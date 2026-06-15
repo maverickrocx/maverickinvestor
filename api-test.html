@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>mfapi.in Live Test</title>
+<style>
+  body { font-family: monospace; background:#111; color:#eee; padding:2rem; }
+  h2 { color:#4fc; margin-bottom:1rem; }
+  .section { margin-bottom:2rem; }
+  .row { display:flex; gap:1rem; padding:.4rem 0; border-bottom:1px solid #222; font-size:.85rem; }
+  .label { width:220px; color:#aaa; }
+  .pass { color:#4fc; }
+  .fail { color:#f66; }
+  .pending { color:#fa0; }
+  #summary { margin-top:1rem; font-size:1.1rem; font-weight:bold; }
+</style>
+</head>
+<body>
+<h2>🔬 mfapi.in Live API Test</h2>
+<div class="section">
+  <b>Index Fund Proxies</b>
+  <div id="indices"></div>
+</div>
+<div class="section">
+  <b>Mutual Fund NAVs (sample 5)</b>
+  <div id="funds"></div>
+</div>
+<div id="summary" class="pending">Running tests…</div>
+
+<script>
+const MFAPI = 'https://api.mfapi.in/mf/';
+
+const INDEX_CONFIG = [
+  { name:'Nifty 50',           code:120716 },
+  { name:'BSE Sensex',         code:119065 },
+  { name:'Bank Nifty',         code:134008 },
+  { name:'Nifty Midcap 150',   code:147622 },
+  { name:'Nifty Next 50',      code:143341 },
+  { name:'Nifty Smallcap 250', code:147623 },
+];
+
+const FUND_SAMPLE = [
+  { name:'Parag Parikh Flexi Cap',  code:122639 },
+  { name:'Mirae Asset Large Cap',   code:118825 },
+  { name:'HDFC Mid-Cap Opp',        code:100179 },
+  { name:'Axis Small Cap',          code:125354 },
+  { name:'SBI Bluechip',            code:119598 },
+];
+
+function addRow(containerId, label, content, pass) {
+  const d = document.getElementById(containerId);
+  d.innerHTML += `<div class="row"><span class="label">${label}</span><span class="${pass ? 'pass' : 'fail'}">${content}</span></div>`;
+}
+
+async function runTests() {
+  let passed = 0, failed = 0;
+
+  // Index tests
+  await Promise.allSettled(INDEX_CONFIG.map(async (cfg) => {
+    try {
+      const r = await fetch(MFAPI + cfg.code);
+      const data = await r.json();
+      const arr = data.data;
+      const cur  = parseFloat(arr[0].nav);
+      const prev = parseFloat(arr[1].nav);
+      const pct  = ((cur - prev) / prev) * 100;
+      const sign = pct >= 0 ? '+' : '';
+      addRow('indices', cfg.name, `NAV ₹${cur.toFixed(4)} · ${sign}${pct.toFixed(2)}% · ${arr[0].date}`, true);
+      passed++;
+    } catch(e) {
+      addRow('indices', cfg.name, 'FAILED — ' + e.message, false);
+      failed++;
+    }
+  }));
+
+  // Fund tests
+  await Promise.allSettled(FUND_SAMPLE.map(async (f) => {
+    try {
+      const r = await fetch(MFAPI + f.code);
+      const data = await r.json();
+      const arr = data.data;
+      const cur  = parseFloat(arr[0].nav);
+      const prev = parseFloat(arr[1].nav);
+      const d1   = ((cur - prev) / prev) * 100;
+      const i1   = Math.min(252, arr.length - 1);
+      const y1   = ((cur - parseFloat(arr[i1].nav)) / parseFloat(arr[i1].nav)) * 100;
+      const sign = d1 >= 0 ? '+' : '';
+      addRow('funds', f.name, `NAV ₹${cur.toFixed(4)} · 1D ${sign}${d1.toFixed(2)}% · 1Y +${y1.toFixed(1)}% · ${arr[0].date}`, true);
+      passed++;
+    } catch(e) {
+      addRow('funds', f.name, 'FAILED — ' + e.message, false);
+      failed++;
+    }
+  }));
+
+  const total = passed + failed;
+  const el = document.getElementById('summary');
+  if (failed === 0) {
+    el.className = 'pass';
+    el.textContent = `✅ ALL ${total} TESTS PASSED — live data flows correctly from mfapi.in`;
+  } else {
+    el.className = 'fail';
+    el.textContent = `⚠️ ${passed}/${total} passed, ${failed} failed`;
+  }
+}
+
+runTests();
+</script>
+</body>
+</html>

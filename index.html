@@ -1,0 +1,3724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maverick Investor — Smart Money for Every Indian</title>
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+    :root {
+      --green:      #0d6e47;
+      --green-dark: #094d32;
+      --green-light:#12925f;
+      --orange:     #f47c20;
+      --orange-light:#ff9a45;
+      --cream:      #fdf8f2;
+      --dark:       #111827;
+      --mid:        #374151;
+      --muted:      #6b7280;
+      --border:     #e5e7eb;
+      --white:      #ffffff;
+      --card-bg:    #ffffff;
+      --shadow:     0 4px 24px rgba(0,0,0,.08);
+      --radius:     14px;
+      --radius-sm:  8px;
+      --font:       'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--cream); color: var(--dark); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+
+    /* ============================================================
+       TYPOGRAPHY UTILITIES
+    ============================================================ */
+    .section-label {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--orange);
+      background: rgba(244,124,32,.1);
+      padding: .25rem .75rem;
+      border-radius: 99px;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--dark);
+      margin-bottom: .75rem;
+    }
+    .section-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 52ch;
+    }
+    .center { text-align: center; }
+    .center .section-sub { margin: 0 auto; }
+
+    /* ============================================================
+       LAYOUT
+    ============================================================ */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 5rem 0; }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-weight: 700;
+      border-radius: 99px;
+      padding: .75rem 1.75rem;
+      font-size: .95rem;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s, filter .15s;
+      border: none;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.18); }
+    .btn-primary { background: var(--orange); color: var(--white); }
+    .btn-secondary { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,.5); }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+    .btn-outline { background: transparent; color: var(--green); border: 2px solid var(--green); }
+    .btn-outline:hover { background: var(--green); color: var(--white); }
+    .btn-green { background: var(--green); color: var(--white); }
+    .btn-dark { background: var(--dark); color: var(--white); }
+
+    /* ============================================================
+       NAV
+    ============================================================ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(9, 77, 50, .96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 1.5rem;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--white);
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: var(--orange);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.75rem;
+      font-size: .9rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.8);
+    }
+    .nav-links a:hover { color: var(--orange); }
+    .nav-cta { display: flex; gap: .75rem; align-items: center; }
+    .nav-cta .btn { padding: .55rem 1.3rem; font-size: .85rem; }
+    .hamburger { display: none; font-size: 1.4rem; color: var(--white); cursor: pointer; }
+
+    /* ============================================================
+       TICKER BAR
+    ============================================================ */
+    .ticker-bar {
+      background: var(--green-dark);
+      padding: .45rem 0;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      margin-top: 64px;
+    }
+    .ticker-track {
+      display: flex;
+      gap: 2.5rem;
+      white-space: nowrap;
+      animation: ticker 28s linear infinite;
+    }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      font-size: .78rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.85);
+    }
+    .ticker-item .name { color: var(--orange-light); }
+    .ticker-item .up   { color: #4ade80; }
+    .ticker-item .down { color: #f87171; }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 60%, #1a7a52 100%);
+      padding: 5rem 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='40' x2='80' y2='40' stroke='rgba(255,255,255,0.04)' stroke-width='0.5'/%3E%3Cline x1='40' y1='0' x2='40' y2='80' stroke='rgba(255,255,255,0.04)' stroke-width='0.5'/%3E%3Cpath d='M0,20 H20 V0' stroke='rgba(255,255,255,0.06)' stroke-width='0.5' fill='none'/%3E%3Cpath d='M60,80 V60 H80' stroke='rgba(255,255,255,0.06)' stroke-width='0.5' fill='none'/%3E%3Cpath d='M0,60 H20 V80' stroke='rgba(255,255,255,0.04)' stroke-width='0.5' fill='none'/%3E%3Cpath d='M80,20 H60 V0' stroke='rgba(255,255,255,0.04)' stroke-width='0.5' fill='none'/%3E%3Ccircle cx='20' cy='20' r='2' fill='rgba(255,255,255,0.06)'/%3E%3Ccircle cx='60' cy='60' r='2' fill='rgba(255,255,255,0.06)'/%3E%3Ccircle cx='40' cy='40' r='1.5' fill='rgba(255,255,255,0.04)'/%3E%3Ccircle cx='20' cy='60' r='1.5' fill='rgba(255,255,255,0.05)'/%3E%3Ccircle cx='60' cy='20' r='1.5' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 80% 50%, rgba(244,124,32,.08) 0%, transparent 70%),
+                  radial-gradient(ellipse 50% 70% at 10% 80%, rgba(74,222,128,.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    /* Floating glow orbs */
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      animation: floatOrb 8s ease-in-out infinite;
+    }
+    .orb-1 { width:350px; height:350px; background:rgba(74,222,128,.12); top:-80px; right:8%; animation-duration:9s; }
+    .orb-2 { width:220px; height:220px; background:rgba(244,124,32,.1); bottom:30px; left:3%; animation-duration:7s; animation-delay:2s; animation-direction:reverse; }
+    .orb-3 { width:280px; height:280px; background:rgba(96,165,250,.08); top:40%; right:2%; animation-duration:11s; animation-delay:1s; }
+    @keyframes floatOrb { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-24px) scale(1.04)} }
+    /* Floating tech shapes */
+    .hero-shape {
+      position: absolute;
+      border: 1px solid rgba(255,255,255,.07);
+      pointer-events: none;
+      animation: spinSlow 20s linear infinite;
+    }
+    .shape-hex { clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%); }
+    .shape-1 { width:80px; height:80px; top:15%; left:8%; animation-duration:25s; background:rgba(255,255,255,.03); border-radius:8px; transform:rotate(12deg); }
+    .shape-2 { width:50px; height:50px; bottom:20%; left:12%; animation-duration:18s; animation-direction:reverse; background:rgba(74,222,128,.04); border-radius:50%; }
+    .shape-3 { width:120px; height:120px; top:60%; right:28%; animation-duration:30s; background:rgba(244,124,32,.03); border-radius:16px; }
+    @keyframes spinSlow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+    }
+    .hero-label {
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--orange-light);
+      margin-bottom: .75rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 span { color: var(--orange-light); }
+    .hero p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.8);
+      margin-bottom: 2rem;
+      max-width: 46ch;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-stats {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .stat-pill {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 12px;
+      padding: .75rem 1.25rem;
+      text-align: center;
+    }
+    .stat-pill .val { font-size: 1.5rem; font-weight: 800; color: var(--white); }
+    .stat-pill .lbl { font-size: .72rem; color: rgba(255,255,255,.65); text-transform: uppercase; letter-spacing: .08em; }
+
+    /* Hero visual */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .dashboard-card {
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 380px;
+      color: var(--white);
+    }
+    .dc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+    .dc-title { font-size: .85rem; font-weight: 700; opacity: .7; }
+    .dc-badge { background: #4ade80; color: #064e3b; font-size: .7rem; font-weight: 800; padding: .2rem .6rem; border-radius: 99px; }
+    .dc-amount { font-size: 2.2rem; font-weight: 900; margin-bottom: .25rem; }
+    .dc-change { font-size: .85rem; color: #4ade80; margin-bottom: 1.25rem; }
+    .dc-chart {
+      height: 80px;
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      margin-bottom: 1.25rem;
+    }
+    .dc-bar { flex: 1; background: rgba(255,255,255,.2); border-radius: 4px 4px 0 0; transition: background .3s; }
+    .dc-bar.hi { background: var(--orange); }
+    .dc-funds { display: flex; flex-direction: column; gap: .6rem; }
+    .dc-fund { display: flex; justify-content: space-between; align-items: center; font-size: .82rem; }
+    .dc-fund .fname { opacity: .8; }
+    .dc-fund .fval { font-weight: 700; }
+    .dc-fund .fup { color: #4ade80; }
+    .dc-fund .fdn { color: #f87171; }
+
+    /* Floating badges */
+    .float-badge {
+      position: absolute;
+      background: var(--white);
+      border-radius: 12px;
+      padding: .65rem 1rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,.15);
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      animation: float 3s ease-in-out infinite;
+    }
+    .float-badge.one { bottom: -20px; left: -30px; animation-delay: 0s; }
+    .float-badge.two { top: -15px; right: -20px; animation-delay: 1.5s; }
+    .float-badge .fb-icon { font-size: 1.1rem; }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+    /* ============================================================
+       TOOLS SECTION
+    ============================================================ */
+    /* ── Portfolio Allocation Bar ─────────────────────────── */
+    .alloc-bar-wrap {
+      display: flex;
+      border-radius: 6px;
+      overflow: hidden;
+      height: 22px;
+      margin-bottom: 1rem;
+      gap: 2px;
+    }
+    .alloc-seg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .6rem;
+      font-weight: 800;
+      color: rgba(255,255,255,.9);
+      letter-spacing: .04em;
+      border-radius: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      gap: 3px;
+      transition: flex .3s;
+    }
+    .alloc-seg:hover { filter: brightness(1.15); }
+    .dc-stats-row {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 1rem;
+    }
+    .dc-stat {
+      flex: 1;
+      background: rgba(255,255,255,.07);
+      border-radius: 8px;
+      padding: .4rem .5rem;
+      text-align: center;
+    }
+    .ds-val { font-size: .88rem; font-weight: 800; }
+    .ds-lbl { font-size: .6rem; opacity: .6; letter-spacing: .04em; text-transform: uppercase; }
+
+    /* ── Tools Section ────────────────────────────────────── */
+    .tools-section {
+      background: var(--white);
+      background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1' fill='rgba(13,110,71,0.07)'/%3E%3C/svg%3E");
+      position: relative;
+    }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    /* ── Goals in Tools ───────────────────────────────────── */
+    .goals-banner {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin: 3rem 0 1.5rem;
+      padding: 1.25rem 1.75rem;
+      background: linear-gradient(135deg, var(--green-dark), var(--green));
+      border-radius: var(--radius);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .goals-banner::before {
+      content:'';
+      position:absolute;
+      inset:0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='30' x2='60' y2='30' stroke='rgba(255,255,255,0.05)' stroke-width='0.5'/%3E%3Cline x1='30' y1='0' x2='30' y2='60' stroke='rgba(255,255,255,0.05)' stroke-width='0.5'/%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(255,255,255,0.08)'/%3E%3C/svg%3E");
+    }
+    .gb-icon { font-size: 2.2rem; position: relative; }
+    .gb-text { position: relative; }
+    .gb-text h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: .15rem; }
+    .gb-text p { font-size: .82rem; opacity: .75; }
+    .gb-dl-link {
+      margin-left: auto;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,.4);
+      padding: .45rem 1rem;
+      border-radius: 99px;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+    .gb-dl-link:hover { background: rgba(255,255,255,.15); border-color: var(--white); }
+    .goal-tiles-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+    }
+    /* goal-tiles-grid breakpoints handled in main responsive block below */
+    .goal-tile {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1rem;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .goal-tile:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--green-light); }
+    .goal-tile::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background: var(--green); border-radius:3px 3px 0 0; }
+    .goal-tile:nth-child(even)::before { background: var(--orange); }
+    .gt-header { display:flex; align-items:center; gap:.5rem; margin-bottom:.85rem; }
+    .gt-icon { font-size:1.3rem; }
+    .gt-name { font-size:.88rem; font-weight:800; color:var(--dark); }
+    .gt-inp-row { margin-bottom:.6rem; }
+    .gt-inp-row label { display:block; font-size:.68rem; color:var(--muted); font-weight:600; margin-bottom:.2rem; }
+    .gt-number {
+      width:100%;
+      font-size:.8rem;
+      padding:.35rem .6rem;
+      border:1.5px solid var(--border);
+      border-radius:8px;
+      background:var(--cream);
+      color:var(--dark);
+      font-weight:600;
+    }
+    .gt-slider { width:100%; accent-color:var(--green); margin:.1rem 0; }
+    .gt-yrs-val { font-size:.72rem; color:var(--green); font-weight:700; }
+    .gt-result {
+      background: linear-gradient(135deg, rgba(13,110,71,.06), rgba(13,110,71,.02));
+      border-radius: 8px;
+      padding: .6rem .7rem;
+      margin-top: .75rem;
+      border: 1px solid rgba(13,110,71,.12);
+    }
+    .gt-result-row { display:flex; justify-content:space-between; font-size:.7rem; margin-bottom:.2rem; }
+    .gt-result-row:last-child { margin-bottom:0; }
+    .gt-result-row span { color:var(--muted); }
+    .gt-result-row strong { color:var(--green); font-size:.78rem; }
+    .gt-sip { color:var(--green-dark) !important; font-size:.84rem !important; }
+
+    /* ── Section background patterns ─────────────────────── */
+    .indices-section {
+      position: relative;
+      background: linear-gradient(160deg, var(--green-dark) 0%, #0a3d22 100%);
+    }
+    .indices-section::before {
+      content:'';
+      position:absolute;
+      inset:0;
+      background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='40' x2='80' y2='40' stroke='rgba(255,255,255,0.04)' stroke-width='0.5'/%3E%3Cline x1='40' y1='0' x2='40' y2='80' stroke='rgba(255,255,255,0.04)' stroke-width='0.5'/%3E%3Ccircle cx='40' cy='40' r='1.5' fill='rgba(255,255,255,0.06)'/%3E%3Ccircle cx='0' cy='0' r='1' fill='rgba(255,255,255,0.04)'/%3E%3Ccircle cx='80' cy='80' r='1' fill='rgba(255,255,255,0.04)'/%3E%3C/svg%3E");
+      pointer-events:none;
+    }
+    .calc-section {
+      background: linear-gradient(160deg, #0a2d1c 0%, var(--green-dark) 50%, #0a2d1c 100%);
+      position: relative;
+    }
+    .calc-section::before {
+      content:'';
+      position:absolute;
+      inset:0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='28' y='28' width='4' height='4' rx='1' fill='rgba(255,255,255,0.04)'/%3E%3C/svg%3E");
+      pointer-events:none;
+    }
+    .tool-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+      cursor: default;
+    }
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: var(--green-light);
+    }
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--green);
+    }
+    .tool-card.orange::before { background: var(--orange); }
+    .tool-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+      background: rgba(13,110,71,.1);
+    }
+    .tool-card.orange .tool-icon { background: rgba(244,124,32,.1); }
+    .tool-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: .5rem; }
+    .tool-card p { font-size: .88rem; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.5; }
+    .tool-dl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--green);
+      border: 1.5px solid var(--green);
+      padding: .45rem 1rem;
+      border-radius: 99px;
+      transition: all .2s;
+    }
+    .tool-card.orange .tool-dl-btn { color: var(--orange); border-color: var(--orange); }
+    .tool-dl-btn:hover { background: var(--green); color: var(--white); }
+    .tool-card.orange .tool-dl-btn:hover { background: var(--orange); color: var(--white); }
+    .tool-tag {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      font-size: .65rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .2rem .55rem;
+      border-radius: 99px;
+    }
+    .tag-free { background: rgba(74,222,128,.15); color: #065f46; }
+    .tag-live { background: rgba(244,124,32,.15); color: #9a3412; }
+
+    /* ============================================================
+       LIVE FUND TRACKER
+    ============================================================ */
+    .tracker-section { background: var(--cream); }
+    .tracker-controls {
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+      margin: 2rem 0 1.5rem;
+    }
+    .tab-btn {
+      padding: .5rem 1.25rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--green);
+      color: var(--white);
+      border-color: var(--green);
+    }
+    .fund-table-wrap {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1.5px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .fund-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .88rem;
+    }
+    .fund-table thead {
+      background: var(--green-dark);
+      color: var(--white);
+    }
+    .fund-table th {
+      padding: .9rem 1.25rem;
+      text-align: left;
+      font-weight: 700;
+      font-size: .78rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .fund-table td {
+      padding: .9rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--mid);
+    }
+    .fund-table tr:last-child td { border-bottom: none; }
+    .fund-table tr:hover td { background: rgba(13,110,71,.03); }
+    .fund-name-cell { display: flex; align-items: center; gap: .75rem; }
+    .fund-avatar {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .65rem;
+      font-weight: 800;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .fund-name { font-weight: 700; color: var(--dark); font-size: .9rem; }
+    .fund-type { font-size: .73rem; color: var(--muted); }
+    .badge-risk {
+      display: inline-block;
+      font-size: .68rem;
+      font-weight: 700;
+      padding: .18rem .55rem;
+      border-radius: 99px;
+    }
+    .risk-low    { background: rgba(74,222,128,.15); color: #065f46; }
+    .risk-mod    { background: rgba(251,191,36,.15); color: #92400e; }
+    .risk-high   { background: rgba(248,113,113,.15); color: #991b1b; }
+    .positive { color: #059669; font-weight: 700; }
+    .negative { color: #dc2626; font-weight: 700; }
+    .nav-val { font-weight: 700; color: var(--dark); }
+    .live-dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      background: #4ade80;
+      border-radius: 50%;
+      margin-right: 4px;
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    /* ============================================================
+       CALCULATORS (interactive)
+    ============================================================ */
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: 560px;
+      margin: 0 auto;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .calc-card {
+      background: var(--cream);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+    .calc-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: .6rem; }
+    .calc-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-group label { font-size: .8rem; font-weight: 700; color: var(--mid); display: block; margin-bottom: .35rem; }
+    .form-group input[type=range] { width: 100%; accent-color: var(--green); }
+    .range-row { display: flex; justify-content: space-between; font-size: .78rem; color: var(--muted); }
+    .input-field {
+      width: 100%;
+      padding: .6rem .9rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: .9rem;
+      font-family: inherit;
+      color: var(--dark);
+      background: var(--white);
+      transition: border-color .2s;
+    }
+    .input-field:focus { outline: none; border-color: var(--green); }
+    .calc-result {
+      background: var(--green-dark);
+      color: var(--white);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem;
+      margin-top: .5rem;
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+    }
+    .calc-result .res-label { font-size: .75rem; opacity: .7; text-transform: uppercase; letter-spacing: .08em; }
+    .calc-result .res-value { font-size: 1.6rem; font-weight: 900; color: var(--orange-light); }
+    .calc-result .res-sub { font-size: .78rem; opacity: .7; }
+
+    /* ============================================================
+       RISK QUESTIONNAIRE
+    ============================================================ */
+    .risk-section { background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%); }
+    .risk-section .section-title { color: var(--white); }
+    .risk-section .section-sub { color: rgba(255,255,255,.7); }
+    .risk-section .section-label { background: rgba(255,255,255,.15); color: var(--orange-light); }
+    .quiz-card {
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      max-width: 680px;
+      margin: 3rem auto 0;
+      color: var(--white);
+    }
+    .quiz-progress { margin-bottom: 2rem; }
+    .quiz-progress-bar-bg {
+      background: rgba(255,255,255,.2);
+      height: 6px;
+      border-radius: 99px;
+      margin-top: .5rem;
+    }
+    .quiz-progress-bar {
+      background: var(--orange);
+      height: 6px;
+      border-radius: 99px;
+      width: 20%;
+      transition: width .4s;
+    }
+    .quiz-step { font-size: .78rem; opacity: .7; }
+    .quiz-q { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.4; }
+    .quiz-options { display: flex; flex-direction: column; gap: .75rem; }
+    .quiz-opt {
+      background: rgba(255,255,255,.08);
+      border: 1.5px solid rgba(255,255,255,.15);
+      border-radius: var(--radius-sm);
+      padding: .9rem 1.25rem;
+      cursor: pointer;
+      font-size: .9rem;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .quiz-opt:hover, .quiz-opt.selected {
+      background: rgba(244,124,32,.25);
+      border-color: var(--orange);
+    }
+    .quiz-opt .opt-dot {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,.4);
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .quiz-opt.selected .opt-dot {
+      background: var(--orange);
+      border-color: var(--orange);
+    }
+    .quiz-nav { display: flex; justify-content: space-between; margin-top: 2rem; align-items: center; }
+    .quiz-result {
+      display: none;
+      text-align: center;
+      padding: 1rem 0;
+    }
+    .result-ring {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      border: 6px solid var(--orange);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 2rem;
+    }
+    .result-profile { font-size: 1.5rem; font-weight: 900; color: var(--orange-light); margin-bottom: .5rem; }
+    .result-desc { font-size: .9rem; opacity: .8; max-width: 42ch; margin: 0 auto; }
+
+    /* ============================================================
+       INSURANCE ADVISOR
+    ============================================================ */
+    .insurance-section { background: var(--cream); }
+    .insurance-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-top: 3rem;
+    }
+    .ins-types { display: flex; flex-direction: column; gap: 1rem; }
+    .ins-type-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: all .2s;
+      position: relative;
+    }
+    .ins-type-card:hover, .ins-type-card.active {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(13,110,71,.08);
+    }
+    .ins-type-card .its-icon { font-size: 1.8rem; }
+    .ins-type-card .its-info h4 { font-size: .95rem; font-weight: 800; margin-bottom: .2rem; }
+    .ins-type-card .its-info p { font-size: .78rem; color: var(--muted); }
+    .ins-type-card .its-amount {
+      margin-left: auto;
+      text-align: right;
+      font-size: .82rem;
+    }
+    .its-amount .amt { font-weight: 800; font-size: 1rem; color: var(--green); }
+    .its-amount .per { color: var(--muted); font-size: .72rem; }
+    .ins-calc-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      position: sticky;
+      top: 80px;
+    }
+    .ins-calc-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: .5rem; }
+    .coverage-meter {
+      background: var(--cream);
+      border-radius: var(--radius-sm);
+      padding: 1.5rem;
+      margin-top: 1.25rem;
+      text-align: center;
+    }
+    .coverage-num { font-size: 2rem; font-weight: 900; color: var(--green); }
+    .coverage-label { font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .coverage-bars { display: flex; gap: 4px; margin-top: 1rem; }
+    .cov-bar { flex: 1; height: 8px; background: var(--border); border-radius: 99px; }
+    .cov-bar.filled { background: var(--green); }
+
+    /* ============================================================
+       RETIREMENT PLANNER BANNER
+    ============================================================ */
+    .retirement-banner {
+      background: linear-gradient(135deg, #1c1c2e 0%, #16213e 100%);
+      border-radius: var(--radius);
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: center;
+      margin: 0 0 5rem;
+    }
+    .rb-label { font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--orange-light); margin-bottom: .75rem; }
+    .rb-title { font-size: 1.6rem; font-weight: 900; color: var(--white); margin-bottom: .75rem; line-height: 1.2; }
+    .rb-sub { color: rgba(255,255,255,.65); font-size: .9rem; margin-bottom: 1.5rem; }
+    .rb-features { display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 1.75rem; }
+    .rb-feat { font-size: .78rem; font-weight: 600; color: rgba(255,255,255,.8); display: flex; align-items: center; gap: .35rem; }
+    .rb-feat::before { content: '✓'; color: #4ade80; font-weight: 900; }
+    .rb-visual {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      min-width: 220px;
+      text-align: center;
+      color: var(--white);
+    }
+    .rb-icon { font-size: 3rem; margin-bottom: .75rem; }
+    .rb-visual p { font-size: .82rem; opacity: .6; }
+    .rb-visual strong { display: block; font-size: 1.1rem; font-weight: 800; margin-top: .25rem; }
+
+    /* ============================================================
+       MOBILE APP SECTION
+    ============================================================ */
+    .app-section { background: var(--white); }
+    .app-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .app-features { display: flex; flex-direction: column; gap: 1.25rem; margin: 2rem 0; }
+    .app-feat {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .af-icon {
+      width: 40px; height: 40px;
+      background: rgba(13,110,71,.1);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: .1rem;
+    }
+    .af-text h4 { font-size: .95rem; font-weight: 800; margin-bottom: .2rem; }
+    .af-text p  { font-size: .82rem; color: var(--muted); line-height: 1.5; }
+    .app-store-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .store-btn {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      background: var(--dark);
+      color: var(--white);
+      border-radius: 12px;
+      padding: .75rem 1.25rem;
+      font-size: .82rem;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .store-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.2); }
+    .store-btn .sb-icon { font-size: 1.6rem; }
+    .store-btn .sb-text .sb-sup { font-size: .65rem; opacity: .7; display: block; }
+    .store-btn .sb-text .sb-main { font-size: .95rem; font-weight: 800; }
+    .store-btn.soon { opacity: .5; pointer-events: none; }
+
+    /* Phone mockup */
+    .phone-mockup {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+    .phone-frame {
+      width: 240px;
+      background: var(--dark);
+      border-radius: 36px;
+      padding: 12px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.25), 0 0 0 1px rgba(255,255,255,.08);
+      position: relative;
+    }
+    .phone-notch {
+      width: 70px; height: 22px;
+      background: var(--dark);
+      border-radius: 0 0 12px 12px;
+      margin: 0 auto;
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+    .phone-screen {
+      background: var(--cream);
+      border-radius: 26px;
+      overflow: hidden;
+      min-height: 440px;
+    }
+    .app-header-bar {
+      background: var(--green-dark);
+      padding: 2.5rem .9rem .9rem;
+      color: var(--white);
+    }
+    .app-header-bar .app-greeting { font-size: .62rem; opacity: .7; }
+    .app-header-bar .app-name { font-size: .85rem; font-weight: 800; margin-bottom: .6rem; }
+    .app-portfolio-val { font-size: 1.3rem; font-weight: 900; }
+    .app-portfolio-chg { font-size: .65rem; color: #4ade80; }
+    .app-screen-body { padding: .75rem; }
+    .app-quick-btns { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-bottom: .75rem; }
+    .aqb {
+      background: var(--white);
+      border-radius: 10px;
+      padding: .65rem .5rem;
+      text-align: center;
+      font-size: .58rem;
+      font-weight: 700;
+      color: var(--dark);
+      border: 1px solid var(--border);
+    }
+    .aqb .aqb-icon { font-size: 1rem; margin-bottom: .2rem; }
+    .app-section-title { font-size: .65rem; font-weight: 800; color: var(--mid); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .5rem; }
+    .app-fund-row {
+      background: var(--white);
+      border-radius: 8px;
+      padding: .6rem .75rem;
+      margin-bottom: .4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .6rem;
+    }
+    .afr-name { font-weight: 700; color: var(--dark); }
+    .afr-nav  { font-size: .55rem; color: var(--muted); }
+    .afr-ret  { font-weight: 800; }
+    .afr-ret.up  { color: #059669; }
+    .afr-ret.dn  { color: #dc2626; }
+
+    /* Second phone */
+    .phone-frame-2 {
+      position: absolute;
+      right: -40px;
+      top: 30px;
+      transform: scale(.82);
+      opacity: .6;
+    }
+
+    /* ============================================================
+       WHY US
+    ============================================================ */
+    .why-section { background: var(--cream); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .why-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      border: 1.5px solid var(--border);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .why-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .why-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .why-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: .5rem; }
+    .why-card p { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+
+    /* ============================================================
+       LIVE INDICES
+    ============================================================ */
+    .indices-section { background: var(--green-dark); padding: 4rem 0; }
+    .indices-section .section-label { background: rgba(255,255,255,.15); color: var(--orange-light); }
+    .indices-section .section-title { color: var(--white); }
+    .indices-section .section-sub   { color: rgba(255,255,255,.7); }
+    .indices-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .index-card {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: background .2s, transform .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .index-card:hover { background: rgba(255,255,255,.12); transform: translateY(-2px); }
+    .index-card.up-card   { border-left: 4px solid #4ade80; }
+    .index-card.down-card { border-left: 4px solid #f87171; }
+    .ic-label { font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.55); margin-bottom: .4rem; }
+    .ic-name  { font-size: .9rem; font-weight: 800; color: var(--white); margin-bottom: .75rem; }
+    .ic-value { font-size: 1.55rem; font-weight: 900; color: var(--white); line-height: 1; }
+    .ic-change {
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      font-size: .85rem;
+      font-weight: 800;
+      margin-top: .5rem;
+      padding: .25rem .7rem;
+      border-radius: 99px;
+    }
+    .ic-change.up   { background: rgba(74,222,128,.15); color: #4ade80; }
+    .ic-change.down { background: rgba(248,113,113,.15); color: #f87171; }
+    .ic-meta { font-size: .72rem; color: rgba(255,255,255,.4); margin-top: .6rem; }
+    .ic-sparkline {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 28px;
+      margin-top: .75rem;
+      opacity: .6;
+    }
+    .ic-bar { flex: 1; border-radius: 1px 1px 0 0; min-height: 3px; }
+    /* Skeleton loader */
+    .loading-card { animation: shimmer 1.4s ease-in-out infinite; }
+    .ic-skeleton { height: 100px; border-radius: 8px; background: rgba(255,255,255,.06); }
+    @keyframes shimmer { 0%,100%{opacity:.4} 50%{opacity:.9} }
+    /* Market status badge */
+    .market-status-badge {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 99px;
+      padding: .5rem 1.1rem;
+      font-size: .78rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.8);
+    }
+    .market-open  { color: #4ade80; }
+    .market-closed{ color: #f87171; }
+    /* indices-grid breakpoints handled in main responsive block below */
+
+    /* ============================================================
+       GOALS SECTION
+    ============================================================ */
+    .goals-section { background: var(--white); }
+    .goals-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .goal-card-main {
+      background: var(--cream);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+    .goal-card-main:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+      border-color: var(--green);
+    }
+    .goal-icon-wrap {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: .5rem;
+    }
+    .goal-card-main h3 { font-size: 1.05rem; font-weight: 800; }
+    .goal-card-main > p { font-size: .85rem; color: var(--muted); line-height: 1.5; }
+    .goal-calc-inline { margin-top: .75rem; display: flex; flex-direction: column; gap: .75rem; }
+    .gci-row { display: flex; flex-direction: column; gap: .25rem; }
+    .gci-row label { font-size: .75rem; font-weight: 700; color: var(--mid); }
+    .gci-row input[type=range] { width: 100%; accent-color: var(--green); }
+    .gci-inp {
+      width: 100%;
+      padding: .45rem .75rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: .9rem;
+      font-family: inherit;
+      color: var(--dark);
+      background: var(--white);
+      transition: border-color .2s;
+    }
+    .gci-inp:focus { outline: none; border-color: var(--green); }
+    .gci-val { font-size: .75rem; font-weight: 700; color: var(--green); }
+    .goal-result {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: .75rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .gr-row { display: flex; justify-content: space-between; align-items: center; font-size: .82rem; }
+    .gr-row span { color: var(--muted); }
+    .gr-row strong { font-size: .88rem; color: var(--dark); }
+    .sip-highlight { font-size: 1rem !important; color: var(--green) !important; }
+    .goal-summary-card {
+      background: linear-gradient(135deg, var(--green-dark), var(--green-light));
+      border-color: transparent;
+      color: var(--white);
+    }
+    .goal-summary-card h3, .goal-summary-card > p { color: rgba(255,255,255,.95); }
+    .goal-summary-card > p { color: rgba(255,255,255,.75); }
+    .goal-summary-list { display: flex; flex-direction: column; gap: .5rem; margin-top: .5rem; }
+    .gsl-item { font-size: .85rem; color: rgba(255,255,255,.85); display: flex; align-items: center; gap: .6rem; font-weight: 600; }
+    @media (max-width: 900px) { .goals-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .goals-grid { grid-template-columns: 1fr; } }
+
+    /* ============================================================
+       DISCLAIMER
+    ============================================================ */
+    .disclaimer {
+      background: rgba(244,124,32,.07);
+      border-left: 4px solid var(--orange);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 1rem 1.5rem;
+      font-size: .8rem;
+      color: var(--mid);
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .disclaimer strong { color: var(--dark); }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--green-dark);
+      color: rgba(255,255,255,.75);
+      padding: 4rem 0 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      margin-bottom: 2rem;
+    }
+    .footer-brand p { font-size: .85rem; margin: 1rem 0 1.25rem; line-height: 1.6; opacity: .7; }
+    .social-row { display: flex; gap: .75rem; }
+    .social-btn {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,.1);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem;
+      transition: background .2s;
+    }
+    .social-btn:hover { background: var(--orange); }
+    .footer-col h4 { font-weight: 800; font-size: .9rem; color: var(--white); margin-bottom: 1rem; }
+    .footer-col ul { display: flex; flex-direction: column; gap: .6rem; }
+    .footer-col li a { font-size: .85rem; transition: color .2s; }
+    .footer-col li a:hover { color: var(--orange-light); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: .78rem;
+      opacity: .6;
+    }
+    .sebi-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 8px;
+      padding: .4rem .8rem;
+      font-size: .73rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.85);
+    }
+
+    /* ============================================================
+       HERO SIP CALCULATOR (compact glassmorphism card)
+    ============================================================ */
+    /* Portfolio card + calc stack sit side-by-side inside hero-visual */
+    .hero-cards-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      align-items: stretch;
+      width: 100%;
+    }
+    /* Remove fixed max-width inside the layout — let the grid size it */
+    .hero-cards-layout .dashboard-card {
+      max-width: none;
+    }
+    /* Calc cards stack vertically, filling the same height as the portfolio card */
+    .hero-calc-stack {
+      display: flex;
+      flex-direction: column;
+      gap: .85rem;
+    }
+    .hero-sip-calc {
+      background: rgba(255,255,255,.07);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.2rem 1.3rem;
+      flex: 1;           /* each calc card takes equal vertical space */
+      display: flex;
+      flex-direction: column;
+    }
+    /* Push result to the bottom of each calc card */
+    .hsc-result { margin-top: auto; padding-top: .65rem; }
+    .hsc-title {
+      font-size: .68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--orange-light);
+      margin-bottom: .9rem;
+    }
+    .hsc-row {
+      display: grid;
+      grid-template-columns: 68px 1fr 62px;
+      align-items: center;
+      gap: .4rem;
+      margin-bottom: .55rem;
+    }
+    .hsc-row label { font-size: .7rem; color: rgba(255,255,255,.55); }
+    .hsc-row input[type=range] { accent-color: var(--orange); cursor: pointer; }
+    .hsc-row span  { font-size: .72rem; font-weight: 700; color: rgba(255,255,255,.9); text-align: right; }
+    .hsc-result {
+      background: rgba(244,124,32,.22);
+      border: 1px solid rgba(244,124,32,.3);
+      border-radius: var(--radius-sm);
+      padding: .65rem 1rem;
+      margin-top: .65rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .hsc-corpus { font-size: 1.35rem; font-weight: 900; color: var(--orange-light); }
+    .hsc-sub    { font-size: .65rem; color: rgba(255,255,255,.55); text-align: right; line-height: 1.4; }
+
+    /* ============================================================
+       FUND CATEGORY BLOCKS
+    ============================================================ */
+    .fund-cat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .fund-cat-block {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .fcb-header {
+      padding: .85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: var(--cream);
+    }
+    .fcb-header-left { display: flex; align-items: center; gap: .55rem; }
+    .fcb-dot  { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .fcb-icon { font-size: 1rem; }
+    .fcb-name { font-weight: 800; font-size: .92rem; color: var(--dark); }
+    .fcb-count {
+      font-size: .68rem; font-weight: 700;
+      color: var(--muted);
+      background: var(--border);
+      padding: .15rem .55rem;
+      border-radius: 99px;
+    }
+    .fcb-row-hdr {
+      background: #f8f9fa;
+      padding: .35rem 1.25rem;
+      display: grid;
+      grid-template-columns: 1fr 72px 58px 48px;
+      gap: .4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .fcb-row-hdr span {
+      font-size: .64rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--muted);
+    }
+    .fcb-row-hdr span:nth-child(n+2) { text-align: right; }
+    .fcb-row {
+      display: grid;
+      grid-template-columns: 1fr 72px 58px 48px;
+      gap: .4rem;
+      align-items: center;
+      padding: .65rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      transition: background .15s;
+    }
+    .fcb-row:last-child { border-bottom: none; }
+    .fcb-row:hover { background: rgba(13,110,71,.03); }
+    .fcb-fund-name {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--dark);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .fcb-nav  { font-size: .8rem; font-weight: 700; color: var(--dark); text-align: right; }
+    .fcb-d1   { font-size: .78rem; font-weight: 700; text-align: right; }
+    .fcb-1y   { font-size: .75rem; color: var(--muted); text-align: right; }
+
+    /* ============================================================
+       RESPONSIVE — fluid across all display sizes
+       XL Desktop  ≥ 1600px
+       Desktop      1280 – 1599px  (no changes needed — base styles)
+       13" Laptop   1100 – 1279px
+       11" Laptop    900 – 1099px
+       Tablet        600 –  899px
+       Mobile        480 –  599px
+       Small Mobile      < 480px
+    ============================================================ */
+
+    /* ── XL Desktop (≥ 1600px) — more breathing room ──────── */
+    @media (min-width: 1600px) {
+      .container          { max-width: 1400px; }
+      .hero               { padding: 6.5rem 0 5.5rem; }
+      .hero-cards-layout  { gap: 1.5rem; }
+      .hero h1            { font-size: 3.6rem; }
+      .fund-cat-grid      { gap: 2rem; }
+      section             { padding: 6rem 0; }
+    }
+
+    /* ── 13" Laptop (1100 – 1279px) — compact but full layout ─ */
+    @media (max-width: 1279px) {
+      .container          { padding: 0 2rem; }
+      .hero-grid          { gap: 2rem; }
+      .hero               { padding: 4.5rem 0 3.5rem; }
+      .dashboard-card     { padding: 1.3rem; }
+      .dc-amount          { font-size: 1.9rem; }
+      .hero-cards-layout  { gap: 1rem; }
+      .hero-calc-stack    { gap: .75rem; }
+      .nav-links          { gap: 1.2rem; font-size: .85rem; }
+      .nav-cta .btn       { padding: .5rem 1.1rem; font-size: .82rem; }
+      .fund-cat-grid      { gap: 1.25rem; }
+      .why-grid           { grid-template-columns: repeat(3, 1fr); }
+      .footer-grid        { grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 1.75rem; }
+      section             { padding: 4.5rem 0; }
+    }
+
+    /* ── 11" Laptop (900 – 1099px) — scale down, keep 2-col hero ─ */
+    @media (max-width: 1099px) {
+      .container          { padding: 0 1.5rem; }
+      .hero-grid          { gap: 1.25rem; }
+      .hero               { padding: 4rem 0 3rem; }
+      .hero h1            { font-size: clamp(1.7rem, 3.8vw, 2.4rem); }
+      .hero p             { font-size: .95rem; }
+      .hero-btns          { gap: .65rem; }
+      .hero-btns .btn     { padding: .65rem 1.3rem; font-size: .85rem; }
+      .stat-pill          { padding: .6rem 1rem; }
+      .stat-pill .val     { font-size: 1.2rem; }
+      .hero-stats         { gap: 1rem; margin-top: 1.75rem; }
+      /* Dashboard card — let grid control width, just tweak internals */
+      .dashboard-card     { padding: 1.1rem; }
+      .dc-amount          { font-size: 1.6rem; }
+      .dc-chart           { height: 60px; }
+      .dc-stats-row       { gap: .5rem; }
+      .float-badge        { font-size: .7rem; padding: .45rem .7rem; }
+      .float-badge.one    { left: -5px; bottom: -10px; }
+      .float-badge.two    { right: -5px; top: -8px; }
+      /* Hero layout — keep side-by-side but tighter */
+      .hero-cards-layout  { gap: .85rem; }
+      .hero-calc-stack    { gap: .65rem; }
+      .hsc-title          { font-size: .62rem; margin-bottom: .65rem; }
+      .hsc-row            { grid-template-columns: 52px 1fr 50px; gap: .3rem; margin-bottom: .45rem; }
+      .hsc-row label      { font-size: .65rem; }
+      .hsc-row span       { font-size: .65rem; }
+      .hsc-corpus         { font-size: 1.15rem; }
+      .hsc-sub            { font-size: .6rem; }
+      /* Nav */
+      .nav-links          { gap: .9rem; font-size: .8rem; }
+      .nav-cta .btn       { padding: .45rem .95rem; font-size: .78rem; }
+      /* Sections */
+      section             { padding: 4rem 0; }
+      .section-title      { font-size: clamp(1.4rem, 3vw, 2rem); }
+      /* Fund blocks */
+      .fund-cat-grid      { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .fcb-fund-name      { font-size: .74rem; }
+      .fcb-nav, .fcb-d1, .fcb-1y { font-size: .72rem; }
+      /* Tools & Goals */
+      .goal-tiles-grid    { grid-template-columns: repeat(3, 1fr); }
+      .tools-grid         { grid-template-columns: repeat(2, 1fr); }
+      /* Why grid */
+      .why-grid           { grid-template-columns: repeat(3, 1fr); }
+      /* Footer */
+      .footer-grid        { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    }
+
+    /* ── Tablet (600 – 899px) — collapse to single column ──── */
+    @media (max-width: 899px) {
+      .hero-grid, .app-grid    { grid-template-columns: 1fr; }
+      .hero-visual             { display: none; }
+      .retirement-banner       { grid-template-columns: 1fr; }
+      .rb-visual               { display: none; }
+      .nav-links               { display: none; }
+      .hamburger               { display: block; }
+      .phone-frame-2           { display: none; }
+      .fund-cat-grid           { grid-template-columns: 1fr 1fr; gap: .85rem; }
+      .indices-grid            { grid-template-columns: repeat(2, 1fr); }
+      .why-grid                { grid-template-columns: 1fr 1fr; }
+      .footer-grid             { grid-template-columns: 1fr 1fr; }
+      .goal-tiles-grid         { grid-template-columns: repeat(3, 1fr); }
+      .tools-grid              { grid-template-columns: repeat(2, 1fr); }
+      section                  { padding: 4rem 0; }
+      .hero                    { padding: 5rem 0 3rem; text-align: center; }
+      .hero p                  { margin-left: auto; margin-right: auto; }
+      .hero-btns               { justify-content: center; }
+      .hero-stats              { justify-content: center; }
+    }
+
+    /* ── Mobile (480 – 599px) ──────────────────────────────── */
+    @media (max-width: 599px) {
+      .why-grid, .footer-grid  { grid-template-columns: 1fr; }
+      section                  { padding: 3rem 0; }
+      .tools-grid              { grid-template-columns: 1fr; }
+      .goal-tiles-grid         { grid-template-columns: repeat(2, 1fr); }
+      .fund-cat-grid           { grid-template-columns: 1fr; }
+      .indices-grid            { grid-template-columns: 1fr 1fr; }
+      .section-title           { font-size: 1.5rem; }
+    }
+
+    /* ── Small Mobile (< 480px) ────────────────────────────── */
+    @media (max-width: 479px) {
+      .container               { padding: 0 1rem; }
+      .indices-grid            { grid-template-columns: 1fr; }
+      .goal-tiles-grid         { grid-template-columns: 1fr; }
+      .hero-stats              { gap: .6rem; }
+      .stat-pill               { padding: .5rem .75rem; }
+      .stat-pill .val          { font-size: 1.1rem; }
+      .section-title           { font-size: 1.35rem; }
+      .footer-grid             { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       MODAL SYSTEM
+    ============================================================ */
+    .modal-overlay {
+      display:none; position:fixed; inset:0; background:rgba(0,0,0,.55);
+      z-index:9999; align-items:center; justify-content:center; padding:1rem;
+    }
+    .modal-overlay.open { display:flex; }
+    .modal-box {
+      background:#fff; border-radius:var(--radius); max-width:640px; width:100%;
+      max-height:85vh; overflow-y:auto; padding:2rem; position:relative;
+      box-shadow:0 24px 64px rgba(0,0,0,.18);
+    }
+    .modal-close {
+      position:absolute; top:1rem; right:1rem; background:none; border:none;
+      font-size:1.5rem; cursor:pointer; color:var(--muted); line-height:1;
+    }
+    .modal-title { font-size:1.35rem; font-weight:800; color:var(--dark); margin-bottom:1rem; }
+    .modal-body p { color:var(--mid); margin-bottom:.75rem; line-height:1.7; font-size:.95rem; }
+    .modal-body h4 { font-size:1rem; font-weight:700; color:var(--dark); margin:.75rem 0 .25rem; }
+    .modal-body ul { list-style:disc; padding-left:1.25rem; color:var(--mid); font-size:.93rem; }
+    .modal-body ul li { margin-bottom:.35rem; }
+
+    /* ============================================================
+       PORTFOLIO RECOMMENDER
+    ============================================================ */
+    .recommender-section {
+      padding: 5rem 0;
+      background: linear-gradient(135deg, #0d6e47 0%, #094d32 100%);
+    }
+    .rec-header { text-align:center; margin-bottom:3rem; }
+    .rec-header .section-label { background:rgba(255,255,255,.15); color:#fff; }
+    .rec-header h2 { color:#fff; font-size:clamp(1.6rem,4vw,2.3rem); font-weight:800; }
+    .rec-header p  { color:rgba(255,255,255,.75); margin-top:.5rem; font-size:1rem; }
+
+    .rec-card {
+      background:#fff; border-radius:var(--radius); padding:2rem 2.5rem;
+      max-width:780px; margin:0 auto; box-shadow:0 24px 64px rgba(0,0,0,.18);
+    }
+
+    /* Steps */
+    .rec-steps {
+      display:flex; gap:.5rem; margin-bottom:2rem;
+    }
+    .rec-step-dot {
+      flex:1; height:4px; border-radius:99px; background:#e5e7eb; transition:.3s;
+    }
+    .rec-step-dot.active { background:var(--green); }
+    .rec-step-dot.done   { background:var(--green-light); }
+
+    .rec-step { display:none; }
+    .rec-step.visible { display:block; }
+
+    .rec-step-title {
+      font-size:1.1rem; font-weight:700; color:var(--dark); margin-bottom:1.5rem;
+    }
+    .rec-step-title span { color:var(--green); }
+
+    /* Input rows */
+    .rec-row { margin-bottom:1.25rem; }
+    .rec-row label { display:block; font-size:.85rem; font-weight:600; color:var(--mid); margin-bottom:.4rem; }
+    .rec-row .rec-val { font-size:.9rem; font-weight:700; color:var(--green); float:right; }
+    .rec-row input[type=range] { width:100%; accent-color:var(--green); }
+    .rec-row select {
+      width:100%; padding:.6rem .9rem; border:1.5px solid var(--border);
+      border-radius:var(--radius-sm); font-size:.95rem; background:#fff;
+      color:var(--dark); appearance:none; cursor:pointer;
+    }
+
+    /* Choice chips */
+    .rec-chips { display:flex; flex-wrap:wrap; gap:.6rem; }
+    .rec-chip {
+      padding:.5rem 1.1rem; border:1.5px solid var(--border);
+      border-radius:99px; font-size:.85rem; font-weight:600; cursor:pointer;
+      transition:.2s; background:#fff; color:var(--mid);
+    }
+    .rec-chip:hover { border-color:var(--green); color:var(--green); }
+    .rec-chip.selected { background:var(--green); color:#fff; border-color:var(--green); }
+
+    /* Nav buttons */
+    .rec-nav { display:flex; justify-content:space-between; margin-top:2rem; gap:1rem; }
+    .rec-btn-back {
+      padding:.7rem 1.5rem; border:1.5px solid var(--border); border-radius:var(--radius-sm);
+      background:#fff; font-size:.9rem; font-weight:600; cursor:pointer; color:var(--mid);
+    }
+    .rec-btn-next {
+      padding:.7rem 1.8rem; border:none; border-radius:var(--radius-sm);
+      background:var(--green); color:#fff; font-size:.9rem; font-weight:700; cursor:pointer;
+      flex:1; transition:.2s;
+    }
+    .rec-btn-next:hover { background:var(--green-light); }
+
+    /* Result */
+    .rec-result { display:none; }
+    .rec-result.visible { display:block; }
+    .rec-profile-badge {
+      display:inline-block; padding:.4rem 1.1rem; border-radius:99px;
+      background:rgba(13,110,71,.1); color:var(--green); font-size:.85rem;
+      font-weight:700; margin-bottom:1rem;
+    }
+    .rec-result-title { font-size:1.2rem; font-weight:800; color:var(--dark); margin-bottom:.25rem; }
+    .rec-result-sub { font-size:.85rem; color:var(--muted); margin-bottom:1.5rem; }
+
+    .rec-alloc-bars { margin-bottom:1.5rem; }
+    .rec-alloc-row { margin-bottom:.6rem; }
+    .rec-alloc-label {
+      display:flex; justify-content:space-between; font-size:.82rem;
+      font-weight:600; color:var(--mid); margin-bottom:.25rem;
+    }
+    .rec-alloc-bar-bg { background:#f0f0f0; border-radius:99px; height:10px; overflow:hidden; }
+    .rec-alloc-bar    { height:10px; border-radius:99px; transition:width 1s ease; }
+
+    .rec-funds-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-bottom:1.5rem;
+    }
+    @media(max-width:540px){ .rec-funds-grid{ grid-template-columns:1fr; } }
+    .rec-fund-card {
+      border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:.9rem 1rem;
+      border-left:4px solid var(--green);
+    }
+    .rec-fund-name { font-size:.85rem; font-weight:700; color:var(--dark); margin-bottom:.2rem; }
+    .rec-fund-meta { font-size:.75rem; color:var(--muted); margin-bottom:.3rem; }
+    .rec-fund-sip   { font-size:.9rem; font-weight:800; color:var(--green); }
+    .rec-fund-alloc { font-size:.75rem; color:var(--muted); }
+
+    .rec-total-sip {
+      background:rgba(13,110,71,.07); border-radius:var(--radius-sm);
+      padding:1rem 1.25rem; display:flex; justify-content:space-between; align-items:center;
+      margin-bottom:1rem;
+    }
+    .rec-total-sip-label { font-size:.9rem; font-weight:600; color:var(--mid); }
+    .rec-total-sip-val   { font-size:1.5rem; font-weight:800; color:var(--green); }
+
+    .rec-disclaimer {
+      font-size:.73rem; color:var(--muted); line-height:1.5; margin-top:1rem;
+      padding-top:1rem; border-top:1px solid var(--border);
+    }
+    .rec-restart {
+      background:none; border:1.5px solid var(--border); border-radius:var(--radius-sm);
+      padding:.6rem 1.2rem; cursor:pointer; font-size:.85rem; font-weight:600;
+      color:var(--mid); margin-top:.75rem;
+    }
+
+    /* ── Performance table ───────────────────────────── */
+    #recPerfTable { margin:1.5rem 0 1rem; }
+    .perf-table-title { font-size:.95rem; font-weight:700; color:var(--dark); margin-bottom:.75rem; }
+    .perf-table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .perf-table { width:100%; border-collapse:collapse; font-size:.78rem; min-width:600px; }
+    .perf-table thead tr { background:var(--green); color:#fff; }
+    .perf-table th { padding:.5rem .75rem; text-align:left; font-weight:600; white-space:nowrap; }
+    .perf-table tbody tr { border-bottom:1px solid var(--border); }
+    .perf-table tbody tr:hover { background:#f7faf8; }
+    .perf-table td { padding:.5rem .75rem; vertical-align:middle; }
+    .pt-fund-name { display:flex; align-items:center; gap:.4rem; font-weight:600; color:var(--dark); }
+    .pt-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+    .pt-num { text-align:right; font-family:monospace; }
+    .pt-highlight { font-weight:700; color:var(--green); }
+    .pt-bold { font-weight:800; color:var(--dark); }
+    .risk-chip { display:inline-block; padding:.15rem .45rem; border-radius:99px; font-size:.68rem; font-weight:600; white-space:nowrap; }
+    .risk-moderate { background:#e8f5e9; color:#2d6a4f; }
+    .risk-high { background:#fff3e0; color:#c25c00; }
+    .risk-very-high { background:#fde8e8; color:#b71c1c; }
+    .risk-moderate-high { background:#fff8e1; color:#8a6000; }
+    .perf-note { font-size:.72rem; color:var(--muted); margin-top:.5rem; line-height:1.5; }
+
+    /* ── About / Founder section ─────────────────────── */
+    .founder-section { padding:5rem 0; background:#fff; }
+    .founder-grid { display:grid; grid-template-columns:280px 1fr; gap:3.5rem; align-items:center; max-width:900px; margin:0 auto; }
+    @media(max-width:720px){ .founder-grid { grid-template-columns:1fr; text-align:center; } }
+    .founder-photo-wrap { position:relative; }
+    .founder-photo {
+      width:240px; height:240px; border-radius:50%; object-fit:cover;
+      border:4px solid var(--green); box-shadow:0 8px 32px rgba(0,0,0,.12);
+    }
+    .founder-photo-placeholder {
+      width:240px; height:240px; border-radius:50%; background:var(--green);
+      display:flex; align-items:center; justify-content:center;
+      font-size:5rem; font-weight:800; color:#fff; letter-spacing:-2px;
+      border:4px solid var(--green); box-shadow:0 8px 32px rgba(0,0,0,.12);
+      margin:0 auto;
+    }
+    .founder-badge {
+      display:inline-block; background:var(--green); color:#fff;
+      font-size:.7rem; font-weight:700; padding:.3rem .8rem; border-radius:99px;
+      letter-spacing:.05em; margin-bottom:1rem; text-transform:uppercase;
+    }
+    .founder-name { font-size:2rem; font-weight:800; color:var(--dark); margin:0 0 .2rem; }
+    .founder-title { font-size:1rem; color:var(--green); font-weight:600; margin:0 0 1.2rem; }
+    .founder-bio { font-size:.92rem; color:var(--mid); line-height:1.75; margin-bottom:1.5rem; }
+    .founder-stats { display:flex; gap:2rem; flex-wrap:wrap; }
+    @media(max-width:720px){ .founder-stats { justify-content:center; } }
+    .founder-stat { text-align:center; }
+    .founder-stat-val { font-size:1.6rem; font-weight:800; color:var(--green); }
+    .founder-stat-label { font-size:.75rem; color:var(--muted); margin-top:.1rem; }
+    .founder-links { margin-top:1.5rem; display:flex; gap:.75rem; flex-wrap:wrap; }
+    @media(max-width:720px){ .founder-links { justify-content:center; } }
+    .founder-link {
+      display:inline-flex; align-items:center; gap:.4rem; padding:.5rem 1rem;
+      border:1.5px solid var(--border); border-radius:var(--radius-sm);
+      font-size:.82rem; font-weight:600; color:var(--mid); text-decoration:none;
+      transition:border-color .2s, color .2s;
+    }
+    .founder-link:hover { border-color:var(--green); color:var(--green); }
+
+  </style>
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns%3D'http%3A//www.w3.org/2000/svg' viewBox%3D'0 0 100 100'%3E%3Ctext y%3D'.9em' font-size%3D'90'%3E%F0%9F%93%88%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="favicon.svg"></head>
+<body>
+
+<!-- ============================================================
+     NAV
+============================================================ -->
+<nav>
+  <div class="container nav-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">📈</div>
+      Maverick Investor
+    </a>
+    <ul class="nav-links">
+      <li><a href="#tools">Tools & Goals</a></li>
+      <li><a href="#indices">Markets</a></li>
+      <li><a href="#tracker">Fund Tracker</a></li>
+      <li><a href="#app">Mobile App</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-secondary" style="display:none;">Login</a>
+      <a href="#recommender" class="btn btn-primary">Get Started Free</a>
+    </div>
+    <div class="hamburger">☰</div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     LIVE TICKER BAR
+============================================================ -->
+<div class="ticker-bar">
+  <div class="ticker-track" id="tickerTrack">
+    <!-- duplicated for seamless loop -->
+  </div>
+</div>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section class="hero" id="hero">
+  <!-- Floating orbs & shapes -->
+  <div class="hero-orb orb-1"></div>
+  <div class="hero-orb orb-2"></div>
+  <div class="hero-orb orb-3"></div>
+  <div class="hero-shape shape-1"></div>
+  <div class="hero-shape shape-2"></div>
+  <div class="hero-shape shape-3"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <div class="hero-label">🇮🇳 Built for Indian Investors</div>
+        <h1>Invest Smart.<br>Retire <span>Fearless</span>.</h1>
+        <p>Expert guidance on mutual funds, insurance, and retirement planning — tailored for the Indian market. Track live NAVs, calculate your future corpus, and make every rupee count.</p>
+        <div class="hero-btns">
+          <a href="#tools" class="btn btn-primary">⬇ Download Free Tools</a>
+          <a href="#tracker" class="btn btn-secondary">Live Fund Tracker →</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-pill">
+            <div class="val">2,000+</div>
+            <div class="lbl">Funds Tracked</div>
+          </div>
+          <div class="stat-pill">
+            <div class="val">SEBI</div>
+            <div class="lbl">Compliant Info</div>
+          </div>
+          <div class="stat-pill">
+            <div class="val">Free</div>
+            <div class="lbl">All Calculators</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard card + Calculators side by side -->
+      <div class="hero-visual">
+        <div class="hero-cards-layout">
+
+          <!-- Left: Portfolio card -->
+          <div style="position:relative;">
+            <div class="dashboard-card">
+              <div class="dc-header">
+                <div>
+                  <div class="dc-title">Balanced Growth Portfolio</div>
+                  <div style="font-size:.63rem; color:rgba(255,255,255,.45); margin-top:2px; letter-spacing:.03em;">₹1L SIP/month · Jan 2021 – Jun 2026 (5.5 yrs)</div>
+                </div>
+                <div class="dc-badge">● LIVE</div>
+              </div>
+              <!-- Allocation bar -->
+              <div class="alloc-bar-wrap" title="Asset Allocation">
+                <div class="alloc-seg" style="width:60%;background:rgba(74,222,128,.65);">Equity&nbsp;60%</div>
+                <div class="alloc-seg" style="width:25%;background:rgba(96,165,250,.65);">Debt&nbsp;25%</div>
+                <div class="alloc-seg" style="width:10%;background:rgba(251,146,60,.75);">🌍10%</div>
+                <div class="alloc-seg" style="width:5%;background:rgba(250,204,21,.75);" title="Gold 5%">Au</div>
+              </div>
+              <div class="dc-amount">₹1,00,36,000</div>
+              <div class="dc-change">▲ +₹34,36,000 (+52.1%) since Jan '21</div>
+              <!-- Stats row -->
+              <div class="dc-stats-row">
+                <div class="dc-stat"><div class="ds-val">₹66L</div><div class="ds-lbl">Invested</div></div>
+                <div class="dc-stat"><div class="ds-val">13.6%</div><div class="ds-lbl">XIRR</div></div>
+                <div class="dc-stat"><div class="ds-val">₹34.4L</div><div class="ds-lbl">Gain</div></div>
+                <div class="dc-stat"><div class="ds-val">5.5 Yrs</div><div class="ds-lbl">Duration</div></div>
+              </div>
+              <div class="dc-chart" id="heroChart"></div>
+              <div class="dc-funds">
+                <div class="dc-fund"><span class="fname">SBI Small Cap Fund</span><span class="fval fup">▲ 22% CAGR</span></div>
+                <div class="dc-fund"><span class="fname">Axis Midcap Fund</span><span class="fval fup">▲ 20% CAGR</span></div>
+                <div class="dc-fund"><span class="fname">Nippon Gold ETF FoF</span><span class="fval fup">▲ 15% CAGR</span></div>
+                <div class="dc-fund"><span class="fname">HDFC Short Term Debt</span><span class="fval fup">▲ 7.2% CAGR</span></div>
+              </div>
+            </div>
+            <div class="float-badge one"><span class="fb-icon">🏦</span> SIP ₹1L/month · Jan '21</div>
+            <div class="float-badge two"><span class="fb-icon">🎯</span> ₹66L → ₹1.0 Cr ✓</div>
+          </div>
+
+          <!-- Right: Calculators stacked vertically -->
+          <div class="hero-calc-stack">
+
+            <!-- SIP Calculator -->
+            <div class="hero-sip-calc">
+              <div class="hsc-title">⚡ SIP Calculator</div>
+              <div class="hsc-row">
+                <label>Monthly SIP</label>
+                <input type="range" min="500" max="100000" step="500" value="10000" id="heroSipAmt" oninput="updateHeroSIP()">
+                <span id="heroSipAmtLbl">₹10,000</span>
+              </div>
+              <div class="hsc-row">
+                <label>Duration</label>
+                <input type="range" min="1" max="30" step="1" value="10" id="heroSipYrs" oninput="updateHeroSIP()">
+                <span id="heroSipYrsLbl">10 yrs</span>
+              </div>
+              <div class="hsc-row">
+                <label>Return</label>
+                <input type="range" min="6" max="20" step="0.5" value="12" id="heroSipRet" oninput="updateHeroSIP()">
+                <span id="heroSipRetLbl">12%</span>
+              </div>
+              <div class="hsc-result">
+                <div class="hsc-corpus" id="heroSipCorpus">₹23.2 L</div>
+                <div class="hsc-sub" id="heroSipSub">Invested ₹12L · Gain ₹11.2L</div>
+              </div>
+            </div>
+
+            <!-- Retirement Corpus Calculator -->
+            <div class="hero-sip-calc">
+              <div class="hsc-title">🏖️ Retirement Corpus</div>
+              <div class="hsc-row">
+                <label>Age now</label>
+                <input type="range" min="20" max="55" step="1" value="30" id="heroRetAge" oninput="updateHeroRetirement()">
+                <span id="heroRetAgeLbl">30 yrs</span>
+              </div>
+              <div class="hsc-row">
+                <label>Retire at</label>
+                <input type="range" min="45" max="70" step="1" value="60" id="heroRetRetire" oninput="updateHeroRetirement()">
+                <span id="heroRetRetireLbl">60 yrs</span>
+              </div>
+              <div class="hsc-row">
+                <label>Mthly exp.</label>
+                <input type="range" min="10000" max="200000" step="5000" value="50000" id="heroRetExp" oninput="updateHeroRetirement()">
+                <span id="heroRetExpLbl">₹50K</span>
+              </div>
+              <div class="hsc-result">
+                <div class="hsc-corpus" id="heroRetCorpus">—</div>
+                <div class="hsc-sub" id="heroRetSub">SIP/mo needed</div>
+              </div>
+            </div>
+
+          </div><!-- /.hero-calc-stack -->
+        </div><!-- /.hero-cards-layout -->
+      </div><!-- /.hero-visual -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DOWNLOADABLE TOOLS
+============================================================ -->
+<section class="tools-section" id="tools">
+  <div class="container">
+    <div class="center">
+      <div class="section-label">Free Downloads</div>
+      <h2 class="section-title">Tools Built for Your Financial Journey</h2>
+      <p class="section-sub">Downloadable planners, calculators, and questionnaires — designed for Indian investors, usable offline.</p>
+    </div>
+    <div class="tools-grid">
+
+      <div class="tool-card">
+        <span class="tool-tag tag-free">FREE</span>
+        <div class="tool-icon">🏖️</div>
+        <h3>Retirement Corpus Planner</h3>
+        <p>Calculate how much you need to retire comfortably in India. Accounts for inflation, EPF, PPF, NPS, and SWP strategy.</p>
+        <a href="Retirement_Planner_Maverick.xlsx" download class="tool-dl-btn">⬇ Download Excel Planner</a>
+      </div>
+
+      <div class="tool-card orange">
+        <span class="tool-tag tag-free">FREE</span>
+        <div class="tool-icon" style="background:rgba(244,124,32,.1)">🛡️</div>
+        <h3>Insurance Need Calculator</h3>
+        <p>Find your ideal term life cover, health insurance sum assured, and critical illness cover — based on your income, liabilities & family size.</p>
+        <a href="Insurance_Calculator_Maverick.xlsx" download class="tool-dl-btn">⬇ Download Excel Calculator</a>
+      </div>
+
+      <div class="tool-card">
+        <span class="tool-tag tag-free">FREE</span>
+        <div class="tool-icon">📊</div>
+        <h3>Risk Tolerance Questionnaire</h3>
+        <p>A 10-question assessment that maps you to one of 5 investor profiles — conservative to aggressive — with recommended asset allocation.</p>
+        <a href="Risk_Questionnaire_Maverick.pdf" download class="tool-dl-btn">⬇ Download PDF</a>
+      </div>
+
+      <div class="tool-card orange">
+        <span class="tool-tag tag-free">FREE</span>
+        <div class="tool-icon" style="background:rgba(244,124,32,.1)">💰</div>
+        <h3>SIP Goal Tracker Sheet</h3>
+        <p>Track multiple SIPs, visualize your goal progress, simulate step-up SIPs, and project your XIRR — all in one spreadsheet.</p>
+        <a href="SIP_Tracker_Maverick.xlsx" download class="tool-dl-btn">⬇ Download Excel Sheet</a>
+      </div>
+
+    </div>
+
+    <!-- ── Goal Calculators ─────────────────────────────── -->
+    <div class="goals-banner">
+      <div class="gb-icon">🎯</div>
+      <div class="gb-text">
+        <h3>Goal Calculators</h3>
+        <p>Inflation-adjusted SIP planner for every life milestone — education, marriage, car, home, travel</p>
+      </div>
+      <a href="Goals_Planner_Maverick.xlsx" download class="gb-dl-link">⬇ Download Full Goals Planner</a>
+    </div>
+
+    <div class="goal-tiles-grid">
+
+      <!-- Education -->
+      <div class="goal-tile">
+        <div class="gt-header"><span class="gt-icon">🎓</span><span class="gt-name">Education</span></div>
+        <div class="gt-inp-row">
+          <label>Cost today (₹)</label>
+          <input type="number" class="gt-number" id="g2-eduCost" value="2500000" oninput="calcGoal('edu')">
+        </div>
+        <div class="gt-inp-row">
+          <label>Years away · <span class="gt-yrs-val" id="g2-eduYrsVal">10 yrs</span></label>
+          <input type="range" class="gt-slider" min="1" max="25" value="10" id="g2-eduYrs" oninput="calcGoal('edu')">
+        </div>
+        <div class="gt-result">
+          <div class="gt-result-row"><span>Future cost (8% inf.)</span><strong id="g2-eduFuture">—</strong></div>
+          <div class="gt-result-row"><span>Monthly SIP @12%</span><strong class="gt-sip" id="g2-eduSIP">—</strong></div>
+        </div>
+      </div>
+
+      <!-- Marriage -->
+      <div class="goal-tile">
+        <div class="gt-header"><span class="gt-icon">💍</span><span class="gt-name">Marriage</span></div>
+        <div class="gt-inp-row">
+          <label>Budget today (₹)</label>
+          <input type="number" class="gt-number" id="g2-weddCost" value="2000000" oninput="calcGoal('wedd')">
+        </div>
+        <div class="gt-inp-row">
+          <label>Years away · <span class="gt-yrs-val" id="g2-weddYrsVal">7 yrs</span></label>
+          <input type="range" class="gt-slider" min="1" max="20" value="7" id="g2-weddYrs" oninput="calcGoal('wedd')">
+        </div>
+        <div class="gt-result">
+          <div class="gt-result-row"><span>Future cost (7% inf.)</span><strong id="g2-weddFuture">—</strong></div>
+          <div class="gt-result-row"><span>Monthly SIP @12%</span><strong class="gt-sip" id="g2-weddSIP">—</strong></div>
+        </div>
+      </div>
+
+      <!-- Car -->
+      <div class="goal-tile">
+        <div class="gt-header"><span class="gt-icon">🚗</span><span class="gt-name">Car</span></div>
+        <div class="gt-inp-row">
+          <label>Car price today (₹)</label>
+          <input type="number" class="gt-number" id="g2-carCost" value="1200000" oninput="calcGoal('car')">
+        </div>
+        <div class="gt-inp-row">
+          <label>Years away · <span class="gt-yrs-val" id="g2-carYrsVal">3 yrs</span></label>
+          <input type="range" class="gt-slider" min="1" max="10" value="3" id="g2-carYrs" oninput="calcGoal('car')">
+        </div>
+        <div class="gt-result">
+          <div class="gt-result-row"><span>Future cost (5% inf.)</span><strong id="g2-carFuture">—</strong></div>
+          <div class="gt-result-row"><span>Monthly SIP @12%</span><strong class="gt-sip" id="g2-carSIP">—</strong></div>
+        </div>
+      </div>
+
+      <!-- Home -->
+      <div class="goal-tile">
+        <div class="gt-header"><span class="gt-icon">🏡</span><span class="gt-name">Home</span></div>
+        <div class="gt-inp-row">
+          <label>Down payment (₹)</label>
+          <input type="number" class="gt-number" id="g2-homeCost" value="3000000" oninput="calcGoal('home')">
+        </div>
+        <div class="gt-inp-row">
+          <label>Years away · <span class="gt-yrs-val" id="g2-homeYrsVal">6 yrs</span></label>
+          <input type="range" class="gt-slider" min="1" max="15" value="6" id="g2-homeYrs" oninput="calcGoal('home')">
+        </div>
+        <div class="gt-result">
+          <div class="gt-result-row"><span>Future cost (8% inf.)</span><strong id="g2-homeFuture">—</strong></div>
+          <div class="gt-result-row"><span>Monthly SIP @12%</span><strong class="gt-sip" id="g2-homeSIP">—</strong></div>
+        </div>
+      </div>
+
+      <!-- Foreign Trip -->
+      <div class="goal-tile">
+        <div class="gt-header"><span class="gt-icon">✈️</span><span class="gt-name">Foreign Trip</span></div>
+        <div class="gt-inp-row">
+          <label>Trip budget today (₹)</label>
+          <input type="number" class="gt-number" id="g2-tripCost" value="400000" oninput="calcGoal('trip')">
+        </div>
+        <div class="gt-inp-row">
+          <label>Years away · <span class="gt-yrs-val" id="g2-tripYrsVal">2 yrs</span></label>
+          <input type="range" class="gt-slider" min="1" max="10" value="2" id="g2-tripYrs" oninput="calcGoal('trip')">
+        </div>
+        <div class="gt-result">
+          <div class="gt-result-row"><span>Future cost (5% inf.)</span><strong id="g2-tripFuture">—</strong></div>
+          <div class="gt-result-row"><span>Monthly SIP @12%</span><strong class="gt-sip" id="g2-tripSIP">—</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     PORTFOLIO RECOMMENDER SECTION
+============================================================ -->
+<section class="recommender-section" id="recommender">
+  <div class="container">
+    <div class="rec-header">
+      <div class="section-label">Personalised For You</div>
+      <h2>Build Your Mutual Fund Portfolio</h2>
+      <p>Answer 4 quick questions — get a portfolio tailored to your age, income, risk appetite, and goals.</p>
+    </div>
+
+    <div class="rec-card" id="recWizard">
+      <!-- Step progress dots -->
+      <div class="rec-steps">
+        <div class="rec-step-dot active" id="rdot0"></div>
+        <div class="rec-step-dot" id="rdot1"></div>
+        <div class="rec-step-dot" id="rdot2"></div>
+        <div class="rec-step-dot" id="rdot3"></div>
+      </div>
+
+      <!-- Step 1: Age & Income -->
+      <div class="rec-step visible" id="rstep0">
+        <div class="rec-step-title">Step 1 of 4 — <span>Tell us about yourself</span></div>
+        <div class="rec-row">
+          <label>Your age &nbsp;<span class="rec-val" id="rAgeVal">30 yrs</span></label>
+          <input type="range" min="18" max="65" value="30" id="rAge" oninput="document.getElementById('rAgeVal').textContent=this.value+' yrs'">
+        </div>
+        <div class="rec-row">
+          <label>Monthly income (take-home)</label>
+          <select id="rIncome">
+            <option value="30000">Up to ₹30,000</option>
+            <option value="60000" selected>₹30,000 – ₹60,000</option>
+            <option value="100000">₹60,000 – ₹1 Lakh</option>
+            <option value="200000">₹1 Lakh – ₹2 Lakh</option>
+            <option value="500000">₹2 Lakh+</option>
+          </select>
+        </div>
+        <div class="rec-nav">
+          <div></div>
+          <button class="rec-btn-next" onclick="recNext(0)">Next →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Risk Profile -->
+      <div class="rec-step" id="rstep1">
+        <div class="rec-step-title">Step 2 of 4 — <span>Your risk appetite</span></div>
+        <p style="font-size:.88rem;color:var(--muted);margin-bottom:1rem;">How would you react if your portfolio dropped 20% in one year?</p>
+        <div class="rec-chips" id="rRiskChips">
+          <div class="rec-chip" onclick="selectChip('rRiskChips',this,'conservative')">🛡️ Conservative — I'd lose sleep</div>
+          <div class="rec-chip selected" onclick="selectChip('rRiskChips',this,'moderate')">⚖️ Moderate — I'd hold on</div>
+          <div class="rec-chip" onclick="selectChip('rRiskChips',this,'aggressive')">🚀 Aggressive — I'd buy more</div>
+        </div>
+        <div class="rec-nav">
+          <button class="rec-btn-back" onclick="recBack(1)">← Back</button>
+          <button class="rec-btn-next" onclick="recNext(1)">Next →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Goals -->
+      <div class="rec-step" id="rstep2">
+        <div class="rec-step-title">Step 3 of 4 — <span>Your financial goals</span></div>
+        <p style="font-size:.88rem;color:var(--muted);margin-bottom:1rem;">Select all that apply.</p>
+        <div class="rec-chips" id="rGoalChips" style="gap:.6rem">
+          <div class="rec-chip selected" onclick="toggleChip(this,'retirement')">🏖️ Retirement</div>
+          <div class="rec-chip" onclick="toggleChip(this,'wealth')">📈 Wealth Creation</div>
+          <div class="rec-chip" onclick="toggleChip(this,'taxsaving')">💰 Tax Saving (80C)</div>
+          <div class="rec-chip" onclick="toggleChip(this,'education')">🎓 Child's Education</div>
+          <div class="rec-chip" onclick="toggleChip(this,'home')">🏡 Home Down Payment</div>
+        </div>
+        <div class="rec-nav">
+          <button class="rec-btn-back" onclick="recBack(2)">← Back</button>
+          <button class="rec-btn-next" onclick="recNext(2)">Next →</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Monthly SIP budget -->
+      <div class="rec-step" id="rstep3">
+        <div class="rec-step-title">Step 4 of 4 — <span>Monthly SIP budget</span></div>
+        <div class="rec-row">
+          <label>How much can you invest per month? &nbsp;<span class="rec-val" id="rSipVal">₹10,000</span></label>
+          <input type="range" min="1000" max="100000" step="500" value="10000" id="rSip"
+            oninput="document.getElementById('rSipVal').textContent='₹'+Number(this.value).toLocaleString('en-IN')">
+        </div>
+        <p style="font-size:.82rem;color:var(--muted);margin-top:.5rem;">We recommend investing 20–30% of take-home income. A consistent SIP beats timing the market every time.</p>
+        <div class="rec-nav">
+          <button class="rec-btn-back" onclick="recBack(3)">← Back</button>
+          <button class="rec-btn-next" onclick="recSubmit()">Build My Portfolio →</button>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div class="rec-result" id="recResult">
+        <div class="rec-profile-badge" id="recProfileBadge"></div>
+        <div class="rec-result-title" id="recResultTitle"></div>
+        <div class="rec-result-sub" id="recResultSub"></div>
+
+        <div class="rec-alloc-bars" id="recAllocBars"></div>
+
+        <div class="rec-total-sip">
+          <div class="rec-total-sip-label">Recommended Monthly SIP</div>
+          <div class="rec-total-sip-val" id="recTotalSip"></div>
+        </div>
+
+        <div class="rec-funds-grid" id="recFundsGrid"></div>
+
+        <div id="recPerfTable"></div>
+
+        <p style="font-size:.82rem;color:var(--mid);margin-top:.25rem;">
+          <strong>Tax saving note:</strong> <span id="recTaxNote"></span>
+        </p>
+
+        <div class="rec-disclaimer">
+          ⚠️ This is a general educational recommendation, not personalised investment advice. Mutual fund investments are subject to market risks. Please read all scheme-related documents carefully before investing. Consult a SEBI-registered investment advisor for personalised guidance.
+        </div>
+
+        <button class="rec-restart" onclick="recRestart()">↩ Start Over</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LIVE INDICES SECTION
+============================================================ -->
+<section class="indices-section" id="indices">
+  <div class="container">
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:2rem;">
+      <div>
+        <div class="section-label">Live Markets</div>
+        <h2 class="section-title" style="margin-bottom:.25rem;">Index Fund Daily Performance</h2>
+        <p style="font-size:.78rem;color:rgba(255,255,255,.45);margin:.25rem 0 .5rem;letter-spacing:.02em;">% change tracked via AMFI index funds — mirrors actual index movement</p>
+        <p class="section-sub" style="max-width:none;">
+          <span class="live-dot"></span>
+          <span id="indexStatusText">Loading live index data…</span>
+        </p>
+      </div>
+      <div id="marketStatus" class="market-status-badge">
+        <span id="marketStatusDot" class="live-dot"></span>
+        <span id="marketStatusLabel">Loading…</span>
+      </div>
+    </div>
+
+    <div class="indices-grid" id="indicesGrid">
+      <!-- 6 skeleton cards while loading -->
+      <div class="index-card loading-card"><div class="ic-skeleton"></div></div>
+      <div class="index-card loading-card"><div class="ic-skeleton"></div></div>
+      <div class="index-card loading-card"><div class="ic-skeleton"></div></div>
+      <div class="index-card loading-card"><div class="ic-skeleton"></div></div>
+      <div class="index-card loading-card"><div class="ic-skeleton"></div></div>
+      <div class="index-card loading-card"><div class="ic-skeleton"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LIVE FUND TRACKER
+============================================================ -->
+<section class="tracker-section" id="tracker">
+  <div class="container">
+    <div class="section-label">Live Tracker</div>
+    <h2 class="section-title">Top Mutual Fund NAVs</h2>
+    <p class="section-sub">
+      <span class="live-dot"></span>
+      <span id="navStatusText">Fetching live NAVs from AMFI via mfapi.in…</span>
+    </p>
+
+    <div class="tracker-controls">
+      <button class="tab-btn active" onclick="filterFunds('all', this)">All Categories</button>
+      <button class="tab-btn" onclick="filterFunds('equity', this)">Equity</button>
+      <button class="tab-btn" onclick="filterFunds('index', this)">Index</button>
+      <button class="tab-btn" onclick="filterFunds('global', this)">Global &amp; Gold</button>
+    </div>
+
+    <div class="fund-cat-grid" id="fundCatGrid"></div>
+  </div>
+</section>
+
+<!-- Goals section removed — calculators now live in the Tools section above -->
+<section style="display:none" id="goals">
+  <div class="container">
+    <div class="goals-grid">
+
+      <div class="goal-card-main" data-goal="education">
+        <div class="goal-icon-wrap" style="background:rgba(13,110,71,.1)">🎓</div>
+        <h3>Education</h3>
+        <p>School fees, engineering, MBA, foreign university — plan the full education journey.</p>
+        <div class="goal-calc-inline">
+          <div class="gci-row">
+            <label>Current cost of education (₹)</label>
+            <input type="number" class="gci-inp" id="eduCost" value="2500000" oninput="calcGoal('edu')">
+          </div>
+          <div class="gci-row">
+            <label>Years until needed</label>
+            <input type="range" min="1" max="25" value="10" id="eduYrs" oninput="calcGoal('edu')">
+            <div class="gci-val" id="eduYrsVal">10 years</div>
+          </div>
+          <div class="goal-result">
+            <div class="gr-row"><span>Inflation-adjusted cost</span><strong id="eduFuture">₹44.7L</strong></div>
+            <div class="gr-row"><span>Monthly SIP needed</span><strong id="eduSIP" class="sip-highlight">₹12,440</strong></div>
+          </div>
+        </div>
+        <a href="Goals_Planner_Maverick.xlsx" download class="tool-dl-btn" style="margin-top:1rem;">⬇ Full Education Planner</a>
+      </div>
+
+      <div class="goal-card-main" data-goal="marriage">
+        <div class="goal-icon-wrap" style="background:rgba(244,124,32,.1)">💍</div>
+        <h3>Marriage</h3>
+        <p>Wedding ceremony, jewellery, honeymoon — plan all components of a big Indian wedding.</p>
+        <div class="goal-calc-inline">
+          <div class="gci-row">
+            <label>Estimated wedding budget today (₹)</label>
+            <input type="number" class="gci-inp" id="weddCost" value="2000000" oninput="calcGoal('wedd')">
+          </div>
+          <div class="gci-row">
+            <label>Years until wedding</label>
+            <input type="range" min="1" max="20" value="7" id="weddYrs" oninput="calcGoal('wedd')">
+            <div class="gci-val" id="weddYrsVal">7 years</div>
+          </div>
+          <div class="goal-result">
+            <div class="gr-row"><span>Future cost (7% inflation)</span><strong id="weddFuture">₹32.2L</strong></div>
+            <div class="gr-row"><span>Monthly SIP needed</span><strong id="weddSIP" class="sip-highlight">₹24,300</strong></div>
+          </div>
+        </div>
+        <a href="Goals_Planner_Maverick.xlsx" download class="tool-dl-btn" style="margin-top:1rem; color:var(--orange); border-color:var(--orange);">⬇ Full Marriage Planner</a>
+      </div>
+
+      <div class="goal-card-main" data-goal="car">
+        <div class="goal-icon-wrap" style="background:rgba(13,110,71,.1)">🚗</div>
+        <h3>Car</h3>
+        <p>Next car, upgrade, or electric vehicle — plan your auto purchase without a loan.</p>
+        <div class="goal-calc-inline">
+          <div class="gci-row">
+            <label>Car price today (₹)</label>
+            <input type="number" class="gci-inp" id="carCost" value="1200000" oninput="calcGoal('car')">
+          </div>
+          <div class="gci-row">
+            <label>Years until purchase</label>
+            <input type="range" min="1" max="10" value="3" id="carYrs" oninput="calcGoal('car')">
+            <div class="gci-val" id="carYrsVal">3 years</div>
+          </div>
+          <div class="goal-result">
+            <div class="gr-row"><span>Future cost (5% inflation)</span><strong id="carFuture">₹13.9L</strong></div>
+            <div class="gr-row"><span>Monthly SIP needed</span><strong id="carSIP" class="sip-highlight">₹29,700</strong></div>
+          </div>
+        </div>
+        <a href="Goals_Planner_Maverick.xlsx" download class="tool-dl-btn" style="margin-top:1rem;">⬇ Full Car Planner</a>
+      </div>
+
+      <div class="goal-card-main" data-goal="home">
+        <div class="goal-icon-wrap" style="background:rgba(244,124,32,.1)">🏡</div>
+        <h3>Home</h3>
+        <p>Down payment, renovation, or second property — plan your real estate milestone.</p>
+        <div class="goal-calc-inline">
+          <div class="gci-row">
+            <label>Target down payment / amount (₹)</label>
+            <input type="number" class="gci-inp" id="homeCost" value="3000000" oninput="calcGoal('home')">
+          </div>
+          <div class="gci-row">
+            <label>Years until purchase</label>
+            <input type="range" min="1" max="15" value="6" id="homeYrs" oninput="calcGoal('home')">
+            <div class="gci-val" id="homeYrsVal">6 years</div>
+          </div>
+          <div class="goal-result">
+            <div class="gr-row"><span>Future cost (8% inflation)</span><strong id="homeFuture">₹47.6L</strong></div>
+            <div class="gr-row"><span>Monthly SIP needed</span><strong id="homeSIP" class="sip-highlight">₹38,200</strong></div>
+          </div>
+        </div>
+        <a href="Goals_Planner_Maverick.xlsx" download class="tool-dl-btn" style="margin-top:1rem; color:var(--orange); border-color:var(--orange);">⬇ Full Home Planner</a>
+      </div>
+
+      <div class="goal-card-main" data-goal="travel">
+        <div class="goal-icon-wrap" style="background:rgba(13,110,71,.1)">✈️</div>
+        <h3>Foreign Trips</h3>
+        <p>Europe, USA, South-East Asia, World Tour — plan and fund your travel dreams.</p>
+        <div class="goal-calc-inline">
+          <div class="gci-row">
+            <label>Trip budget today (₹)</label>
+            <input type="number" class="gci-inp" id="tripCost" value="400000" oninput="calcGoal('trip')">
+          </div>
+          <div class="gci-row">
+            <label>Years until trip</label>
+            <input type="range" min="1" max="10" value="2" id="tripYrs" oninput="calcGoal('trip')">
+            <div class="gci-val" id="tripYrsVal">2 years</div>
+          </div>
+          <div class="goal-result">
+            <div class="gr-row"><span>Future cost (5% inflation)</span><strong id="tripFuture">₹4.4L</strong></div>
+            <div class="gr-row"><span>Monthly SIP needed</span><strong id="tripSIP" class="sip-highlight">₹16,900</strong></div>
+          </div>
+        </div>
+        <a href="Goals_Planner_Maverick.xlsx" download class="tool-dl-btn" style="margin-top:1rem;">⬇ Full Travel Planner</a>
+      </div>
+
+      <!-- Summary card -->
+      <div class="goal-card-main goal-summary-card">
+        <div class="goal-icon-wrap" style="background:rgba(13,110,71,.1)">📋</div>
+        <h3>All Goals Combined</h3>
+        <p>Download the complete Goals Planner Excel — covers 20+ life goals across 6 categories with inflation-adjusted SIP calculations.</p>
+        <div class="goal-summary-list">
+          <div class="gsl-item"><span>🎓</span>Education (4 sub-goals)</div>
+          <div class="gsl-item"><span>💍</span>Marriage (3 sub-goals)</div>
+          <div class="gsl-item"><span>🚗</span>Car (3 variants)</div>
+          <div class="gsl-item"><span>🏡</span>Home (3 goals)</div>
+          <div class="gsl-item"><span>✈️</span>Foreign Trips (4 destinations)</div>
+          <div class="gsl-item"><span>🎯</span>Emergency Fund + Retirement</div>
+        </div>
+        <div style="margin-top:auto; padding-top:1.25rem; display:flex; flex-direction:column; gap:.75rem;">
+          <a href="Goals_Planner_Maverick.xlsx" download class="btn btn-green" style="justify-content:center;">⬇ Download Goals Planner (Excel)</a>
+          <a href="Retirement_Planner_Maverick.xlsx" download class="btn btn-outline" style="justify-content:center;">⬇ Retirement Corpus Planner</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Calculators now live in the hero section above -->
+
+<!-- ============================================================
+     WHY US
+============================================================ -->
+<section class="why-section" id="about">
+  <div class="container">
+    <div class="center">
+      <div class="section-label">Why Maverick Investor</div>
+      <h2 class="section-title">Advice Without the Conflict of Interest</h2>
+      <p class="section-sub">We don't earn commissions. We don't sell products. We just help you make better decisions.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🏛️</div>
+        <h3>SEBI-Compliant Information</h3>
+        <p>All content follows SEBI's investor education guidelines. We clearly distinguish between education and personalised advice.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🇮🇳</div>
+        <h3>India-First Context</h3>
+        <p>Built around Indian tax laws (LTCG, STCG, 80C), AMFI fund data, RBI policies, and the Indian inflation reality.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🔒</div>
+        <h3>No Product Bias</h3>
+        <p>We don't earn trail commissions or referral fees. Our guidance is research-led, not commission-driven.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">📡</div>
+        <h3>Live AMFI Data</h3>
+        <p>Fund NAVs pulled directly from AMFI's daily data feed — no stale numbers, no third-party delays.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">📱</div>
+        <h3>Android App Coming</h3>
+        <p>Track your portfolio, get NAV alerts, and run calculations on the go — our Android app is in development.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🎓</div>
+        <h3>Education First</h3>
+        <p>Every tool comes with plain-language explanations — because the best investment decision is an informed one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FOUNDER / ABOUT
+============================================================ -->
+<section class="founder-section" id="founder">
+  <div class="container">
+    <div class="center" style="margin-bottom:3rem;">
+      <div class="section-label">Behind Maverick Investor</div>
+      <h2 class="section-title">Built by an Investor, for Investors</h2>
+      <p class="section-sub">Real skin in the game — not theory from a textbook.</p>
+    </div>
+    <div class="founder-grid">
+      <div class="founder-photo-wrap">
+        <img src="jilesh.jpg" alt="Jilesh Kadi" class="founder-photo"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="founder-photo-placeholder" style="display:none;">JK</div>
+      </div>
+      <div>
+        <div class="founder-badge">Founder &amp; Editor</div>
+        <h3 class="founder-name">Jilesh Kadi</h3>
+        <p class="founder-title">Independent Investor · Financial Educator</p>
+        <p class="founder-bio">
+          I started Maverick Investor because I couldn't find a single Indian personal finance resource that was honest, India-specific, and free from product conflicts. No commissions, no referral fees — just clear thinking on mutual funds, insurance, and retirement planning.
+        </p>
+        <p class="founder-bio">
+          I've been investing in Indian equity markets for over five years, tracking my own XIRR religiously and learning from every cycle. Maverick Investor is my attempt to share that lens: evidence-led, India-first, and built around how regular Indian families actually earn, save, and invest.
+        </p>
+        <div class="founder-stats">
+          <div class="founder-stat">
+            <div class="founder-stat-val">₹66L+</div>
+            <div class="founder-stat-label">Personal Portfolio</div>
+          </div>
+          <div class="founder-stat">
+            <div class="founder-stat-val">13.6%</div>
+            <div class="founder-stat-label">XIRR over 5+ years</div>
+          </div>
+          <div class="founder-stat">
+            <div class="founder-stat-val">30+</div>
+            <div class="founder-stat-label">Funds Tracked Live</div>
+          </div>
+        </div>
+        <div class="founder-links">
+          <a href="mailto:jileshkadi@gmail.com" class="founder-link">✉️ Get in Touch</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MOBILE APP
+============================================================ -->
+<section class="app-section" id="app">
+  <div class="container">
+    <div class="app-grid">
+      <div>
+        <div class="section-label">📱 Android App</div>
+        <h2 class="section-title">Maverick Investor<br>in Your Pocket</h2>
+        <p class="section-sub">Everything from the website — live NAVs, calculators, risk quiz, and retirement planner — optimised for mobile.</p>
+
+        <div class="app-features">
+          <div class="app-feat">
+            <div class="af-icon">📡</div>
+            <div class="af-text">
+              <h4>Live NAV Alerts</h4>
+              <p>Get push notifications when your watched funds hit target NAVs or gain/drop beyond thresholds.</p>
+            </div>
+          </div>
+          <div class="app-feat">
+            <div class="af-icon">🎯</div>
+            <div class="af-text">
+              <h4>Goal Tracker</h4>
+              <p>Set financial goals — house, car, child's education, retirement — and track progress in real time.</p>
+            </div>
+          </div>
+          <div class="app-feat">
+            <div class="af-icon">🧮</div>
+            <div class="af-text">
+              <h4>All Calculators Offline</h4>
+              <p>SIP, lump sum, retirement, insurance, and step-up SIP calculators — no internet needed.</p>
+            </div>
+          </div>
+          <div class="app-feat">
+            <div class="af-icon">📊</div>
+            <div class="af-text">
+              <h4>Portfolio Snapshot</h4>
+              <p>Add your existing mutual fund holdings and see XIRR, asset allocation, and goal mapping.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-store-btns">
+          <a href="#" class="store-btn">
+            <div class="sb-icon">🤖</div>
+            <div class="sb-text">
+              <span class="sb-sup">GET IT ON</span>
+              <span class="sb-main">Google Play</span>
+            </div>
+          </a>
+          <div class="store-btn soon">
+            <div class="sb-icon">🍎</div>
+            <div class="sb-text">
+              <span class="sb-sup">COMING SOON</span>
+              <span class="sb-main">App Store</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone mockup -->
+      <div class="phone-mockup">
+        <div style="position:relative; display:inline-block;">
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="app-header-bar">
+                <div class="app-greeting">Good morning,</div>
+                <div class="app-name">Jilesh 👋</div>
+                <div class="app-portfolio-val">₹1,00,36,000</div>
+                <div class="app-portfolio-chg">▲ +52.1% since Jan '21</div>
+              </div>
+              <div class="app-screen-body">
+                <div class="app-quick-btns">
+                  <div class="aqb"><div class="aqb-icon">📈</div>Fund Tracker</div>
+                  <div class="aqb"><div class="aqb-icon">🧮</div>SIP Calc</div>
+                  <div class="aqb"><div class="aqb-icon">🎯</div>Goals</div>
+                  <div class="aqb"><div class="aqb-icon">🛡️</div>Insurance</div>
+                </div>
+                <div class="app-section-title">Top Gainers Today</div>
+                <div class="app-fund-row">
+                  <div><div class="afr-name">Quant Small Cap</div><div class="afr-nav">NAV ₹218.45</div></div>
+                  <div class="afr-ret up">▲ 2.4%</div>
+                </div>
+                <div class="app-fund-row">
+                  <div><div class="afr-name">Mirae Asset Flexi Cap</div><div class="afr-nav">NAV ₹94.12</div></div>
+                  <div class="afr-ret up">▲ 1.8%</div>
+                </div>
+                <div class="app-fund-row">
+                  <div><div class="afr-name">Parag Parikh Flexi Cap</div><div class="afr-nav">NAV ₹76.30</div></div>
+                  <div class="afr-ret up">▲ 1.2%</div>
+                </div>
+                <div class="app-fund-row">
+                  <div><div class="afr-name">HDFC Mid Cap Opp.</div><div class="afr-nav">NAV ₹132.67</div></div>
+                  <div class="afr-ret dn">▼ 0.4%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DISCLAIMER
+============================================================ -->
+<div class="container" style="padding-bottom:3rem;">
+  <div class="disclaimer">
+    <strong>⚠️ Important Disclaimer:</strong> Maverick Investor provides general financial education and information only. This is not personalised investment advice. Mutual fund investments are subject to market risks — please read all scheme-related documents carefully before investing. Past returns are not indicative of future performance. For personalised advice, consult a SEBI-registered investment advisor (RIA). Insurance premium and coverage estimates are indicative only.
+  </div>
+</div>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo" style="color:var(--white);">
+          <div class="logo-icon">📈</div>
+          Maverick Investor
+        </a>
+        <p>Empowering Indian investors with unbiased, research-backed guidance on mutual funds, insurance, and retirement planning.</p>
+        <div class="sebi-badge">🏛️ SEBI Investor Education Compliant</div>
+        <div class="social-row" style="margin-top:1rem; font-size:.75rem; color:rgba(255,255,255,.45);">
+          Social channels coming soon
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="#hero">SIP Calculator</a></li>
+          <li><a href="#tools">Retirement Planner</a></li>
+          <li><a href="#tools">Insurance Estimator</a></li>
+          <li><a href="#tools">Risk Questionnaire</a></li>
+          <li><a href="#tools">Goal Tracker</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="#" onclick="openModal('modal-mf-basics');return false;">Mutual Fund Basics</a></li>
+          <li><a href="#" onclick="openModal('modal-sip-vs-lump');return false;">SIP vs Lump Sum</a></li>
+          <li><a href="#" onclick="openModal('modal-elss');return false;">ELSS Tax Saving</a></li>
+          <li><a href="#" onclick="openModal('modal-nps');return false;">NPS Guide</a></li>
+          <li><a href="#" onclick="openModal('modal-term');return false;">Term Insurance 101</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#founder" onclick="document.getElementById('founder').scrollIntoView({behavior:'smooth'});return false;">About Us</a></li>
+          <li><a href="#" onclick="openModal('modal-contact');return false;">Contact</a></li>
+          <li><a href="#" onclick="openModal('modal-privacy');return false;">Privacy Policy</a></li>
+          <li><a href="#" onclick="openModal('modal-terms');return false;">Terms of Use</a></li>
+          <li><a href="#" onclick="openModal('modal-disclaimer');return false;">Disclaimer</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Maverick Investor. All rights reserved.</div>
+      <div>Built with ❤️ for Indian investors · Not SEBI-registered · Educational use only</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+  /* ═══════════════════════════════════════════════════════════
+     LIVE DATA CONFIGURATION
+  ═══════════════════════════════════════════════════════════ */
+
+  // ── Mutual Fund scheme codes (AMFI / mfapi.in) — 30 funds across 6 categories ──
+  // All scheme codes verified against mfapi.in live data (June 2026)
+  const FUND_CONFIG = [
+    // ── Large Cap ──────────────────────────────────────────────
+    { name:'Mirae Asset Large Cap',       group:'Large Cap',    cat:'equity', schemeCode:118825, color:'#e63946', risk:'Moderate',       er:0.52 },
+    { name:'HDFC Large Cap Fund',         group:'Large Cap',    cat:'equity', schemeCode:119018, color:'#0d6e47', risk:'Moderate',       er:0.82 },
+    { name:'ICICI Pru Large Cap',         group:'Large Cap',    cat:'equity', schemeCode:120586, color:'#6a4c93', risk:'Moderate',       er:0.90 },
+    { name:'SBI Large Cap Fund',          group:'Large Cap',    cat:'equity', schemeCode:119598, color:'#0077b6', risk:'Moderate',       er:0.82 },
+    { name:'Axis Large Cap Fund',         group:'Large Cap',    cat:'equity', schemeCode:120465, color:'#f47c20', risk:'Moderate',       er:0.70 },
+    // ── Mid Cap ────────────────────────────────────────────────
+    { name:'HDFC Mid Cap Fund',           group:'Mid Cap',      cat:'equity', schemeCode:118989, color:'#0077b6', risk:'High',           er:0.72 },
+    { name:'Motilal Oswal Midcap',        group:'Mid Cap',      cat:'equity', schemeCode:127042, color:'#e63946', risk:'High',           er:0.56 },
+    { name:'Nippon India Mid Cap',        group:'Mid Cap',      cat:'equity', schemeCode:118668, color:'#bc6c25', risk:'High',           er:0.71 },
+    { name:'Axis Midcap Fund',            group:'Mid Cap',      cat:'equity', schemeCode:120505, color:'#2d6a4f', risk:'High',           er:0.52 },
+    { name:'SBI Midcap Fund',             group:'Mid Cap',      cat:'equity', schemeCode:119716, color:'#457b9d', risk:'High',           er:0.82 },
+    // ── Small Cap ──────────────────────────────────────────────
+    { name:'Quant Small Cap',             group:'Small Cap',    cat:'equity', schemeCode:120828, color:'#e76f51', risk:'Very High',      er:0.62 },
+    { name:'Nippon India Small Cap',      group:'Small Cap',    cat:'equity', schemeCode:118778, color:'#0d6e47', risk:'Very High',      er:0.67 },
+    { name:'SBI Small Cap Fund',          group:'Small Cap',    cat:'equity', schemeCode:125497, color:'#6a4c93', risk:'Very High',      er:0.64 },
+    { name:'Axis Small Cap Fund',         group:'Small Cap',    cat:'equity', schemeCode:125354, color:'#0077b6', risk:'Very High',      er:0.53 },
+    { name:'DSP Small Cap Fund',          group:'Small Cap',    cat:'equity', schemeCode:119212, color:'#f47c20', risk:'Very High',      er:0.82 },
+    // ── Flexi Cap ──────────────────────────────────────────────
+    { name:'Parag Parikh Flexi Cap',      group:'Flexi Cap',    cat:'equity', schemeCode:122639, color:'#2d6a4f', risk:'Moderate',       er:0.59 },
+    { name:'Kotak Flexicap Fund',         group:'Flexi Cap',    cat:'equity', schemeCode:120166, color:'#e63946', risk:'Moderate',       er:0.52 },
+    { name:'HDFC Flexi Cap Fund',         group:'Flexi Cap',    cat:'equity', schemeCode:118955, color:'#0077b6', risk:'Moderate',       er:0.78 },
+    { name:'UTI Flexi Cap Fund',          group:'Flexi Cap',    cat:'equity', schemeCode:120662, color:'#bc6c25', risk:'Moderate',       er:0.78 },
+    { name:'Motilal Oswal Flexi Cap',     group:'Flexi Cap',    cat:'equity', schemeCode:129046, color:'#457b9d', risk:'Moderate',       er:0.80 },
+    // ── Index Funds ────────────────────────────────────────────
+    { name:'UTI Nifty 50 Index',          group:'Index',        cat:'index',  schemeCode:120716, color:'#457b9d', risk:'Moderate',       er:0.18 },
+    { name:'HDFC Nifty 50 Index',         group:'Index',        cat:'index',  schemeCode:119063, color:'#0d6e47', risk:'Moderate',       er:0.20 },
+    { name:'ICICI Pru Nifty 50 Index',    group:'Index',        cat:'index',  schemeCode:120620, color:'#6a4c93', risk:'Moderate',       er:0.17 },
+    { name:'Motilal Nifty 50 Index',      group:'Index',        cat:'index',  schemeCode:147794, color:'#0077b6', risk:'Moderate',       er:0.10 },
+    { name:'ICICI Pru Nifty Next 50',     group:'Index',        cat:'index',  schemeCode:120684, color:'#f47c20', risk:'Moderate-High',  er:0.30 },
+    // ── Global & Gold ──────────────────────────────────────────
+    { name:'Mirae Asset S&P 500 FoF',    group:'Global & Gold', cat:'global', schemeCode:149170, color:'#e63946', risk:'High',           er:0.63 },
+    { name:'Mirae NYSE FANG+ FoF',       group:'Global & Gold', cat:'global', schemeCode:148928, color:'#0077b6', risk:'Very High',      er:0.68 },
+    { name:'Nippon India Gold Savings',   group:'Global & Gold', cat:'global', schemeCode:118663, color:'#f4c430', risk:'Moderate',       er:0.14 },
+    { name:'SBI Gold Fund',               group:'Global & Gold', cat:'global', schemeCode:119788, color:'#bc6c25', risk:'Moderate',       er:0.17 },
+    { name:'Axis Gold Fund',              group:'Global & Gold', cat:'global', schemeCode:120473, color:'#2d6a4f', risk:'Moderate',       er:0.15 },
+  ];
+
+  // ── Index config — tracked via mfapi.in index fund NAVs ──
+  // proxyScheme = AMFI scheme code of a direct-plan index fund tracking this index
+  // Daily NAV % change = daily index % change (highly accurate proxy)
+  const INDEX_CONFIG = [
+    { name:'Nifty 50',        abbr:'NIFTY 50',   exchange:'NSE', color:'#0d6e47', proxyScheme:120716, proxyName:'UTI Nifty 50 Index' },
+    { name:'BSE Sensex',      abbr:'SENSEX',     exchange:'BSE', color:'#0077b6', proxyScheme:119065, proxyName:'HDFC Sensex Index'  },
+    { name:'Bank Nifty',      abbr:'BANK NIFTY', exchange:'NSE', color:'#f47c20', proxyScheme:134008, proxyName:'SBI Nifty Bank ETF' },
+    { name:'Nifty Midcap 150',abbr:'NIFTY MID',  exchange:'NSE', color:'#6a4c93', proxyScheme:147622, proxyName:'Motilal MidCap 150' },
+    { name:'Nifty Next 50',   abbr:'NIFTY NXT',  exchange:'NSE', color:'#2d6a4f', proxyScheme:143341, proxyName:'UTI Nifty Next 50 Index' },
+    { name:'Nifty Smallcap 250', abbr:'NIFTY SML', exchange:'NSE', color:'#9b2226', proxyScheme:147623, proxyName:'Motilal Nifty Smallcap 250' },
+  ];
+
+  const MFAPI = 'https://api.mfapi.in/mf/';
+
+  /* ═══════════════════════════════════════════════════════════
+     STATE
+  ═══════════════════════════════════════════════════════════ */
+  let funds         = FUND_CONFIG.map(f => ({ ...f, nav:'—', d1:'—', y1:'—', y3:'—', y5:'—', y3Raw:null, y5Raw:null, up:true, live:false }));
+  let indexData     = INDEX_CONFIG.map(cfg => ({ ...cfg, fundNav:'—', chg:'—', chgPct:'—', asOf:'', up:true, live:false }));
+  let currentFilter = 'all';
+  let tickerItems   = [];
+
+  /* ═══════════════════════════════════════════════════════════
+     FORMATTERS
+  ═══════════════════════════════════════════════════════════ */
+  function fmt(n) {
+    if (n >= 1e7) return '₹' + (n/1e7).toFixed(2) + ' Cr';
+    if (n >= 1e5) return '₹' + (n/1e5).toFixed(2) + ' L';
+    return '₹' + n.toLocaleString('en-IN');
+  }
+  function fmtNum(n) {
+    if (n >= 1e7) return (n/1e7).toFixed(2) + ' Cr';
+    if (n >= 1e5) return (n/1e5).toFixed(2) + ' L';
+    return n.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+  }
+  function fmtPrice(n, decimals=2) {
+    return parseFloat(n).toLocaleString('en-IN', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+  }
+  function sign(n) { return n >= 0 ? '+' : ''; }
+  function initials(name) { return name.split(' ').slice(0,2).map(w=>w[0]).join(''); }
+  function isMarketOpen() {
+    const now = new Date();
+    const ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+    const day = ist.getDay();
+    const h = ist.getHours(), m = ist.getMinutes();
+    const mins = h * 60 + m;
+    return day >= 1 && day <= 5 && mins >= 555 && mins <= 930; // 9:15–15:30 IST
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     TICKER BAR
+  ═══════════════════════════════════════════════════════════ */
+  function buildTicker() {
+    const track = document.getElementById('tickerTrack');
+    if (!track) return;
+    const items = [...tickerItems, ...tickerItems];
+    if (!items.length) return;
+    track.innerHTML = items.map(t => `
+      <span class="ticker-item">
+        <span class="name">${t.name}</span>
+        <span>${t.val}</span>
+        <span class="${t.up ? 'up' : 'down'}">${t.chg}</span>
+        <span style="opacity:.3">|</span>
+      </span>`).join('');
+  }
+
+  function seedTickerFallback() {
+    tickerItems = [
+      { name:'NIFTY 50',    val:'—',      chg:'loading…', up:true },
+      { name:'SENSEX',      val:'—',      chg:'loading…', up:true },
+      { name:'BANK NIFTY',  val:'—',      chg:'loading…', up:true },
+      { name:'NIFTY MID',   val:'—',      chg:'loading…', up:true },
+      { name:'PARAG PARIKH',val:'₹—',     chg:'loading…', up:true },
+      { name:'HDFC MID CAP',val:'₹—',     chg:'loading…', up:true },
+      { name:'QUANT SMALL', val:'₹—',     chg:'loading…', up:true },
+    ];
+    buildTicker();
+  }
+  seedTickerFallback();
+
+  /* ═══════════════════════════════════════════════════════════
+     HERO CHART BARS
+  ═══════════════════════════════════════════════════════════ */
+  function buildHeroChart() {
+    const heights = [40,55,38,62,70,58,80,68,75,90,85,100];
+    const chart = document.getElementById('heroChart');
+    if (!chart) return;
+    chart.innerHTML = heights.map((h,i) =>
+      `<div class="dc-bar ${i===heights.length-1?'hi':''}" style="height:${h}%"></div>`).join('');
+  }
+  buildHeroChart();
+
+  /* ═══════════════════════════════════════════════════════════
+     LIVE INDICES — plain fetch, all parallel, no stagger
+  ═══════════════════════════════════════════════════════════ */
+  function renderIndexCards(data) {
+    const grid = document.getElementById('indicesGrid');
+    if (!grid) return;
+    function spark(up) {
+      const vals = Array.from({length:10}, () => 30 + Math.random()*55);
+      const col  = up ? '#4ade80' : '#f87171';
+      return vals.map(h => `<div class="ic-bar" style="height:${h}%;background:${col}20;"></div>`).join('')
+            + `<div class="ic-bar" style="height:${vals[vals.length-1]}%;background:${col};"></div>`;
+    }
+    grid.innerHTML = data.map((idx, i) => {
+      const cfg = INDEX_CONFIG[i] || {};
+      const up  = idx.up !== undefined ? idx.up : true;
+      // Hero value = % change (accurate — index fund daily % = index daily %)
+      // Fund NAV shown as small secondary label to avoid confusion with index level
+      return `
+        <div class="index-card ${up ? 'up-card' : 'down-card'}">
+          <div class="ic-label">${cfg.exchange || 'NSE'} · ${idx.live ? '<span class="live-dot" style="margin-right:2px"></span> LIVE' : 'Loading…'}</div>
+          <div class="ic-name">${idx.name}</div>
+          <div class="ic-value" style="font-size:1.6rem">${idx.live ? (up ? '▲' : '▼') + ' ' + idx.chgPct : '—'}</div>
+          <div style="display:flex; align-items:center; gap:.75rem; flex-wrap:wrap;">
+            <div class="ic-meta">${idx.live ? 'Today\'s change · ' + idx.asOf : 'via ' + (cfg.proxyName||'index fund')}</div>
+          </div>
+          <div class="ic-meta" style="margin-top:.3rem;opacity:.6">${idx.live ? 'Fund NAV ₹' + idx.fundNav + ' · ' + (cfg.proxyName||'') : ''}</div>
+          <div class="ic-sparkline">${spark(up)}</div>
+        </div>`;
+    }).join('');
+  }
+
+  function updateTickerWithIndices() {
+    tickerItems = [
+      ...indexData.map(i => ({ name: i.abbr, val: i.chgPct || '—', chg: i.chgPct || '—', up: i.up !== false })),
+      ...funds.filter(f => f.live).map(f => ({ name: f.name.split(' ').slice(0,2).join(' ').toUpperCase(), val: '₹'+f.nav, chg: f.d1, up: f.up })),
+    ];
+    buildTicker();
+  }
+
+  async function loadLiveIndices() {
+    document.getElementById('indexStatusText').textContent = 'Loading live index data…';
+    indexData = INDEX_CONFIG.map(cfg => ({ ...cfg, fundNav:'—', chg:'—', chgPct:'—', asOf:'', up:true, live:false }));
+    renderIndexCards(indexData);
+
+    // Fire all 6 fetches at once — update data array only inside .then()
+    await Promise.allSettled(INDEX_CONFIG.map((cfg, i) =>
+      fetch(MFAPI + cfg.proxyScheme)
+        .then(r => r.json())
+        .then(data => {
+          const arr = data.data;
+          if (!arr || arr.length < 2) return;
+          const cur  = parseFloat(arr[0].nav);
+          const prev = parseFloat(arr[1].nav);
+          const diff = cur - prev;
+          const pct  = (diff / prev) * 100;
+          const up   = diff >= 0;
+          indexData[i] = { ...cfg, fundNav:cur.toFixed(2), chg:(up?'+':'')+diff.toFixed(4), chgPct:(up?'+':'')+pct.toFixed(2)+'%', asOf:arr[0].date, up, live:true };
+        })
+        .catch(() => {})
+    ));
+
+    // Render ONCE after all fetches settle — keeps render errors out of .catch()
+    renderIndexCards(indexData);
+    updateTickerWithIndices();
+
+    const live = indexData.filter(d => d.live).length;
+    const open = isMarketOpen();
+    const lbl  = document.getElementById('marketStatusLabel');
+    document.getElementById('indexStatusText').textContent =
+      live > 0
+        ? `Live NAVs from mfapi.in · ${live}/6 indices · Refreshes every 5 min`
+        : 'Index data unavailable — will retry on next refresh';
+    if (lbl) { lbl.textContent = open ? 'Market Open' : 'Market Closed'; lbl.className = open ? 'market-open' : 'market-closed'; }
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     LIVE FUND NAVs — plain fetch, all parallel, no stagger
+  ═══════════════════════════════════════════════════════════ */
+  async function loadFundNAVs() {
+    document.getElementById('navStatusText').textContent = 'Loading live NAVs…';
+
+    // Fire all 30 fetches simultaneously — update data array only inside .then()
+    await Promise.allSettled(FUND_CONFIG.map((fund, idx) =>
+      fetch(MFAPI + fund.schemeCode)
+        .then(r => r.json())
+        .then(data => {
+          const arr = data.data;
+          if (!arr || arr.length < 2) return;
+          const cur  = parseFloat(arr[0].nav);
+          const prev = parseFloat(arr[1].nav);
+          const i1   = Math.min(252,  arr.length - 1);
+          const i3   = Math.min(756,  arr.length - 1);
+          const i5   = Math.min(1260, arr.length - 1);
+          const d1   = ((cur - prev) / prev) * 100;
+          const y1   = ((cur - parseFloat(arr[i1].nav)) / parseFloat(arr[i1].nav)) * 100;
+          const y3Raw = (Math.pow(cur / parseFloat(arr[i3].nav), 1/3) - 1) * 100;
+          const y5Raw = arr.length > 500 ? (Math.pow(cur / parseFloat(arr[i5].nav), 1/5) - 1) * 100 : null;
+          const up   = d1 >= 0;
+          funds[idx] = { ...fund, nav:cur.toFixed(4), d1:sign(d1)+d1.toFixed(2)+'%', y1:sign(y1)+y1.toFixed(1)+'%',
+                         y3:sign(y3Raw)+y3Raw.toFixed(1)+'%', y3Raw,
+                         y5: y5Raw !== null ? sign(y5Raw)+y5Raw.toFixed(1)+'%' : 'N/A', y5Raw,
+                         asOf:arr[0].date, up, live:true };
+        })
+        .catch(() => {})
+    ));
+
+    // Render ONCE after all fetches settle — keeps render errors out of .catch()
+    renderFundTable();
+    updateTickerWithFunds();
+
+    const live = funds.filter(f => f.live).length;
+    document.getElementById('navStatusText').textContent =
+      live > 0
+        ? `Live NAVs loaded · ${live}/${FUND_CONFIG.length} funds · Source: AMFI · As of last published date`
+        : 'NAV data unavailable — will retry on next refresh';
+  }
+
+  function updateTickerWithFunds() {
+    const liveIdxItems  = indexData.filter(i => i.live).map(i => ({ name: i.abbr, val: i.fundNav, chg: i.chgPct, up: i.up }));
+    const liveFundItems = funds.filter(f => f.live).map(f => ({
+      name: f.name.split(' ').slice(0,2).join(' ').toUpperCase(),
+      val: '₹' + parseFloat(f.nav).toFixed(2),
+      chg: f.d1,
+      up: f.up,
+    }));
+    tickerItems = [...liveIdxItems, ...liveFundItems];
+    if (tickerItems.length) buildTicker();
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     FUND CATEGORY BLOCK RENDER
+  ═══════════════════════════════════════════════════════════ */
+  function riskClass(r) {
+    if (r === 'Low') return 'risk-low';
+    if (r === 'High' || r === 'Very High') return 'risk-high';
+    return 'risk-mod';
+  }
+
+  // Group funds by their 'group' field
+  const GROUP_ORDER = ['Large Cap', 'Mid Cap', 'Small Cap', 'Flexi Cap', 'Index', 'Global & Gold'];
+  const GROUP_META = {
+    'Large Cap':    { icon:'🏢', dot:'#e63946' },
+    'Mid Cap':      { icon:'🏗️', dot:'#0077b6' },
+    'Small Cap':    { icon:'🚀', dot:'#e76f51' },
+    'Flexi Cap':    { icon:'🔀', dot:'#2d6a4f' },
+    'Index':        { icon:'📊', dot:'#457b9d' },
+    'Global & Gold':{ icon:'🌍', dot:'#f4c430' },
+  };
+
+  function renderFundTable() {
+    const grid = document.getElementById('fundCatGrid');
+    if (!grid) return;
+
+    // filter which groups to show
+    const catFilter = currentFilter; // 'all', 'equity', 'index', 'global'
+    const groupsToShow = GROUP_ORDER.filter(g => {
+      if (catFilter === 'all') return true;
+      const meta = GROUP_META[g];
+      if (catFilter === 'global') return g === 'Global & Gold';
+      if (catFilter === 'index')  return g === 'Index';
+      // equity = all equity groups
+      return ['Large Cap','Mid Cap','Small Cap','Flexi Cap'].includes(g);
+    });
+
+    grid.innerHTML = groupsToShow.map(grpName => {
+      const meta = GROUP_META[grpName] || { icon:'📁', dot:'#888' };
+      const grpFunds = funds.filter(f => f.group === grpName);
+      const rows = grpFunds.map(f => {
+        const navStr = (f.nav && f.nav !== '—') ? '₹' + parseFloat(f.nav).toFixed(2) : '—';
+        const d1Class = f.up ? 'positive' : 'negative';
+        const liveTag = f.live ? '<span class="live-dot" style="vertical-align:middle;margin-left:3px;"></span>' : '';
+        return `
+          <div class="fcb-row">
+            <div class="fcb-fund-name" title="${f.name}">${f.name}${liveTag}</div>
+            <div class="fcb-nav">${navStr}</div>
+            <div class="fcb-d1 ${d1Class}">${f.d1}</div>
+            <div class="fcb-1y ${(f.y1||'').startsWith('+') ? 'positive' : ''}">${f.y1}</div>
+          </div>`;
+      }).join('');
+
+      return `
+        <div class="fund-cat-block" data-group="${grpName}">
+          <div class="fcb-header">
+            <div class="fcb-header-left">
+              <span class="fcb-dot" style="background:${meta.dot}"></span>
+              <span class="fcb-icon">${meta.icon}</span>
+              <span class="fcb-name">${grpName}</span>
+            </div>
+            <span class="fcb-count">Top ${grpFunds.length}</span>
+          </div>
+          <div class="fcb-row-hdr">
+            <span>Fund</span><span>NAV</span><span>1D</span><span>1Y</span>
+          </div>
+          ${rows}
+        </div>`;
+    }).join('');
+  }
+
+  function filterFunds(cat, btn) {
+    currentFilter = cat;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderFundTable();
+  }
+
+  // Render placeholder blocks immediately
+  renderFundTable();
+
+  /* -------------------------------------------------------
+     GOALS CALCULATOR
+  ------------------------------------------------------- */
+  function calcGoal(key) {
+    // Support both old (goals section) and new (tools tiles with g2- prefix) IDs
+    const bases = [
+      { costId:`eduCost`,  yrsId:`eduYrs`,  futId:`eduFuture`,  sipId:`eduSIP`,  yrsLbl:`eduYrsVal`,  inf:8  },
+      { costId:`weddCost`, yrsId:`weddYrs`, futId:`weddFuture`, sipId:`weddSIP`, yrsLbl:`weddYrsVal`, inf:7  },
+      { costId:`carCost`,  yrsId:`carYrs`,  futId:`carFuture`,  sipId:`carSIP`,  yrsLbl:`carYrsVal`,  inf:5  },
+      { costId:`homeCost`, yrsId:`homeYrs`, futId:`homeFuture`, sipId:`homeSIP`, yrsLbl:`homeYrsVal`, inf:8  },
+      { costId:`tripCost`, yrsId:`tripYrs`, futId:`tripFuture`, sipId:`tripSIP`, yrsLbl:`tripYrsVal`, inf:5  },
+    ];
+    const keyMap = { edu:0, wedd:1, car:2, home:3, trip:4 };
+    const idx = keyMap[key];
+    if (idx === undefined) return;
+    const infRate = bases[idx].inf;
+
+    // Compute for each prefix (old section + new tiles)
+    [['', ''], ['g2-', 'g2-']].forEach(([cp, yp]) => {
+      const costEl = document.getElementById(cp + bases[idx].costId);
+      const yrsEl  = document.getElementById(yp + bases[idx].yrsId);
+      if (!costEl || !yrsEl) return;
+      const cost = parseFloat(costEl.value) || 0;
+      const yrs  = parseFloat(yrsEl.value)  || 1;
+      const r    = 12 / 1200;
+      const n    = yrs * 12;
+      const yrsLbl = document.getElementById(yp + bases[idx].yrsLbl);
+      if (yrsLbl) yrsLbl.textContent = yrs + ' yr' + (yrs>1?'s':'');
+      const future = cost * Math.pow(1 + infRate/100, yrs);
+      const sip    = future / (((Math.pow(1+r,n)-1)/r)*(1+r));
+      const futEl = document.getElementById(yp + bases[idx].futId);
+      const sipEl = document.getElementById(yp + bases[idx].sipId);
+      if (futEl) futEl.textContent = fmt(Math.round(future));
+      if (sipEl) sipEl.textContent = fmt(Math.round(sip));
+    });
+  }
+  // Init all goals (both old & new)
+  ['edu','wedd','car','home','trip'].forEach(calcGoal);
+
+  /* -------------------------------------------------------
+     HERO SIP CALCULATOR (compact, in hero visual column)
+  ------------------------------------------------------- */
+  function updateHeroSIP() {
+    const p = +document.getElementById('heroSipAmt').value;
+    const y = +document.getElementById('heroSipYrs').value;
+    const r = +document.getElementById('heroSipRet').value / 100 / 12;
+    const n = y * 12;
+    const corpus   = p * ((Math.pow(1+r,n)-1)/r) * (1+r);
+    const invested = p * n;
+    const gain     = corpus - invested;
+    document.getElementById('heroSipAmtLbl').textContent = '₹' + p.toLocaleString('en-IN');
+    document.getElementById('heroSipYrsLbl').textContent = y + ' yr' + (y > 1 ? 's' : '');
+    document.getElementById('heroSipRetLbl').textContent = document.getElementById('heroSipRet').value + '%';
+    document.getElementById('heroSipCorpus').textContent = fmt(Math.round(corpus));
+    document.getElementById('heroSipSub').textContent    = 'Invested ' + fmt(Math.round(invested)) + ' · Gain ' + fmt(Math.round(gain));
+  }
+  updateHeroSIP();
+
+  /* -------------------------------------------------------
+     HERO RETIREMENT CORPUS CALCULATOR
+  ------------------------------------------------------- */
+  function updateHeroRetirement() {
+    const curAge   = +document.getElementById('heroRetAge').value;
+    const retAge   = +document.getElementById('heroRetRetire').value;
+    const exp      = +document.getElementById('heroRetExp').value;
+    const years    = Math.max(1, retAge - curAge);
+    const r        = 12 / 100 / 12;
+    const n        = years * 12;
+    // Future monthly expense (6% inflation)
+    const futureExp  = exp * Math.pow(1.06, years);
+    // Corpus needed = 25× annual expenses (4% SWR)
+    const corpus     = futureExp * 12 * 25;
+    // SIP to build that corpus
+    const sip        = corpus / (((Math.pow(1+r,n)-1)/r) * (1+r));
+    // Label helpers
+    const fmtK = v => v >= 1e7 ? (v/1e7).toFixed(1)+' Cr' : v >= 1e5 ? (v/1e5).toFixed(1)+' L' : v >= 1e3 ? (v/1e3).toFixed(0)+'K' : Math.round(v);
+    document.getElementById('heroRetAgeLbl').textContent    = curAge + ' yrs';
+    document.getElementById('heroRetRetireLbl').textContent = retAge + ' yrs';
+    document.getElementById('heroRetExpLbl').textContent    = '₹' + fmtK(exp);
+    document.getElementById('heroRetCorpus').textContent    = '₹' + fmtK(Math.round(sip)) + '/mo';
+    document.getElementById('heroRetSub').textContent       = 'For ₹' + fmtK(Math.round(corpus)) + ' corpus in ' + years + ' yrs';
+  }
+  updateHeroRetirement();
+
+  /* -------------------------------------------------------
+     RETIREMENT CALCULATOR
+  ------------------------------------------------------- */
+  function calcRetirement() {
+    if (!document.getElementById('retAge')) return;
+    const age    = +document.getElementById('retAge').value;
+    const retAge = +document.getElementById('retRet').value;
+    const exp    = +document.getElementById('retExp').value;
+    const yrsToRet = Math.max(1, retAge - age);
+    const inflation = 0.06;
+    const futureExp = exp * Math.pow(1 + inflation, yrsToRet);
+    const annualExp = futureExp * 12;
+    const retYrs = 25;
+    const safeR  = 0.07;
+    const corpus = annualExp * ((1 - Math.pow(1+safeR, -retYrs)) / safeR);
+    document.getElementById('retAgeLabel').textContent = age;
+    document.getElementById('retRetLabel').textContent = retAge;
+    document.getElementById('retExpLabel').textContent = exp.toLocaleString('en-IN');
+    document.getElementById('retCorpus').textContent = fmt(Math.round(corpus));
+    document.getElementById('retSub').textContent = `Based on 6% inflation · ${retYrs} yr retirement · ${yrsToRet} yrs to go`;
+  }
+  calcRetirement();
+
+  /* -------------------------------------------------------
+     INSURANCE CALCULATOR
+  ------------------------------------------------------- */
+  const insTypes = {
+    term:     { label:'Term Life Insurance',  formula:'10× income + loans + 5L/dependent', multiplier:(inc,loans,dep)=>inc*10+loans+dep*500000 },
+    health:   { label:'Health Insurance',     formula:'3–5L per person in family',         multiplier:(inc,loans,dep)=>Math.max(500000,(dep+1)*500000) },
+    critical: { label:'Critical Illness',     formula:'3× annual income',                  multiplier:(inc,loans,dep)=>inc*3 },
+    ulip:     { label:'ULIP',                 formula:'10× annual premium target',         multiplier:(inc,loans,dep)=>inc*0.5 },
+  };
+  let activeInsType = 'term';
+
+  function selectIns(el, type) {
+    document.querySelectorAll('.ins-type-card').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    activeInsType = type;
+    calcInsurance();
+  }
+
+  function calcInsurance() {
+    if (!document.getElementById('insIncome')) return;
+    const inc    = +document.getElementById('insIncome').value  || 0;
+    const loans  = +document.getElementById('insLoans').value   || 0;
+    const dep    = +document.getElementById('insDep').value     || 0;
+    const cfg    = insTypes[activeInsType];
+    const cover  = cfg.multiplier(inc, loans, dep);
+    document.getElementById('insCoverage').textContent = fmt(Math.round(cover));
+    document.getElementById('insType').textContent     = cfg.label;
+    document.getElementById('insFormula').textContent  = cfg.formula;
+    const bars = document.getElementById('covBars');
+    const filled = Math.min(10, Math.ceil(cover / 2000000));
+    bars.innerHTML = Array.from({length:10}, (_,i) =>
+      `<div class="cov-bar ${i < filled ? 'filled' : ''}"></div>`
+    ).join('');
+  }
+  calcInsurance();
+
+  /* -------------------------------------------------------
+     RISK QUESTIONNAIRE
+  ------------------------------------------------------- */
+  const questions = [
+    {
+      q: "If your investments dropped 20% in a month, what would you do?",
+      opts: ["Sell everything immediately", "Sell some to reduce risk", "Hold and wait", "Buy more at lower prices"]
+    },
+    {
+      q: "What is your primary investment goal?",
+      opts: ["Capital protection", "Regular income", "Moderate growth", "Aggressive wealth creation"]
+    },
+    {
+      q: "What is your investment time horizon?",
+      opts: ["Less than 2 years", "2–5 years", "5–10 years", "More than 10 years"]
+    },
+    {
+      q: "What portion of your monthly income can you invest without financial stress?",
+      opts: ["Less than 5%", "5–10%", "10–20%", "More than 20%"]
+    },
+    {
+      q: "How familiar are you with equity mutual funds?",
+      opts: ["Not at all familiar", "Basic understanding", "Fairly comfortable", "Very experienced"]
+    }
+  ];
+
+  const profiles = [
+    { name:'Conservative 🛡️', desc:'You prefer safety over growth. Best fit: Debt funds, FD, Liquid funds, Short-duration funds.', emoji:'🛡️', min:0, max:5 },
+    { name:'Moderate-Conservative 🌿', desc:'Steady returns with low risk. Best fit: Balanced advantage funds, Hybrid funds.', emoji:'🌿', min:6, max:10 },
+    { name:'Moderate ⚖️', desc:'Balanced growth and risk tolerance. Best fit: Flexi-cap, ELSS, Multi-asset funds.', emoji:'⚖️', min:11, max:14 },
+    { name:'Moderate-Aggressive 📈', desc:'Comfortable with volatility for higher returns. Best fit: Mid-cap, Small-cap, Sectoral funds.', emoji:'📈', min:15, max:17 },
+    { name:'Aggressive 🚀', desc:'Maximum growth, high risk appetite. Best fit: Small-cap, Momentum, International equity funds.', emoji:'🚀', min:18, max:20 },
+  ];
+
+  let currentQ = 0;
+  let answers  = [];
+
+  function renderQuiz() {
+    if (!document.getElementById('quizStep')) return;
+    const q = questions[currentQ];
+    document.getElementById('quizStep').textContent = `Question ${currentQ+1} of ${questions.length}`;
+    document.getElementById('quizBar').style.width = `${(currentQ/questions.length)*100}%`;
+    document.getElementById('quizQuestion').textContent = q.q;
+    document.getElementById('quizOptions').innerHTML = q.opts.map((o,i) => `
+      <div class="quiz-opt ${answers[currentQ]===i?'selected':''}" onclick="selectOpt(${i})">
+        <div class="opt-dot">${answers[currentQ]===i?'✓':''}</div>
+        <span>${o}</span>
+      </div>`).join('');
+    document.getElementById('quizBackBtn').style.visibility = currentQ===0?'hidden':'visible';
+    document.getElementById('quizNextBtn').textContent = currentQ===questions.length-1 ? 'See My Profile →' : 'Next →';
+  }
+
+  function selectOpt(i) {
+    answers[currentQ] = i;
+    renderQuiz();
+  }
+
+  function quizNext() {
+    if (answers[currentQ] === undefined) { alert('Please select an option.'); return; }
+    if (currentQ < questions.length-1) {
+      currentQ++;
+      renderQuiz();
+    } else {
+      showResult();
+    }
+  }
+
+  function quizBack() {
+    if (currentQ > 0) { currentQ--; renderQuiz(); }
+  }
+
+  function showResult() {
+    const score = answers.reduce((s,a) => s + a, 0);
+    const profile = profiles.find(p => score >= p.min && score <= p.max) || profiles[2];
+    document.getElementById('quizBar').style.width = '100%';
+    document.getElementById('quizOptions').innerHTML = '';
+    document.getElementById('quizQuestion').innerHTML = '';
+    document.getElementById('quizStep').textContent = 'Your Profile';
+    document.getElementById('quizNav') && (document.getElementById('quizNav').style.display='none');
+    document.querySelector('.quiz-nav').style.display = 'none';
+    document.querySelector('.quiz-progress').style.display = 'none';
+    const result = document.getElementById('quizResult');
+    result.style.display = 'block';
+    document.getElementById('resultRing').textContent = profile.emoji;
+    document.getElementById('resultProfile').textContent = profile.name;
+    document.getElementById('resultDesc').textContent = profile.desc;
+  }
+
+  function resetQuiz() {
+    currentQ = 0;
+    answers  = [];
+    document.getElementById('quizResult').style.display = 'none';
+    document.querySelector('.quiz-nav').style.display = 'flex';
+    document.querySelector('.quiz-progress').style.display = 'block';
+    renderQuiz();
+  }
+
+  renderQuiz();
+
+  /* -------------------------------------------------------
+     SIMULATE DOWNLOAD
+  ------------------------------------------------------- */
+  function simulateDownload(e, filename) {
+    e.preventDefault();
+    const link = document.createElement('a');
+    link.href = '#';
+    const toast = document.createElement('div');
+    toast.style.cssText = `
+      position:fixed; bottom:2rem; left:50%; transform:translateX(-50%);
+      background:var(--green-dark); color:#fff; padding:.9rem 1.75rem;
+      border-radius:99px; font-weight:700; font-size:.9rem;
+      box-shadow:0 8px 24px rgba(0,0,0,.25); z-index:9999;
+      display:flex; align-items:center; gap:.6rem;
+      animation:fadeInUp .3s ease;
+    `;
+    toast.innerHTML = `<span>✅</span> ${filename} — coming soon! We'll email it when live.`;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3500);
+  }
+
+
+
+  /* ═══════════════════════════════════════════════════════════
+     MODAL SYSTEM
+  ═══════════════════════════════════════════════════════════ */
+  function openModal(id) {
+    const el = document.getElementById(id);
+    if (el) { el.classList.add('open'); document.body.style.overflow='hidden'; }
+  }
+  function closeModal(id) {
+    const el = document.getElementById(id);
+    if (el) { el.classList.remove('open'); document.body.style.overflow=''; }
+  }
+  document.addEventListener('keydown', e => { if(e.key==='Escape') document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open')); });
+
+  /* ═══════════════════════════════════════════════════════════
+     PORTFOLIO RECOMMENDER
+  ═══════════════════════════════════════════════════════════ */
+  let recData = { age:30, income:60000, risk:'moderate', goals:['retirement'], sip:10000 };
+
+  function recNext(step) {
+    // Collect step data
+    if (step === 0) {
+      recData.age    = +document.getElementById('rAge').value;
+      recData.income = +document.getElementById('rIncome').value;
+    } else if (step === 1) {
+      const sel = document.querySelector('#rRiskChips .rec-chip.selected');
+      recData.risk = sel ? sel.dataset.val || sel.textContent.match(/conservative|moderate|aggressive/i)?.[0]?.toLowerCase() || 'moderate' : 'moderate';
+    } else if (step === 2) {
+      recData.goals = Array.from(document.querySelectorAll('#rGoalChips .rec-chip.selected')).map(c => c.dataset.val || c.textContent.replace(/[^a-z]/gi,'').toLowerCase());
+    }
+    showRecStep(step + 1);
+  }
+  function recBack(step) { showRecStep(step - 1); }
+
+  function showRecStep(step) {
+    for (let i = 0; i < 4; i++) {
+      const s = document.getElementById('rstep'+i);
+      const d = document.getElementById('rdot'+i);
+      if (s) s.classList.toggle('visible', i === step);
+      if (d) {
+        d.classList.toggle('active', i === step);
+        d.classList.toggle('done', i < step);
+      }
+    }
+  }
+
+  function selectChip(groupId, el, val) {
+    document.querySelectorAll('#'+groupId+' .rec-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    el.dataset.val = val;
+  }
+
+  function toggleChip(el, val) {
+    el.classList.toggle('selected');
+    el.dataset.val = val;
+  }
+
+  function recSubmit() {
+    recData.sip = +document.getElementById('rSip').value;
+    recData.goals = Array.from(document.querySelectorAll('#rGoalChips .rec-chip.selected')).map(c => c.dataset.val || '');
+    const riskSel = document.querySelector('#rRiskChips .rec-chip.selected');
+    recData.risk = riskSel ? (riskSel.dataset.val || 'moderate') : 'moderate';
+    buildPortfolio();
+  }
+
+  function recRestart() {
+    document.getElementById('recResult').classList.remove('visible');
+    document.getElementById('recWizard').querySelector('.rec-steps').style.display = 'flex';
+    // Reset all chips
+    document.querySelectorAll('#rRiskChips .rec-chip').forEach((c,i) => c.classList.toggle('selected', i===1));
+    document.querySelectorAll('#rGoalChips .rec-chip').forEach((c,i) => c.classList.toggle('selected', i===0));
+    recData = { age:30, income:60000, risk:'moderate', goals:['retirement'], sip:10000 };
+    showRecStep(0);
+  }
+
+  function fmtSip(v) {
+    return '₹' + Number(Math.round(v)).toLocaleString('en-IN');
+  }
+
+  function buildPortfolio() {
+    const { age, income, risk, goals, sip } = recData;
+    const wantsElss = goals.includes('taxsaving');
+
+    // ── Base allocation by age ────────────────────────────────
+    let alloc = {};
+    if (age < 30)      alloc = { largeCap:25, flexiCap:25, midCap:20, smallCap:15, index:10, gold:5 };
+    else if (age < 40) alloc = { largeCap:25, flexiCap:25, midCap:20, smallCap:10, index:15, gold:5 };
+    else if (age < 50) alloc = { largeCap:30, flexiCap:25, midCap:15, smallCap:5,  index:20, gold:5 };
+    else               alloc = { largeCap:35, flexiCap:25, midCap:10, smallCap:0,  index:25, gold:5 };
+
+    // ── Risk modifier ─────────────────────────────────────────
+    if (risk === 'aggressive') {
+      alloc.midCap   = Math.min(alloc.midCap + 10, 35);
+      alloc.smallCap = Math.min(alloc.smallCap + 5, 25);
+      alloc.largeCap = Math.max(alloc.largeCap - 10, 15);
+      alloc.index    = Math.max(alloc.index - 5, 5);
+    } else if (risk === 'conservative') {
+      alloc.largeCap = Math.min(alloc.largeCap + 15, 50);
+      alloc.index    = Math.min(alloc.index + 10, 35);
+      alloc.midCap   = Math.max(alloc.midCap - 15, 0);
+      alloc.smallCap = 0;
+      alloc.gold     = Math.min(alloc.gold + 5, 15);
+    }
+
+    // Normalise to 100
+    const tot = Object.values(alloc).reduce((s,v)=>s+v,0);
+    Object.keys(alloc).forEach(k => alloc[k] = Math.round(alloc[k]/tot*100));
+    const diff = 100 - Object.values(alloc).reduce((s,v)=>s+v,0);
+    alloc.largeCap += diff;
+
+    // ── Score funds within each group on live data ────────────
+    // Score = 3Y CAGR × 0.4  +  5Y CAGR × 0.4  −  Expense Ratio × 5
+    // Falls back to first fund in group if live data hasn't arrived yet
+    function pickBest(group, count) {
+      const live = funds.filter(f => f.group === group && f.live && f.y3Raw !== null);
+      const pool = live.length > 0 ? live : funds.filter(f => f.group === group);
+      return pool
+        .map(f => ({ ...f, score: (f.y3Raw || 0) * 0.4 + (f.y5Raw || 0) * 0.4 - (f.er || 1) * 5 }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, count);
+    }
+
+    const groupColors = {
+      'Large Cap':'#0d6e47', 'Flexi Cap':'#2d6a4f', 'Mid Cap':'#f47c20',
+      'Small Cap':'#e63946', 'Index':'#457b9d', 'Global & Gold':'#f4c430'
+    };
+
+    // Pick top fund per category (top 2 for Large & Flexi which get big allocation)
+    const segments = [
+      { label:'Large Cap',  pct:alloc.largeCap,  group:'Large Cap',    color:'#0d6e47', picks:1 },
+      { label:'Flexi Cap',  pct:alloc.flexiCap,  group:'Flexi Cap',    color:'#2d6a4f', picks:1 },
+      { label:'Mid Cap',    pct:alloc.midCap,    group:'Mid Cap',      color:'#f47c20', picks:1 },
+      { label:'Small Cap',  pct:alloc.smallCap,  group:'Small Cap',    color:'#e63946', picks:1 },
+      { label:'Index',      pct:alloc.index,     group:'Index',        color:'#457b9d', picks:1 },
+      { label:'Gold',       pct:alloc.gold,      group:'Global & Gold',color:'#f4c430', picks:1 },
+    ].filter(s => s.pct > 0);
+
+    // Flatten into individual fund picks with SIP splits
+    const picks = [];
+    segments.forEach(seg => {
+      const best = pickBest(seg.group, seg.picks);
+      const splitPct = Math.round(seg.pct / best.length);
+      best.forEach((f, i) => {
+        picks.push({
+          label: seg.label,
+          pct:   i === best.length - 1 ? seg.pct - splitPct * i : splitPct,
+          color: seg.color,
+          fund:  f.name,
+          risk:  f.risk,
+          group: f.group,
+          y1:    f.y1   || '—',
+          y3:    f.y3   || '—',
+          y5:    f.y5   || '—',
+          er:    f.er   != null ? f.er.toFixed(2) + '%' : '—',
+          live:  f.live || false,
+        });
+      });
+    });
+
+    // ── Profile label ─────────────────────────────────────────
+    const profiles = {
+      conservative: { label:'Conservative Investor 🛡️', sub:'Capital preservation with steady growth — low-volatility funds dominate.' },
+      moderate:     { label:'Balanced Growth Investor ⚖️', sub:'A diversified mix targeting 11–13% CAGR with manageable risk.' },
+      aggressive:   { label:'High-Growth Investor 🚀', sub:'Tilt towards mid & small cap for maximum long-term wealth creation.' },
+    };
+    const profile = profiles[risk] || profiles.moderate;
+
+    document.getElementById('recProfileBadge').textContent = profile.label;
+    document.getElementById('recResultTitle').textContent  = `Personalised Portfolio for Age ${age}`;
+    document.getElementById('recResultSub').textContent    = profile.sub;
+    document.getElementById('recTotalSip').textContent     = fmtSip(sip) + '/mo';
+
+    // ── Allocation bars ───────────────────────────────────────
+    document.getElementById('recAllocBars').innerHTML = segments.map(s => `
+      <div class="rec-alloc-row">
+        <div class="rec-alloc-label"><span>${s.label}</span><span style="color:${s.color};font-weight:700">${s.pct}%</span></div>
+        <div class="rec-alloc-bar-bg"><div class="rec-alloc-bar" style="width:${s.pct}%;background:${s.color}"></div></div>
+      </div>`).join('');
+
+    // ── Fund cards ────────────────────────────────────────────
+    document.getElementById('recFundsGrid').innerHTML = picks.map(p => {
+      const sipAmt = Math.round(sip * p.pct / 100 / 500) * 500;
+      return `<div class="rec-fund-card" style="border-left-color:${p.color}">
+        <div class="rec-fund-name">${p.fund}</div>
+        <div class="rec-fund-meta">${p.label} · Risk: ${p.risk}</div>
+        <div class="rec-fund-sip">${fmtSip(sipAmt)}<span class="rec-fund-alloc"> /mo (${p.pct}%)</span></div>
+      </div>`;
+    }).join('');
+
+    // ── Performance table ─────────────────────────────────────
+    const liveNote = picks.some(p => p.live)
+      ? 'Live AMFI data · Loaded today'
+      : '⏳ Live data still loading — scores based on available data';
+    document.getElementById('recPerfTable').innerHTML = `
+      <div class="perf-table-wrap">
+        <h4 class="perf-table-title">Fund Performance Comparison</h4>
+        <div class="perf-table-scroll">
+        <table class="perf-table">
+          <thead>
+            <tr>
+              <th>Fund</th>
+              <th>Category</th>
+              <th>1Y Return</th>
+              <th>3Y CAGR</th>
+              <th>5Y CAGR</th>
+              <th>Exp. Ratio</th>
+              <th>Risk</th>
+              <th>Alloc.</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${picks.map(p => `<tr>
+              <td class="pt-fund-name"><span class="pt-dot" style="background:${p.color}"></span>${p.fund}</td>
+              <td>${p.label}</td>
+              <td class="pt-num">${p.y1}</td>
+              <td class="pt-num pt-highlight">${p.y3}</td>
+              <td class="pt-num pt-highlight">${p.y5}</td>
+              <td class="pt-num">${p.er}</td>
+              <td><span class="risk-chip risk-${p.risk.toLowerCase().replace(/\s+/g,'-')}">${p.risk}</span></td>
+              <td class="pt-num pt-bold">${p.pct}%</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+        </div>
+        <p class="perf-note">${liveNote} · Past returns ≠ future results · Direct plan expense ratios (AMFI)</p>
+      </div>`;
+
+    // ── Tax note ──────────────────────────────────────────────
+    const taxNote = wantsElss
+      ? 'You selected Tax Saving (80C). Consider adding ₹12,500/month to an ELSS fund (e.g. Axis Long Term Equity or Mirae Asset Tax Saver) to claim the full ₹1.5L 80C deduction. ELSS funds are not in the live tracker yet but are available on all fund platforms.'
+      : 'No specific tax-saving goal selected. If you're in the 20–30% tax bracket, consider allocating up to ₹12,500/month to an ELSS fund to claim ₹1.5L deduction under Section 80C.';
+    document.getElementById('recTaxNote').textContent = taxNote;
+
+    // ── Show result ───────────────────────────────────────────
+    document.getElementById('recWizard').querySelector('.rec-steps').style.display = 'none';
+    ['rstep0','rstep1','rstep2','rstep3'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('visible');
+    });
+    document.getElementById('recResult').classList.add('visible');
+  }
+
+
+  /* STARTUP */
+
+  // Render skeleton cards immediately while data loads
+  (function initIndexSkeletons() {
+    var grid = document.getElementById('indicesGrid');
+    if (!grid) return;
+    grid.innerHTML = INDEX_CONFIG.map(function() { return '<div class="index-card loading-card"><div class="ic-label ic-skeleton" style="width:60px;height:12px;margin-bottom:6px;"></div><div class="ic-skeleton" style="width:140px;height:18px;margin-bottom:8px;"></div><div class="ic-skeleton" style="width:100px;height:28px;margin-bottom:8px;"></div><div class="ic-skeleton" style="width:120px;height:14px;"></div></div>'; }).join('');
+  })();
+
+  loadLiveIndices();
+  loadFundNAVs();
+  setInterval(loadLiveIndices, 5 * 60 * 1000);
+  setInterval(loadFundNAVs,    5 * 60 * 1000);
+
+  const _toastStyle = document.createElement('style');
+  _toastStyle.textContent = '@keyframes fadeInUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}';
+  document.head.appendChild(_toastStyle);
+</script>
+
+<!-- ============================================================
+     MODALS — Learn & Company links
+============================================================ -->
+<div class="modal-overlay" id="modal-mf-basics" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-mf-basics')">×</button>
+    <div class="modal-title">Mutual Fund Basics</div>
+    <div class="modal-body">
+      <p>A mutual fund pools money from many investors and invests it in stocks, bonds, or other securities. A professional fund manager makes the investment decisions.</p>
+      <h4>Key terms</h4>
+      <ul>
+        <li><strong>NAV (Net Asset Value):</strong> The price of one unit of the fund — calculated daily after market close.</li>
+        <li><strong>SIP (Systematic Investment Plan):</strong> Investing a fixed amount every month, regardless of market conditions.</li>
+        <li><strong>ELSS:</strong> Equity Linked Savings Scheme — qualifies for ₹1.5L tax deduction under Section 80C, with a 3-year lock-in.</li>
+        <li><strong>Exit Load:</strong> A fee charged if you redeem within a certain period (usually 1 year for equity funds).</li>
+        <li><strong>Expense Ratio:</strong> Annual fee charged by the fund house — lower is better. Index funds typically have 0.1–0.2%.</li>
+      </ul>
+      <h4>Fund categories</h4>
+      <ul>
+        <li><strong>Large Cap:</strong> Invest in top 100 companies by market cap. Stable, moderate returns (~11–13% long-term).</li>
+        <li><strong>Mid Cap:</strong> Companies ranked 101–250. Higher growth potential, higher volatility.</li>
+        <li><strong>Small Cap:</strong> Companies ranked 251+. High risk, high reward — suitable for 7+ year horizon.</li>
+        <li><strong>Flexi Cap:</strong> Fund manager can invest across large, mid, and small cap freely.</li>
+        <li><strong>Index Funds:</strong> Passively track an index like Nifty 50 or Sensex. Low cost, market returns.</li>
+      </ul>
+      <h4>Tax on mutual funds (as of FY2025)</h4>
+      <ul>
+        <li>Equity funds held &lt;1 year: Short-Term Capital Gains (STCG) @ 20%</li>
+        <li>Equity funds held &gt;1 year: Long-Term Capital Gains (LTCG) @ 12.5% (gains above ₹1.25L)</li>
+        <li>Debt funds: Taxed as per your income tax slab</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-sip-vs-lump" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-sip-vs-lump')">×</button>
+    <div class="modal-title">SIP vs Lump Sum</div>
+    <div class="modal-body">
+      <p>Both are ways to invest in mutual funds — each works best in different situations.</p>
+      <h4>SIP — Systematic Investment Plan</h4>
+      <ul>
+        <li>Invest a fixed amount every month (e.g. ₹5,000/month)</li>
+        <li>Benefits from <strong>Rupee Cost Averaging</strong> — you buy more units when markets are low, fewer when high</li>
+        <li>Best for: Salaried investors, beginners, volatile markets</li>
+        <li>Removes the need to time the market</li>
+      </ul>
+      <h4>Lump Sum</h4>
+      <ul>
+        <li>Invest a large amount all at once</li>
+        <li>Best for: When markets are at a significant correction (dips)</li>
+        <li>Risk: If markets fall right after, you're fully exposed</li>
+        <li>Ideal for: Windfalls like bonus, inheritance, maturity proceeds</li>
+      </ul>
+      <h4>The verdict for most investors</h4>
+      <p>Start with SIP for regular income. Add lump sum opportunistically during market corrections of 10%+. A ₹10,000/month SIP compounded at 12% for 15 years builds ₹1 crore. Start early — time in the market beats timing the market.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-elss" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-elss')">×</button>
+    <div class="modal-title">ELSS Tax Saving</div>
+    <div class="modal-body">
+      <p>ELSS (Equity Linked Savings Scheme) is the most popular 80C tax-saving instrument for investors who want growth.</p>
+      <h4>Key benefits</h4>
+      <ul>
+        <li>Deduction up to <strong>₹1.5 Lakh</strong> under Section 80C — saves up to ₹46,800 in tax (30% bracket)</li>
+        <li>Shortest lock-in of all 80C instruments — just <strong>3 years</strong></li>
+        <li>Invested in equity — historically delivers 12–15% over long periods</li>
+        <li>Can be done via SIP — ₹12,500/month = ₹1.5L/year for full 80C benefit</li>
+      </ul>
+      <h4>Comparison with other 80C options</h4>
+      <ul>
+        <li><strong>PPF:</strong> 7.1% guaranteed, 15-year lock-in — ultra-safe, low return</li>
+        <li><strong>NSC:</strong> 7.7% fixed, 5-year lock-in</li>
+        <li><strong>FD (5yr):</strong> ~6–7%, taxable interest</li>
+        <li><strong>ELSS:</strong> Market-linked (~12–15% historically), 3-year lock-in, LTCG taxed above ₹1.25L</li>
+      </ul>
+      <h4>Who should invest in ELSS?</h4>
+      <p>Anyone in the 20–30% tax bracket with a 5+ year horizon. The 3-year lock-in ensures you don't panic-sell during corrections, which often works in your favour.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-nps" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-nps')">×</button>
+    <div class="modal-title">NPS Guide</div>
+    <div class="modal-body">
+      <p>NPS (National Pension System) is a government-backed retirement savings scheme — one of the most tax-efficient instruments for salaried employees.</p>
+      <h4>Tax benefits — the NPS triple advantage</h4>
+      <ul>
+        <li><strong>Section 80C:</strong> Up to ₹1.5L deductible (shared with other 80C investments)</li>
+        <li><strong>Section 80CCD(1B):</strong> Additional ₹50,000 deduction — exclusive to NPS</li>
+        <li><strong>Section 80CCD(2):</strong> Employer contribution (up to 10% of salary) is fully deductible — not subject to any limit</li>
+      </ul>
+      <h4>How NPS works</h4>
+      <ul>
+        <li>Tier 1 account — mandatory, locked till retirement (60 years)</li>
+        <li>At retirement: 60% corpus is tax-free; 40% must be used to buy annuity</li>
+        <li>You choose your asset allocation — Equity (E), Corporate Bonds (C), Government Securities (G)</li>
+        <li>Auto-choice option available — reduces equity exposure as you age</li>
+      </ul>
+      <h4>Who should use NPS?</h4>
+      <p>Ideal for anyone in the 30% bracket who has already exhausted 80C. The additional ₹50,000 deduction under 80CCD(1B) alone saves ₹15,000+ in tax. Start early — the power of compounding over 30+ years is significant.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-term" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-term')">×</button>
+    <div class="modal-title">Term Insurance 101</div>
+    <div class="modal-body">
+      <p>Term insurance is the simplest, cheapest, and most important insurance you'll ever buy. If you have dependents, you need it.</p>
+      <h4>Why term, not ULIP or endowment?</h4>
+      <ul>
+        <li>Term plans pay only on death — no maturity benefit. This keeps premiums extremely low.</li>
+        <li>A ₹1 Crore cover for a 30-year-old costs ~₹7,000–10,000/year — less than ₹1,000/month</li>
+        <li>ULIPs and endowment plans mix insurance + investment — poorly. Buy term + invest the rest separately.</li>
+      </ul>
+      <h4>How much cover do you need?</h4>
+      <ul>
+        <li>Rule of thumb: <strong>10–15× annual income</strong></li>
+        <li>Add outstanding loans (home loan, car loan)</li>
+        <li>Add ₹5–10L per dependent for their future needs</li>
+        <li>Example: ₹12L income + ₹40L home loan + 2 kids = ₹2.1–2.6 Crore cover</li>
+      </ul>
+      <h4>Key features to look for</h4>
+      <ul>
+        <li><strong>Claim Settlement Ratio:</strong> Choose insurers with 98%+ CSR</li>
+        <li><strong>Policy term:</strong> Cover till at least age 65–70</li>
+        <li><strong>Riders:</strong> Consider critical illness rider and accidental death benefit</li>
+        <li><strong>Income payout option:</strong> Monthly income to family instead of lump sum</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-about" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-about')">×</button>
+    <div class="modal-title">About Maverick Investor</div>
+    <div class="modal-body">
+      <p>Maverick Investor is an independent Indian personal finance platform built to give every Indian investor — from first-time SIP starters to seasoned portfolio builders — access to clear, unbiased financial guidance.</p>
+      <h4>What we do</h4>
+      <ul>
+        <li>Provide live mutual fund NAV tracking via AMFI data</li>
+        <li>Offer free downloadable planners for retirement, goals, SIPs, and insurance</li>
+        <li>Educate investors on mutual funds, NPS, insurance, and tax planning</li>
+        <li>Help investors build personalised portfolios based on their goals and risk profile</li>
+      </ul>
+      <h4>What we don't do</h4>
+      <ul>
+        <li>We do not charge commissions or receive referral fees from any fund house</li>
+        <li>We are not SEBI-registered investment advisors</li>
+        <li>We do not execute trades or manage money on your behalf</li>
+      </ul>
+      <p>All content is for educational purposes only. For personalised investment advice, please consult a SEBI-registered investment advisor (RIA).</p>
+      <h4>Contact</h4>
+      <p>Reach us at <a href="mailto:jileshkadi@gmail.com" style="color:var(--green);font-weight:600;">jileshkadi@gmail.com</a></p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-contact" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-contact')">×</button>
+    <div class="modal-title">Contact Us</div>
+    <div class="modal-body">
+      <p>Have feedback, a question, or a fund suggestion? We'd love to hear from you.</p>
+      <h4>Email</h4>
+      <p><a href="mailto:jileshkadi@gmail.com" style="color:var(--green);font-weight:600;">jileshkadi@gmail.com</a></p>
+      <h4>Response time</h4>
+      <p>We aim to respond within 2–3 business days.</p>
+      <h4>What to include</h4>
+      <ul>
+        <li>Your query or feedback in detail</li>
+        <li>If reporting a data issue — the fund name and date</li>
+        <li>If suggesting a fund — the scheme name and AMFI code</li>
+      </ul>
+      <p style="margin-top:1rem;font-size:.82rem;color:var(--muted);">Please do not share sensitive personal or financial information over email.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-privacy" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-privacy')">×</button>
+    <div class="modal-title">Privacy Policy</div>
+    <div class="modal-body">
+      <p>Last updated: June 2026</p>
+      <h4>Data we collect</h4>
+      <p>Maverick Investor does not collect any personal data. This website has no login, no registration, no cookies for tracking, and no third-party analytics.</p>
+      <h4>Calculator inputs</h4>
+      <p>All calculator inputs (age, income, SIP amount, etc.) are processed entirely in your browser. No data is sent to any server.</p>
+      <h4>Live NAV data</h4>
+      <p>Live NAV data is fetched directly from <strong>mfapi.in</strong> (an AMFI data wrapper) in your browser. No data about you is transmitted.</p>
+      <h4>External links</h4>
+      <p>This website may link to external sites. We are not responsible for the privacy practices of external websites.</p>
+      <h4>Contact</h4>
+      <p>Privacy questions: <a href="mailto:jileshkadi@gmail.com" style="color:var(--green);">jileshkadi@gmail.com</a></p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-terms" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-terms')">×</button>
+    <div class="modal-title">Terms of Use</div>
+    <div class="modal-body">
+      <p>By using Maverick Investor, you agree to the following terms.</p>
+      <h4>Educational use only</h4>
+      <p>All content on this website — including fund data, calculators, articles, and portfolio recommendations — is provided for educational and informational purposes only. Nothing on this site constitutes personalised investment advice.</p>
+      <h4>No liability</h4>
+      <p>Maverick Investor is not responsible for any investment decisions you make based on content from this website. Mutual fund investments are subject to market risk. Past performance is not indicative of future returns.</p>
+      <h4>Data accuracy</h4>
+      <p>NAV data is sourced from AMFI via mfapi.in and is generally accurate but may be delayed. We make no guarantees of real-time accuracy.</p>
+      <h4>Intellectual property</h4>
+      <p>All original content on this website is the property of Maverick Investor. You may use downloadable tools for personal use only — not for commercial redistribution.</p>
+      <h4>Modifications</h4>
+      <p>We reserve the right to modify these terms at any time. Continued use of the website after changes constitutes acceptance.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-disclaimer" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-disclaimer')">×</button>
+    <div class="modal-title">Disclaimer</div>
+    <div class="modal-body">
+      <p><strong>Maverick Investor is not a SEBI-registered investment advisor.</strong></p>
+      <p>All content — including fund recommendations, portfolio suggestions, calculator outputs, and articles — is for general educational purposes only and does not constitute personalised investment advice, solicitation, or a recommendation to buy or sell any security.</p>
+      <h4>Market risk</h4>
+      <p>Mutual fund investments are subject to market risks. Past performance is not indicative of future returns. Please read all scheme-related documents carefully before investing.</p>
+      <h4>Professional advice</h4>
+      <p>For personalised investment planning tailored to your specific financial situation, please consult a SEBI-registered investment advisor (RIA). You can find RIAs on the <a href="https://www.sebi.gov.in" target="_blank" style="color:var(--green);">SEBI website</a>.</p>
+      <h4>Data sources</h4>
+      <p>NAV data is sourced from AMFI (Association of Mutual Funds in India) via the mfapi.in API. All historical performance figures are approximate and for illustration only.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
