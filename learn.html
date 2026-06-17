@@ -1577,6 +1577,7 @@
     <div class="learn-tabs">
       <button class="learn-tab active" onclick="switchLearnTab('mf', this)">📊 Mutual Fund Basics</button>
       <button class="learn-tab" onclick="switchLearnTab('ins', this)">🛡️ Insurance Basics</button>
+      <button class="learn-tab" onclick="switchLearnTab('nps', this)">🏦 NPS Guide</button>
     </div>
 
     <!-- MF PANEL -->
@@ -1684,6 +1685,102 @@
           <span class="source-badge">Source: IRDAI / SEBI</span>
         </div>
       </div>
+
+    <!-- NPS PANEL -->
+    <div id="learnNps" class="learn-panel" id="nps">
+      <div class="accordion">
+        <button class="accordion-hdr" onclick="toggleAcc(this)">What is the National Pension System (NPS)? <span class="acc-icon">+</span></button>
+        <div class="accordion-body">
+          The National Pension System (NPS) is a voluntary, long-term retirement savings scheme regulated by the <strong>Pension Fund Regulatory and Development Authority (PFRDA)</strong>. Launched by the Government of India in 2004 (for government employees) and opened to all citizens in 2009, NPS allows you to build a retirement corpus through regular contributions invested across equity, corporate bonds, government securities, and alternative assets.
+          <br><br>
+          On retirement at 60, you can withdraw up to <strong>60% as a tax-free lump sum</strong>; the remaining 40% must be used to purchase an annuity (pension).
+          <br><br>
+          <strong>Who should consider NPS?</strong> Salaried individuals who have maxed out 80C (₹1.5L), self-employed individuals seeking structured retirement savings, and anyone wanting an additional ₹50,000 tax deduction under 80CCD(1B).
+          <span class="source-badge">Source: PFRDA / npstrust.org.in</span>
+        </div>
+      </div>
+      <div class="accordion">
+        <button class="accordion-hdr" onclick="toggleAcc(this)">Tier I vs Tier II Accounts <span class="acc-icon">+</span></button>
+        <div class="accordion-body">
+          <strong>Tier I (Mandatory / Pension Account)</strong><br>
+          — Minimum contribution: ₹500/year (₹1,000 minimum to open)<br>
+          — Withdrawals locked until age 60 (with limited exceptions)<br>
+          — All tax benefits apply (80CCD(1), 80CCD(1B), 80CCD(2))<br>
+          — Mandatory for government employees; voluntary for others<br><br>
+          <strong>Tier II (Voluntary / Savings Account)</strong><br>
+          — No lock-in — withdraw anytime<br>
+          — No tax deduction benefit (except for central government employees)<br>
+          — Minimum contribution: ₹250<br>
+          — Useful as a low-cost investment account; fund expense ratios are among the lowest in India (&lt;0.1%)<br><br>
+          <strong>Key difference:</strong> Tier I is for retirement; Tier II is flexible savings.
+          <span class="source-badge">Source: PFRDA</span>
+        </div>
+      </div>
+      <div class="accordion">
+        <button class="accordion-hdr" onclick="toggleAcc(this)">Tax Benefits — 80CCD(1), 80CCD(1B) &amp; 80CCD(2) <span class="acc-icon">+</span></button>
+        <div class="accordion-body">
+          NPS offers three layers of tax deduction under the Income Tax Act:<br><br>
+          <strong>80CCD(1) — Own contribution:</strong> Up to 10% of salary (or 20% of gross income for self-employed), within the overall ₹1.5L 80C limit. If you've already filled your 80C bucket (ELSS, PPF, etc.), this gives no additional benefit.<br><br>
+          <strong>80CCD(1B) — Extra ₹50,000 deduction:</strong> An additional deduction of up to ₹50,000 over and above the ₹1.5L 80C limit — exclusive to NPS. This is the most valuable benefit for those in the 30% tax bracket (saves up to ₹15,000/year in tax).<br><br>
+          <strong>80CCD(2) — Employer contribution:</strong> If your employer contributes to your NPS (up to 10% of basic + DA), that amount is fully deductible — no ceiling. This is separate from and in addition to 80CCD(1B).<br><br>
+          <strong>On withdrawal at 60:</strong> 60% lump sum is completely tax-free. The 40% annuity income is taxed as regular income.
+          <span class="source-badge">Source: Income Tax Act / PFRDA</span>
+        </div>
+      </div>
+      <div class="accordion">
+        <button class="accordion-hdr" onclick="toggleAcc(this)">Asset Classes &amp; Investment Choice <span class="acc-icon">+</span></button>
+        <div class="accordion-body">
+          NPS invests across four asset classes:<br><br>
+          <strong>Class E (Equity)</strong> — Invests in equity and equity-related instruments. Maximum 75% allocation. Highest risk, highest return potential. Cap reduces to 50% after age 50.<br><br>
+          <strong>Class C (Corporate Bonds)</strong> — Fixed-income debt securities from companies. Moderate risk.<br><br>
+          <strong>Class G (Government Securities)</strong> — Central and state government bonds. Lowest risk, stable returns.<br><br>
+          <strong>Class A (Alternative Assets)</strong> — REITs, InvITs, and other alternatives. Maximum 5% allocation.<br><br>
+          <strong>Two investment approaches:</strong><br>
+          — <strong>Active Choice:</strong> You decide the allocation across E, C, G, A within limits.<br>
+          — <strong>Auto Choice (Lifecycle Fund):</strong> Allocation is age-based — higher equity when young, automatically shifting to debt as you approach retirement. Three options: Aggressive (LC-75), Moderate (LC-50), Conservative (LC-25).
+          <span class="source-badge">Source: PFRDA</span>
+        </div>
+      </div>
+      <div class="accordion">
+        <button class="accordion-hdr" onclick="toggleAcc(this)">Pension Fund Managers &amp; Returns <span class="acc-icon">+</span></button>
+        <div class="accordion-body">
+          PFRDA-registered Pension Fund Managers (PFMs) manage NPS investments. You choose one:<br><br>
+          SBI Pension Funds · LIC Pension Fund · HDFC Pension · ICICI Pru Pension · Kotak Mahindra Pension · Aditya Birla Sun Life Pension · Axis Pension Fund · Tata Pension · Max Life Pension · DSP Pension<br><br>
+          <strong>Historical equity (Class E) returns (approximate 5-year CAGR):</strong> Most leading PFMs have delivered 12–15% CAGR on the equity option — comparable to actively managed large-cap mutual funds but at a fraction of the cost.<br><br>
+          <strong>Expense ratios:</strong> NPS has one of the lowest fund management charges in India — as low as 0.01–0.09% per annum vs 0.5–2% for mutual funds. Over 30 years this cost advantage compounds significantly.
+          <span class="source-badge">Source: NPS Trust / npstrust.org.in</span>
+        </div>
+      </div>
+      <div class="accordion">
+        <button class="accordion-hdr" onclick="toggleAcc(this)">How to Open an NPS Account <span class="acc-icon">+</span></button>
+        <div class="accordion-body">
+          <strong>Online (eNPS) — fastest option:</strong><br>
+          1. Visit <strong>enps.nsdl.com</strong> or <strong>cra-nsdl.com</strong><br>
+          2. Register using PAN + Aadhaar (OTP-based e-KYC) or net banking<br>
+          3. Choose your PFM, asset class, and investment choice<br>
+          4. You receive a <strong>PRAN</strong> (Permanent Retirement Account Number) — your lifelong NPS identifier<br>
+          5. Minimum first contribution: ₹500 (Tier I)<br><br>
+          <strong>Offline:</strong> Visit any <strong>Point of Presence (PoP)</strong> — most major banks (SBI, HDFC, ICICI, Axis, Kotak) and post offices act as PoPs.<br><br>
+          <strong>Employer route:</strong> Many corporates offer NPS through payroll — ask your HR. Employer contributions under 80CCD(2) are especially valuable.<br><br>
+          <strong>Important:</strong> You can have only one PRAN. It stays with you even if you change jobs or cities.
+          <span class="source-badge">Source: enps.nsdl.com / PFRDA</span>
+        </div>
+      </div>
+      <div class="accordion">
+        <button class="accordion-hdr" onclick="toggleAcc(this)">NPS vs PPF vs ELSS — Which is Better? <span class="acc-icon">+</span></button>
+        <div class="accordion-body">
+          <strong>NPS</strong> — Best for: Additional ₹50K tax saving (80CCD(1B)); lowest-cost equity exposure; structured retirement planning. Drawback: 40% must buy annuity (annuity income is taxable).<br><br>
+          <strong>PPF (Public Provident Fund)</strong> — Best for: Completely tax-free (EEE status); guaranteed returns (~7.1% currently); 15-year lock-in. Drawback: Returns lower than equity over long term; no equity exposure.<br><br>
+          <strong>ELSS (Equity Linked Savings Scheme)</strong> — Best for: Shortest lock-in (3 years); highest return potential; diversified equity. Drawback: Within 80C limit only; LTCG taxable above ₹1.25L.<br><br>
+          <strong>Recommended approach:</strong><br>
+          — Max PPF for guaranteed, tax-free debt exposure<br>
+          — Use ELSS to fill 80C with equity allocation<br>
+          — Use NPS for the extra ₹50K deduction via 80CCD(1B) — especially if in the 30% bracket<br>
+          — Add regular mutual fund SIPs for goals beyond retirement
+          <span class="source-badge">Source: PFRDA / Income Tax Act / AMFI</span>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 </div>
@@ -1716,8 +1813,8 @@
       <div class="footer-col">
         <h4>Learn</h4>
         <ul>
-          <li><a href="#">Mutual Fund Basics</a></li>
-          <li><a href="#">SIP vs Lump Sum</a></li>
+          <li><a href="learn.html">Mutual Fund Basics</a></li>
+          <li><a href="learn.html">Insurance Basics</a></li>
           <li><a href="#">ELSS Tax Saving</a></li>
           <li><a href="#">NPS Guide</a></li>
           <li><a href="#">Term Insurance 101</a></li>

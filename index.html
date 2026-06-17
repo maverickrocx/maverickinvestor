@@ -920,14 +920,14 @@
     .why-card {
       background: var(--white);
       border-radius: var(--radius);
-      padding: 2rem;
+      padding: 1.1rem 1.25rem;
       border: 1.5px solid var(--border);
       transition: transform .2s, box-shadow .2s;
     }
     .why-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
-    .why-icon { font-size: 2rem; margin-bottom: 1rem; }
-    .why-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: .5rem; }
-    .why-card p { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+    .why-icon { font-size: 1.4rem; margin-bottom: .6rem; }
+    .why-card h3 { font-size: .88rem; font-weight: 800; margin-bottom: .35rem; }
+    .why-card p { font-size: .8rem; color: var(--muted); line-height: 1.55; }
 
     /* ============================================================
        LIVE INDICES
@@ -1868,16 +1868,6 @@
 
 <!-- Calculators now live in the hero section above -->
 
-<!-- ============================================================
-     EXPLORE OTHER PAGES
-============================================================ -->
-<section style="background:var(--green-dark);padding:2.5rem 0;">
-  <div class="container" style="display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center;justify-content:center;text-align:center;">
-    <a href="tools.html" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--white);color:var(--green-dark);font-weight:700;padding:.75rem 1.5rem;border-radius:99px;font-size:.9rem;text-decoration:none;">📥 Tools &amp; Goal Calculators</a>
-    <a href="learn.html" style="display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:var(--white);font-weight:700;padding:.75rem 1.5rem;border-radius:99px;font-size:.9rem;text-decoration:none;border:2px solid rgba(255,255,255,.5);">📚 Investment Basics</a>
-    <a href="fund-advisor.html" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--orange);color:var(--white);font-weight:700;padding:.75rem 1.5rem;border-radius:99px;font-size:.9rem;text-decoration:none;">⚡ Fund Advisor</a>
-  </div>
-</section>
 
 <!-- ============================================================
      WHY US
@@ -1912,8 +1902,8 @@
       </div>
       <div class="why-card">
         <div class="why-icon">📱</div>
-        <h3>Android App Coming</h3>
-        <p>Track your portfolio, get NAV alerts, and run calculations on the go — our Android app is in development.</p>
+        <h3>Android &amp; iOS Apps Coming</h3>
+        <p>NAV alerts, goal tracker, and all calculators on the go — apps for both Android and iPhone in development.</p>
       </div>
       <div class="why-card">
         <div class="why-icon">🎓</div>
@@ -1980,8 +1970,8 @@
     <div class="ret-cta-card">
       <div class="ret-cta-icon">📊</div>
       <div class="ret-cta-text">
-        <h3>Get Your Personalised Retirement Plan</h3>
-        <p>Our comprehensive retirement planner — tailored to your age, income, goals, and risk profile — is available free on request. Includes corpus calculation, SIP schedule, and drawdown strategy.</p>
+        <h3>Get Your Personalised Goal Based Investment Plan</h3>
+        <p>A comprehensive goal-based investment plan — tailored to your age, income, goals, and risk profile — available free on request. Covers retirement corpus, child's education, home purchase, and all major life goals with SIP schedules.</p>
       </div>
       <a href="mailto:jileshkadi@gmail.com?subject=Retirement%20Planner%20Request&body=Hi%20Jilesh%2C%0A%0AI%27d%20like%20to%20receive%20the%20comprehensive%20retirement%20planner.%0A%0AMy%20details%3A%0AName%3A%20%0AAge%3A%20%0AMonthly%20income%3A%20%0ARisk%20profile%3A%20" class="btn-ret-cta">
         📧 Request by Email
@@ -1997,7 +1987,7 @@
   <div class="container">
     <div class="app-grid">
       <div>
-        <div class="section-label">📱 Android App</div>
+        <div class="section-label">📱 Mobile App</div>
         <h2 class="section-title">Maverick Investor<br>in Your Pocket</h2>
         <p class="section-sub">Everything from the website — live NAVs, calculators, risk quiz, and retirement planner — optimised for mobile.</p>
 
@@ -2024,22 +2014,22 @@
             </div>
           </div>
           <div class="app-feat">
-            <div class="af-icon">📊</div>
+            <div class="af-icon">🎯</div>
             <div class="af-text">
-              <h4>Portfolio Snapshot</h4>
-              <p>Add your existing mutual fund holdings and see XIRR, asset allocation, and goal mapping.</p>
+              <h4>Fund Advisor On the Go</h4>
+              <p>Take the risk questionnaire and get personalised fund recommendations anytime, anywhere.</p>
             </div>
           </div>
         </div>
 
         <div class="app-store-btns">
-          <a href="#" class="store-btn">
+          <div class="store-btn soon">
             <div class="sb-icon">🤖</div>
             <div class="sb-text">
-              <span class="sb-sup">GET IT ON</span>
+              <span class="sb-sup">COMING SOON</span>
               <span class="sb-main">Google Play</span>
             </div>
-          </a>
+          </div>
           <div class="store-btn soon">
             <div class="sb-icon">🍎</div>
             <div class="sb-text">
@@ -2050,45 +2040,35 @@
         </div>
       </div>
 
-      <!-- Phone mockup -->
-      <div class="phone-mockup">
-        <div style="position:relative; display:inline-block;">
-          <div class="phone-frame">
-            <div class="phone-notch"></div>
-            <div class="phone-screen">
-              <div class="app-header-bar">
-                <div class="app-greeting">Good morning,</div>
-                <div class="app-name">Jilesh 👋</div>
-                <div class="app-portfolio-val">₹1,00,36,000</div>
-                <div class="app-portfolio-chg">▲ +52.1% since Jan '21</div>
-              </div>
-              <div class="app-screen-body">
-                <div class="app-quick-btns">
-                  <div class="aqb"><div class="aqb-icon">📈</div>Fund Tracker</div>
-                  <div class="aqb"><div class="aqb-icon">🧮</div>SIP Calc</div>
-                  <div class="aqb"><div class="aqb-icon">🎯</div>Goals</div>
-                  <div class="aqb"><div class="aqb-icon">🛡️</div>Insurance</div>
-                </div>
-                <div class="app-section-title">Top Gainers Today</div>
-                <div class="app-fund-row">
-                  <div><div class="afr-name">Quant Small Cap</div><div class="afr-nav">NAV ₹218.45</div></div>
-                  <div class="afr-ret up">▲ 2.4%</div>
-                </div>
-                <div class="app-fund-row">
-                  <div><div class="afr-name">Mirae Asset Flexi Cap</div><div class="afr-nav">NAV ₹94.12</div></div>
-                  <div class="afr-ret up">▲ 1.8%</div>
-                </div>
-                <div class="app-fund-row">
-                  <div><div class="afr-name">Parag Parikh Flexi Cap</div><div class="afr-nav">NAV ₹76.30</div></div>
-                  <div class="afr-ret up">▲ 1.2%</div>
-                </div>
-                <div class="app-fund-row">
-                  <div><div class="afr-name">HDFC Mid Cap Opp.</div><div class="afr-nav">NAV ₹132.67</div></div>
-                  <div class="afr-ret dn">▼ 0.4%</div>
-                </div>
-              </div>
+      <!-- Dual phone mockup: Android + iPhone -->
+      <div class="phone-mockup" style="display:flex;gap:2rem;align-items:flex-end;justify-content:center;">
+        <!-- Android -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:.75rem;">
+          <div style="width:130px;height:250px;background:#0f0f0f;border-radius:16px;border:3px solid #333;
+            display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;box-shadow:0 8px 32px rgba(0,0,0,.5);">
+            <div style="width:40px;height:4px;background:#444;border-radius:2px;position:absolute;top:10px;"></div>
+            <div style="text-align:center;padding:0 10px;">
+              <div style="font-size:1.5rem;margin-bottom:.5rem;">🤖</div>
+              <div style="color:var(--orange);font-size:.65rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;">Coming Soon</div>
+              <div style="color:#888;font-size:.58rem;margin-top:.4rem;line-height:1.4;">Maverick Investor<br>for Android</div>
             </div>
+            <div style="width:30px;height:30px;border-radius:50%;border:2px solid #333;position:absolute;bottom:8px;"></div>
           </div>
+          <div style="font-size:.75rem;color:var(--muted);font-weight:600;">Android</div>
+        </div>
+        <!-- iPhone -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:.75rem;">
+          <div style="width:130px;height:270px;background:#0f0f0f;border-radius:28px;border:3px solid #2a2a2a;
+            display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;box-shadow:0 8px 32px rgba(0,0,0,.5);">
+            <div style="width:44px;height:10px;background:#1a1a1a;border-radius:6px;position:absolute;top:12px;border:2px solid #2a2a2a;"></div>
+            <div style="text-align:center;padding:0 10px;">
+              <div style="font-size:1.5rem;margin-bottom:.5rem;">🍎</div>
+              <div style="color:var(--orange);font-size:.65rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;">Coming Soon</div>
+              <div style="color:#888;font-size:.58rem;margin-top:.4rem;line-height:1.4;">Maverick Investor<br>for iPhone</div>
+            </div>
+            <div style="width:80px;height:4px;background:#333;border-radius:2px;position:absolute;bottom:10px;"></div>
+          </div>
+          <div style="font-size:.75rem;color:var(--muted);font-weight:600;">iPhone</div>
         </div>
       </div>
     </div>
@@ -2136,10 +2116,9 @@
         <h4>Learn</h4>
         <ul>
           <li><a href="learn.html">Mutual Fund Basics</a></li>
-          <li><a href="learn.html#sipVsLumpSum">SIP vs Lump Sum</a></li>
-          <li><a href="learn.html">ELSS Tax Saving</a></li>
-          <li><a href="tools.html">NPS Guide</a></li>
-          <li><a href="learn.html">Term Insurance 101</a></li>
+          <li><a href="learn.html">Insurance Basics</a></li>
+          <li><a href="learn.html#nps">NPS Guide</a></li>
+          <li><a href="fund-advisor.html">Risk Questionnaire</a></li>
         </ul>
       </div>
       <div class="footer-col">
