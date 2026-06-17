@@ -692,84 +692,6 @@
     .calc-result .res-sub { font-size: .78rem; opacity: .7; }
 
     /* ============================================================
-       RISK QUESTIONNAIRE
-    ============================================================ */
-    .risk-section { background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%); }
-    .risk-section .section-title { color: var(--white); }
-    .risk-section .section-sub { color: rgba(255,255,255,.7); }
-    .risk-section .section-label { background: rgba(255,255,255,.15); color: var(--orange-light); }
-    .quiz-card {
-      background: rgba(255,255,255,.1);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,.15);
-      border-radius: var(--radius);
-      padding: 2.5rem;
-      max-width: 680px;
-      margin: 3rem auto 0;
-      color: var(--white);
-    }
-    .quiz-progress { margin-bottom: 2rem; }
-    .quiz-progress-bar-bg {
-      background: rgba(255,255,255,.2);
-      height: 6px;
-      border-radius: 99px;
-      margin-top: .5rem;
-    }
-    .quiz-progress-bar {
-      background: var(--orange);
-      height: 6px;
-      border-radius: 99px;
-      width: 20%;
-      transition: width .4s;
-    }
-    .quiz-step { font-size: .78rem; opacity: .7; }
-    .quiz-q { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.4; }
-    .quiz-options { display: flex; flex-direction: column; gap: .75rem; }
-    .quiz-opt {
-      background: rgba(255,255,255,.08);
-      border: 1.5px solid rgba(255,255,255,.15);
-      border-radius: var(--radius-sm);
-      padding: .9rem 1.25rem;
-      cursor: pointer;
-      font-size: .9rem;
-      transition: all .2s;
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-    }
-    .quiz-opt:hover, .quiz-opt.selected {
-      background: rgba(244,124,32,.25);
-      border-color: var(--orange);
-    }
-    .quiz-opt .opt-dot {
-      width: 18px; height: 18px;
-      border: 2px solid rgba(255,255,255,.4);
-      border-radius: 50%;
-      flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .quiz-opt.selected .opt-dot {
-      background: var(--orange);
-      border-color: var(--orange);
-    }
-    .quiz-nav { display: flex; justify-content: space-between; margin-top: 2rem; align-items: center; }
-    .quiz-result {
-      display: none;
-      text-align: center;
-      padding: 1rem 0;
-    }
-    .result-ring {
-      width: 100px; height: 100px;
-      border-radius: 50%;
-      border: 6px solid var(--orange);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 1rem;
-      font-size: 2rem;
-    }
-    .result-profile { font-size: 1.5rem; font-weight: 900; color: var(--orange-light); margin-bottom: .5rem; }
-    .result-desc { font-size: .9rem; opacity: .8; max-width: 42ch; margin: 0 auto; }
-
-    /* ============================================================
        INSURANCE ADVISOR
     ============================================================ */
     .insurance-section { background: var(--cream); }
@@ -1491,211 +1413,6 @@
       .section-title           { font-size: 1.35rem; }
       .footer-grid             { grid-template-columns: 1fr; }
     }
-
-    /* ============================================================
-       MODAL SYSTEM
-    ============================================================ */
-    .modal-overlay {
-      display:none; position:fixed; inset:0; background:rgba(0,0,0,.55);
-      z-index:9999; align-items:center; justify-content:center; padding:1rem;
-    }
-    .modal-overlay.open { display:flex; }
-    .modal-box {
-      background:#fff; border-radius:var(--radius); max-width:640px; width:100%;
-      max-height:85vh; overflow-y:auto; padding:2rem; position:relative;
-      box-shadow:0 24px 64px rgba(0,0,0,.18);
-    }
-    .modal-close {
-      position:absolute; top:1rem; right:1rem; background:none; border:none;
-      font-size:1.5rem; cursor:pointer; color:var(--muted); line-height:1;
-    }
-    .modal-title { font-size:1.35rem; font-weight:800; color:var(--dark); margin-bottom:1rem; }
-    .modal-body p { color:var(--mid); margin-bottom:.75rem; line-height:1.7; font-size:.95rem; }
-    .modal-body h4 { font-size:1rem; font-weight:700; color:var(--dark); margin:.75rem 0 .25rem; }
-    .modal-body ul { list-style:disc; padding-left:1.25rem; color:var(--mid); font-size:.93rem; }
-    .modal-body ul li { margin-bottom:.35rem; }
-
-    /* ============================================================
-       PORTFOLIO RECOMMENDER
-    ============================================================ */
-    .recommender-section {
-      padding: 5rem 0;
-      background: linear-gradient(135deg, #0d6e47 0%, #094d32 100%);
-    }
-    .rec-header { text-align:center; margin-bottom:3rem; }
-    .rec-header .section-label { background:rgba(255,255,255,.15); color:#fff; }
-    .rec-header h2 { color:#fff; font-size:clamp(1.6rem,4vw,2.3rem); font-weight:800; }
-    .rec-header p  { color:rgba(255,255,255,.75); margin-top:.5rem; font-size:1rem; }
-
-    .rec-card {
-      background:#fff; border-radius:var(--radius); padding:2rem 2.5rem;
-      max-width:780px; margin:0 auto; box-shadow:0 24px 64px rgba(0,0,0,.18);
-    }
-
-    /* Steps */
-    .rec-steps {
-      display:flex; gap:.5rem; margin-bottom:2rem;
-    }
-    .rec-step-dot {
-      flex:1; height:4px; border-radius:99px; background:#e5e7eb; transition:.3s;
-    }
-    .rec-step-dot.active { background:var(--green); }
-    .rec-step-dot.done   { background:var(--green-light); }
-
-    .rec-step { display:none; }
-    .rec-step.visible { display:block; }
-
-    .rec-step-title {
-      font-size:1.1rem; font-weight:700; color:var(--dark); margin-bottom:1.5rem;
-    }
-    .rec-step-title span { color:var(--green); }
-
-    /* Input rows */
-    .rec-row { margin-bottom:1.25rem; }
-    .rec-row label { display:block; font-size:.85rem; font-weight:600; color:var(--mid); margin-bottom:.4rem; }
-    .rec-row .rec-val { font-size:.9rem; font-weight:700; color:var(--green); float:right; }
-    .rec-row input[type=range] { width:100%; accent-color:var(--green); }
-    .rec-row select {
-      width:100%; padding:.6rem .9rem; border:1.5px solid var(--border);
-      border-radius:var(--radius-sm); font-size:.95rem; background:#fff;
-      color:var(--dark); appearance:none; cursor:pointer;
-    }
-
-    /* Choice chips */
-    .rec-chips { display:flex; flex-wrap:wrap; gap:.6rem; }
-    .rec-chip {
-      padding:.5rem 1.1rem; border:1.5px solid var(--border);
-      border-radius:99px; font-size:.85rem; font-weight:600; cursor:pointer;
-      transition:.2s; background:#fff; color:var(--mid);
-    }
-    .rec-chip:hover { border-color:var(--green); color:var(--green); }
-    .rec-chip.selected { background:var(--green); color:#fff; border-color:var(--green); }
-
-    /* Nav buttons */
-    .rec-nav { display:flex; justify-content:space-between; margin-top:2rem; gap:1rem; }
-    .rec-btn-back {
-      padding:.7rem 1.5rem; border:1.5px solid var(--border); border-radius:var(--radius-sm);
-      background:#fff; font-size:.9rem; font-weight:600; cursor:pointer; color:var(--mid);
-    }
-    .rec-btn-next {
-      padding:.7rem 1.8rem; border:none; border-radius:var(--radius-sm);
-      background:var(--green); color:#fff; font-size:.9rem; font-weight:700; cursor:pointer;
-      flex:1; transition:.2s;
-    }
-    .rec-btn-next:hover { background:var(--green-light); }
-
-    /* Result */
-    .rec-result { display:none; }
-    .rec-result.visible { display:block; }
-    .rec-profile-badge {
-      display:inline-block; padding:.4rem 1.1rem; border-radius:99px;
-      background:rgba(13,110,71,.1); color:var(--green); font-size:.85rem;
-      font-weight:700; margin-bottom:1rem;
-    }
-    .rec-result-title { font-size:1.2rem; font-weight:800; color:var(--dark); margin-bottom:.25rem; }
-    .rec-result-sub { font-size:.85rem; color:var(--muted); margin-bottom:1.5rem; }
-
-    .rec-alloc-bars { margin-bottom:1.5rem; }
-    .rec-alloc-row { margin-bottom:.6rem; }
-    .rec-alloc-label {
-      display:flex; justify-content:space-between; font-size:.82rem;
-      font-weight:600; color:var(--mid); margin-bottom:.25rem;
-    }
-    .rec-alloc-bar-bg { background:#f0f0f0; border-radius:99px; height:10px; overflow:hidden; }
-    .rec-alloc-bar    { height:10px; border-radius:99px; transition:width 1s ease; }
-
-    .rec-funds-grid {
-      display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-bottom:1.5rem;
-    }
-    @media(max-width:540px){ .rec-funds-grid{ grid-template-columns:1fr; } }
-    .rec-fund-card {
-      border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:.9rem 1rem;
-      border-left:4px solid var(--green);
-    }
-    .rec-fund-name { font-size:.85rem; font-weight:700; color:var(--dark); margin-bottom:.2rem; }
-    .rec-fund-meta { font-size:.75rem; color:var(--muted); margin-bottom:.3rem; }
-    .rec-fund-sip   { font-size:.9rem; font-weight:800; color:var(--green); }
-    .rec-fund-alloc { font-size:.75rem; color:var(--muted); }
-
-    .rec-total-sip {
-      background:rgba(13,110,71,.07); border-radius:var(--radius-sm);
-      padding:1rem 1.25rem; display:flex; justify-content:space-between; align-items:center;
-      margin-bottom:1rem;
-    }
-    .rec-total-sip-label { font-size:.9rem; font-weight:600; color:var(--mid); }
-    .rec-total-sip-val   { font-size:1.5rem; font-weight:800; color:var(--green); }
-
-    .rec-disclaimer {
-      font-size:.73rem; color:var(--muted); line-height:1.5; margin-top:1rem;
-      padding-top:1rem; border-top:1px solid var(--border);
-    }
-    .rec-restart {
-      background:none; border:1.5px solid var(--border); border-radius:var(--radius-sm);
-      padding:.6rem 1.2rem; cursor:pointer; font-size:.85rem; font-weight:600;
-      color:var(--mid); margin-top:.75rem;
-    }
-
-    /* ── Performance table ───────────────────────────── */
-    #recPerfTable { margin:1.5rem 0 1rem; }
-    .perf-table-title { font-size:.95rem; font-weight:700; color:var(--dark); margin-bottom:.75rem; }
-    .perf-table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
-    .perf-table { width:100%; border-collapse:collapse; font-size:.78rem; min-width:600px; }
-    .perf-table thead tr { background:var(--green); color:#fff; }
-    .perf-table th { padding:.5rem .75rem; text-align:left; font-weight:600; white-space:nowrap; }
-    .perf-table tbody tr { border-bottom:1px solid var(--border); }
-    .perf-table tbody tr:hover { background:#f7faf8; }
-    .perf-table td { padding:.5rem .75rem; vertical-align:middle; }
-    .pt-fund-name { display:flex; align-items:center; gap:.4rem; font-weight:600; color:var(--dark); }
-    .pt-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-    .pt-num { text-align:right; font-family:monospace; }
-    .pt-highlight { font-weight:700; color:var(--green); }
-    .pt-bold { font-weight:800; color:var(--dark); }
-    .risk-chip { display:inline-block; padding:.15rem .45rem; border-radius:99px; font-size:.68rem; font-weight:600; white-space:nowrap; }
-    .risk-moderate { background:#e8f5e9; color:#2d6a4f; }
-    .risk-high { background:#fff3e0; color:#c25c00; }
-    .risk-very-high { background:#fde8e8; color:#b71c1c; }
-    .risk-moderate-high { background:#fff8e1; color:#8a6000; }
-    .perf-note { font-size:.72rem; color:var(--muted); margin-top:.5rem; line-height:1.5; }
-
-    /* ── About / Founder section ─────────────────────── */
-    .founder-section { padding:5rem 0; background:#fff; }
-    .founder-grid { display:grid; grid-template-columns:280px 1fr; gap:3.5rem; align-items:center; max-width:900px; margin:0 auto; }
-    @media(max-width:720px){ .founder-grid { grid-template-columns:1fr; text-align:center; } }
-    .founder-photo-wrap { position:relative; }
-    .founder-photo {
-      width:240px; height:240px; border-radius:50%; object-fit:cover;
-      border:4px solid var(--green); box-shadow:0 8px 32px rgba(0,0,0,.12);
-    }
-    .founder-photo-placeholder {
-      width:240px; height:240px; border-radius:50%; background:var(--green);
-      display:flex; align-items:center; justify-content:center;
-      font-size:5rem; font-weight:800; color:#fff; letter-spacing:-2px;
-      border:4px solid var(--green); box-shadow:0 8px 32px rgba(0,0,0,.12);
-      margin:0 auto;
-    }
-    .founder-badge {
-      display:inline-block; background:var(--green); color:#fff;
-      font-size:.7rem; font-weight:700; padding:.3rem .8rem; border-radius:99px;
-      letter-spacing:.05em; margin-bottom:1rem; text-transform:uppercase;
-    }
-    .founder-name { font-size:2rem; font-weight:800; color:var(--dark); margin:0 0 .2rem; }
-    .founder-title { font-size:1rem; color:var(--green); font-weight:600; margin:0 0 1.2rem; }
-    .founder-bio { font-size:.92rem; color:var(--mid); line-height:1.75; margin-bottom:1.5rem; }
-    .founder-stats { display:flex; gap:2rem; flex-wrap:wrap; }
-    @media(max-width:720px){ .founder-stats { justify-content:center; } }
-    .founder-stat { text-align:center; }
-    .founder-stat-val { font-size:1.6rem; font-weight:800; color:var(--green); }
-    .founder-stat-label { font-size:.75rem; color:var(--muted); margin-top:.1rem; }
-    .founder-links { margin-top:1.5rem; display:flex; gap:.75rem; flex-wrap:wrap; }
-    @media(max-width:720px){ .founder-links { justify-content:center; } }
-    .founder-link {
-      display:inline-flex; align-items:center; gap:.4rem; padding:.5rem 1rem;
-      border:1.5px solid var(--border); border-radius:var(--radius-sm);
-      font-size:.82rem; font-weight:600; color:var(--mid); text-decoration:none;
-      transition:border-color .2s, color .2s;
-    }
-    .founder-link:hover { border-color:var(--green); color:var(--green); }
-
   </style>
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns%3D'http%3A//www.w3.org/2000/svg' viewBox%3D'0 0 100 100'%3E%3Ctext y%3D'.9em' font-size%3D'90'%3E%F0%9F%93%88%3C/text%3E%3C/svg%3E">
@@ -1713,13 +1430,14 @@
     </a>
     <ul class="nav-links">
       <li><a href="#tools">Tools & Goals</a></li>
+      <li><a href="fund-advisor.html">Fund Advisor</a></li>
       <li><a href="#indices">Markets</a></li>
       <li><a href="#tracker">Fund Tracker</a></li>
       <li><a href="#app">Mobile App</a></li>
     </ul>
     <div class="nav-cta">
       <a href="#" class="btn btn-secondary" style="display:none;">Login</a>
-      <a href="#recommender" class="btn btn-primary">Get Started Free</a>
+      <a href="#" class="btn btn-primary">Get Started Free</a>
     </div>
     <div class="hamburger">☰</div>
   </div>
@@ -1904,7 +1622,10 @@
         <div class="tool-icon">📊</div>
         <h3>Risk Tolerance Questionnaire</h3>
         <p>A 10-question assessment that maps you to one of 5 investor profiles — conservative to aggressive — with recommended asset allocation.</p>
-        <a href="Risk_Questionnaire_Maverick.pdf" download class="tool-dl-btn">⬇ Download PDF</a>
+        <div style="display:flex;flex-direction:column;gap:.5rem;align-items:flex-start;">
+          <a href="fund-advisor.html" class="tool-dl-btn">⚡ Take the Interactive Assessment</a>
+          <a href="Risk_Questionnaire_Maverick.pdf" download class="tool-dl-btn">⬇ Download PDF</a>
+        </div>
       </div>
 
       <div class="tool-card orange">
@@ -2014,128 +1735,6 @@
         </div>
       </div>
 
-    </div>
-  </div>
-</section>
-
-
-<!-- ============================================================
-     PORTFOLIO RECOMMENDER SECTION
-============================================================ -->
-<section class="recommender-section" id="recommender">
-  <div class="container">
-    <div class="rec-header">
-      <div class="section-label">Personalised For You</div>
-      <h2>Build Your Mutual Fund Portfolio</h2>
-      <p>Answer 4 quick questions — get a portfolio tailored to your age, income, risk appetite, and goals.</p>
-    </div>
-
-    <div class="rec-card" id="recWizard">
-      <!-- Step progress dots -->
-      <div class="rec-steps">
-        <div class="rec-step-dot active" id="rdot0"></div>
-        <div class="rec-step-dot" id="rdot1"></div>
-        <div class="rec-step-dot" id="rdot2"></div>
-        <div class="rec-step-dot" id="rdot3"></div>
-      </div>
-
-      <!-- Step 1: Age & Income -->
-      <div class="rec-step visible" id="rstep0">
-        <div class="rec-step-title">Step 1 of 4 — <span>Tell us about yourself</span></div>
-        <div class="rec-row">
-          <label>Your age &nbsp;<span class="rec-val" id="rAgeVal">30 yrs</span></label>
-          <input type="range" min="18" max="65" value="30" id="rAge" oninput="document.getElementById('rAgeVal').textContent=this.value+' yrs'">
-        </div>
-        <div class="rec-row">
-          <label>Monthly income (take-home)</label>
-          <select id="rIncome">
-            <option value="30000">Up to ₹30,000</option>
-            <option value="60000" selected>₹30,000 – ₹60,000</option>
-            <option value="100000">₹60,000 – ₹1 Lakh</option>
-            <option value="200000">₹1 Lakh – ₹2 Lakh</option>
-            <option value="500000">₹2 Lakh+</option>
-          </select>
-        </div>
-        <div class="rec-nav">
-          <div></div>
-          <button class="rec-btn-next" onclick="recNext(0)">Next →</button>
-        </div>
-      </div>
-
-      <!-- Step 2: Risk Profile -->
-      <div class="rec-step" id="rstep1">
-        <div class="rec-step-title">Step 2 of 4 — <span>Your risk appetite</span></div>
-        <p style="font-size:.88rem;color:var(--muted);margin-bottom:1rem;">How would you react if your portfolio dropped 20% in one year?</p>
-        <div class="rec-chips" id="rRiskChips">
-          <div class="rec-chip" onclick="selectChip('rRiskChips',this,'conservative')">🛡️ Conservative — I'd lose sleep</div>
-          <div class="rec-chip selected" onclick="selectChip('rRiskChips',this,'moderate')">⚖️ Moderate — I'd hold on</div>
-          <div class="rec-chip" onclick="selectChip('rRiskChips',this,'aggressive')">🚀 Aggressive — I'd buy more</div>
-        </div>
-        <div class="rec-nav">
-          <button class="rec-btn-back" onclick="recBack(1)">← Back</button>
-          <button class="rec-btn-next" onclick="recNext(1)">Next →</button>
-        </div>
-      </div>
-
-      <!-- Step 3: Goals -->
-      <div class="rec-step" id="rstep2">
-        <div class="rec-step-title">Step 3 of 4 — <span>Your financial goals</span></div>
-        <p style="font-size:.88rem;color:var(--muted);margin-bottom:1rem;">Select all that apply.</p>
-        <div class="rec-chips" id="rGoalChips" style="gap:.6rem">
-          <div class="rec-chip selected" onclick="toggleChip(this,'retirement')">🏖️ Retirement</div>
-          <div class="rec-chip" onclick="toggleChip(this,'wealth')">📈 Wealth Creation</div>
-          <div class="rec-chip" onclick="toggleChip(this,'taxsaving')">💰 Tax Saving (80C)</div>
-          <div class="rec-chip" onclick="toggleChip(this,'education')">🎓 Child's Education</div>
-          <div class="rec-chip" onclick="toggleChip(this,'home')">🏡 Home Down Payment</div>
-        </div>
-        <div class="rec-nav">
-          <button class="rec-btn-back" onclick="recBack(2)">← Back</button>
-          <button class="rec-btn-next" onclick="recNext(2)">Next →</button>
-        </div>
-      </div>
-
-      <!-- Step 4: Monthly SIP budget -->
-      <div class="rec-step" id="rstep3">
-        <div class="rec-step-title">Step 4 of 4 — <span>Monthly SIP budget</span></div>
-        <div class="rec-row">
-          <label>How much can you invest per month? &nbsp;<span class="rec-val" id="rSipVal">₹10,000</span></label>
-          <input type="range" min="1000" max="100000" step="500" value="10000" id="rSip"
-            oninput="document.getElementById('rSipVal').textContent='₹'+Number(this.value).toLocaleString('en-IN')">
-        </div>
-        <p style="font-size:.82rem;color:var(--muted);margin-top:.5rem;">We recommend investing 20–30% of take-home income. A consistent SIP beats timing the market every time.</p>
-        <div class="rec-nav">
-          <button class="rec-btn-back" onclick="recBack(3)">← Back</button>
-          <button class="rec-btn-next" onclick="recSubmit()">Build My Portfolio →</button>
-        </div>
-      </div>
-
-      <!-- Result -->
-      <div class="rec-result" id="recResult">
-        <div class="rec-profile-badge" id="recProfileBadge"></div>
-        <div class="rec-result-title" id="recResultTitle"></div>
-        <div class="rec-result-sub" id="recResultSub"></div>
-
-        <div class="rec-alloc-bars" id="recAllocBars"></div>
-
-        <div class="rec-total-sip">
-          <div class="rec-total-sip-label">Recommended Monthly SIP</div>
-          <div class="rec-total-sip-val" id="recTotalSip"></div>
-        </div>
-
-        <div class="rec-funds-grid" id="recFundsGrid"></div>
-
-        <div id="recPerfTable"></div>
-
-        <p style="font-size:.82rem;color:var(--mid);margin-top:.25rem;">
-          <strong>Tax saving note:</strong> <span id="recTaxNote"></span>
-        </p>
-
-        <div class="rec-disclaimer">
-          ⚠️ This is a general educational recommendation, not personalised investment advice. Mutual fund investments are subject to market risks. Please read all scheme-related documents carefully before investing. Consult a SEBI-registered investment advisor for personalised guidance.
-        </div>
-
-        <button class="rec-restart" onclick="recRestart()">↩ Start Over</button>
-      </div>
     </div>
   </div>
 </section>
@@ -2381,55 +1980,6 @@
   </div>
 </section>
 
-
-<!-- ============================================================
-     FOUNDER / ABOUT
-============================================================ -->
-<section class="founder-section" id="founder">
-  <div class="container">
-    <div class="center" style="margin-bottom:3rem;">
-      <div class="section-label">Behind Maverick Investor</div>
-      <h2 class="section-title">Built by an Investor, for Investors</h2>
-      <p class="section-sub">Real skin in the game — not theory from a textbook.</p>
-    </div>
-    <div class="founder-grid">
-      <div class="founder-photo-wrap">
-        <img src="jilesh.jpg" alt="Jilesh Kadi" class="founder-photo"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="founder-photo-placeholder" style="display:none;">JK</div>
-      </div>
-      <div>
-        <div class="founder-badge">Founder &amp; Editor</div>
-        <h3 class="founder-name">Jilesh Kadi</h3>
-        <p class="founder-title">Independent Investor · Financial Educator</p>
-        <p class="founder-bio">
-          I started Maverick Investor because I couldn't find a single Indian personal finance resource that was honest, India-specific, and free from product conflicts. No commissions, no referral fees — just clear thinking on mutual funds, insurance, and retirement planning.
-        </p>
-        <p class="founder-bio">
-          I've been investing in Indian equity markets for over five years, tracking my own XIRR religiously and learning from every cycle. Maverick Investor is my attempt to share that lens: evidence-led, India-first, and built around how regular Indian families actually earn, save, and invest.
-        </p>
-        <div class="founder-stats">
-          <div class="founder-stat">
-            <div class="founder-stat-val">₹66L+</div>
-            <div class="founder-stat-label">Personal Portfolio</div>
-          </div>
-          <div class="founder-stat">
-            <div class="founder-stat-val">13.6%</div>
-            <div class="founder-stat-label">XIRR over 5+ years</div>
-          </div>
-          <div class="founder-stat">
-            <div class="founder-stat-val">30+</div>
-            <div class="founder-stat-label">Funds Tracked Live</div>
-          </div>
-        </div>
-        <div class="founder-links">
-          <a href="mailto:jileshkadi@gmail.com" class="founder-link">✉️ Get in Touch</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ============================================================
      MOBILE APP
 ============================================================ -->
@@ -2557,38 +2107,41 @@
         </a>
         <p>Empowering Indian investors with unbiased, research-backed guidance on mutual funds, insurance, and retirement planning.</p>
         <div class="sebi-badge">🏛️ SEBI Investor Education Compliant</div>
-        <div class="social-row" style="margin-top:1rem; font-size:.75rem; color:rgba(255,255,255,.45);">
-          Social channels coming soon
+        <div class="social-row" style="margin-top:1rem;">
+          <a href="#" class="social-btn">𝕏</a>
+          <a href="#" class="social-btn">in</a>
+          <a href="#" class="social-btn">▶</a>
+          <a href="#" class="social-btn">📷</a>
         </div>
       </div>
       <div class="footer-col">
         <h4>Tools</h4>
         <ul>
-          <li><a href="#hero">SIP Calculator</a></li>
-          <li><a href="#tools">Retirement Planner</a></li>
-          <li><a href="#tools">Insurance Estimator</a></li>
-          <li><a href="#tools">Risk Questionnaire</a></li>
-          <li><a href="#tools">Goal Tracker</a></li>
+          <li><a href="#">SIP Calculator</a></li>
+          <li><a href="#">Retirement Planner</a></li>
+          <li><a href="#">Insurance Estimator</a></li>
+          <li><a href="fund-advisor.html">Risk Questionnaire</a></li>
+          <li><a href="#">Goal Tracker</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Learn</h4>
         <ul>
-          <li><a href="#" onclick="openModal('modal-mf-basics');return false;">Mutual Fund Basics</a></li>
-          <li><a href="#" onclick="openModal('modal-sip-vs-lump');return false;">SIP vs Lump Sum</a></li>
-          <li><a href="#" onclick="openModal('modal-elss');return false;">ELSS Tax Saving</a></li>
-          <li><a href="#" onclick="openModal('modal-nps');return false;">NPS Guide</a></li>
-          <li><a href="#" onclick="openModal('modal-term');return false;">Term Insurance 101</a></li>
+          <li><a href="#">Mutual Fund Basics</a></li>
+          <li><a href="#">SIP vs Lump Sum</a></li>
+          <li><a href="#">ELSS Tax Saving</a></li>
+          <li><a href="#">NPS Guide</a></li>
+          <li><a href="#">Term Insurance 101</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Company</h4>
         <ul>
-          <li><a href="#founder" onclick="document.getElementById('founder').scrollIntoView({behavior:'smooth'});return false;">About Us</a></li>
-          <li><a href="#" onclick="openModal('modal-contact');return false;">Contact</a></li>
-          <li><a href="#" onclick="openModal('modal-privacy');return false;">Privacy Policy</a></li>
-          <li><a href="#" onclick="openModal('modal-terms');return false;">Terms of Use</a></li>
-          <li><a href="#" onclick="openModal('modal-disclaimer');return false;">Disclaimer</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+          <li><a href="#">Disclaimer</a></li>
         </ul>
       </div>
     </div>
@@ -2611,41 +2164,41 @@
   // All scheme codes verified against mfapi.in live data (June 2026)
   const FUND_CONFIG = [
     // ── Large Cap ──────────────────────────────────────────────
-    { name:'Mirae Asset Large Cap',       group:'Large Cap',    cat:'equity', schemeCode:118825, color:'#e63946', risk:'Moderate',       er:0.52 },
-    { name:'HDFC Large Cap Fund',         group:'Large Cap',    cat:'equity', schemeCode:119018, color:'#0d6e47', risk:'Moderate',       er:0.82 },
-    { name:'ICICI Pru Large Cap',         group:'Large Cap',    cat:'equity', schemeCode:120586, color:'#6a4c93', risk:'Moderate',       er:0.90 },
-    { name:'SBI Large Cap Fund',          group:'Large Cap',    cat:'equity', schemeCode:119598, color:'#0077b6', risk:'Moderate',       er:0.82 },
-    { name:'Axis Large Cap Fund',         group:'Large Cap',    cat:'equity', schemeCode:120465, color:'#f47c20', risk:'Moderate',       er:0.70 },
+    { name:'Mirae Asset Large Cap',       group:'Large Cap',    cat:'equity', schemeCode:118825, color:'#e63946', risk:'Moderate' },
+    { name:'HDFC Large Cap Fund',         group:'Large Cap',    cat:'equity', schemeCode:119018, color:'#0d6e47', risk:'Moderate' },
+    { name:'ICICI Pru Large Cap',         group:'Large Cap',    cat:'equity', schemeCode:120586, color:'#6a4c93', risk:'Moderate' },
+    { name:'SBI Large Cap Fund',          group:'Large Cap',    cat:'equity', schemeCode:119598, color:'#0077b6', risk:'Moderate' },
+    { name:'Axis Large Cap Fund',         group:'Large Cap',    cat:'equity', schemeCode:120465, color:'#f47c20', risk:'Moderate' },
     // ── Mid Cap ────────────────────────────────────────────────
-    { name:'HDFC Mid Cap Fund',           group:'Mid Cap',      cat:'equity', schemeCode:118989, color:'#0077b6', risk:'High',           er:0.72 },
-    { name:'Motilal Oswal Midcap',        group:'Mid Cap',      cat:'equity', schemeCode:127042, color:'#e63946', risk:'High',           er:0.56 },
-    { name:'Nippon India Mid Cap',        group:'Mid Cap',      cat:'equity', schemeCode:118668, color:'#bc6c25', risk:'High',           er:0.71 },
-    { name:'Axis Midcap Fund',            group:'Mid Cap',      cat:'equity', schemeCode:120505, color:'#2d6a4f', risk:'High',           er:0.52 },
-    { name:'SBI Midcap Fund',             group:'Mid Cap',      cat:'equity', schemeCode:119716, color:'#457b9d', risk:'High',           er:0.82 },
+    { name:'HDFC Mid Cap Fund',           group:'Mid Cap',      cat:'equity', schemeCode:118989, color:'#0077b6', risk:'High'     },
+    { name:'Motilal Oswal Midcap',        group:'Mid Cap',      cat:'equity', schemeCode:127042, color:'#e63946', risk:'High'     },
+    { name:'Nippon India Mid Cap',        group:'Mid Cap',      cat:'equity', schemeCode:118668, color:'#bc6c25', risk:'High'     },
+    { name:'Axis Midcap Fund',            group:'Mid Cap',      cat:'equity', schemeCode:120505, color:'#2d6a4f', risk:'High'     },
+    { name:'SBI Midcap Fund',             group:'Mid Cap',      cat:'equity', schemeCode:119716, color:'#457b9d', risk:'High'     },
     // ── Small Cap ──────────────────────────────────────────────
-    { name:'Quant Small Cap',             group:'Small Cap',    cat:'equity', schemeCode:120828, color:'#e76f51', risk:'Very High',      er:0.62 },
-    { name:'Nippon India Small Cap',      group:'Small Cap',    cat:'equity', schemeCode:118778, color:'#0d6e47', risk:'Very High',      er:0.67 },
-    { name:'SBI Small Cap Fund',          group:'Small Cap',    cat:'equity', schemeCode:125497, color:'#6a4c93', risk:'Very High',      er:0.64 },
-    { name:'Axis Small Cap Fund',         group:'Small Cap',    cat:'equity', schemeCode:125354, color:'#0077b6', risk:'Very High',      er:0.53 },
-    { name:'DSP Small Cap Fund',          group:'Small Cap',    cat:'equity', schemeCode:119212, color:'#f47c20', risk:'Very High',      er:0.82 },
+    { name:'Quant Small Cap',             group:'Small Cap',    cat:'equity', schemeCode:120828, color:'#e76f51', risk:'Very High' },
+    { name:'Nippon India Small Cap',      group:'Small Cap',    cat:'equity', schemeCode:118778, color:'#0d6e47', risk:'Very High' },
+    { name:'SBI Small Cap Fund',          group:'Small Cap',    cat:'equity', schemeCode:125497, color:'#6a4c93', risk:'Very High' },
+    { name:'Axis Small Cap Fund',         group:'Small Cap',    cat:'equity', schemeCode:125354, color:'#0077b6', risk:'Very High' },
+    { name:'DSP Small Cap Fund',          group:'Small Cap',    cat:'equity', schemeCode:119212, color:'#f47c20', risk:'Very High' },
     // ── Flexi Cap ──────────────────────────────────────────────
-    { name:'Parag Parikh Flexi Cap',      group:'Flexi Cap',    cat:'equity', schemeCode:122639, color:'#2d6a4f', risk:'Moderate',       er:0.59 },
-    { name:'Kotak Flexicap Fund',         group:'Flexi Cap',    cat:'equity', schemeCode:120166, color:'#e63946', risk:'Moderate',       er:0.52 },
-    { name:'HDFC Flexi Cap Fund',         group:'Flexi Cap',    cat:'equity', schemeCode:118955, color:'#0077b6', risk:'Moderate',       er:0.78 },
-    { name:'UTI Flexi Cap Fund',          group:'Flexi Cap',    cat:'equity', schemeCode:120662, color:'#bc6c25', risk:'Moderate',       er:0.78 },
-    { name:'Motilal Oswal Flexi Cap',     group:'Flexi Cap',    cat:'equity', schemeCode:129046, color:'#457b9d', risk:'Moderate',       er:0.80 },
+    { name:'Parag Parikh Flexi Cap',      group:'Flexi Cap',    cat:'equity', schemeCode:122639, color:'#2d6a4f', risk:'Moderate' },
+    { name:'Kotak Flexicap Fund',         group:'Flexi Cap',    cat:'equity', schemeCode:120166, color:'#e63946', risk:'Moderate' },
+    { name:'HDFC Flexi Cap Fund',         group:'Flexi Cap',    cat:'equity', schemeCode:118955, color:'#0077b6', risk:'Moderate' },
+    { name:'UTI Flexi Cap Fund',          group:'Flexi Cap',    cat:'equity', schemeCode:120662, color:'#bc6c25', risk:'Moderate' },
+    { name:'Motilal Oswal Flexi Cap',     group:'Flexi Cap',    cat:'equity', schemeCode:129046, color:'#457b9d', risk:'Moderate' },
     // ── Index Funds ────────────────────────────────────────────
-    { name:'UTI Nifty 50 Index',          group:'Index',        cat:'index',  schemeCode:120716, color:'#457b9d', risk:'Moderate',       er:0.18 },
-    { name:'HDFC Nifty 50 Index',         group:'Index',        cat:'index',  schemeCode:119063, color:'#0d6e47', risk:'Moderate',       er:0.20 },
-    { name:'ICICI Pru Nifty 50 Index',    group:'Index',        cat:'index',  schemeCode:120620, color:'#6a4c93', risk:'Moderate',       er:0.17 },
-    { name:'Motilal Nifty 50 Index',      group:'Index',        cat:'index',  schemeCode:147794, color:'#0077b6', risk:'Moderate',       er:0.10 },
-    { name:'ICICI Pru Nifty Next 50',     group:'Index',        cat:'index',  schemeCode:120684, color:'#f47c20', risk:'Moderate-High',  er:0.30 },
+    { name:'UTI Nifty 50 Index',          group:'Index',        cat:'index',  schemeCode:120716, color:'#457b9d', risk:'Moderate' },
+    { name:'HDFC Nifty 50 Index',         group:'Index',        cat:'index',  schemeCode:119063, color:'#0d6e47', risk:'Moderate' },
+    { name:'ICICI Pru Nifty 50 Index',    group:'Index',        cat:'index',  schemeCode:120620, color:'#6a4c93', risk:'Moderate' },
+    { name:'Motilal Nifty 50 Index',      group:'Index',        cat:'index',  schemeCode:147794, color:'#0077b6', risk:'Moderate' },
+    { name:'ICICI Pru Nifty Next 50',     group:'Index',        cat:'index',  schemeCode:120684, color:'#f47c20', risk:'Moderate-High' },
     // ── Global & Gold ──────────────────────────────────────────
-    { name:'Mirae Asset S&P 500 FoF',    group:'Global & Gold', cat:'global', schemeCode:149170, color:'#e63946', risk:'High',           er:0.63 },
-    { name:'Mirae NYSE FANG+ FoF',       group:'Global & Gold', cat:'global', schemeCode:148928, color:'#0077b6', risk:'Very High',      er:0.68 },
-    { name:'Nippon India Gold Savings',   group:'Global & Gold', cat:'global', schemeCode:118663, color:'#f4c430', risk:'Moderate',       er:0.14 },
-    { name:'SBI Gold Fund',               group:'Global & Gold', cat:'global', schemeCode:119788, color:'#bc6c25', risk:'Moderate',       er:0.17 },
-    { name:'Axis Gold Fund',              group:'Global & Gold', cat:'global', schemeCode:120473, color:'#2d6a4f', risk:'Moderate',       er:0.15 },
+    { name:'Mirae Asset S&P 500 FoF',    group:'Global & Gold', cat:'global', schemeCode:149170, color:'#e63946', risk:'High'     },
+    { name:'Mirae NYSE FANG+ FoF',       group:'Global & Gold', cat:'global', schemeCode:148928, color:'#0077b6', risk:'Very High' },
+    { name:'Nippon India Gold Savings',   group:'Global & Gold', cat:'global', schemeCode:118663, color:'#f4c430', risk:'Moderate' },
+    { name:'SBI Gold Fund',               group:'Global & Gold', cat:'global', schemeCode:119788, color:'#bc6c25', risk:'Moderate' },
+    { name:'Axis Gold Fund',              group:'Global & Gold', cat:'global', schemeCode:120473, color:'#2d6a4f', risk:'Moderate' },
   ];
 
   // ── Index config — tracked via mfapi.in index fund NAVs ──
@@ -2665,7 +2218,7 @@
   /* ═══════════════════════════════════════════════════════════
      STATE
   ═══════════════════════════════════════════════════════════ */
-  let funds         = FUND_CONFIG.map(f => ({ ...f, nav:'—', d1:'—', y1:'—', y3:'—', y5:'—', y3Raw:null, y5Raw:null, up:true, live:false }));
+  let funds         = FUND_CONFIG.map(f => ({ ...f, nav:'—', d1:'—', y1:'—', y3:'—', up:true, live:false }));
   let indexData     = INDEX_CONFIG.map(cfg => ({ ...cfg, fundNav:'—', chg:'—', chgPct:'—', asOf:'', up:true, live:false }));
   let currentFilter = 'all';
   let tickerItems   = [];
@@ -2830,18 +2383,13 @@
           if (!arr || arr.length < 2) return;
           const cur  = parseFloat(arr[0].nav);
           const prev = parseFloat(arr[1].nav);
-          const i1   = Math.min(252,  arr.length - 1);
-          const i3   = Math.min(756,  arr.length - 1);
-          const i5   = Math.min(1260, arr.length - 1);
+          const i1   = Math.min(252, arr.length - 1);
+          const i3   = Math.min(756, arr.length - 1);
           const d1   = ((cur - prev) / prev) * 100;
           const y1   = ((cur - parseFloat(arr[i1].nav)) / parseFloat(arr[i1].nav)) * 100;
-          const y3Raw = (Math.pow(cur / parseFloat(arr[i3].nav), 1/3) - 1) * 100;
-          const y5Raw = arr.length > 500 ? (Math.pow(cur / parseFloat(arr[i5].nav), 1/5) - 1) * 100 : null;
+          const y3   = (Math.pow(cur / parseFloat(arr[i3].nav), 1/3) - 1) * 100;
           const up   = d1 >= 0;
-          funds[idx] = { ...fund, nav:cur.toFixed(4), d1:sign(d1)+d1.toFixed(2)+'%', y1:sign(y1)+y1.toFixed(1)+'%',
-                         y3:sign(y3Raw)+y3Raw.toFixed(1)+'%', y3Raw,
-                         y5: y5Raw !== null ? sign(y5Raw)+y5Raw.toFixed(1)+'%' : 'N/A', y5Raw,
-                         asOf:arr[0].date, up, live:true };
+          funds[idx] = { ...fund, nav:cur.toFixed(4), d1:sign(d1)+d1.toFixed(2)+'%', y1:sign(y1)+y1.toFixed(1)+'%', y3:y3.toFixed(1)+'%', asOf:arr[0].date, up, live:true };
         })
         .catch(() => {})
     ));
@@ -3092,105 +2640,6 @@
   calcInsurance();
 
   /* -------------------------------------------------------
-     RISK QUESTIONNAIRE
-  ------------------------------------------------------- */
-  const questions = [
-    {
-      q: "If your investments dropped 20% in a month, what would you do?",
-      opts: ["Sell everything immediately", "Sell some to reduce risk", "Hold and wait", "Buy more at lower prices"]
-    },
-    {
-      q: "What is your primary investment goal?",
-      opts: ["Capital protection", "Regular income", "Moderate growth", "Aggressive wealth creation"]
-    },
-    {
-      q: "What is your investment time horizon?",
-      opts: ["Less than 2 years", "2–5 years", "5–10 years", "More than 10 years"]
-    },
-    {
-      q: "What portion of your monthly income can you invest without financial stress?",
-      opts: ["Less than 5%", "5–10%", "10–20%", "More than 20%"]
-    },
-    {
-      q: "How familiar are you with equity mutual funds?",
-      opts: ["Not at all familiar", "Basic understanding", "Fairly comfortable", "Very experienced"]
-    }
-  ];
-
-  const profiles = [
-    { name:'Conservative 🛡️', desc:'You prefer safety over growth. Best fit: Debt funds, FD, Liquid funds, Short-duration funds.', emoji:'🛡️', min:0, max:5 },
-    { name:'Moderate-Conservative 🌿', desc:'Steady returns with low risk. Best fit: Balanced advantage funds, Hybrid funds.', emoji:'🌿', min:6, max:10 },
-    { name:'Moderate ⚖️', desc:'Balanced growth and risk tolerance. Best fit: Flexi-cap, ELSS, Multi-asset funds.', emoji:'⚖️', min:11, max:14 },
-    { name:'Moderate-Aggressive 📈', desc:'Comfortable with volatility for higher returns. Best fit: Mid-cap, Small-cap, Sectoral funds.', emoji:'📈', min:15, max:17 },
-    { name:'Aggressive 🚀', desc:'Maximum growth, high risk appetite. Best fit: Small-cap, Momentum, International equity funds.', emoji:'🚀', min:18, max:20 },
-  ];
-
-  let currentQ = 0;
-  let answers  = [];
-
-  function renderQuiz() {
-    if (!document.getElementById('quizStep')) return;
-    const q = questions[currentQ];
-    document.getElementById('quizStep').textContent = `Question ${currentQ+1} of ${questions.length}`;
-    document.getElementById('quizBar').style.width = `${(currentQ/questions.length)*100}%`;
-    document.getElementById('quizQuestion').textContent = q.q;
-    document.getElementById('quizOptions').innerHTML = q.opts.map((o,i) => `
-      <div class="quiz-opt ${answers[currentQ]===i?'selected':''}" onclick="selectOpt(${i})">
-        <div class="opt-dot">${answers[currentQ]===i?'✓':''}</div>
-        <span>${o}</span>
-      </div>`).join('');
-    document.getElementById('quizBackBtn').style.visibility = currentQ===0?'hidden':'visible';
-    document.getElementById('quizNextBtn').textContent = currentQ===questions.length-1 ? 'See My Profile →' : 'Next →';
-  }
-
-  function selectOpt(i) {
-    answers[currentQ] = i;
-    renderQuiz();
-  }
-
-  function quizNext() {
-    if (answers[currentQ] === undefined) { alert('Please select an option.'); return; }
-    if (currentQ < questions.length-1) {
-      currentQ++;
-      renderQuiz();
-    } else {
-      showResult();
-    }
-  }
-
-  function quizBack() {
-    if (currentQ > 0) { currentQ--; renderQuiz(); }
-  }
-
-  function showResult() {
-    const score = answers.reduce((s,a) => s + a, 0);
-    const profile = profiles.find(p => score >= p.min && score <= p.max) || profiles[2];
-    document.getElementById('quizBar').style.width = '100%';
-    document.getElementById('quizOptions').innerHTML = '';
-    document.getElementById('quizQuestion').innerHTML = '';
-    document.getElementById('quizStep').textContent = 'Your Profile';
-    document.getElementById('quizNav') && (document.getElementById('quizNav').style.display='none');
-    document.querySelector('.quiz-nav').style.display = 'none';
-    document.querySelector('.quiz-progress').style.display = 'none';
-    const result = document.getElementById('quizResult');
-    result.style.display = 'block';
-    document.getElementById('resultRing').textContent = profile.emoji;
-    document.getElementById('resultProfile').textContent = profile.name;
-    document.getElementById('resultDesc').textContent = profile.desc;
-  }
-
-  function resetQuiz() {
-    currentQ = 0;
-    answers  = [];
-    document.getElementById('quizResult').style.display = 'none';
-    document.querySelector('.quiz-nav').style.display = 'flex';
-    document.querySelector('.quiz-progress').style.display = 'block';
-    renderQuiz();
-  }
-
-  renderQuiz();
-
-  /* -------------------------------------------------------
      SIMULATE DOWNLOAD
   ------------------------------------------------------- */
   function simulateDownload(e, filename) {
@@ -3212,249 +2661,6 @@
   }
 
 
-
-  /* ═══════════════════════════════════════════════════════════
-     MODAL SYSTEM
-  ═══════════════════════════════════════════════════════════ */
-  function openModal(id) {
-    const el = document.getElementById(id);
-    if (el) { el.classList.add('open'); document.body.style.overflow='hidden'; }
-  }
-  function closeModal(id) {
-    const el = document.getElementById(id);
-    if (el) { el.classList.remove('open'); document.body.style.overflow=''; }
-  }
-  document.addEventListener('keydown', e => { if(e.key==='Escape') document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open')); });
-
-  /* ═══════════════════════════════════════════════════════════
-     PORTFOLIO RECOMMENDER
-  ═══════════════════════════════════════════════════════════ */
-  let recData = { age:30, income:60000, risk:'moderate', goals:['retirement'], sip:10000 };
-
-  function recNext(step) {
-    // Collect step data
-    if (step === 0) {
-      recData.age    = +document.getElementById('rAge').value;
-      recData.income = +document.getElementById('rIncome').value;
-    } else if (step === 1) {
-      const sel = document.querySelector('#rRiskChips .rec-chip.selected');
-      recData.risk = sel ? sel.dataset.val || sel.textContent.match(/conservative|moderate|aggressive/i)?.[0]?.toLowerCase() || 'moderate' : 'moderate';
-    } else if (step === 2) {
-      recData.goals = Array.from(document.querySelectorAll('#rGoalChips .rec-chip.selected')).map(c => c.dataset.val || c.textContent.replace(/[^a-z]/gi,'').toLowerCase());
-    }
-    showRecStep(step + 1);
-  }
-  function recBack(step) { showRecStep(step - 1); }
-
-  function showRecStep(step) {
-    for (let i = 0; i < 4; i++) {
-      const s = document.getElementById('rstep'+i);
-      const d = document.getElementById('rdot'+i);
-      if (s) s.classList.toggle('visible', i === step);
-      if (d) {
-        d.classList.toggle('active', i === step);
-        d.classList.toggle('done', i < step);
-      }
-    }
-  }
-
-  function selectChip(groupId, el, val) {
-    document.querySelectorAll('#'+groupId+' .rec-chip').forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-    el.dataset.val = val;
-  }
-
-  function toggleChip(el, val) {
-    el.classList.toggle('selected');
-    el.dataset.val = val;
-  }
-
-  function recSubmit() {
-    recData.sip = +document.getElementById('rSip').value;
-    recData.goals = Array.from(document.querySelectorAll('#rGoalChips .rec-chip.selected')).map(c => c.dataset.val || '');
-    const riskSel = document.querySelector('#rRiskChips .rec-chip.selected');
-    recData.risk = riskSel ? (riskSel.dataset.val || 'moderate') : 'moderate';
-    buildPortfolio();
-  }
-
-  function recRestart() {
-    document.getElementById('recResult').classList.remove('visible');
-    document.getElementById('recWizard').querySelector('.rec-steps').style.display = 'flex';
-    // Reset all chips
-    document.querySelectorAll('#rRiskChips .rec-chip').forEach((c,i) => c.classList.toggle('selected', i===1));
-    document.querySelectorAll('#rGoalChips .rec-chip').forEach((c,i) => c.classList.toggle('selected', i===0));
-    recData = { age:30, income:60000, risk:'moderate', goals:['retirement'], sip:10000 };
-    showRecStep(0);
-  }
-
-  function fmtSip(v) {
-    return '₹' + Number(Math.round(v)).toLocaleString('en-IN');
-  }
-
-  function buildPortfolio() {
-    const { age, income, risk, goals, sip } = recData;
-    const wantsElss = goals.includes('taxsaving');
-
-    // ── Base allocation by age ────────────────────────────────
-    let alloc = {};
-    if (age < 30)      alloc = { largeCap:25, flexiCap:25, midCap:20, smallCap:15, index:10, gold:5 };
-    else if (age < 40) alloc = { largeCap:25, flexiCap:25, midCap:20, smallCap:10, index:15, gold:5 };
-    else if (age < 50) alloc = { largeCap:30, flexiCap:25, midCap:15, smallCap:5,  index:20, gold:5 };
-    else               alloc = { largeCap:35, flexiCap:25, midCap:10, smallCap:0,  index:25, gold:5 };
-
-    // ── Risk modifier ─────────────────────────────────────────
-    if (risk === 'aggressive') {
-      alloc.midCap   = Math.min(alloc.midCap + 10, 35);
-      alloc.smallCap = Math.min(alloc.smallCap + 5, 25);
-      alloc.largeCap = Math.max(alloc.largeCap - 10, 15);
-      alloc.index    = Math.max(alloc.index - 5, 5);
-    } else if (risk === 'conservative') {
-      alloc.largeCap = Math.min(alloc.largeCap + 15, 50);
-      alloc.index    = Math.min(alloc.index + 10, 35);
-      alloc.midCap   = Math.max(alloc.midCap - 15, 0);
-      alloc.smallCap = 0;
-      alloc.gold     = Math.min(alloc.gold + 5, 15);
-    }
-
-    // Normalise to 100
-    const tot = Object.values(alloc).reduce((s,v)=>s+v,0);
-    Object.keys(alloc).forEach(k => alloc[k] = Math.round(alloc[k]/tot*100));
-    const diff = 100 - Object.values(alloc).reduce((s,v)=>s+v,0);
-    alloc.largeCap += diff;
-
-    // ── Score funds within each group on live data ────────────
-    // Score = 3Y CAGR × 0.4  +  5Y CAGR × 0.4  −  Expense Ratio × 5
-    // Falls back to first fund in group if live data hasn't arrived yet
-    function pickBest(group, count) {
-      const live = funds.filter(f => f.group === group && f.live && f.y3Raw !== null);
-      const pool = live.length > 0 ? live : funds.filter(f => f.group === group);
-      return pool
-        .map(f => ({ ...f, score: (f.y3Raw || 0) * 0.4 + (f.y5Raw || 0) * 0.4 - (f.er || 1) * 5 }))
-        .sort((a, b) => b.score - a.score)
-        .slice(0, count);
-    }
-
-    const groupColors = {
-      'Large Cap':'#0d6e47', 'Flexi Cap':'#2d6a4f', 'Mid Cap':'#f47c20',
-      'Small Cap':'#e63946', 'Index':'#457b9d', 'Global & Gold':'#f4c430'
-    };
-
-    // Pick top fund per category (top 2 for Large & Flexi which get big allocation)
-    const segments = [
-      { label:'Large Cap',  pct:alloc.largeCap,  group:'Large Cap',    color:'#0d6e47', picks:1 },
-      { label:'Flexi Cap',  pct:alloc.flexiCap,  group:'Flexi Cap',    color:'#2d6a4f', picks:1 },
-      { label:'Mid Cap',    pct:alloc.midCap,    group:'Mid Cap',      color:'#f47c20', picks:1 },
-      { label:'Small Cap',  pct:alloc.smallCap,  group:'Small Cap',    color:'#e63946', picks:1 },
-      { label:'Index',      pct:alloc.index,     group:'Index',        color:'#457b9d', picks:1 },
-      { label:'Gold',       pct:alloc.gold,      group:'Global & Gold',color:'#f4c430', picks:1 },
-    ].filter(s => s.pct > 0);
-
-    // Flatten into individual fund picks with SIP splits
-    const picks = [];
-    segments.forEach(seg => {
-      const best = pickBest(seg.group, seg.picks);
-      const splitPct = Math.round(seg.pct / best.length);
-      best.forEach((f, i) => {
-        picks.push({
-          label: seg.label,
-          pct:   i === best.length - 1 ? seg.pct - splitPct * i : splitPct,
-          color: seg.color,
-          fund:  f.name,
-          risk:  f.risk,
-          group: f.group,
-          y1:    f.y1   || '—',
-          y3:    f.y3   || '—',
-          y5:    f.y5   || '—',
-          er:    f.er   != null ? f.er.toFixed(2) + '%' : '—',
-          live:  f.live || false,
-        });
-      });
-    });
-
-    // ── Profile label ─────────────────────────────────────────
-    const profiles = {
-      conservative: { label:'Conservative Investor 🛡️', sub:'Capital preservation with steady growth — low-volatility funds dominate.' },
-      moderate:     { label:'Balanced Growth Investor ⚖️', sub:'A diversified mix targeting 11–13% CAGR with manageable risk.' },
-      aggressive:   { label:'High-Growth Investor 🚀', sub:'Tilt towards mid & small cap for maximum long-term wealth creation.' },
-    };
-    const profile = profiles[risk] || profiles.moderate;
-
-    document.getElementById('recProfileBadge').textContent = profile.label;
-    document.getElementById('recResultTitle').textContent  = `Personalised Portfolio for Age ${age}`;
-    document.getElementById('recResultSub').textContent    = profile.sub;
-    document.getElementById('recTotalSip').textContent     = fmtSip(sip) + '/mo';
-
-    // ── Allocation bars ───────────────────────────────────────
-    document.getElementById('recAllocBars').innerHTML = segments.map(s => `
-      <div class="rec-alloc-row">
-        <div class="rec-alloc-label"><span>${s.label}</span><span style="color:${s.color};font-weight:700">${s.pct}%</span></div>
-        <div class="rec-alloc-bar-bg"><div class="rec-alloc-bar" style="width:${s.pct}%;background:${s.color}"></div></div>
-      </div>`).join('');
-
-    // ── Fund cards ────────────────────────────────────────────
-    document.getElementById('recFundsGrid').innerHTML = picks.map(p => {
-      const sipAmt = Math.round(sip * p.pct / 100 / 500) * 500;
-      return `<div class="rec-fund-card" style="border-left-color:${p.color}">
-        <div class="rec-fund-name">${p.fund}</div>
-        <div class="rec-fund-meta">${p.label} · Risk: ${p.risk}</div>
-        <div class="rec-fund-sip">${fmtSip(sipAmt)}<span class="rec-fund-alloc"> /mo (${p.pct}%)</span></div>
-      </div>`;
-    }).join('');
-
-    // ── Performance table ─────────────────────────────────────
-    const liveNote = picks.some(p => p.live)
-      ? 'Live AMFI data · Loaded today'
-      : '⏳ Live data still loading — scores based on available data';
-    document.getElementById('recPerfTable').innerHTML = `
-      <div class="perf-table-wrap">
-        <h4 class="perf-table-title">Fund Performance Comparison</h4>
-        <div class="perf-table-scroll">
-        <table class="perf-table">
-          <thead>
-            <tr>
-              <th>Fund</th>
-              <th>Category</th>
-              <th>1Y Return</th>
-              <th>3Y CAGR</th>
-              <th>5Y CAGR</th>
-              <th>Exp. Ratio</th>
-              <th>Risk</th>
-              <th>Alloc.</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${picks.map(p => `<tr>
-              <td class="pt-fund-name"><span class="pt-dot" style="background:${p.color}"></span>${p.fund}</td>
-              <td>${p.label}</td>
-              <td class="pt-num">${p.y1}</td>
-              <td class="pt-num pt-highlight">${p.y3}</td>
-              <td class="pt-num pt-highlight">${p.y5}</td>
-              <td class="pt-num">${p.er}</td>
-              <td><span class="risk-chip risk-${p.risk.toLowerCase().replace(/\s+/g,'-')}">${p.risk}</span></td>
-              <td class="pt-num pt-bold">${p.pct}%</td>
-            </tr>`).join('')}
-          </tbody>
-        </table>
-        </div>
-        <p class="perf-note">${liveNote} · Past returns ≠ future results · Direct plan expense ratios (AMFI)</p>
-      </div>`;
-
-    // ── Tax note ──────────────────────────────────────────────
-    const taxNote = wantsElss
-      ? 'You selected Tax Saving (80C). Consider adding ₹12,500/month to an ELSS fund (e.g. Axis Long Term Equity or Mirae Asset Tax Saver) to claim the full ₹1.5L 80C deduction. ELSS funds are not in the live tracker yet but are available on all fund platforms.'
-      : 'No specific tax-saving goal selected. If you're in the 20–30% tax bracket, consider allocating up to ₹12,500/month to an ELSS fund to claim ₹1.5L deduction under Section 80C.';
-    document.getElementById('recTaxNote').textContent = taxNote;
-
-    // ── Show result ───────────────────────────────────────────
-    document.getElementById('recWizard').querySelector('.rec-steps').style.display = 'none';
-    ['rstep0','rstep1','rstep2','rstep3'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.classList.remove('visible');
-    });
-    document.getElementById('recResult').classList.add('visible');
-  }
-
-
   /* STARTUP */
 
   // Render skeleton cards immediately while data loads
@@ -3473,252 +2679,5 @@
   _toastStyle.textContent = '@keyframes fadeInUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}';
   document.head.appendChild(_toastStyle);
 </script>
-
-<!-- ============================================================
-     MODALS — Learn & Company links
-============================================================ -->
-<div class="modal-overlay" id="modal-mf-basics" onclick="if(event.target===this)closeModal(this.id)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('modal-mf-basics')">×</button>
-    <div class="modal-title">Mutual Fund Basics</div>
-    <div class="modal-body">
-      <p>A mutual fund pools money from many investors and invests it in stocks, bonds, or other securities. A professional fund manager makes the investment decisions.</p>
-      <h4>Key terms</h4>
-      <ul>
-        <li><strong>NAV (Net Asset Value):</strong> The price of one unit of the fund — calculated daily after market close.</li>
-        <li><strong>SIP (Systematic Investment Plan):</strong> Investing a fixed amount every month, regardless of market conditions.</li>
-        <li><strong>ELSS:</strong> Equity Linked Savings Scheme — qualifies for ₹1.5L tax deduction under Section 80C, with a 3-year lock-in.</li>
-        <li><strong>Exit Load:</strong> A fee charged if you redeem within a certain period (usually 1 year for equity funds).</li>
-        <li><strong>Expense Ratio:</strong> Annual fee charged by the fund house — lower is better. Index funds typically have 0.1–0.2%.</li>
-      </ul>
-      <h4>Fund categories</h4>
-      <ul>
-        <li><strong>Large Cap:</strong> Invest in top 100 companies by market cap. Stable, moderate returns (~11–13% long-term).</li>
-        <li><strong>Mid Cap:</strong> Companies ranked 101–250. Higher growth potential, higher volatility.</li>
-        <li><strong>Small Cap:</strong> Companies ranked 251+. High risk, high reward — suitable for 7+ year horizon.</li>
-        <li><strong>Flexi Cap:</strong> Fund manager can invest across large, mid, and small cap freely.</li>
-        <li><strong>Index Funds:</strong> Passively track an index like Nifty 50 or Sensex. Low cost, market returns.</li>
-      </ul>
-      <h4>Tax on mutual funds (as of FY2025)</h4>
-      <ul>
-        <li>Equity funds held &lt;1 year: Short-Term Capital Gains (STCG) @ 20%</li>
-        <li>Equity funds held &gt;1 year: Long-Term Capital Gains (LTCG) @ 12.5% (gains above ₹1.25L)</li>
-        <li>Debt funds: Taxed as per your income tax slab</li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-sip-vs-lump" onclick="if(event.target===this)closeModal(this.id)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('modal-sip-vs-lump')">×</button>
-    <div class="modal-title">SIP vs Lump Sum</div>
-    <div class="modal-body">
-      <p>Both are ways to invest in mutual funds — each works best in different situations.</p>
-      <h4>SIP — Systematic Investment Plan</h4>
-      <ul>
-        <li>Invest a fixed amount every month (e.g. ₹5,000/month)</li>
-        <li>Benefits from <strong>Rupee Cost Averaging</strong> — you buy more units when markets are low, fewer when high</li>
-        <li>Best for: Salaried investors, beginners, volatile markets</li>
-        <li>Removes the need to time the market</li>
-      </ul>
-      <h4>Lump Sum</h4>
-      <ul>
-        <li>Invest a large amount all at once</li>
-        <li>Best for: When markets are at a significant correction (dips)</li>
-        <li>Risk: If markets fall right after, you're fully exposed</li>
-        <li>Ideal for: Windfalls like bonus, inheritance, maturity proceeds</li>
-      </ul>
-      <h4>The verdict for most investors</h4>
-      <p>Start with SIP for regular income. Add lump sum opportunistically during market corrections of 10%+. A ₹10,000/month SIP compounded at 12% for 15 years builds ₹1 crore. Start early — time in the market beats timing the market.</p>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-elss" onclick="if(event.target===this)closeModal(this.id)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('modal-elss')">×</button>
-    <div class="modal-title">ELSS Tax Saving</div>
-    <div class="modal-body">
-      <p>ELSS (Equity Linked Savings Scheme) is the most popular 80C tax-saving instrument for investors who want growth.</p>
-      <h4>Key benefits</h4>
-      <ul>
-        <li>Deduction up to <strong>₹1.5 Lakh</strong> under Section 80C — saves up to ₹46,800 in tax (30% bracket)</li>
-        <li>Shortest lock-in of all 80C instruments — just <strong>3 years</strong></li>
-        <li>Invested in equity — historically delivers 12–15% over long periods</li>
-        <li>Can be done via SIP — ₹12,500/month = ₹1.5L/year for full 80C benefit</li>
-      </ul>
-      <h4>Comparison with other 80C options</h4>
-      <ul>
-        <li><strong>PPF:</strong> 7.1% guaranteed, 15-year lock-in — ultra-safe, low return</li>
-        <li><strong>NSC:</strong> 7.7% fixed, 5-year lock-in</li>
-        <li><strong>FD (5yr):</strong> ~6–7%, taxable interest</li>
-        <li><strong>ELSS:</strong> Market-linked (~12–15% historically), 3-year lock-in, LTCG taxed above ₹1.25L</li>
-      </ul>
-      <h4>Who should invest in ELSS?</h4>
-      <p>Anyone in the 20–30% tax bracket with a 5+ year horizon. The 3-year lock-in ensures you don't panic-sell during corrections, which often works in your favour.</p>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-nps" onclick="if(event.target===this)closeModal(this.id)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('modal-nps')">×</button>
-    <div class="modal-title">NPS Guide</div>
-    <div class="modal-body">
-      <p>NPS (National Pension System) is a government-backed retirement savings scheme — one of the most tax-efficient instruments for salaried employees.</p>
-      <h4>Tax benefits — the NPS triple advantage</h4>
-      <ul>
-        <li><strong>Section 80C:</strong> Up to ₹1.5L deductible (shared with other 80C investments)</li>
-        <li><strong>Section 80CCD(1B):</strong> Additional ₹50,000 deduction — exclusive to NPS</li>
-        <li><strong>Section 80CCD(2):</strong> Employer contribution (up to 10% of salary) is fully deductible — not subject to any limit</li>
-      </ul>
-      <h4>How NPS works</h4>
-      <ul>
-        <li>Tier 1 account — mandatory, locked till retirement (60 years)</li>
-        <li>At retirement: 60% corpus is tax-free; 40% must be used to buy annuity</li>
-        <li>You choose your asset allocation — Equity (E), Corporate Bonds (C), Government Securities (G)</li>
-        <li>Auto-choice option available — reduces equity exposure as you age</li>
-      </ul>
-      <h4>Who should use NPS?</h4>
-      <p>Ideal for anyone in the 30% bracket who has already exhausted 80C. The additional ₹50,000 deduction under 80CCD(1B) alone saves ₹15,000+ in tax. Start early — the power of compounding over 30+ years is significant.</p>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-term" onclick="if(event.target===this)closeModal(this.id)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('modal-term')">×</button>
-    <div class="modal-title">Term Insurance 101</div>
-    <div class="modal-body">
-      <p>Term insurance is the simplest, cheapest, and most important insurance you'll ever buy. If you have dependents, you need it.</p>
-      <h4>Why term, not ULIP or endowment?</h4>
-      <ul>
-        <li>Term plans pay only on death — no maturity benefit. This keeps premiums extremely low.</li>
-        <li>A ₹1 Crore cover for a 30-year-old costs ~₹7,000–10,000/year — less than ₹1,000/month</li>
-        <li>ULIPs and endowment plans mix insurance + investment — poorly. Buy term + invest the rest separately.</li>
-      </ul>
-      <h4>How much cover do you need?</h4>
-      <ul>
-        <li>Rule of thumb: <strong>10–15× annual income</strong></li>
-        <li>Add outstanding loans (home loan, car loan)</li>
-        <li>Add ₹5–10L per dependent for their future needs</li>
-        <li>Example: ₹12L income + ₹40L home loan + 2 kids = ₹2.1–2.6 Crore cover</li>
-      </ul>
-      <h4>Key features to look for</h4>
-      <ul>
-        <li><strong>Claim Settlement Ratio:</strong> Choose insurers with 98%+ CSR</li>
-        <li><strong>Policy term:</strong> Cover till at least age 65–70</li>
-        <li><strong>Riders:</strong> Consider critical illness rider and accidental death benefit</li>
-        <li><strong>Income payout option:</strong> Monthly income to family instead of lump sum</li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-about" onclick="if(event.target===this)closeModal(this.id)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('modal-about')">×</button>
-    <div class="modal-title">About Maverick Investor</div>
-    <div class="modal-body">
-      <p>Maverick Investor is an independent Indian personal finance platform built to give every Indian investor — from first-time SIP starters to seasoned portfolio builders — access to clear, unbiased financial guidance.</p>
-      <h4>What we do</h4>
-      <ul>
-        <li>Provide live mutual fund NAV tracking via AMFI data</li>
-        <li>Offer free downloadable planners for retirement, goals, SIPs, and insurance</li>
-        <li>Educate investors on mutual funds, NPS, insurance, and tax planning</li>
-        <li>Help investors build personalised portfolios based on their goals and risk profile</li>
-      </ul>
-      <h4>What we don't do</h4>
-      <ul>
-        <li>We do not charge commissions or receive referral fees from any fund house</li>
-        <li>We are not SEBI-registered investment advisors</li>
-        <li>We do not execute trades or manage money on your behalf</li>
-      </ul>
-      <p>All content is for educational purposes only. For personalised investment advice, please consult a SEBI-registered investment advisor (RIA).</p>
-      <h4>Contact</h4>
-      <p>Reach us at <a href="mailto:jileshkadi@gmail.com" style="color:var(--green);font-weight:600;">jileshkadi@gmail.com</a></p>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-contact" onclick="if(event.target===this)closeModal(this.id)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('modal-contact')">×</button>
-    <div class="modal-title">Contact Us</div>
-    <div class="modal-body">
-      <p>Have feedback, a question, or a fund suggestion? We'd love to hear from you.</p>
-      <h4>Email</h4>
-      <p><a href="mailto:jileshkadi@gmail.com" style="color:var(--green);font-weight:600;">jileshkadi@gmail.com</a></p>
-      <h4>Response time</h4>
-      <p>We aim to respond within 2–3 business days.</p>
-      <h4>What to include</h4>
-      <ul>
-        <li>Your query or feedback in detail</li>
-        <li>If reporting a data issue — the fund name and date</li>
-        <li>If suggesting a fund — the scheme name and AMFI code</li>
-      </ul>
-      <p style="margin-top:1rem;font-size:.82rem;color:var(--muted);">Please do not share sensitive personal or financial information over email.</p>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-privacy" onclick="if(event.target===this)closeModal(this.id)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('modal-privacy')">×</button>
-    <div class="modal-title">Privacy Policy</div>
-    <div class="modal-body">
-      <p>Last updated: June 2026</p>
-      <h4>Data we collect</h4>
-      <p>Maverick Investor does not collect any personal data. This website has no login, no registration, no cookies for tracking, and no third-party analytics.</p>
-      <h4>Calculator inputs</h4>
-      <p>All calculator inputs (age, income, SIP amount, etc.) are processed entirely in your browser. No data is sent to any server.</p>
-      <h4>Live NAV data</h4>
-      <p>Live NAV data is fetched directly from <strong>mfapi.in</strong> (an AMFI data wrapper) in your browser. No data about you is transmitted.</p>
-      <h4>External links</h4>
-      <p>This website may link to external sites. We are not responsible for the privacy practices of external websites.</p>
-      <h4>Contact</h4>
-      <p>Privacy questions: <a href="mailto:jileshkadi@gmail.com" style="color:var(--green);">jileshkadi@gmail.com</a></p>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-terms" onclick="if(event.target===this)closeModal(this.id)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('modal-terms')">×</button>
-    <div class="modal-title">Terms of Use</div>
-    <div class="modal-body">
-      <p>By using Maverick Investor, you agree to the following terms.</p>
-      <h4>Educational use only</h4>
-      <p>All content on this website — including fund data, calculators, articles, and portfolio recommendations — is provided for educational and informational purposes only. Nothing on this site constitutes personalised investment advice.</p>
-      <h4>No liability</h4>
-      <p>Maverick Investor is not responsible for any investment decisions you make based on content from this website. Mutual fund investments are subject to market risk. Past performance is not indicative of future returns.</p>
-      <h4>Data accuracy</h4>
-      <p>NAV data is sourced from AMFI via mfapi.in and is generally accurate but may be delayed. We make no guarantees of real-time accuracy.</p>
-      <h4>Intellectual property</h4>
-      <p>All original content on this website is the property of Maverick Investor. You may use downloadable tools for personal use only — not for commercial redistribution.</p>
-      <h4>Modifications</h4>
-      <p>We reserve the right to modify these terms at any time. Continued use of the website after changes constitutes acceptance.</p>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-disclaimer" onclick="if(event.target===this)closeModal(this.id)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('modal-disclaimer')">×</button>
-    <div class="modal-title">Disclaimer</div>
-    <div class="modal-body">
-      <p><strong>Maverick Investor is not a SEBI-registered investment advisor.</strong></p>
-      <p>All content — including fund recommendations, portfolio suggestions, calculator outputs, and articles — is for general educational purposes only and does not constitute personalised investment advice, solicitation, or a recommendation to buy or sell any security.</p>
-      <h4>Market risk</h4>
-      <p>Mutual fund investments are subject to market risks. Past performance is not indicative of future returns. Please read all scheme-related documents carefully before investing.</p>
-      <h4>Professional advice</h4>
-      <p>For personalised investment planning tailored to your specific financial situation, please consult a SEBI-registered investment advisor (RIA). You can find RIAs on the <a href="https://www.sebi.gov.in" target="_blank" style="color:var(--green);">SEBI website</a>.</p>
-      <h4>Data sources</h4>
-      <p>NAV data is sourced from AMFI (Association of Mutual Funds in India) via the mfapi.in API. All historical performance figures are approximate and for illustration only.</p>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
