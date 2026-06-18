@@ -1550,7 +1550,7 @@
       <li><a href="tools.html">Tools &amp; Goals</a></li>
       <li><a href="learn.html" class="nav-active">Learn</a></li>
       <li><a href="fund-advisor.html">Fund Advisor</a></li>
-      <li><a href="index.html#founder">About</a></li>
+      <li><a href="about.html">About</a></li>
     </ul>
     <div class="nav-tagline">
       <span class="t-maverick">Maverick</span> thinking.<br>
@@ -1686,8 +1686,10 @@
         </div>
       </div>
 
+    </div>
+
     <!-- NPS PANEL -->
-    <div id="learnNps" class="learn-panel" id="nps">
+    <div id="learnNps" class="learn-panel">
       <div class="accordion">
         <button class="accordion-hdr" onclick="toggleAcc(this)">What is the National Pension System (NPS)? <span class="acc-icon">+</span></button>
         <div class="accordion-body">
@@ -1823,7 +1825,7 @@
       <div class="footer-col">
         <h4>Company</h4>
         <ul>
-          <li><a href="index.html#founder">About Us</a></li>
+          <li><a href="about.html">About Us</a></li>
           <li><a href="mailto:jileshkadi@gmail.com">Contact</a></li>
         </ul>
       </div>
@@ -1839,7 +1841,8 @@
   function switchLearnTab(tab, btn) {
     document.querySelectorAll('.learn-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.learn-tab').forEach(b => b.classList.remove('active'));
-    document.getElementById('learn' + (tab === 'mf' ? 'Mf' : 'Ins')).classList.add('active');
+    const panelMap = {mf:'learnMf', ins:'learnIns', nps:'learnNps'};
+    document.getElementById(panelMap[tab] || 'learnMf').classList.add('active');
     btn.classList.add('active');
   }
   function toggleAcc(btn) {
