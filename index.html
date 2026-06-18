@@ -26,6 +26,60 @@
       --radius-sm:  8px;
       --font:       'Segoe UI', system-ui, -apple-system, sans-serif;
     }
+    /* ── Dark-theme override (matrix look) ── */
+    :root {
+      --green:      #f97316;
+      --green-dark: #0f172a;
+      --green-light:#fb923c;
+      --orange:     #f97316;
+      --orange-light:#fb923c;
+      --cream:      #0f172a;
+      --dark:       #e2e8f0;
+      --mid:        #cbd5e1;
+      --muted:      #94a3b8;
+      --border:     rgba(255,255,255,.1);
+      --white:      #e2e8f0;
+      --card-bg:    #1e293b;
+      --shadow:     0 4px 24px rgba(0,0,0,.4);
+    }
+    /* Fix elements that assumed light backgrounds */
+    body { color: #e2e8f0; }
+    .topbar { background: rgba(15,23,42,.95) !important; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .nav-links a { color: #cbd5e1 !important; }
+    .nav-links a:hover, .nav-links a.nav-active { color: #f97316 !important; }
+    footer { background: #080f1e !important; color: #94a3b8 !important; }
+    footer a { color: #94a3b8 !important; }
+    footer a:hover { color: #f97316 !important; }
+    /* Fix white-background elements for dark theme */
+    .float-badge { background: rgba(15,23,42,.88) !important; color: #e2e8f0 !important; border: 1px solid rgba(255,255,255,.18) !important; box-shadow: 0 4px 16px rgba(0,0,0,.5) !important; }
+    .float-badge .fb-icon { filter: none; }
+    .tools-section, .app-section { background: #0f172a !important; }
+    .goal-tile { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; color: #e2e8f0 !important; }
+    .goal-tile .gt-name { color: #e2e8f0 !important; }
+    .goal-tile .gt-amount { color: #f97316 !important; }
+    .tab-btn { background: #1e293b !important; color: #94a3b8 !important; border-color: rgba(255,255,255,.12) !important; }
+    .tab-btn.active { background: #f97316 !important; color: #fff !important; border-color: #f97316 !important; }
+    .fund-table-wrap { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; }
+    .ins-type-card, .ins-calc-card { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; color: #e2e8f0 !important; }
+    .why-card { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; }
+    .why-card h3, .why-card p { color: #e2e8f0 !important; }
+    .aqb { background: #263348 !important; color: #e2e8f0 !important; }
+    .app-fund-row { background: #263348 !important; border-color: rgba(255,255,255,.08) !important; }
+    .app-fund-row span { color: #e2e8f0 !important; }
+    .input-field { background: #0f172a !important; color: #e2e8f0 !important; border-color: rgba(255,255,255,.15) !important; }
+    .section-title, .section-sub { color: #e2e8f0 !important; }
+    .app-card-label { color: #94a3b8 !important; }
+    input, select, textarea { background: #0f172a !important; color: #e2e8f0 !important; border-color: rgba(255,255,255,.15) !important; }
+    table { color: #e2e8f0; }
+    th { background: rgba(249,115,22,.15) !important; color: #f97316 !important; }
+    td { border-color: rgba(255,255,255,.07) !important; }
+    tr:nth-child(even) { background: rgba(255,255,255,.03) !important; }
+    .section-title, h1, h2, h3, h4 { color: #e2e8f0; }
+    p, li, label { color: #cbd5e1; }
+    strong { color: #e2e8f0; }
+    .hint, .note { color: #94a3b8 !important; }
+    .card, .form-card, [class*=card], [class*=-card] { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; color: #e2e8f0 !important; }
+
 
     /* ============================================================
        RESET & BASE
@@ -1537,6 +1591,48 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg"></head>
 <body>
 
+<style>nav,main,.topbar,.hero,.section,footer,.hero-section,.about-hero,.page-hero,.step,#app,.container,.topbar-inner{position:relative;z-index:1;}</style>
+
+<!-- Matrix particle background -->
+<canvas id="mi-bg-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.55"></canvas>
+<script>
+(function(){
+  var C=document.getElementById('mi-bg-canvas');
+  var ctx=C.getContext('2d');
+  var CS=22, cols, drops, speeds, colors;
+  function init(){
+    C.width=window.innerWidth; C.height=window.innerHeight;
+    cols=Math.floor(C.width/CS);
+    drops=Array.from({length:cols},function(){return Math.random()*(-(C.height/CS));});
+    speeds=Array.from({length:cols},function(){return 0.25+Math.random()*0.55;});
+    colors=Array.from({length:cols},function(){return Math.random()>0.82?'59,130,246':'249,115,22';});
+  }
+  var last=0;
+  function draw(ts){
+    requestAnimationFrame(draw);
+    if(ts-last<28) return; last=ts;
+    ctx.fillStyle='rgba(0,0,0,0.13)';
+    ctx.fillRect(0,0,C.width,C.height);
+    for(var i=0;i<cols;i++){
+      var y=drops[i]*CS, x=i*CS+CS/2, c=colors[i];
+      ctx.beginPath(); ctx.arc(x,y,2.8,0,6.28);
+      ctx.fillStyle='rgba('+c+',0.9)'; ctx.fill();
+      ctx.beginPath(); ctx.arc(x,y-CS,2,0,6.28);
+      ctx.fillStyle='rgba('+c+',0.45)'; ctx.fill();
+      ctx.beginPath(); ctx.arc(x,y-CS*2,1.4,0,6.28);
+      ctx.fillStyle='rgba('+c+',0.2)'; ctx.fill();
+      ctx.beginPath(); ctx.arc(x,y-CS*3,1,0,6.28);
+      ctx.fillStyle='rgba('+c+',0.08)'; ctx.fill();
+      drops[i]+=speeds[i];
+      if(drops[i]*CS>C.height+CS*4 && Math.random()>0.97) drops[i]=Math.random()*-8;
+    }
+  }
+  init();
+  window.addEventListener('resize',init);
+  requestAnimationFrame(draw);
+})();
+</script>
+<style>nav,main,.topbar,.hero,.section,footer,.hero-section,.about-hero,.page-hero,#app{position:relative;z-index:1;}</style>
 <!-- ============================================================
      NAV
 ============================================================ -->
@@ -1550,7 +1646,7 @@
       <li><a href="index.html" class="nav-active">Home</a></li>
       <li><a href="tools.html">Tools &amp; Goals</a></li>
       <li><a href="learn.html">Learn</a></li>
-      <li><a href="fund-advisor.html">Fund Advisor</a></li>
+      <li><a href="mf-advisor.html">MF Advisor</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
     <div class="nav-tagline">
@@ -2043,53 +2139,50 @@
      FOOTER
 ============================================================ -->
 <footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="#" class="logo" style="color:var(--white);">
-          <div class="logo-icon">📈</div>
-          Maverick Investor
-        </a>
-        <p>Empowering Indian investors with unbiased, research-backed guidance on mutual funds, insurance, and retirement planning.</p>
-        <div class="sebi-badge">🏛️ SEBI Investor Education Compliant</div>
-        <div class="social-row" style="margin-top:1rem;">
-          <a href="https://www.linkedin.com/in/jilesh/" target="_blank" rel="noopener" class="social-btn">in</a>
-          <a href="mailto:jileshkadi@gmail.com" class="social-btn" title="Email us">✉</a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>Tools</h4>
-        <ul>
-          <li><a href="tools.html">SIP Calculator</a></li>
-          <li><a href="tools.html">Retirement Planner</a></li>
-          <li><a href="tools.html">Insurance Estimator</a></li>
-          <li><a href="fund-advisor.html">Risk Questionnaire</a></li>
-          <li><a href="tools.html">Goal Tracker</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Learn</h4>
-        <ul>
-          <li><a href="learn.html">Mutual Fund Basics</a></li>
-          <li><a href="learn.html">Insurance Basics</a></li>
-          <li><a href="learn.html#nps">NPS Guide</a></li>
-          <li><a href="fund-advisor.html">Risk Questionnaire</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="mailto:jileshkadi@gmail.com">Contact</a></li>
-        </ul>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="logo" style="color:#e2e8f0;text-decoration:none;">
+        <div class="logo-icon">📈</div> Maverick Investor
+      </a>
+      <p>Empowering Indian investors with unbiased, research-backed guidance on mutual funds, insurance, and retirement planning.</p>
+      <div class="sebi-badge">🏛️ SEBI Investor Education Compliant</div>
+      <div class="social-row">
+        <a href="https://www.linkedin.com/in/jilesh/" target="_blank" rel="noopener" class="social-btn">in</a>
+        <a href="mailto:jileshkadi@gmail.com" class="social-btn" title="Email us">✉</a>
       </div>
     </div>
-    <div class="footer-bottom">
-      <div>© 2026 Maverick Investor. All rights reserved.</div>
-      <div>Built with ❤️ for Indian investors · Not SEBI-registered · Educational use only</div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li><li><a href="tools.html">Tools & Goals</a></li><li><a href="learn.html">Learn</a></li><li><a href="mf-advisor.html">MF Advisor</a></li><li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Tools</h4>
+      <ul>
+        <li><a href="tools.html">SIP Calculator</a></li>
+        <li><a href="tools.html">Retirement Planner</a></li>
+        <li><a href="tools.html">Goal Tracker</a></li>
+        <li><a href="mf-advisor.html">MF Advisor</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Learn</h4>
+      <ul>
+        <li><a href="learn.html">Mutual Fund Basics</a></li>
+        <li><a href="learn.html">Insurance Basics</a></li>
+        <li><a href="learn.html">NPS Guide</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="mailto:jileshkadi@gmail.com">Contact</a></li>
+      </ul>
     </div>
   </div>
+  <div class="footer-bottom">
+    <div>© 2026 Maverick Investor. All rights reserved.</div>
+    <div>Built with ❤️ for Indian investors · Not SEBI-registered · Educational use only</div>
+  </div>
 </footer>
+
 
 <!-- ============================================================
      JAVASCRIPT
