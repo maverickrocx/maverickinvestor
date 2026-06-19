@@ -1580,6 +1580,11 @@
     .page-hero h1 { font-size: clamp(1.8rem,4vw,2.4rem); font-weight: 800; margin-bottom: .5rem; }
     .page-hero p { color: rgba(255,255,255,.8); font-size: 1rem; max-width: 520px; margin: 0 auto; }
     .learn-wrap { background: var(--cream); padding: 4rem 1.5rem; }
+    /* === FIX: Learn accordion text on light cards — orange (logo shade) for visibility === */
+    .accordion-hdr,
+    .accordion-body,
+    .accordion-body strong,
+    .accordion-body *:not(.source-badge) { color: var(--orange) !important; }
   </style>
 </head>
 <body>
