@@ -269,7 +269,7 @@ footer{background:#080f1e;color:#94a3b8;padding:3.5rem 0 1.5rem;border-top:1px s
 </head>
 <body>
 
-<style>nav,main,.topbar,.hero,.section,footer,.hero-section,.about-hero,.page-hero,.step,#app,.container,
+<style>nav,main,.topbar,.hero,.section,footer,.hero-section,.about-hero,.page-hero,.step,#app,.container{position:relative;z-index:1;}
 /* ── Inline input sliders ─────────────────────────────── */
 .slider-wrap{margin:6px 0 2px;display:block;}
 .inline-slider{
@@ -453,11 +453,17 @@ footer{background:#080f1e;color:#94a3b8;padding:3.5rem 0 1.5rem;border-top:1px s
           </div>
           <div class="form-group" style="display:flex;flex-direction:column;justify-content:flex-end">
             <label>Retirement Duration (years)</label>
-            <input type="number" id="inp-ret-duration" placeholder="25" min="5" max="40" value="25">
+            <input type="number" id="inp-ret-duration" placeholder="25" min="5" max="40" value="25" oninput="calcRetTotal()">
             <p class="hint">How many years post-retirement (life expectancy − retirement age)</p>
           </div>
+          <div class="form-group" style="display:flex;flex-direction:column;justify-content:flex-end">
+            <label>Conservative Return on Corpus (% p.a.)</label>
+            <input type="number" id="inp-ret-return" placeholder="8" step="0.5" min="3" max="12" value="8" oninput="calcRetTotal()">
+            <p class="hint">Post-retirement return (safer debt-heavy mix). Corpus = present value of future expenses.</p>
+          </div>
         </div>
-        <div class="ret-total"><span class="ret-total-lbl">📊 Annual Expense Today · Corpus = 25× at retirement</span><span class="ret-total-val" id="ret-total-disp">₹0</span></div>
+        <div class="ret-total" style="margin-bottom:.5rem"><span class="ret-total-lbl">📈 Future annual expense at retirement age</span><span class="ret-total-val" id="ret-annual-disp">₹0</span></div>
+        <div class="ret-total"><span class="ret-total-lbl">📊 Corpus needed at retirement · PV of future expenses</span><span class="ret-total-val" id="ret-total-disp">₹0</span></div>
       </div>
       <!-- NON-RETIREMENT: single lump sum -->
       <div id="lump-expense-block">
@@ -885,14 +891,32 @@ function submitStep1(){
 // ============================================================
 // STEP 2
 // ============================================================
+// Retirement corpus = present value (at retirement) of post-retirement expenses,
+// where each year's expense grows with inflation and the corpus earns a conservative return.
+// annual = annual expense in today's money; yrs = years to retirement; dur = years in retirement.
+function retirementCorpus(annual, yrs, inflPct, dur, retPct){
+  const g = inflPct/100, r = retPct/100;
+  const aRet = annual * Math.pow(1+g, yrs);            // annual expense in the first year of retirement
+  const k = (1+g)/(1+r);
+  let corpusAtRet;
+  if(Math.abs(r-g) < 1e-9) corpusAtRet = aRet * dur;   // returns exactly offset inflation
+  else corpusAtRet = aRet * (1 - Math.pow(k, dur)) / (1 - k); // PV of dur years of inflating withdrawals, drawn at start of each year
+  return { aRet, corpusAtRet, corpusToday: corpusAtRet / Math.pow(1+g, yrs) };
+}
+
 function calcRetTotal(){
   const hh = parseFloat(document.getElementById('inp-ret-household').value)||0;
   const med = parseFloat(document.getElementById('inp-ret-medicine').value)||0;
   const oth = parseFloat(document.getElementById('inp-ret-others').value)||0;
   const annual = hh*12 + med*12 + oth;
-  const corpus25x = annual*25;
-  document.getElementById('ret-total-disp').textContent = '₹'+fmtL(corpus25x)+' (25× annual)';
   S._retAnnual = annual;
+  const dur    = parseInt(document.getElementById('inp-ret-duration').value)||25;
+  const retPct = parseFloat(document.getElementById('inp-ret-return').value)||8;
+  const yrs    = parseInt(document.getElementById('inp-years').value) || (S.age?Math.max(1,60-S.age):20);
+  const inflPct= parseFloat(document.getElementById('inp-inflation').value) || (GOALS[S.goal]?GOALS[S.goal].inflation:7);
+  const rc = retirementCorpus(annual, yrs, inflPct, dur, retPct);
+  document.getElementById('ret-total-disp').textContent = annual>0 ? fmtL(Math.round(rc.corpusAtRet)) : '₹0';
+  var _ra=document.getElementById('ret-annual-disp'); if(_ra) _ra.textContent = annual>0 ? fmtL(Math.round(rc.aRet)) : '₹0';
 }
 
 function submitStep2(){
@@ -908,10 +932,15 @@ function submitStep2(){
     const dur = parseInt(document.getElementById('inp-ret-duration').value)||25;
     const annual = hh*12 + med*12 + oth;
     if(annual<1000){ alert('Please enter your monthly expenses for retirement.'); return; }
+    const retPct = parseFloat(document.getElementById('inp-ret-return').value)||8;
     S._retAnnual = annual;
     S._retDuration = dur;
-    // expense = annual spend today; corpus = 25x at retirement (via inflation adjustment in calculation)
-    S.expense = annual * 25;
+    S._retReturn = retPct;
+    // Corpus = PV (at retirement) of post-retirement expenses, inflation-grown & discounted at a
+    // conservative return. Store its today's-value so downstream inflation*(1+infl)^years reproduces it.
+    const rc = retirementCorpus(annual, yrs, infl, dur, retPct);
+    S._retAnnualAtRet = rc.aRet;
+    S.expense = rc.corpusToday;
   } else {
     const exp = parseFloat(document.getElementById('inp-expense').value);
     if(!exp||exp<10000){ alert('Please enter a valid goal amount.'); return; }
@@ -1245,17 +1274,20 @@ function renderResults(){
     ?`Per month (starting), increasing ${S.stepup}% annually · Includes 20% buffer`
     :'Per month (flat SIP) · Includes 20% market-correction buffer';
   const portRate=(S.portCAGR*100).toFixed(1);
-  document.getElementById('psb-ret').textContent=`Backtested portfolio at ${portRate}% p.a. · Exact SIP: ₹${fmt(S.recSip)} · +20% buffer builds ₹${fmtL(Math.round(S.targetCorpus*1.2))} safety corpus`;
+  document.getElementById('psb-ret').textContent=`Backtested portfolio at ${portRate}% p.a. · Exact SIP: ₹${fmt(S.recSip)} · +20% buffer builds ${fmtL(Math.round(S.targetCorpus*1.2))} safety corpus`;
 
   // Summary cards
   const cards=[
-    ['Target Corpus', '₹'+fmtL(S.targetCorpus), `Inflation-adjusted at ${(S.inflation*100).toFixed(1)}%`],
-    ['Existing Cover', S.useCorpus||S.useExistingSip?'₹'+fmtL(S.fvCorpus+S.fvExSip):'₹0','From current corpus + SIP'],
-    ['Remaining Shortfall', '₹'+fmtL(S.shortfall),'Amount your new SIP must build'],
+    ['Target Corpus', fmtL(S.targetCorpus), `Inflation-adjusted at ${(S.inflation*100).toFixed(1)}%`],
+    ['Existing Cover', S.useCorpus||S.useExistingSip?fmtL(S.fvCorpus+S.fvExSip):'₹0','From current corpus + SIP'],
+    ['Remaining Shortfall', fmtL(S.shortfall),'Amount your new SIP must build'],
     ['Portfolio CAGR', (S.portCAGR*100).toFixed(1)+'%','Backtested weighted portfolio return'],
     ['Time to Goal', S.years+'Y','From today'],
     ['Years Compounding',S.years+'Y','Stay invested!'],
   ];
+  if(S.goal==='retirement' && S._retAnnualAtRet){
+    cards.unshift(['Annual Expense at Retirement', fmtL(S._retAnnualAtRet), `Today's expense grown at ${(S.inflation*100).toFixed(1)}% for ${S.years}y`]);
+  }
   document.getElementById('summary-grid').innerHTML=cards.map(([l,v,s])=>
     `<div class="sc"><div class="sc-lbl">${l}</div><div class="sc-val">${v}</div><div class="sc-sub">${s}</div></div>`
   ).join('');
@@ -1275,7 +1307,7 @@ function renderResults(){
     const dispSip=isHL?S.recSipFinal:sip;
     tbody.innerHTML+=`<tr class="${isHL?'hl':''}">
       <td>${labels[i]}${isHL?'<span class="badge-rec">★ Recommended (+20% buffer)</span>':''}</td>
-      <td>₹${fmt(isHL?S.recSipFinal:sip)}</td><td>₹${fmtL(isHL?S.recSipFinal*(S.years*12):invested)}</td><td>₹${fmtL(isHL?stepupSIPFV(S.recSipFinal,r,S.years,S.stepup)+(S.fvCorpus+S.fvExSip):corpus)}</td></tr>`;
+      <td>₹${fmt(isHL?S.recSipFinal:sip)}</td><td>${fmtL(isHL?S.recSipFinal*(S.years*12):invested)}</td><td>${fmtL(isHL?stepupSIPFV(S.recSipFinal,r,S.years,S.stepup)+(S.fvCorpus+S.fvExSip):corpus)}</td></tr>`;
   });
 
   // Portfolio table
@@ -1305,7 +1337,7 @@ function renderResults(){
   const slExp=document.getElementById('sl-exp');
   slExp.value=S.expense; slExp.min=Math.round(S.expense*0.3); slExp.max=Math.round(S.expense*3);
   document.getElementById('sl-sip-val').textContent='₹'+fmt(S.recSipFinal);
-  document.getElementById('sl-exp-val').textContent='₹'+fmtL(S.expense);
+  document.getElementById('sl-exp-val').textContent=fmtL(S.expense);
   // Delay chart render so canvas is visible in DOM
   setTimeout(()=>renderChart(S.recSipFinal, S.recSip, S.targetCorpus, S.years, S.portCAGR), 80);
 }
@@ -1371,7 +1403,7 @@ function onSliderChange(){
   const sip=parseInt(document.getElementById('sl-sip').value);
   const exp=parseInt(document.getElementById('sl-exp').value);
   document.getElementById('sl-sip-val').textContent='₹'+fmt(sip);
-  document.getElementById('sl-exp-val').textContent='₹'+fmtL(exp);
+  document.getElementById('sl-exp-val').textContent=fmtL(exp);
   const newTarget=exp*Math.pow(1+S.inflation,S.years);
   renderChart(sip, newTarget, S.years, S.portCAGR);
 }
@@ -1428,7 +1460,7 @@ function downloadPDF(){
   doc.setFont('helvetica','normal'); doc.setFontSize(11); doc.setTextColor(60,60,60);
   const lines=[
     `Goal: ${g.label}`,
-    `Target Corpus (inflation-adjusted): ₹${fmtL(S.targetCorpus)}`,
+    `Target Corpus (inflation-adjusted): ${fmtL(S.targetCorpus)}`,
     `Time Horizon: ${S.years} years`,
     `Inflation Assumed: ${(S.inflation*100).toFixed(1)}%`,
     `Risk Persona: ${S.persona.raw.name} → Effective: ${S.persona.effective.name}`,
@@ -1459,12 +1491,7 @@ function downloadPDF(){
 // UTILS
 // ============================================================
 function fmt(n){ if(!n) return '0'; n=Math.round(n); return n.toLocaleString('en-IN'); }
-function fmtL(n){
-  if(!n) return '0';
-  if(n>=10000000) return (n/10000000).toFixed(2)+' Cr';
-  if(n>=100000) return (n/100000).toFixed(2)+' L';
-  return fmt(n);
-}
+function fmtL(v){ v=Math.round(v||0); if(v>=1000000) return '₹'+(v/10000000).toFixed(2)+' Cr'; if(v>=100000) return '₹'+(v/100000).toFixed(2)+' L'; if(v>=1000) return '₹'+(v/1000).toFixed(0)+'K'; return '₹'+v; }
 function restart(){ S={...S,goal:null,name:'',age:30}; goStep(0); }
 
 // INIT QUIZ
@@ -1562,7 +1589,7 @@ function bindSlider(numId, min, max, step, fmt) {
   });
 }
 
-function fmtL(v) { return v >= 100000 ? '₹' + (v/100000).toFixed(0) + 'L' : v >= 1000 ? '₹' + (v/1000).toFixed(0) + 'K' : '₹' + v; }
+// (fmtL defined above)
 function fmtPct(v) { return v + '%'; }
 function fmtYr(v) { return v + 'yr'; }
 

@@ -45,7 +45,7 @@
     }
     /* Fix elements that assumed light backgrounds */
     body { color: #e2e8f0; }
-    .topbar { background: rgba(15,23,42,.95) !important; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .topbar { background: rgba(15,23,42,.95) !important; border-bottom: 1px solid rgba(255,255,255,.08); position: sticky !important; top: 0 !important; z-index: 1000 !important; }
     .nav-links a { color: #cbd5e1 !important; }
     .nav-links a:hover, .nav-links a.nav-active { color: #f97316 !important; }
     footer { background: #080f1e !important; color: #94a3b8 !important; }
@@ -107,7 +107,7 @@
        LAYOUT
     ============================================================ */
     .container { max-width: 1160px; margin: 0 auto; padding: 0 1.5rem; }
-    section { padding: 5rem 0; }
+    section { padding: 3rem 0; }
 
     /* ============================================================
        BUTTONS
@@ -212,7 +212,7 @@
     ============================================================ */
     .hero {
       background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 60%, #1a7a52 100%);
-      padding: 5rem 0 4rem;
+      padding: 3rem 0 2.4rem;
       position: relative;
       overflow: hidden;
     }
@@ -968,7 +968,7 @@
     /* ============================================================
        LIVE INDICES
     ============================================================ */
-    .indices-section { background: var(--green-dark); padding: 4rem 0; }
+    .indices-section { background: var(--green-dark); padding: 2.4rem 0; }
     .indices-section .section-label { background: rgba(255,255,255,.15); color: var(--orange-light); }
     .indices-section .section-title { color: var(--white); }
     .indices-section .section-sub   { color: rgba(255,255,255,.7); }
@@ -1133,7 +1133,7 @@
     footer {
       background: var(--green-dark);
       color: rgba(255,255,255,.75);
-      padding: 4rem 0 2rem;
+      padding: 2.4rem 0 1.2rem;
     }
     .footer-grid {
       display: grid;
@@ -1333,18 +1333,18 @@
     /* ── XL Desktop (≥ 1600px) — more breathing room ──────── */
     @media (min-width: 1600px) {
       .container          { max-width: 1400px; }
-      .hero               { padding: 6.5rem 0 5.5rem; }
+      .hero               { padding: 3.9rem 0 3.3rem; }
       .hero-cards-layout  { gap: 1.5rem; }
       .hero h1            { font-size: 3.6rem; }
       .fund-cat-grid      { gap: 2rem; }
-      section             { padding: 6rem 0; }
+      section             { padding: 3.6rem 0; }
     }
 
     /* ── 13" Laptop (1100 – 1279px) — compact but full layout ─ */
     @media (max-width: 1279px) {
       .container          { padding: 0 2rem; }
       .hero-grid          { gap: 2rem; }
-      .hero               { padding: 4.5rem 0 3.5rem; }
+      .hero               { padding: 2.7rem 0 2.1rem; }
       .dashboard-card     { padding: 1.3rem; }
       .dc-amount          { font-size: 1.9rem; }
       .hero-cards-layout  { gap: 1rem; }
@@ -1354,14 +1354,14 @@
       .fund-cat-grid      { gap: 1.25rem; }
       .why-grid           { grid-template-columns: repeat(3, 1fr); }
       .footer-grid        { grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 1.75rem; }
-      section             { padding: 4.5rem 0; }
+      section             { padding: 2.7rem 0; }
     }
 
     /* ── 11" Laptop (900 – 1099px) — scale down, keep 2-col hero ─ */
     @media (max-width: 1099px) {
       .container          { padding: 0 1.5rem; }
       .hero-grid          { gap: 1.25rem; }
-      .hero               { padding: 4rem 0 3rem; }
+      .hero               { padding: 2.4rem 0 1.8rem; }
       .hero h1            { font-size: clamp(1.7rem, 3.8vw, 2.4rem); }
       .hero p             { font-size: .95rem; }
       .hero-btns          { gap: .65rem; }
@@ -1390,7 +1390,7 @@
       .nav-links          { gap: .9rem; font-size: .8rem; }
       .nav-cta .btn       { padding: .45rem .95rem; font-size: .78rem; }
       /* Sections */
-      section             { padding: 4rem 0; }
+      section             { padding: 2.4rem 0; }
       .section-title      { font-size: clamp(1.4rem, 3vw, 2rem); }
       /* Fund blocks */
       .fund-cat-grid      { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
@@ -1420,8 +1420,8 @@
       .footer-grid             { grid-template-columns: 1fr 1fr; }
       .goal-tiles-grid         { grid-template-columns: repeat(3, 1fr); }
       .tools-grid              { grid-template-columns: repeat(2, 1fr); }
-      section                  { padding: 4rem 0; }
-      .hero                    { padding: 5rem 0 3rem; text-align: center; }
+      section                  { padding: 2.4rem 0; }
+      .hero                    { padding: 3rem 0 1.8rem; text-align: center; }
       .hero p                  { margin-left: auto; margin-right: auto; }
       .hero-btns               { justify-content: center; }
       .hero-stats              { justify-content: center; }
@@ -1430,7 +1430,7 @@
     /* ── Mobile (480 – 599px) ──────────────────────────────── */
     @media (max-width: 599px) {
       .why-grid, .footer-grid  { grid-template-columns: 1fr; }
-      section                  { padding: 3rem 0; }
+      section                  { padding: 1.8rem 0; }
       .tools-grid              { grid-template-columns: 1fr; }
       .goal-tiles-grid         { grid-template-columns: repeat(2, 1fr); }
       .fund-cat-grid           { grid-template-columns: 1fr; }
@@ -1450,7 +1450,7 @@
       .footer-grid             { grid-template-columns: 1fr; }
     }
     /* ── FOUNDER SECTION ────────────────────────────────────── */
-    .founder-section { background: var(--white); padding: 5rem 0; }
+    .founder-section { background: var(--white); padding: 3rem 0; }
     .founder-card {
       display: flex; gap: 3rem; align-items: flex-start;
       background: var(--cream); border-radius: var(--radius);
@@ -1483,7 +1483,7 @@
     .email-link { background: var(--green); color: #fff; }
 
     /* ── LEARN / BASICS SECTION ─────────────────────────────── */
-    .learn-section { background: var(--cream); padding: 5rem 0; }
+    .learn-section { background: var(--cream); padding: 3rem 0; }
     .learn-tabs { display: flex; gap: .5rem; margin: 2rem 0 2rem; flex-wrap: wrap; }
     .learn-tab {
       padding: .65rem 1.5rem; border-radius: 99px; font-weight: 700; font-size: .9rem;
@@ -1509,7 +1509,7 @@
     .source-badge { display: inline-block; margin-top: .75rem; font-size: .75rem; background: #e8f5ee; color: var(--green-dark); padding: .25rem .65rem; border-radius: 99px; font-weight: 600; }
 
     /* ── RETIREMENT CTA SECTION ─────────────────────────────── */
-    .ret-cta-section { background: var(--green-dark); padding: 3.5rem 0; }
+    .ret-cta-section { background: var(--green-dark); padding: 2.1rem 0; }
     .ret-cta-card {
       display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
       background: rgba(255,255,255,.06); border-radius: var(--radius);
@@ -1580,12 +1580,13 @@
     .page-hero h1 { font-size: clamp(1.8rem,4vw,2.4rem); font-weight: 800; margin-bottom: .5rem; }
     .page-hero p { color: rgba(255,255,255,.8); font-size: 1rem; max-width: 520px; margin: 0 auto; }
     .learn-wrap { background: var(--cream); padding: 4rem 1.5rem; }
-    /* === FIX: Learn accordion text on light cards — orange (logo shade) for visibility === */
-    .accordion-hdr,
-    .accordion-body,
-    .accordion-body strong,
-    .accordion-body *:not(.source-badge) { color: var(--orange) !important; }
-  </style>
+    /* === FIX: Learn accordion — dark cards + orange text (high contrast, crisp) === */
+    .accordion       { border-color:rgba(255,255,255,.10) !important; }
+    .accordion-hdr   { background:#1e293b !important; color:var(--orange) !important; }
+    .accordion-hdr:hover { background:#243247 !important; }
+    .accordion-body  { background:#16212f !important; border-top-color:rgba(255,255,255,.08) !important; color:#e2e8f0 !important; }
+    .accordion-body strong { color:var(--orange) !important; }
+</style>
 </head>
 <body>
 
