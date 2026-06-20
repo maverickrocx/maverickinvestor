@@ -209,7 +209,6 @@ input[type=range]{width:100%;accent-color:var(--orange);cursor:pointer;height:6p
 .c-mc{background:rgba(249,115,22,.15);color:#fb923c;}
 .c-sc{background:rgba(234,179,8,.15);color:#facc15;}
 .c-debt{background:rgba(34,197,94,.15);color:#4ade80;}
-.c-elss{background:rgba(236,72,153,.15);color:#f472b6;}
 .alloc-bar-wrap{background:var(--card2);border-radius:4px;height:6px;width:80px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:.4rem;}
 .alloc-bar{height:100%;background:var(--orange);border-radius:4px;}
 
@@ -333,8 +332,9 @@ footer{background:#080f1e;color:#94a3b8;padding:3.5rem 0 1.5rem;border-top:1px s
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="tools.html">Tools &amp; Goals</a></li>
-      <li><a href="learn.html">Learn</a></li>
       <li><a href="mf-advisor.html" class="nav-active">MF Advisor</a></li>
+      <li><a href="stock-screener.html">Stock Screener</a></li>
+      <li><a href="learn.html">Learn</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
     <div class="nav-tagline">
@@ -763,13 +763,13 @@ const PERSONAS = [
     desc:'Maximum equity, maximum conviction. You see market crashes as buying opportunities and think in decades, not years.' },
 ];
 
-// Allocation matrix: [largeCap%, flexiCap%, midCap%, smallCap%, debt%, elss%]
+// Allocation matrix: [largeCap%, flexiCap%, midCap%, smallCap%, debt%]
 const ALLOC = {
-  guardian:  { s:[0,0,0,0,95,5],  m:[5,5,0,0,85,5],    l:[15,10,0,0,70,5],   xl:[20,10,5,0,55,10] },
-  preserver: { s:[5,5,0,0,85,5],  m:[15,10,0,0,65,10],  l:[25,15,5,0,45,10],  xl:[25,20,10,0,30,15] },
-  balancer:  { s:[10,5,0,0,80,5], m:[20,15,5,0,50,10],  l:[25,20,15,5,25,10], xl:[25,20,15,10,15,15] },
-  grower:    { s:[15,10,0,0,70,5],m:[20,20,15,5,30,10], l:[20,25,20,10,15,10],xl:[15,25,25,20,5,10] },
-  maverick:  { s:[15,15,5,0,60,5],m:[15,25,20,10,20,10],l:[15,25,25,20,5,10], xl:[10,25,25,25,0,15] },
+  guardian:  { s:[0,5,0,0,95],   m:[5,10,0,0,85],     l:[15,15,0,0,70],    xl:[20,20,5,0,55] },
+  preserver: { s:[5,10,0,0,85],  m:[15,20,0,0,65],    l:[25,25,5,0,45],    xl:[25,35,10,0,30] },
+  balancer:  { s:[10,10,0,0,80], m:[20,25,5,0,50],    l:[25,30,15,5,25],   xl:[25,35,15,10,15] },
+  grower:    { s:[15,15,0,0,70], m:[20,30,15,5,30],   l:[20,35,20,10,15],  xl:[15,35,25,20,5] },
+  maverick:  { s:[15,20,5,0,60], m:[15,35,20,10,20],  l:[15,35,25,20,5],   xl:[10,40,25,25,0] },
 };
 
 // Fund data [name, schemeCode, sharpe, ter, aum, fallbackCAGR]
@@ -794,15 +794,11 @@ const FUND_DB = {
     ['HDFC Short Term Debt Fund',119214,0.85,0.35,18750,7.2],
     ['ICICI Pru Corporate Bond Fund',120687,0.88,0.38,28350,7.5],
   ],
-  elss:[
-    ['Mirae Asset Tax Saver Fund',118989,1.24,0.52,24680,13.2],
-    ['Parag Parikh Tax Saver Fund',135800,1.18,0.72,4350,13.8],
-  ],
 };
-const CAT_KEYS = ['largeCap','flexiCap','midCap','smallCap','debt','elss'];
-const CAT_LABELS = ['Large Cap','Flexi Cap','Mid Cap','Small Cap','Debt','ELSS'];
-const CAT_CSS = ['c-lc','c-fc','c-mc','c-sc','c-debt','c-elss'];
-const FALLBACK_CAGR = [12.8,14.2,16.1,18.2,7.2,13.2]; // per category
+const CAT_KEYS = ['largeCap','flexiCap','midCap','smallCap','debt'];
+const CAT_LABELS = ['Large Cap','Flexi Cap','Mid Cap','Small Cap','Debt'];
+const CAT_CSS = ['c-lc','c-fc','c-mc','c-sc','c-debt'];
+const FALLBACK_CAGR = [12.8,14.2,16.1,18.2,7.2]; // per category
 
 // ============================================================
 // STATE
@@ -1032,7 +1028,7 @@ function getHorizonKey(years){
 }
 
 function getAllocation(effKey, hKey){
-  const base = [...ALLOC[effKey][hKey]]; // [lc,fc,mc,sc,debt,elss]
+  const base = [...ALLOC[effKey][hKey]]; // [lc,fc,mc,sc,debt]
   // Corpus adequacy nudge
   const fvCorpus = S.corpus * Math.pow(1+(S.corpusRet/100),S.years);
   const target = S.expense * Math.pow(1+S.inflation, S.years);
@@ -1048,8 +1044,8 @@ function getAllocation(effKey, hKey){
   // Rule 1: age > 30 → minimum 5% debt
   if(age > 30 && base[4] < 5){
     const needed = 5 - base[4];
-    // Take from largest equity bucket (LC, FC, MC, SC, ELSS order preference)
-    const eqBuckets = [0,1,2,3,5];
+    // Take from largest equity bucket (LC, FC, MC, SC order preference)
+    const eqBuckets = [0,1,2,3];
     for(let bi=0; bi<eqBuckets.length; bi++){
       const i = eqBuckets[bi];
       if(base[i] >= needed){ base[i] -= needed; base[4] += needed; break; }
@@ -1058,11 +1054,11 @@ function getAllocation(effKey, hKey){
   }
   // Rule 2: age > 50 → cap equity at 65% (rest goes to debt)
   if(age > 50){
-    const equity = base[0]+base[1]+base[2]+base[3]+base[5];
+    const equity = base[0]+base[1]+base[2]+base[3];
     if(equity > 65){
       const excess = equity - 65;
       // Proportionally reduce each equity bucket
-      [0,1,2,3,5].forEach(i => {
+      [0,1,2,3].forEach(i => {
         const cut = Math.round(base[i] * excess / equity);
         base[i] = Math.max(0, base[i] - cut);
       });
@@ -1522,7 +1518,7 @@ window.goStep=function(n){
     <div class="footer-col">
       <h4>Navigate</h4>
       <ul>
-        <li><a href="index.html">Home</a></li><li><a href="tools.html">Tools & Goals</a></li><li><a href="learn.html">Learn</a></li><li><a href="mf-advisor.html">MF Advisor</a></li><li><a href="about.html">About</a></li>
+        <li><a href="index.html">Home</a></li><li><a href="tools.html">Tools &amp; Goals</a></li><li><a href="mf-advisor.html">MF Advisor</a></li><li><a href="stock-screener.html">Stock Screener</a></li><li><a href="learn.html">Learn</a></li><li><a href="about.html">About</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -1532,6 +1528,7 @@ window.goStep=function(n){
         <li><a href="tools.html">Retirement Planner</a></li>
         <li><a href="tools.html">Goal Tracker</a></li>
         <li><a href="mf-advisor.html">MF Advisor</a></li>
+        <li><a href="stock-screener.html">Stock Screener</a></li>
       </ul>
     </div>
     <div class="footer-col">
