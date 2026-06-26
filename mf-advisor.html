@@ -11,7 +11,7 @@
 :root{--orange:#f97316;--orange-d:#ea6c0a;--dark:#0f172a;--card:#1e293b;--card2:#263348;--text:#e2e8f0;--muted:#94a3b8;--border:rgba(255,255,255,.08);--radius:16px;--green:#22c55e;--blue:#3b82f6;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:transparent;color:var(--text);overflow-x:hidden;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden;}
 
 /* NAV */
 
@@ -31,7 +31,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:transparent;color:va
 .step.active{display:block;}
 #step0,#step6{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding-top:64px;background:var(--dark);}
 #step0.active,#step6.active{display:flex;}
-#step7{display:none;padding-top:64px;background:#f8fafc;}
+#step7{display:none;padding-top:64px;background:#f8fafc;position:relative;z-index:1;}
 #step7.active{display:block;}
 
 /* GOAL HERO */
@@ -294,7 +294,7 @@ footer{background:#080f1e;color:#94a3b8;padding:3.5rem 0 1.5rem;border-top:1px s
 </style>
 
 <!-- Matrix particle background -->
-<canvas id="mi-bg-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:.55"></canvas>
+<canvas id="mi-bg-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.55"></canvas>
 <script>
 (function(){
   var C=document.getElementById('mi-bg-canvas');
@@ -1545,9 +1545,29 @@ function downloadPDF(){
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF({unit:'mm',format:'a4'});
   const PW=210, ML=12, MR=12, CW=PW-ML-MR;
-  const OR=[249,115,22], WHITE=[255,255,255], DARK=[15,23,42], GREY=[71,85,105], LIGHT=[241,245,249];
+  const OR=[249,115,22], WHITE=[255,255,255], DARK=[30,41,59], GREY=[71,85,105], LIGHT=[241,245,249];
   const g=GOALS[S.goal];
   let y=0;
+
+  // Strip emojis and non-latin chars that jsPDF/helvetica cannot render
+  function safe(s){
+    return String(s||'')
+      .replace(/[₹]/g,'Rs.')          // rupee sign
+      .replace(/→/g,'->')             // arrow
+      .replace(/[☀-➿]/g,'')      // misc symbols
+      .replace(/[\uD800-\uDFFF][\uD800-\uDFFF]/g,'') // surrogate pairs (emojis)
+      .replace(/[^\x00-\x7E]/g,'')         // anything still non-ASCII
+      .replace(/\s+/g,' ').trim();
+  }
+
+  // Formatted rupee for PDF (no ₹ glyph in helvetica)
+  function pdfFmtL(v){
+    v=Math.round(v||0);
+    if(v>=10000000) return 'Rs.'+(v/10000000).toFixed(2)+' Cr';
+    if(v>=100000)   return 'Rs.'+(v/100000).toFixed(2)+' L';
+    if(v>=1000)     return 'Rs.'+(v/1000).toFixed(0)+'K';
+    return 'Rs.'+v;
+  }
 
   function checkPage(need=20){ if(y+need>278){doc.addPage();y=16;} }
 
@@ -1555,14 +1575,14 @@ function downloadPDF(){
   doc.setFillColor(...OR);
   doc.rect(0,0,PW,28,'F');
   doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(...WHITE);
-  doc.text('Maverick Investor  —  MF Advisor Report',ML,11);
+  doc.text('Maverick Investor  -  MF Advisor Report',ML,11);
   doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(255,220,180);
-  doc.text(`${g.emoji}  ${S.name}'s ${g.label} Plan   |   Generated ${new Date().toLocaleDateString('en-IN')}`,ML,19);
-  doc.setFont('helvetica','italic'); doc.setFontSize(8);
+  doc.text(`${safe(S.name)}'s ${safe(g.label)} Plan   |   Generated ${new Date().toLocaleDateString('en-IN')}`,ML,19);
+  doc.setFont('helvetica','italic'); doc.setFontSize(8); doc.setTextColor(255,200,150);
   doc.text('Not SEBI-registered advice. For educational purposes only.',ML,25);
   y=36;
 
-  // ── Section header helper ──
+  // ── Section header ──
   function sectionHeader(title){
     checkPage(14);
     doc.setFillColor(...OR);
@@ -1572,50 +1592,57 @@ function downloadPDF(){
     y+=13;
   }
 
-  // ── Key-value table helper ──
+  // ── Key-value table ──
   function kvTable(rows){
-    const col1=70, col2=CW-col1;
+    const col1=72;
     rows.forEach(([k,v],i)=>{
       checkPage(8);
       doc.setFillColor(...(i%2===0?LIGHT:WHITE));
       doc.rect(ML,y,CW,7,'F');
-      doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(...GREY);
-      doc.text(k,ML+3,y+5);
+      doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(...GREY);
+      doc.text(safe(k),ML+3,y+5);
       doc.setFont('helvetica','bold'); doc.setTextColor(...DARK);
-      doc.text(String(v),ML+col1,y+5);
+      doc.text(safe(v),ML+col1,y+5);
       y+=7;
     });
-    // bottom border
     doc.setDrawColor(203,213,225); doc.setLineWidth(0.2);
     doc.line(ML,y,ML+CW,y);
     y+=6;
   }
 
-  // ── Data table helper ──
-  function dataTable(headers, rows, highlightFn){
+  // ── Data table with custom column widths ──
+  // colWidths: array of mm widths summing to CW; null = equal split
+  function dataTable(headers, rows, highlightFn, colWidths){
     checkPage(12);
-    const colW = CW / headers.length;
-    // header row
+    // compute x offsets
+    const widths = colWidths || headers.map(()=>CW/headers.length);
+    const xOff = widths.reduce((acc,w,i)=>{ acc.push(i===0?ML:acc[i-1]+widths[i-1]); return acc; },[]);
+
+    // header
     doc.setFillColor(...OR);
     doc.rect(ML,y,CW,7,'F');
-    doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.setTextColor(...WHITE);
-    headers.forEach((h,i)=> doc.text(h,ML+i*colW+2,y+5));
+    doc.setFont('helvetica','bold'); doc.setFontSize(7.5); doc.setTextColor(...WHITE);
+    headers.forEach((h,i)=> doc.text(safe(h),xOff[i]+2,y+5));
     y+=7;
-    // data rows
+
     rows.forEach((row,ri)=>{
-      checkPage(8);
+      const ROW_H=7;
+      checkPage(ROW_H+2);
       const isHL = highlightFn && highlightFn(row,ri);
       doc.setFillColor(...(isHL?[255,247,237]:(ri%2===0?LIGHT:WHITE)));
-      doc.rect(ML,y,CW,7,'F');
-      if(isHL){
-        doc.setFillColor(...OR);
-        doc.rect(ML,y,3,7,'F');
-      }
+      doc.rect(ML,y,CW,ROW_H,'F');
+      if(isHL){ doc.setFillColor(...OR); doc.rect(ML,y,3,ROW_H,'F'); }
       doc.setFont('helvetica',isHL?'bold':'normal');
-      doc.setFontSize(8.5);
+      doc.setFontSize(8);
       doc.setTextColor(...(isHL?OR:DARK));
-      row.forEach((cell,ci)=> doc.text(String(cell),ML+(ci===0&&isHL?4:ci*colW+2),y+5));
-      y+=7;
+      row.forEach((cell,ci)=>{
+        const maxW = widths[ci]-4;
+        const txt = safe(String(cell||''));
+        // truncate to fit column
+        const fitted = doc.splitTextToSize(txt, maxW)[0]||'';
+        doc.text(fitted, xOff[ci]+(ci===0&&isHL?4:2), y+4.8);
+      });
+      y+=ROW_H;
     });
     doc.setDrawColor(203,213,225); doc.setLineWidth(0.2);
     doc.line(ML,y,ML+CW,y);
@@ -1624,43 +1651,50 @@ function downloadPDF(){
 
   // ══ SECTION 1: Goal Summary ══
   sectionHeader('1.  Goal Summary');
+  const rawName = S.persona.raw ? S.persona.raw.name : S.persona.effective.name;
   kvTable([
-    ['Goal',g.label],
-    ['Name / Age',`${S.name}, ${S.age} years`],
-    ['Time Horizon',`${S.years} years`],
-    ['Inflation Assumed',`${S.inflation}%`],
-    ['Target Corpus (inflation-adj.)',fmtL(S.targetCorpus)],
-    ['Risk Persona',`${S.persona.raw?S.persona.raw.name:S.persona.effective.name} → Effective: ${S.persona.effective.name}`],
-    ['Portfolio Backtested CAGR',`${(S.portCAGR*100).toFixed(1)}%`],
+    ['Goal', g.label],
+    ['Name / Age', `${S.name}, ${S.age} years`],
+    ['Time Horizon', `${S.years} years`],
+    ['Inflation Assumed', `${(S.inflation*100).toFixed(1)}%`],
+    ['Target Corpus (inflation-adj.)', pdfFmtL(S.targetCorpus)],
+    ['Risk Persona', `${rawName} -> Effective: ${S.persona.effective.name}`],
+    ['Portfolio Backtested CAGR', `${(S.portCAGR*100).toFixed(1)}%`],
   ]);
 
-  // ══ SECTION 2: Recommended SIP ══
+  // ══ SECTION 2: Recommended Monthly SIP ══
   sectionHeader('2.  Recommended Monthly SIP');
-  // Big orange highlight box
-  checkPage(20);
+  checkPage(22);
   doc.setFillColor(...OR);
   doc.roundedRect(ML,y,CW,18,3,3,'F');
   doc.setFont('helvetica','bold'); doc.setFontSize(22); doc.setTextColor(...WHITE);
   doc.text(`Rs.${fmt(S.recSip)} / month`,PW/2,y+11,{align:'center'});
-  doc.setFont('helvetica','normal'); doc.setFontSize(8.5);
+  doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(255,230,200);
   doc.text(S.useStepup?`With ${S.stepup}% annual step-up`:'Fixed SIP (no step-up)',PW/2,y+16,{align:'center'});
   y+=24;
 
-  // ══ SECTION 3: SIP Scenarios ══
+  // ══ SECTION 3: SIP Scenarios — built from JS data, not DOM ══
   sectionHeader('3.  SIP Scenarios');
-  const scenRows=[];
-  const scenTbody=document.getElementById('scen-body');
-  if(scenTbody) scenTbody.querySelectorAll('tr').forEach(tr=>{
-    const cells=[...tr.querySelectorAll('td')].map(td=>td.innerText.replace(/\n.*/,'').trim());
-    if(cells.length) scenRows.push(cells);
+  const scenRates=[0.10,0.12,0.15,S.portCAGR];
+  const scenLabels=['10% Conservative','12% Moderate','15% Optimistic',`${(S.portCAGR*100).toFixed(1)}% Backtested (Recommended)`];
+  const scenRows=scenRates.map((r,i)=>{
+    const isHL=i===3;
+    const sip=S.useStepup
+      ?solveStepupSIP(S.targetCorpus,r,S.years,S.stepup,S.fvCorpus+S.fvExSip)
+      :solveFlatSIP(S.targetCorpus,r,S.years*12,S.fvCorpus+S.fvExSip);
+    const dispSip=isHL?S.recSipFinal:sip;
+    const invested=dispSip*(S.years*12);
+    const corpus=isHL
+      ?(S.useStepup?stepupSIPFV(dispSip,r,S.years,S.stepup):sipFV(dispSip,r,S.years*12))+(S.fvCorpus+S.fvExSip)
+      :(S.useStepup?stepupSIPFV(sip,r,S.years,S.stepup):sipFV(sip,r,S.years*12))+(S.fvCorpus+S.fvExSip);
+    return [scenLabels[i], `Rs.${fmt(dispSip)}`, pdfFmtL(invested), pdfFmtL(corpus)];
   });
-  if(scenRows.length){
-    dataTable(
-      ['Return Assumption','Monthly SIP','Total Invested','Expected Corpus'],
-      scenRows,
-      (row)=>row.some(c=>c.includes('Recommended'))
-    );
-  }
+  dataTable(
+    ['Return Assumption','Monthly SIP','Total Invested','Expected Corpus'],
+    scenRows,
+    (_,ri)=>ri===3,
+    [72,30,38,46]
+  );
 
   // ══ SECTION 4: Recommended Portfolio ══
   checkPage(14);
@@ -1668,42 +1702,46 @@ function downloadPDF(){
   const portRows=S.funds.map(f=>{
     const sip=Math.ceil(S.recSip*f.alloc/100/100)*100;
     const xirr=f.xirr!==null?f.xirr+'%':f.fallback+'%*';
+    const catName=(f.cat||'').replace(/([A-Z])/g,' $1').trim();
     return [
-      f.name.length>28?f.name.slice(0,26)+'…':f.name,
-      f.cat||'—',
+      f.name.length>32?f.name.slice(0,30)+'..':f.name,
+      catName,
       f.alloc+'%',
-      'Rs.'+fmt(sip)+'/mo',
+      'Rs.'+fmt(sip),
       xirr,
       String(f.sharpe),
       f.ter+'%'
     ];
   });
-  dataTable(['Fund','Category','Alloc','SIP','XIRR','Sharpe','TER'],portRows,null);
+  // CW=186: Fund55 Cat22 Alloc14 SIP28 XIRR22 Sharpe22 TER23
+  dataTable(['Fund','Category','Alloc','Monthly SIP','XIRR','Sharpe','TER'],portRows,null,[55,22,14,28,22,22,23]);
 
   // ══ SECTION 5: Rebalancing Schedule ══
   checkPage(14);
   sectionHeader('5.  Rebalancing Schedule');
   const rebalItems=document.querySelectorAll('#rebal-line .rebal-item');
   if(rebalItems.length){
-    const rebalRows=[...rebalItems].map(el=>[
-      (el.querySelector('.rebal-yr')||{}).innerText||'',
-      (el.querySelector('.rebal-action')||{}).innerText||'',
-      (el.querySelector('.rebal-why')||{}).innerText||''
-    ]);
-    dataTable(['Year','Action','Rationale'],rebalRows,null);
+    const rebalRows=[...rebalItems].map(el=>{
+      const yr=safe((el.querySelector('.rebal-yr')||{}).textContent||'');
+      const action=safe((el.querySelector('.rebal-action')||{}).textContent||'');
+      const why=safe((el.querySelector('.rebal-why')||{}).textContent||'');
+      return [yr, action, why];
+    });
+    // CW=186: Year38 Action52 Rationale96
+    dataTable(['Year / Milestone','Action','Rationale'],rebalRows,null,[42,52,92]);
   }
 
   // ══ DISCLAIMER ══
-  checkPage(22);
+  checkPage(24);
   doc.setFillColor(255,237,213);
-  doc.roundedRect(ML,y,CW,18,2,2,'F');
+  doc.roundedRect(ML,y,CW,20,2,2,'F');
   doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.setTextColor(154,52,18);
-  doc.text('Disclaimer',ML+3,y+5.5);
-  doc.setFont('helvetica','normal'); doc.setFontSize(7.5);
-  const disc=doc.splitTextToSize('This report is generated by an algorithm analysing historical NAV data. It does not constitute SEBI-registered investment advice. Past performance does not guarantee future returns. Mutual fund investments are subject to market risks. Consult a qualified financial adviser before making investment decisions.',CW-6);
-  doc.text(disc,ML+3,y+10);
+  doc.text('Disclaimer',ML+3,y+6);
+  doc.setFont('helvetica','normal'); doc.setFontSize(7.5); doc.setTextColor(120,40,10);
+  const disc=doc.splitTextToSize('This report is generated by an algorithm analysing historical NAV data. It does not constitute SEBI-registered investment advice. Past performance does not guarantee future returns. Mutual fund investments are subject to market risks. Consult a qualified financial adviser before making investment decisions.',CW-8);
+  doc.text(disc,ML+3,y+11);
 
-  doc.save(`MF_Advisor_${S.name.replace(/ /g,'_')}_${g.label.replace(/ /g,'_')}.pdf`);
+  doc.save(`MF_Advisor_${safe(S.name).replace(/ /g,'_')}_${safe(g.label).replace(/ /g,'_')}.pdf`);
 }
 
 // ============================================================
