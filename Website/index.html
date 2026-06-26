@@ -1586,18 +1586,33 @@
     .nav-tagline .t-investor { color: rgba(255,255,255,.75); font-weight: 400; }
     @media(max-width:720px){ .nav-tagline{ display:none; } }
 
-    /* === FIX: Fund NAV tracker — dark cards + orange text (high contrast, crisp) === */
-    .fund-cat-block { background:#1e293b !important; border-color:rgba(255,255,255,.10) !important; }
-    .fcb-header     { background:#0f172a !important; border-bottom-color:rgba(255,255,255,.08) !important; }
-    .fcb-row-hdr    { background:rgba(255,255,255,.04) !important; border-bottom-color:rgba(255,255,255,.07) !important; }
-    .fcb-row        { border-bottom-color:rgba(255,255,255,.06) !important; }
-    .fcb-row:hover  { background:rgba(249,115,22,.08) !important; }
-    .fcb-name,
-    .fcb-fund-name,
-    .fcb-nav        { color:var(--orange) !important; }
-    .fcb-row-hdr span,
-    .fcb-count      { color:#94a3b8 !important; }
-    .fcb-1y:not(.positive):not(.negative) { color:var(--orange) !important; }
+    /* === Hero: contained card aligned with lower section width === */
+    .hero { background: transparent !important; overflow: visible !important; }
+    .hero::before, .hero::after { display: none !important; }
+    .hero-orb, .hero-shape { display: none !important; }
+    .hero > .container {
+      background: linear-gradient(135deg, rgba(30,41,59,.98) 0%, rgba(249,115,22,.09) 55%, rgba(30,41,59,.98) 100%) !important;
+      border-radius: 18px !important;
+      border: 1px solid rgba(249,115,22,.22) !important;
+      padding: 2.5rem !important;
+      box-shadow: 0 8px 40px rgba(0,0,0,.45) !important;
+    }
+
+    /* === Fund NAV tracker — pale white cards, orange header, dark text === */
+    .fund-cat-block { background: #fff !important; border-color: #e2e8f0 !important; box-shadow: 0 4px 20px rgba(0,0,0,.15) !important; }
+    .fcb-header     { background: #f97316 !important; border-bottom-color: #f97316 !important; }
+    .fcb-name       { color: #fff !important; }
+    .fcb-count      { background: rgba(255,255,255,.25) !important; color: #fff !important; }
+    .fcb-dot        { opacity: .85; }
+    .fcb-row-hdr    { background: #f8fafc !important; border-bottom-color: #e2e8f0 !important; }
+    .fcb-row-hdr span { color: #64748b !important; }
+    .fcb-row        { border-bottom-color: #f1f5f9 !important; }
+    .fcb-row:hover  { background: #fff7ed !important; }
+    .fcb-fund-name  { color: #1e293b !important; }
+    .fcb-nav        { color: #1e293b !important; }
+    .fcb-1y:not(.positive):not(.negative) { color: #64748b !important; }
+    .positive { color: #059669 !important; }
+    .negative { color: #dc2626 !important; }
 </style>
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns%3D'http%3A//www.w3.org/2000/svg' viewBox%3D'0 0 100 100'%3E%3Ctext y%3D'.9em' font-size%3D'90'%3E%F0%9F%93%88%3C/text%3E%3C/svg%3E">
