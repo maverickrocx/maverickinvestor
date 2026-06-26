@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Jilesh Kadi — Maverick Investor</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <style>
+    :root {
+      --green:       #0d6e47;
+      --green-dark:  #094d32;
+      --green-light: #12925f;
+      --orange:      #f47c20;
+      --orange-light:#ff9a45;
+      --cream:       #fdf8f2;
+      --dark:        #111827;
+      --mid:         #374151;
+      --muted:       #6b7280;
+      --border:      #e5e7eb;
+      --white:       #ffffff;
+      --shadow:      0 4px 24px rgba(0,0,0,.08);
+      --radius:      14px;
+      --font:        'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+    /* ── Dark-theme override (matrix look) ── */
+    :root {
+      --green:      #f97316;
+      --green-dark: #0f172a;
+      --green-light:#fb923c;
+      --orange:     #f97316;
+      --orange-light:#fb923c;
+      --cream:      #0f172a;
+      --dark:       #e2e8f0;
+      --mid:        #cbd5e1;
+      --muted:      #94a3b8;
+      --border:     rgba(255,255,255,.1);
+      --white:      #e2e8f0;
+      --card-bg:    #1e293b;
+      --shadow:     0 4px 24px rgba(0,0,0,.4);
+    }
+    /* Fix elements that assumed light backgrounds */
+    body { color: #e2e8f0; padding-top: 64px; }
+    .topbar { background: rgba(15,23,42,.95) !important; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .nav-links a { color: #cbd5e1 !important; }
+    .nav-links a:hover, .nav-links a.nav-active { color: #f97316 !important; }
+    footer { background: #080f1e !important; color: #94a3b8 !important; }
+    footer a { color: #94a3b8 !important; }
+    footer a:hover { color: #f97316 !important; }
+    input, select, textarea { background: #0f172a !important; color: #e2e8f0 !important; border-color: rgba(255,255,255,.15) !important; }
+    table { color: #e2e8f0; }
+    th { background: rgba(249,115,22,.15) !important; color: #f97316 !important; }
+    td { border-color: rgba(255,255,255,.07) !important; }
+    tr:nth-child(even) { background: rgba(255,255,255,.03) !important; }
+    .section-title, h1, h2, h3, h4 { color: #e2e8f0; }
+    p, li, label { color: #cbd5e1; }
+    strong { color: #e2e8f0; }
+    .hint, .note { color: #94a3b8 !important; }
+    .card, .form-card, [class*=card], [class*=-card] { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; color: #e2e8f0 !important; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--cream); color: var(--dark); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ── NAV ── */
+    .topbar { position: fixed; top: 0; left:0; right:0; z-index: 100; background: rgba(15,23,42,.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,.08); }
+
+    /* ── NAV LAYOUT: logo left | links center | right spacer ── */
+    .topbar-inner {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      max-width: 1160px; margin: 0 auto; padding: 0 1.5rem; height: 64px;
+    }
+    .nav-links {
+      display: flex; align-items: center; justify-content: center;
+      gap: 2rem; list-style: none; margin: 0; padding: 0;
+    }
+    .nav-links a { font-size: .9rem; font-weight: 600; color: rgba(255,255,255,.85); transition: color .15s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-active { color: var(--orange) !important; }
+    .nav-cta { display: none; }
+    .logo { display: flex; align-items: center; gap: .6rem; font-weight: 800; font-size: 1.15rem; color: var(--white); }
+    .logo-icon { width: 34px; height: 34px; background: var(--orange); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    /* ── NAV TAGLINE (right side) ── */
+    .nav-tagline { text-align: right; font-size: .72rem; font-weight: 700; line-height: 1.3; letter-spacing: .03em; text-transform: uppercase; white-space: nowrap; }
+    .nav-tagline .t-maverick { color: var(--orange); }
+    .nav-tagline .t-investor { color: rgba(255,255,255,.75); font-weight: 400; }
+    @media(max-width:720px){ .nav-tagline{ display:none; } }
+
+    /* ── HERO ── */
+    .about-hero {
+      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 60%, #ea580c 100%);
+      padding: 5rem 1.5rem 4rem;
+      color: var(--white);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='40' x2='80' y2='40' stroke='rgba(255,255,255,0.04)' stroke-width='0.5'/%3E%3Cline x1='40' y1='0' x2='40' y2='80' stroke='rgba(255,255,255,0.04)' stroke-width='0.5'/%3E%3Cpath d='M0,20 H20 V0' stroke='rgba(255,255,255,0.06)' stroke-width='0.5' fill='none'/%3E%3Cpath d='M60,80 V60 H80' stroke='rgba(255,255,255,0.06)' stroke-width='0.5' fill='none'/%3E%3Cpath d='M0,60 H20 V80' stroke='rgba(255,255,255,0.04)' stroke-width='0.5' fill='none'/%3E%3Cpath d='M80,20 H60 V0' stroke='rgba(255,255,255,0.04)' stroke-width='0.5' fill='none'/%3E%3Ccircle cx='20' cy='20' r='2' fill='rgba(255,255,255,0.06)'/%3E%3Ccircle cx='60' cy='60' r='2' fill='rgba(255,255,255,0.06)'/%3E%3Ccircle cx='40' cy='40' r='1.5' fill='rgba(255,255,255,0.04)'/%3E%3Ccircle cx='20' cy='60' r='1.5' fill='rgba(255,255,255,0.05)'/%3E%3Ccircle cx='60' cy='20' r='1.5' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+    .about-hero-inner {
+      position: relative; z-index: 1;
+    }
+    .about-hero-inner { max-width: 760px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .founder-photo-lg {
+      display: block;
+      width: 200px; height: 200px; border-radius: 16px;
+      border: 4px solid rgba(255,255,255,.2);
+      object-fit: cover; margin: 0 auto 1.5rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,.3);
+    }
+    .about-hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; margin-bottom: .4rem; }
+    .about-hero .tagline { font-size: 1.05rem; color: rgba(255,255,255,.8); margin-bottom: 2rem; }
+    .hero-social { display: flex; gap: 1rem; justify-content: center; margin-top: 1.75rem; }
+    .hero-social a { display: inline-flex; align-items: center; gap: .5rem; padding: .55rem 1.25rem; border-radius: 99px; font-size: .88rem; font-weight: 700; }
+    .btn-li { background: #0a66c2; color: var(--white); }
+    .btn-mail { background: rgba(255,255,255,.15); color: var(--white); border: 1px solid rgba(255,255,255,.3); }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+    .section { padding: 2.4rem 0; }
+    .section-label { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); background: rgba(244,124,32,.1); border-radius: 99px; padding: .25rem .75rem; margin-bottom: .75rem; }
+    .section-title { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 900; margin-bottom: .75rem; }
+    .section-sub { color: var(--muted); font-size: 1rem; max-width: 640px; }
+
+    /* ── EXPERIENCE TIMELINE ── */
+    .timeline { position: relative; margin-top: 2.5rem; padding-left: 2rem; }
+    .timeline::before { content:''; position:absolute; left: .55rem; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--orange), var(--green)); border-radius: 2px; }
+    .tl-item { position: relative; margin-bottom: 2.5rem; }
+    .tl-dot { position: absolute; left: -2rem; top: .3rem; width: 14px; height: 14px; border-radius: 50%; background: var(--orange); border: 3px solid var(--cream); box-shadow: 0 0 0 2px var(--orange); }
+    .tl-item:last-child .tl-dot { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+    .tl-period { font-size: .75rem; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .3rem; }
+    .tl-role { font-size: 1.1rem; font-weight: 800; color: var(--dark); margin-bottom: .2rem; }
+    .tl-org { font-size: .88rem; font-weight: 600; color: var(--green); margin-bottom: .6rem; }
+    .tl-desc { font-size: .92rem; color: var(--mid); line-height: 1.7; }
+    .tl-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .75rem; }
+    .tl-tag { font-size: .72rem; font-weight: 700; padding: .2rem .65rem; border-radius: 99px; background: rgba(13,110,71,.1); color: var(--green); }
+
+
+    /* ── CERT BADGES ── */
+    .cert-badges { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: .75rem; align-items: center; }
+    .cert-badge { display: inline-flex; align-items: center; gap: .35rem; font-size: .72rem; font-weight: 800; padding: .3rem .7rem; border-radius: 6px; letter-spacing: .03em; }
+    .cert-badge-img { height: 64px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,.25)); }
+    .cert-badge-cfa { height: 100px; }
+    .cert-frm  { background: #3d1a5c; color: #d4b8f0; border: 1.5px dashed #9b6fd4; }
+
+    /* ── SKILLS ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 2rem; }
+    .skill-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.4rem; }
+    .skill-card .sk-icon { font-size: 1.6rem; margin-bottom: .6rem; }
+    .skill-card h3 { font-size: .95rem; font-weight: 800; margin-bottom: .4rem; }
+    .skill-card p { font-size: .83rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── PHILOSOPHY ── */
+    .philosophy-block { background: var(--green-dark); color: var(--white); border-radius: var(--radius); padding: 2.5rem; margin-top: 2.5rem; }
+    .philosophy-block blockquote { font-size: 1.2rem; font-weight: 700; line-height: 1.6; color: rgba(255,255,255,.95); border-left: 4px solid var(--orange); padding-left: 1.25rem; margin-bottom: 1.25rem; }
+    .philosophy-block p { font-size: .9rem; color: rgba(255,255,255,.7); line-height: 1.75; }
+
+    /* ── CTA ── */
+    .about-cta { background: linear-gradient(135deg, rgba(244,124,32,.08), rgba(13,110,71,.06)); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 2.5rem; text-align: center; margin-top: 3rem; }
+    .about-cta h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: .6rem; }
+    .about-cta p { color: var(--muted); font-size: .92rem; margin-bottom: 1.5rem; max-width: 520px; margin-left:auto; margin-right:auto; }
+    .btn-primary { display: inline-flex; align-items: center; gap: .5rem; background: var(--orange); color: var(--white); font-weight: 700; padding: .75rem 1.75rem; border-radius: 99px; font-size: .95rem; transition: opacity .15s; }
+    .btn-primary:hover { opacity: .88; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--green-dark); color: rgba(255,255,255,.7); padding: 1.8rem 0 0.9rem; margin-top: 5rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem; margin-bottom: 2rem; }
+    .footer-brand p { font-size: .85rem; line-height: 1.7; margin: .75rem 0 1rem; color: rgba(255,255,255,.55); }
+    .sebi-badge { display: inline-block; font-size: .72rem; font-weight: 700; color: rgba(255,255,255,.6); border: 1px solid rgba(255,255,255,.2); border-radius: 99px; padding: .2rem .7rem; }
+    .social-row { display: flex; gap: .5rem; margin-top: 1rem; }
+    .social-btn { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.25); display: flex; align-items: center; justify-content: center; font-size: .85rem; font-weight: 700; color: rgba(255,255,255,.75); transition: all .15s; }
+    .social-btn:hover { border-color: var(--orange); color: var(--orange); }
+    .footer-col h4 { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.5); margin-bottom: 1rem; }
+    .footer-col ul li { margin-bottom: .5rem; }
+    .footer-col ul li a { font-size: .85rem; color: rgba(255,255,255,.65); transition: color .15s; }
+    .footer-col ul li a:hover { color: var(--orange); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding-top: 1.25rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; font-size: .78rem; color: rgba(255,255,255,.35); }
+    @media(max-width:768px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+      .about-hero { padding: 3.5rem 1.25rem 3rem; }
+      .hero-stats { gap: 1.5rem; }
+    }
+    @media(max-width:480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .timeline { padding-left: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<style>nav,main,.topbar,.hero,.section,footer,.hero-section,.about-hero,.page-hero,.step,#app,.container,.topbar-inner{position:relative;z-index:1;}</style>
+
+<!-- Matrix particle background -->
+<canvas id="mi-bg-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.55"></canvas>
+<script>
+(function(){
+  var C=document.getElementById('mi-bg-canvas');
+  var ctx=C.getContext('2d');
+  var CS=22, cols, drops, speeds, colors;
+  function init(){
+    C.width=window.innerWidth; C.height=window.innerHeight;
+    cols=Math.floor(C.width/CS);
+    drops=Array.from({length:cols},function(){return Math.random()*(-(C.height/CS));});
+    speeds=Array.from({length:cols},function(){return 0.25+Math.random()*0.55;});
+    colors=Array.from({length:cols},function(){return Math.random()>0.82?'59,130,246':'249,115,22';});
+  }
+  var last=0;
+  function draw(ts){
+    requestAnimationFrame(draw);
+    if(ts-last<28) return; last=ts;
+    ctx.fillStyle='rgba(0,0,0,0.13)';
+    ctx.fillRect(0,0,C.width,C.height);
+    for(var i=0;i<cols;i++){
+      var y=drops[i]*CS, x=i*CS+CS/2, c=colors[i];
+      ctx.beginPath(); ctx.arc(x,y,2.8,0,6.28);
+      ctx.fillStyle='rgba('+c+',0.9)'; ctx.fill();
+      ctx.beginPath(); ctx.arc(x,y-CS,2,0,6.28);
+      ctx.fillStyle='rgba('+c+',0.45)'; ctx.fill();
+      ctx.beginPath(); ctx.arc(x,y-CS*2,1.4,0,6.28);
+      ctx.fillStyle='rgba('+c+',0.2)'; ctx.fill();
+      ctx.beginPath(); ctx.arc(x,y-CS*3,1,0,6.28);
+      ctx.fillStyle='rgba('+c+',0.08)'; ctx.fill();
+      drops[i]+=speeds[i];
+      if(drops[i]*CS>C.height+CS*4 && Math.random()>0.97) drops[i]=Math.random()*-8;
+    }
+  }
+  init();
+  window.addEventListener('resize',init);
+  requestAnimationFrame(draw);
+})();
+</script>
+
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">📈</div>
+      Maverick Investor
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="tools.html">Tools &amp; Goals</a></li>
+      <li><a href="mf-advisor.html">MF Advisor</a></li>
+      <li><a href="stock-screener.html">Stock Screener</a></li>
+      <li><a href="learn.html">Learn</a></li>
+      <li><a href="about.html" class="nav-active">About</a></li>
+    </ul>
+    <div class="nav-tagline">
+      <span class="t-maverick">Maverick</span> thinking.<br>
+      <span class="t-investor">Investor</span> returns.
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="about-hero">
+  <div class="about-hero-inner">
+    <img src="jilesh.jpg" alt="Jilesh Kadi" class="founder-photo-lg">
+    <div class="section-label">Meet the Founder</div>
+    <h1>Jilesh Kadi</h1>
+    <p class="tagline">Trader · Risk Manager · Investor · Builder of Maverick Investor</p>
+    <p style="font-size:.95rem;color:rgba(255,255,255,.75);max-width:580px;margin:1.25rem auto 0;line-height:1.75;">
+      I'm a CFA Charterholder, ERP &amp; SCR certified risk professional, and a retail investor who believes every Indian deserves access to clear, unbiased financial guidance. Over 5+ years of investing I've built a ₹66L+ portfolio tracking 30+ funds — earning a 13.6% XIRR. Maverick Investor is my attempt to share what I've learned: no jargon, no commissions, just honest advice tailored for the Indian market.
+    </p>
+
+    <div class="hero-social">
+      <a href="https://www.linkedin.com/in/jilesh/" target="_blank" rel="noopener" class="hero-social-btn btn-li">in LinkedIn</a>
+      <a href="mailto:jileshkadi@gmail.com" class="hero-social-btn btn-mail">✉ Email Me</a>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Experience</div>
+    <h2 class="section-title">A Career Across Markets</h2>
+    <p class="section-sub">From trading floors to risk desks to retail investing — a decade of hands-on market experience that informs every piece of content on Maverick Investor.</p>
+
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Early Career</div>
+        <div class="tl-role">Trader</div>
+        <div class="tl-org">Equities &amp; Commodities Markets</div>
+        <p class="tl-desc">Started in trading across equities and commodities markets — developing a deep understanding of how markets move, reading price action, managing positions under pressure, and navigating the unique dynamics of commodity cycles (energy, metals, agricultural). Trading instilled a discipline around risk and position sizing that shapes everything I do as an investor today.</p>
+        <div class="tl-tags">
+          <span class="tl-tag">Equities</span>
+          <span class="tl-tag">Commodities</span>
+          <span class="tl-tag">Derivatives</span>
+          <span class="tl-tag">Technical Analysis</span>
+          <span class="tl-tag">Position Sizing</span>
+          <span class="tl-tag">Risk/Reward</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Mid Career</div>
+        <div class="tl-role">Risk Manager</div>
+        <div class="tl-org">Financial Services &amp; Commodities</div>
+        <p class="tl-desc">Moved into risk management — covering portfolio-level exposure across financial and commodity markets, counterparty risk, stress testing, and how institutions protect capital in adverse conditions. Managing risk across commodities added a dimension of volatility and macro sensitivity that equity-only frameworks miss entirely. This gave me a rigorous, multi-asset framework for risk that goes well beyond the standard "high/medium/low" categories most retail investors use.</p>
+        <div class="tl-tags">
+          <span class="tl-tag">Portfolio Risk</span>
+          <span class="tl-tag">Commodity Risk</span>
+          <span class="tl-tag">Stress Testing</span>
+          <span class="tl-tag">VaR / CVaR</span>
+          <span class="tl-tag">Asset Allocation</span>
+          <span class="tl-tag">Drawdown Analysis</span>
+        </div>
+        <p class="tl-desc" style="margin-top:.9rem;font-size:.85rem;color:var(--muted);font-style:italic;border-left:3px solid var(--orange);padding-left:.85rem;">
+          Outside of work: I've spent years informally advising friends and family on mutual fund investing — helping them pick direct-plan funds, build SIP schedules, understand their risk profile, and avoid mis-sold products like ULIPs and endowment plans. Those conversations became the seed for Maverick Investor.
+        </p>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Present</div>
+        <div class="tl-role">Founder</div>
+        <div class="tl-org">Maverick Investor</div>
+        <p class="tl-desc">Built Maverick Investor to take the advice I was giving friends and make it available to every Indian investor — with live data, proper tools, and zero conflict of interest. No trail commissions. No product pushing. Just clear, research-backed guidance built on a decade of real market experience.</p>
+        <div class="tl-tags">
+          <span class="tl-tag">AMFI / SEBI Compliant</span>
+          <span class="tl-tag">Live NAV Data</span>
+          <span class="tl-tag">Fund Advisor Tool</span>
+          <span class="tl-tag">Retirement Planning</span>
+          <span class="tl-tag">Goal Calculators</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-label">What I Bring</div>
+    <h2 class="section-title">Skills &amp; Expertise</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="sk-icon">📊</div>
+        <h3>Risk Management</h3>
+        <p>Portfolio-level risk frameworks, stress testing, drawdown analysis, and VaR — institutional rigour applied to personal investing decisions.</p>
+      </div>
+      <div class="skill-card">
+        <div class="sk-icon">🎯</div>
+        <h3>Goal-Based Financial Planning</h3>
+        <p>Mapping every rupee to a specific goal — retirement, child's education, home purchase — with SIP schedules that account for Indian inflation rates.</p>
+      </div>
+      <div class="skill-card">
+        <div class="sk-icon">🔍</div>
+        <h3>Mutual Fund Research</h3>
+        <p>Screening funds on AUM, expense ratio, rolling returns, and Sharpe — the same methodology used in the live Fund Advisor tool.</p>
+      </div>
+      <div class="skill-card">
+        <div class="sk-icon">🛡️</div>
+        <h3>Insurance &amp; Protection Planning</h3>
+        <p>Separating insurance from investment, sizing cover correctly, and avoiding the mis-sold products that cost Indian families crores every year.</p>
+      </div>
+      <div class="skill-card">
+        <div class="sk-icon">📈</div>
+        <h3>Trading &amp; Market Dynamics</h3>
+        <p>A trading background means I understand volatility, liquidity, and market cycles — and why most retail investors should ignore short-term noise entirely.</p>
+      </div>
+      <div class="skill-card">
+        <div class="sk-icon">🎓</div>
+        <h3>Professional Certifications</h3>
+        <p>Formally credentialled across investment analysis, energy risk, and sustainability risk — with FRM in progress.</p>
+        <div class="cert-badges">
+          <a href="https://www.cfainstitute.org/programs/cfa-program" target="_blank" rel="noopener">
+            <img src="cfa-badge.png"
+                 alt="CFA Charterholder" class="cert-badge-img cert-badge-cfa" title="CFA® Charterholder — CFA Institute">
+          </a>
+          <a href="https://www.garp.org/erp" target="_blank" rel="noopener">
+            <img src="https://www.garp.org/hs-fs/hubfs/Website/ERP/Images/ERP%20badge%20iso.png?width=300&name=ERP%20badge%20iso.png"
+                 alt="ERP – Energy Risk Professional" class="cert-badge-img" title="Energy Risk Professional® — GARP">
+          </a>
+          <a href="https://www.garp.org/scr" target="_blank" rel="noopener">
+            <img src="https://www.garp.org/hs-fs/hubfs/GARP%20Design/scr/image/garp-scr-badge.png?width=225&name=garp-scr-badge.png"
+                 alt="SCR – Sustainability and Climate Risk" class="cert-badge-img" title="Sustainability and Climate Risk® — GARP">
+          </a>
+          <span class="cert-badge cert-frm">FRM (Pursuing)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="philosophy-block">
+      <blockquote>"Most financial advice in India is built around what earns the advisor a commission — not what works for you. I spent years watching that play out. Maverick Investor exists to fix that."</blockquote>
+      <p>The Indian investor deserves better. A decade in financial markets — as a trader, a risk manager, and an informal advisor — showed me that the gap between what institutions know and what retail investors are told is enormous. Maverick Investor is my attempt to close that gap: no jargon, no conflicts, no commissions. Just the same rigour I'd apply to my own money, applied to yours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="about-cta">
+      <h3>Want a Personalised Goal Based Investment Plan?</h3>
+      <p>I put together comprehensive, goal-based investment plans on request. Covers your full financial picture: retirement, child's education, home, and insurance.</p>
+      <a href="mailto:jileshkadi@gmail.com?subject=Personalised%20Investment%20Plan%20Request&body=Hi%20Jilesh%2C%0A%0AI%27d%20like%20to%20receive%20a%20personalised%20goal-based%20investment%20plan.%0A%0AMy%20details%3A%0AName%3A%20%0AAge%3A%20%0AMonthly%20income%3A%20%0ATop%20goals%3A%20%0ARisk%20profile%20(if%20known)%3A%20" class="btn-primary">📧 Request Your Plan</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="logo" style="color:#e2e8f0;text-decoration:none;">
+        <div class="logo-icon">📈</div> Maverick Investor
+      </a>
+      <p>Empowering Indian investors with unbiased, research-backed guidance on mutual funds, insurance, and retirement planning.</p>
+      <div class="sebi-badge">🏛️ SEBI Investor Education Compliant</div>
+      <div class="social-row">
+        <a href="https://www.linkedin.com/in/jilesh/" target="_blank" rel="noopener" class="social-btn">in</a>
+        <a href="mailto:jileshkadi@gmail.com" class="social-btn" title="Email us">✉</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li><li><a href="tools.html">Tools &amp; Goals</a></li><li><a href="mf-advisor.html">MF Advisor</a></li><li><a href="stock-screener.html">Stock Screener</a></li><li><a href="learn.html">Learn</a></li><li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Tools</h4>
+      <ul>
+        <li><a href="tools.html">SIP Calculator</a></li>
+        <li><a href="tools.html">Retirement Planner</a></li>
+        <li><a href="tools.html">Goal Tracker</a></li>
+        <li><a href="mf-advisor.html">MF Advisor</a></li>
+        <li><a href="stock-screener.html">Stock Screener</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Learn</h4>
+      <ul>
+        <li><a href="learn.html">Mutual Fund Basics</a></li>
+        <li><a href="learn.html">Insurance Basics</a></li>
+        <li><a href="learn.html">NPS Guide</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="mailto:jileshkadi@gmail.com">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Maverick Investor. All rights reserved.</div>
+    <div>Built with ❤️ for Indian investors · Not SEBI-registered · Educational use only</div>
+  </div>
+</footer>
+
+
+</body>
+</html>

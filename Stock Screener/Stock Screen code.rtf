@@ -1,0 +1,356 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Option Explicit\
+' =====================================================================\
+'  ScreenerEngine.bas  -  Mid/Smallcap Screener data engine\
+'  Pulls 3Y daily prices + fundamentals from Yahoo Finance for all\
+'  150 tickers, computes technicals, writes PriceMetrics, Fundamentals\
+'  and the auto cells on the Macro sheet.\
+'  Entry point:  RefreshAllData   (Alt+F8)\
+' =====================================================================\
+\
+Private Const FIRST_ROW As Long = 2\
+Private Const LAST_ROW As Long = 151\
+Private Const UA As String = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"\
+Private Const THROTTLE_MS As Long = 250\
+\
+Private gCrumb As String\
+\
+' --- Cross-platform throttle: no Windows API needed ---\
+Private Sub Pause(ByVal ms As Long)\
+    Dim t As Double: t = Timer\
+    If t + ms / 1000# >= 86400 Then Exit Sub             ' midnight rollover: skip wait\
+    Do While Timer < t + ms / 1000#\
+        DoEvents\
+    Loop\
+End Sub\
+\
+' ---------------------------------------------------------------------\
+Public Sub RefreshAllData()\
+    Dim t0 As Single: t0 = Timer\
+    Application.ScreenUpdating = False\
+    Application.Calculation = xlCalculationManual\
+    On Error GoTo CleanFail\
+\
+    EnsureCrumb\
+    RefreshFundamentals\
+    RefreshPriceMetrics\
+\
+    Application.Calculation = xlCalculationAutomatic\
+    Application.Calculate\
+    Application.ScreenUpdating = True\
+    Application.StatusBar = False\
+    MsgBox "Refresh complete in " & Format((Timer - t0) / 60, "0.0") & " min." & vbCrLf & "Check the Status columns on PriceMetrics / Fundamentals for any per-ticker failures, then review the Recommendations sheet.", vbInformation\
+    Exit Sub\
+CleanFail:\
+    Application.Calculation = xlCalculationAutomatic\
+    Application.ScreenUpdating = True\
+    Application.StatusBar = False\
+    MsgBox "Refresh stopped: " & Err.Description, vbExclamation\
+End Sub\
+\
+' ============================ HTTP ===================================\
+' Mac: AppleScriptTask -> curl (requires YahooFetch.applescript installed in\
+'      ~/Library/Application Scripts/com.microsoft.Excel/ -- see Setup sheet)\
+' Windows: MSXML2.XMLHTTP\
+Private Function HttpGet(ByVal url As String) As String\
+    Dim tries As Long, resp As String\
+    For tries = 1 To 3\
+        resp = HttpOnce(url)\
+        If Len(resp) > 0 Then HttpGet = resp: Exit Function\
+        Pause 800 * tries\
+    Next tries\
+    HttpGet = ""\
+End Function\
+\
+Private Function HttpOnce(ByVal url As String) As String\
+#If Mac Then\
+    On Error Resume Next\
+    HttpOnce = AppleScriptTask("YahooFetch.applescript", "fetchUrl", url)\
+    If Err.Number <> 0 Then\
+        If Err.Number = 5 Or InStr(Err.Description, "file") > 0 Then\
+            On Error GoTo 0\
+            Err.Raise vbObjectError + 1, , "YahooFetch.applescript not found. Copy it to ~/Library/Application Scripts/com.microsoft.Excel/ (see Setup sheet, step 2)."\
+        End If\
+        HttpOnce = ""\
+    End If\
+    On Error GoTo 0\
+#Else\
+    Dim h As Object\
+    On Error Resume Next\
+    Set h = CreateObject("MSXML2.XMLHTTP.6.0")\
+    If h Is Nothing Then Set h = CreateObject("MSXML2.XMLHTTP")\
+    If h Is Nothing Then Exit Function\
+    h.Open "GET", url, False\
+    h.setRequestHeader "User-Agent", UA\
+    h.setRequestHeader "Accept", "application/json,text/plain,*/*"\
+    h.Send\
+    If Err.Number = 0 Then\
+        If h.Status = 200 Then HttpOnce = h.responseText\
+    End If\
+    On Error GoTo 0\
+#End If\
+End Function\
+\
+Private Sub EnsureCrumb()\
+    Dim resp As String\
+    Application.StatusBar = "Authenticating with Yahoo Finance..."\
+    HttpGet "https://fc.yahoo.com"                       ' sets session cookie (404 expected)\
+    resp = HttpGet("https://query1.finance.yahoo.com/v1/test/getcrumb")\
+    If Len(resp) > 0 And Len(resp) < 30 And InStr(resp, "\{") = 0 Then\
+        gCrumb = resp\
+    Else\
+        gCrumb = ""                                       ' fundamentals may be limited\
+    End If\
+End Sub\
+\
+Private Function EncSym(ByVal s As String) As String\
+    EncSym = Replace(Replace(s, "&", "%26"), " ", "%20")\
+End Function\
+\
+' Percent-encode all non-unreserved characters (for the crumb parameter)\
+Private Function UrlEncode(ByVal s As String) As String\
+    Dim i As Long, c As String, out As String\
+    For i = 1 To Len(s)\
+        c = Mid$(s, i, 1)\
+        If c Like "[A-Za-z0-9]" Or c = "-" Or c = "_" Or c = "." Or c = "~" Then\
+            out = out & c\
+        Else\
+            out = out & "%" & Right$("0" & Hex(Asc(c)), 2)\
+        End If\
+    Next i\
+    UrlEncode = out\
+End Function\
+\
+' ========================= JSON helpers ==============================\
+' Extracts the number after  "key":\{"raw":   (Yahoo quoteSummary style)\
+Private Function JRaw(ByVal js As String, ByVal key As String) As Variant\
+    Dim p As Long, q As Long, s As String\
+    p = InStr(js, """" & key & """:\{""raw"":")\
+    If p = 0 Then JRaw = Empty: Exit Function\
+    p = p + Len(key) + 10                                ' first char after "key":\{"raw":\
+    q = p\
+    Do While q <= Len(js) And InStr(",\}", Mid$(js, q, 1)) = 0\
+        q = q + 1\
+    Loop\
+    s = Mid$(js, p, q - p)\
+    If IsNumeric(s) Then JRaw = CDbl(s) Else JRaw = Empty\
+End Function\
+\
+' Extracts a numeric array  "key":[1,2,null,...]\
+Private Function JArr(ByVal js As String, ByVal key As String) As Variant\
+    Dim p As Long, q As Long, parts() As String, out() As Double\
+    Dim i As Long, n As Long, lastV As Double, haveV As Boolean, fv As Long\
+    p = InStr(js, """" & key & """:[")\
+    If p = 0 Then JArr = Empty: Exit Function\
+    ' Yahoo nests adjclose as "adjclose":[\{"adjclose":[...]\}] - skip to inner array\
+    If Mid$(js, p + Len(key) + 4, 1) = "\{" Then\
+        p = InStr(p + 1, js, """" & key & """:[")\
+        If p = 0 Then JArr = Empty: Exit Function\
+    End If\
+    p = p + Len(key) + 4\
+    q = InStr(p, js, "]")\
+    If q = 0 Then JArr = Empty: Exit Function\
+    parts = Split(Mid$(js, p, q - p), ",")\
+    n = UBound(parts) + 1\
+    If n = 0 Then JArr = Empty: Exit Function\
+    ReDim out(0 To n - 1)\
+    haveV = False: fv = -1\
+    For i = 0 To n - 1\
+        If IsNumeric(parts(i)) Then\
+            lastV = CDbl(parts(i)): haveV = True\
+            If fv = -1 Then fv = i\
+        End If\
+        If haveV Then out(i) = lastV\
+    Next i\
+    If Not haveV Then JArr = Empty: Exit Function\
+    For i = 0 To fv - 1                                  ' back-fill leading nulls\
+        out(i) = out(fv)\
+    Next i\
+    JArr = out\
+End Function\
+\
+' ====================== FUNDAMENTALS =================================\
+Private Sub RefreshFundamentals()\
+    Dim wsT As Worksheet, wsF As Worksheet, r As Long, sym As String, js As String, url As String\
+    Set wsT = ThisWorkbook.Sheets("Tickers")\
+    Set wsF = ThisWorkbook.Sheets("Fundamentals")\
+\
+    For r = FIRST_ROW To LAST_ROW\
+        sym = wsT.Cells(r, 1).Value\
+        Application.StatusBar = "Fundamentals " & (r - 1) & "/150: " & sym\
+        wsF.Range(wsF.Cells(r, 2), wsF.Cells(r, 13)).ClearContents\
+\
+        url = "https://query1.finance.yahoo.com/v10/finance/quoteSummary/" & EncSym(sym) & ".NS" & "?modules=summaryDetail%2CfinancialData%2CdefaultKeyStatistics%2Cprice"\
+        If Len(gCrumb) > 0 Then url = url & "&crumb=" & UrlEncode(gCrumb)\
+        js = HttpGet(url)\
+\
+        If Len(js) = 0 Or InStr(js, """error"":\{") > 0 Then\
+            wsF.Cells(r, 14).Value = "FAIL: no data"\
+        Else\
+            PutV wsF, r, 2, JRaw(js, "marketCap")\
+            PutV wsF, r, 3, JRaw(js, "trailingPE")\
+            PutV wsF, r, 4, JRaw(js, "forwardPE")\
+            PutV wsF, r, 5, JRaw(js, "priceToBook")\
+            PutV wsF, r, 6, JRaw(js, "returnOnEquity")\
+            PutV wsF, r, 7, JRaw(js, "debtToEquity")          ' Yahoo reports in %\
+            PutV wsF, r, 8, JRaw(js, "revenueGrowth")\
+            PutV wsF, r, 9, JRaw(js, "earningsGrowth")\
+            PutV wsF, r, 10, JRaw(js, "profitMargins")\
+            PutV wsF, r, 11, JRaw(js, "dividendYield")\
+            PutV wsF, r, 12, JRaw(js, "beta")\
+            PutV wsF, r, 13, JRaw(js, "heldPercentInsiders")\
+            wsF.Cells(r, 14).Value = "OK " & Format(Now, "dd-mmm hh:nn")\
+        End If\
+        Pause THROTTLE_MS\
+        DoEvents\
+    Next r\
+End Sub\
+\
+Private Sub PutV(ws As Worksheet, r As Long, c As Long, v As Variant)\
+    If Not IsEmpty(v) Then ws.Cells(r, c).Value = v\
+End Sub\
+\
+' ====================== PRICE METRICS ================================\
+Private Sub RefreshPriceMetrics()\
+    Dim wsT As Worksheet, wsP As Worksheet, wsM As Worksheet\
+    Dim r As Long, sym As String, js As String\
+    Dim niftyC As Variant, niftyRet6M As Double, niftySMA200 As Double\
+\
+    Set wsT = ThisWorkbook.Sheets("Tickers")\
+    Set wsP = ThisWorkbook.Sheets("PriceMetrics")\
+    Set wsM = ThisWorkbook.Sheets("Macro")\
+\
+    ' --- Nifty 50 (benchmark) and India VIX ---\
+    Application.StatusBar = "Fetching Nifty 50 benchmark series..."\
+    wsM.Range("B4:B6").ClearContents\
+    js = HttpGet("https://query1.finance.yahoo.com/v8/finance/chart/%5ENSEI?range=3y&interval=1d")\
+    niftyC = JArr(js, "close")\
+    Dim haveNifty As Boolean: haveNifty = False\
+    niftyRet6M = 0: niftySMA200 = 0\
+    If Not IsEmpty(niftyC) Then\
+        Dim nn As Long: nn = UBound(niftyC) + 1\
+        If nn > 126 Then niftyRet6M = niftyC(nn - 1) / niftyC(nn - 1 - 126) - 1: haveNifty = True\
+        If nn >= 200 Then niftySMA200 = MeanTail(niftyC, 200)\
+        wsM.Range("B4").Value = niftyC(nn - 1)\
+        If niftySMA200 > 0 Then wsM.Range("B5").Value = niftySMA200\
+    End If\
+    js = HttpGet("https://query1.finance.yahoo.com/v8/finance/chart/%5EINDIAVIX?range=5d&interval=1d")\
+    Dim vixC As Variant: vixC = JArr(js, "close")\
+    If Not IsEmpty(vixC) Then wsM.Range("B6").Value = vixC(UBound(vixC))\
+    Pause THROTTLE_MS\
+\
+    ' --- per-ticker ---\
+    For r = FIRST_ROW To LAST_ROW\
+        sym = wsT.Cells(r, 1).Value\
+        Application.StatusBar = "Prices " & (r - 1) & "/150: " & sym\
+        wsP.Range(wsP.Cells(r, 2), wsP.Cells(r, 17)).ClearContents\
+\
+        js = HttpGet("https://query1.finance.yahoo.com/v8/finance/chart/" & EncSym(sym) & ".NS?range=3y&interval=1d")\
+        Dim cl As Variant, vol As Variant\
+        cl = JArr(js, "adjclose")\
+        If IsEmpty(cl) Then cl = JArr(js, "close")\
+        vol = JArr(js, "volume")\
+\
+        If IsEmpty(cl) Then\
+            wsP.Cells(r, 18).Value = "FAIL: no price data"\
+        Else\
+            Dim n As Long: n = UBound(cl) + 1\
+            If n < 30 Then\
+                wsP.Cells(r, 18).Value = "FAIL: <30 days history"\
+            Else\
+                Dim lastP As Double: lastP = cl(n - 1)\
+                wsP.Cells(r, 2).Value = lastP\
+                If n > 250 Then wsP.Cells(r, 3).Value = (lastP / cl(0)) ^ (252# / (n - 1)) - 1\
+                If n > 252 Then wsP.Cells(r, 4).Value = lastP / cl(n - 253) - 1\
+                If n > 126 Then wsP.Cells(r, 5).Value = lastP / cl(n - 127) - 1\
+                wsP.Cells(r, 6).Value = AnnVol(cl)\
+                wsP.Cells(r, 7).Value = MaxDD(cl)\
+                If n > 15 Then wsP.Cells(r, 8).Value = RSI14(cl)\
+                Dim s50 As Double, s200 As Double\
+                If n >= 50 Then s50 = MeanTail(cl, 50): wsP.Cells(r, 9).Value = s50\
+                If n >= 200 Then s200 = MeanTail(cl, 200): wsP.Cells(r, 10).Value = s200\
+                If s200 > 0 Then\
+                    wsP.Cells(r, 11).Value = lastP / s200 - 1\
+                    If s50 > 0 Then wsP.Cells(r, 12).Value = IIf(s50 > s200, 1, -1)\
+                End If\
+                Dim hi As Double, lo As Double\
+                HiLo52 cl, hi, lo\
+                wsP.Cells(r, 13).Value = hi\
+                wsP.Cells(r, 14).Value = lo\
+                If hi > 0 Then wsP.Cells(r, 15).Value = lastP / hi - 1\
+                If n > 126 And haveNifty Then wsP.Cells(r, 16).Value = (lastP / cl(n - 1 - 126) - 1) - niftyRet6M\
+                If Not IsEmpty(vol) Then wsP.Cells(r, 17).Value = MeanTail(vol, 63)\
+                wsP.Cells(r, 18).Value = "OK " & Format(Now, "dd-mmm hh:nn")\
+            End If\
+        End If\
+        Pause THROTTLE_MS\
+        DoEvents\
+    Next r\
+End Sub\
+\
+' ======================= math helpers ================================\
+Private Function MeanTail(arr As Variant, ByVal k As Long) As Double\
+    Dim i As Long, s As Double, n As Long\
+    n = UBound(arr) + 1\
+    If k > n Then k = n\
+    For i = n - k To n - 1\
+        s = s + arr(i)\
+    Next i\
+    MeanTail = s / k\
+End Function\
+\
+Private Function AnnVol(cl As Variant) As Double\
+    Dim i As Long, n As Long, m As Double, s As Double, ret() As Double\
+    n = UBound(cl) + 1\
+    If n < 3 Then Exit Function\
+    ReDim ret(1 To n - 1)\
+    For i = 1 To n - 1\
+        If cl(i - 1) > 0 Then ret(i) = Log(cl(i) / cl(i - 1))\
+    Next i\
+    For i = 1 To n - 1: m = m + ret(i): Next i\
+    m = m / (n - 1)\
+    For i = 1 To n - 1: s = s + (ret(i) - m) ^ 2: Next i\
+    AnnVol = Sqr(s / (n - 2)) * Sqr(252)\
+End Function\
+\
+Private Function MaxDD(cl As Variant) As Double\
+    Dim i As Long, pk As Double, dd As Double, w As Double\
+    pk = cl(0)\
+    For i = 1 To UBound(cl)\
+        If cl(i) > pk Then pk = cl(i)\
+        If pk > 0 Then\
+            dd = cl(i) / pk - 1\
+            If dd < w Then w = dd\
+        End If\
+    Next i\
+    MaxDD = w                                            ' negative number\
+End Function\
+\
+Private Function RSI14(cl As Variant) As Double\
+    Dim i As Long, n As Long, ch As Double\
+    Dim ag As Double, al As Double\
+    n = UBound(cl) + 1\
+    For i = n - 14 To n - 1\
+        ch = cl(i) - cl(i - 1)\
+        If ch > 0 Then ag = ag + ch Else al = al - ch\
+    Next i\
+    ag = ag / 14: al = al / 14\
+    If al = 0 Then RSI14 = 100 Else RSI14 = 100 - 100 / (1 + ag / al)\
+End Function\
+\
+Private Sub HiLo52(cl As Variant, ByRef hi As Double, ByRef lo As Double)\
+    Dim i As Long, n As Long, k As Long\
+    n = UBound(cl) + 1\
+    k = n - 252: If k < 0 Then k = 0\
+    hi = cl(k): lo = cl(k)\
+    For i = k To n - 1\
+        If cl(i) > hi Then hi = cl(i)\
+        If cl(i) < lo And cl(i) > 0 Then lo = cl(i)\
+    Next i\
+End Sub}
