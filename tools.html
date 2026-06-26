@@ -1861,34 +1861,36 @@
     return n.toLocaleString('en-IN', { maximumFractionDigits: 2 });
   }
   function calcGoal(key) {
-    // Support both old (goals section) and new (tools tiles with g2- prefix) IDs
     const bases = [
-      { costId:`eduCost`,  yrsId:`eduYrs`,  futId:`eduFuture`,  sipId:`eduSIP`,  yrsLbl:`eduYrsVal`,  inf:8  },
-      { costId:`weddCost`, yrsId:`weddYrs`, futId:`weddFuture`, sipId:`weddSIP`, yrsLbl:`weddYrsVal`, inf:7  },
-      { costId:`carCost`,  yrsId:`carYrs`,  futId:`carFuture`,  sipId:`carSIP`,  yrsLbl:`carYrsVal`,  inf:5  },
-      { costId:`homeCost`, yrsId:`homeYrs`, futId:`homeFuture`, sipId:`homeSIP`, yrsLbl:`homeYrsVal`, inf:8  },
-      { costId:`tripCost`, yrsId:`tripYrs`, futId:`tripFuture`, sipId:`tripSIP`, yrsLbl:`tripYrsVal`, inf:5  },
+      { costId:`eduCost`,  yrsId:`eduYrs`,  futId:`eduFuture`,  sipId:`eduSIP`,  yrsLbl:`eduYrsVal`,  retId:`eduRet`,  inf:10 },
+      { costId:`weddCost`, yrsId:`weddYrs`, futId:`weddFuture`, sipId:`weddSIP`, yrsLbl:`weddYrsVal`, retId:`weddRet`, inf:7  },
+      { costId:`carCost`,  yrsId:`carYrs`,  futId:`carFuture`,  sipId:`carSIP`,  yrsLbl:`carYrsVal`,  retId:`carRet`,  inf:5  },
+      { costId:`homeCost`, yrsId:`homeYrs`, futId:`homeFuture`, sipId:`homeSIP`, yrsLbl:`homeYrsVal`, retId:`homeRet`, inf:8  },
+      { costId:`tripCost`, yrsId:`tripYrs`, futId:`tripFuture`, sipId:`tripSIP`, yrsLbl:`tripYrsVal`, retId:`tripRet`, inf:5  },
     ];
     const keyMap = { edu:0, wedd:1, car:2, home:3, trip:4 };
     const idx = keyMap[key];
     if (idx === undefined) return;
     const infRate = bases[idx].inf;
 
-    // Compute for each prefix (old section + new tiles)
     [['', ''], ['g2-', 'g2-']].forEach(([cp, yp]) => {
       const costEl = document.getElementById(cp + bases[idx].costId);
       const yrsEl  = document.getElementById(yp + bases[idx].yrsId);
       if (!costEl || !yrsEl) return;
       const cost = parseFloat(costEl.value) || 0;
       const yrs  = parseFloat(yrsEl.value)  || 1;
-      const r    = 12 / 1200;
-      const n    = yrs * 12;
+      const retEl = document.getElementById(yp + bases[idx].retId);
+      const annRet = retEl ? (parseFloat(retEl.value) || 12) : 12;
+      const retLblEl = document.getElementById(yp + bases[idx].retId + 'Lbl');
+      if (retLblEl) retLblEl.textContent = annRet + '%';
+      const r = annRet / 1200;
+      const n = yrs * 12;
       const yrsLbl = document.getElementById(yp + bases[idx].yrsLbl);
       if (yrsLbl) yrsLbl.textContent = yrs + ' yr' + (yrs>1?'s':'');
       const future = cost * Math.pow(1 + infRate/100, yrs);
-      const sip    = future / (((Math.pow(1+r,n)-1)/r)*(1+r));
-      const futEl = document.getElementById(yp + bases[idx].futId);
-      const sipEl = document.getElementById(yp + bases[idx].sipId);
+      const sip    = future / ((Math.pow(1+r,n)-1)/r);
+      const futEl  = document.getElementById(yp + bases[idx].futId);
+      const sipEl  = document.getElementById(yp + bases[idx].sipId);
       if (futEl) futEl.textContent = fmt(Math.round(future));
       if (sipEl) sipEl.textContent = fmt(Math.round(sip));
     });

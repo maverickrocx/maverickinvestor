@@ -2458,11 +2458,11 @@
   function calcGoal(key) {
     // Support both old (goals section) and new (tools tiles with g2- prefix) IDs
     const bases = [
-      { costId:`eduCost`,  yrsId:`eduYrs`,  futId:`eduFuture`,  sipId:`eduSIP`,  yrsLbl:`eduYrsVal`,  inf:8  },
-      { costId:`weddCost`, yrsId:`weddYrs`, futId:`weddFuture`, sipId:`weddSIP`, yrsLbl:`weddYrsVal`, inf:7  },
-      { costId:`carCost`,  yrsId:`carYrs`,  futId:`carFuture`,  sipId:`carSIP`,  yrsLbl:`carYrsVal`,  inf:5  },
-      { costId:`homeCost`, yrsId:`homeYrs`, futId:`homeFuture`, sipId:`homeSIP`, yrsLbl:`homeYrsVal`, inf:8  },
-      { costId:`tripCost`, yrsId:`tripYrs`, futId:`tripFuture`, sipId:`tripSIP`, yrsLbl:`tripYrsVal`, inf:5  },
+      { costId:`eduCost`,  yrsId:`eduYrs`,  futId:`eduFuture`,  sipId:`eduSIP`,  yrsLbl:`eduYrsVal`,  retId:`eduRet`,  inf:10 },
+      { costId:`weddCost`, yrsId:`weddYrs`, futId:`weddFuture`, sipId:`weddSIP`, yrsLbl:`weddYrsVal`, retId:`weddRet`, inf:7  },
+      { costId:`carCost`,  yrsId:`carYrs`,  futId:`carFuture`,  sipId:`carSIP`,  yrsLbl:`carYrsVal`,  retId:`carRet`,  inf:5  },
+      { costId:`homeCost`, yrsId:`homeYrs`, futId:`homeFuture`, sipId:`homeSIP`, yrsLbl:`homeYrsVal`, retId:`homeRet`, inf:8  },
+      { costId:`tripCost`, yrsId:`tripYrs`, futId:`tripFuture`, sipId:`tripSIP`, yrsLbl:`tripYrsVal`, retId:`tripRet`, inf:5  },
     ];
     const keyMap = { edu:0, wedd:1, car:2, home:3, trip:4 };
     const idx = keyMap[key];
@@ -2476,12 +2476,16 @@
       if (!costEl || !yrsEl) return;
       const cost = parseFloat(costEl.value) || 0;
       const yrs  = parseFloat(yrsEl.value)  || 1;
-      const r    = 12 / 1200;
+      const retEl = document.getElementById(yp + bases[idx].retId) || document.getElementById(bases[idx].retId);
+      const annRet = retEl ? (parseFloat(retEl.value) || 12) : 12;
+      const retLblEl = document.getElementById(yp + (bases[idx].retId) + 'Lbl') || document.getElementById(bases[idx].retId + 'Lbl');
+      if (retLblEl) retLblEl.textContent = annRet + '%';
+      const r    = annRet / 1200;
       const n    = yrs * 12;
       const yrsLbl = document.getElementById(yp + bases[idx].yrsLbl);
       if (yrsLbl) yrsLbl.textContent = yrs + ' yr' + (yrs>1?'s':'');
       const future = cost * Math.pow(1 + infRate/100, yrs);
-      const sip    = future / (((Math.pow(1+r,n)-1)/r)*(1+r));
+      const sip    = future / ((Math.pow(1+r,n)-1)/r);
       const futEl = document.getElementById(yp + bases[idx].futId);
       const sipEl = document.getElementById(yp + bases[idx].sipId);
       if (futEl) futEl.textContent = fmt(Math.round(future));
@@ -2499,7 +2503,7 @@
     const y = +document.getElementById('heroSipYrs').value;
     const r = +document.getElementById('heroSipRet').value / 100 / 12;
     const n = y * 12;
-    const corpus   = p * ((Math.pow(1+r,n)-1)/r) * (1+r);
+    const corpus   = p * ((Math.pow(1+r,n)-1)/r);
     const invested = p * n;
     const gain     = corpus - invested;
     document.getElementById('heroSipAmtLbl').textContent = '₹' + p.toLocaleString('en-IN');
@@ -2522,10 +2526,12 @@
     const n        = years * 12;
     // Future monthly expense (6% inflation)
     const futureExp  = exp * Math.pow(1.06, years);
-    // Corpus needed = 25× annual expenses (4% SWR)
-    const corpus     = futureExp * 12 * 25;
+    // Corpus via growing annuity: post-ret return 7.5%, inflation 6%, life exp 85
+    const lifeYrs = Math.max(20, 85 - (retAge || 60));
+    const gr = 0.06, rr = 0.075;
+    const corpus     = (futureExp * 12) * (1 - Math.pow((1+gr)/(1+rr), lifeYrs)) / (rr - gr);
     // SIP to build that corpus
-    const sip        = corpus / (((Math.pow(1+r,n)-1)/r) * (1+r));
+    const sip        = corpus / ((Math.pow(1+r,n)-1)/r);
     // Label helpers
     const fmtK = v => v >= 1e7 ? (v/1e7).toFixed(1)+' Cr' : v >= 1e5 ? (v/1e5).toFixed(1)+' L' : v >= 1e3 ? (v/1e3).toFixed(0)+'K' : Math.round(v);
     document.getElementById('heroRetAgeLbl').textContent    = curAge + ' yrs';
@@ -2548,9 +2554,10 @@
     const inflation = 0.06;
     const futureExp = exp * Math.pow(1 + inflation, yrsToRet);
     const annualExp = futureExp * 12;
-    const retYrs = 25;
-    const safeR  = 0.07;
-    const corpus = annualExp * ((1 - Math.pow(1+safeR, -retYrs)) / safeR);
+    // Growing annuity: post-ret return 7.5%, inflation 6%, life expectancy 85
+    const lifeYrs = Math.max(20, 85 - retAge);
+    const gr = 0.06, rr = 0.075;
+    const corpus = annualExp * (1 - Math.pow((1+gr)/(1+rr), lifeYrs)) / (rr - gr);
     document.getElementById('retAgeLabel').textContent = age;
     document.getElementById('retRetLabel').textContent = retAge;
     document.getElementById('retExpLabel').textContent = exp.toLocaleString('en-IN');
@@ -2564,9 +2571,8 @@
   ------------------------------------------------------- */
   const insTypes = {
     term:     { label:'Term Life Insurance',  formula:'10× income + loans + 5L/dependent', multiplier:(inc,loans,dep)=>inc*10+loans+dep*500000 },
-    health:   { label:'Health Insurance',     formula:'3–5L per person in family',         multiplier:(inc,loans,dep)=>Math.max(500000,(dep+1)*500000) },
+    health:   { label:'Health Insurance',     formula:'10L per person (2025 minimum)',     multiplier:(inc,loans,dep)=>Math.max(1000000,(dep+1)*1000000) },
     critical: { label:'Critical Illness',     formula:'3× annual income',                  multiplier:(inc,loans,dep)=>inc*3 },
-    ulip:     { label:'ULIP',                 formula:'10× annual premium target',         multiplier:(inc,loans,dep)=>inc*0.5 },
   };
   let activeInsType = 'term';
 
