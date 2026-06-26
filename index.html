@@ -43,7 +43,8 @@
       --shadow:     0 4px 24px rgba(0,0,0,.4);
     }
     /* Fix elements that assumed light backgrounds */
-    body { color: #e2e8f0; }
+    html { background: #0f172a; }
+    body { color: #e2e8f0; background: transparent !important; }
     .topbar { background: rgba(15,23,42,.95) !important; border-bottom: 1px solid rgba(255,255,255,.08); position: sticky !important; top: 0 !important; z-index: 1000 !important; }
     .nav-links a { color: #cbd5e1 !important; }
     .nav-links a:hover, .nav-links a.nav-active { color: #f97316 !important; }
@@ -2458,11 +2459,11 @@
   function calcGoal(key) {
     // Support both old (goals section) and new (tools tiles with g2- prefix) IDs
     const bases = [
-      { costId:`eduCost`,  yrsId:`eduYrs`,  futId:`eduFuture`,  sipId:`eduSIP`,  yrsLbl:`eduYrsVal`,  inf:8  },
-      { costId:`weddCost`, yrsId:`weddYrs`, futId:`weddFuture`, sipId:`weddSIP`, yrsLbl:`weddYrsVal`, inf:7  },
-      { costId:`carCost`,  yrsId:`carYrs`,  futId:`carFuture`,  sipId:`carSIP`,  yrsLbl:`carYrsVal`,  inf:5  },
-      { costId:`homeCost`, yrsId:`homeYrs`, futId:`homeFuture`, sipId:`homeSIP`, yrsLbl:`homeYrsVal`, inf:8  },
-      { costId:`tripCost`, yrsId:`tripYrs`, futId:`tripFuture`, sipId:`tripSIP`, yrsLbl:`tripYrsVal`, inf:5  },
+      { costId:`eduCost`,  yrsId:`eduYrs`,  futId:`eduFuture`,  sipId:`eduSIP`,  yrsLbl:`eduYrsVal`,  retId:`eduRet`,  inf:10 },
+      { costId:`weddCost`, yrsId:`weddYrs`, futId:`weddFuture`, sipId:`weddSIP`, yrsLbl:`weddYrsVal`, retId:`weddRet`, inf:7  },
+      { costId:`carCost`,  yrsId:`carYrs`,  futId:`carFuture`,  sipId:`carSIP`,  yrsLbl:`carYrsVal`,  retId:`carRet`,  inf:5  },
+      { costId:`homeCost`, yrsId:`homeYrs`, futId:`homeFuture`, sipId:`homeSIP`, yrsLbl:`homeYrsVal`, retId:`homeRet`, inf:8  },
+      { costId:`tripCost`, yrsId:`tripYrs`, futId:`tripFuture`, sipId:`tripSIP`, yrsLbl:`tripYrsVal`, retId:`tripRet`, inf:5  },
     ];
     const keyMap = { edu:0, wedd:1, car:2, home:3, trip:4 };
     const idx = keyMap[key];
@@ -2476,12 +2477,16 @@
       if (!costEl || !yrsEl) return;
       const cost = parseFloat(costEl.value) || 0;
       const yrs  = parseFloat(yrsEl.value)  || 1;
-      const r    = 12 / 1200;
+      const retEl = document.getElementById(yp + bases[idx].retId) || document.getElementById(bases[idx].retId);
+      const annRet = retEl ? (parseFloat(retEl.value) || 12) : 12;
+      const retLblEl = document.getElementById(yp + (bases[idx].retId) + 'Lbl') || document.getElementById(bases[idx].retId + 'Lbl');
+      if (retLblEl) retLblEl.textContent = annRet + '%';
+      const r    = annRet / 1200;
       const n    = yrs * 12;
       const yrsLbl = document.getElementById(yp + bases[idx].yrsLbl);
       if (yrsLbl) yrsLbl.textContent = yrs + ' yr' + (yrs>1?'s':'');
       const future = cost * Math.pow(1 + infRate/100, yrs);
-      const sip    = future / (((Math.pow(1+r,n)-1)/r)*(1+r));
+      const sip    = future / ((Math.pow(1+r,n)-1)/r);
       const futEl = document.getElementById(yp + bases[idx].futId);
       const sipEl = document.getElementById(yp + bases[idx].sipId);
       if (futEl) futEl.textContent = fmt(Math.round(future));
@@ -2550,6 +2555,7 @@
     const inflation = 0.06;
     const futureExp = exp * Math.pow(1 + inflation, yrsToRet);
     const annualExp = futureExp * 12;
+    // Growing annuity: post-ret return 7.5%, inflation 6%, life expectancy 85
     const lifeYrs = Math.max(20, 85 - retAge);
     const gr = 0.06, rr = 0.075;
     const corpus = annualExp * (1 - Math.pow((1+gr)/(1+rr), lifeYrs)) / (rr - gr);
