@@ -101,6 +101,11 @@ select option{background:var(--card);}
 .pfx input{padding-left:2rem;}
 .hint{font-size:.75rem;color:var(--muted);margin-top:.3rem;}
 .inflation-note{font-size:.75rem;color:#fbbf24;margin-top:.3rem;}
+.qp-card{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:border-color .2s,transform .15s;}
+.qp-card:hover{border-color:var(--orange);transform:translateY(-3px);}
+.qp-icon{font-size:2rem;margin-bottom:.5rem;}
+.qp-label{font-weight:700;font-size:1rem;margin-bottom:.35rem;}
+.qp-desc{font-size:.78rem;color:var(--muted);line-height:1.4;}
 
 /* TOGGLES */
 .toggle-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1rem;}
@@ -476,14 +481,24 @@ footer{background:#080f1e;color:#94a3b8;padding:3.5rem 0 1.5rem;border-top:1px s
       <div class="form-row">
         <div class="form-group">
           <label>Years to Goal</label>
-          <input type="number" id="inp-years" placeholder="15" min="1" max="40">
+          <input type="number" id="inp-years" placeholder="15" min="1" max="40" oninput="previewSIP()">
         </div>
         <div class="form-group">
           <label>Inflation Rate (%)</label>
-          <input type="number" id="inp-inflation" placeholder="7" step="0.5" min="1" max="20">
+          <input type="number" id="inp-inflation" placeholder="7" step="0.5" min="1" max="20" oninput="previewSIP()">
           <p class="inflation-note" id="inflNote">⚡ Prefilled based on RBI historical data for this goal</p>
         </div>
+        <div class="form-group">
+          <label>Expected Portfolio Return (% p.a.)</label>
+          <input type="number" id="inp-return" placeholder="12" step="0.5" min="6" max="18" value="12" oninput="previewSIP()">
+          <p class="hint">Preview only — your final plan uses backtested fund returns from live NAV data.</p>
+        </div>
       </div>
+    </div>
+    <div id="sip-preview" style="display:none;background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.25);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;">
+      <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--orange);margin-bottom:.25rem;">Estimated Monthly SIP</div>
+      <div id="sip-preview-val" style="font-size:1.9rem;font-weight:900;color:var(--text);">—</div>
+      <div id="sip-preview-sub" style="font-size:.78rem;color:var(--muted);margin-top:.15rem;">—</div>
     </div>
     <div class="btn-row"><button class="btn btn-primary" onclick="submitStep2()">Continue →</button></div>
   </div>
@@ -587,12 +602,50 @@ footer{background:#080f1e;color:#94a3b8;padding:3.5rem 0 1.5rem;border-top:1px s
     <div class="progress-wrap"><div class="progress-fill" style="width:71%"></div></div>
     <div class="step-lbl">Step 5 of 7</div>
     <h2>Risk Profiling</h2>
-    <p class="step-sub">10 questions to understand your true risk appetite. Be honest — your plan depends on it.</p>
-    <div id="q-counter" class="q-counter" style="text-align:center;color:var(--muted);font-size:.85rem;margin-bottom:1rem;">Question <span id="qnum">1</span> of 10</div>
-    <div id="quiz-container"></div>
-    <div class="btn-row center">
-      <button class="btn btn-ghost btn-sm" id="q-prev-btn" onclick="quizNav(-1)" style="display:none">← Previous</button>
-      <button class="btn btn-primary" id="q-next-btn" onclick="quizNav(1)">Next →</button>
+    <p class="step-sub">Knowing your risk profile helps us pick the right mix of funds for your goal.</p>
+
+    <!-- Quiz gate -->
+    <div id="quiz-gate" style="text-align:center;padding:1rem 0 1.5rem;">
+      <p style="color:var(--muted);margin-bottom:1.5rem;font-size:.95rem;">Would you like to take a short quiz to find your risk profile, or pick one yourself?</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="startQuiz()">Take the 6-question quiz</button>
+        <button class="btn btn-ghost" onclick="showQuickPick()">Quick-pick my style</button>
+      </div>
+    </div>
+
+    <!-- Quick-pick cards (hidden initially) -->
+    <div id="quick-pick" style="display:none;padding:.5rem 0 1.5rem;">
+      <p style="color:var(--muted);margin-bottom:1.25rem;font-size:.9rem;text-align:center;">Choose the style that best describes you:</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;">
+        <div class="qp-card" onclick="quickPickPersona('conservative')">
+          <div class="qp-icon">🛡️</div>
+          <div class="qp-label">Conservative</div>
+          <div class="qp-desc">Stability first. Lower risk, steady growth.</div>
+        </div>
+        <div class="qp-card" onclick="quickPickPersona('balanced')">
+          <div class="qp-icon">⚖️</div>
+          <div class="qp-label">Balanced</div>
+          <div class="qp-desc">Mix of growth and safety.</div>
+        </div>
+        <div class="qp-card" onclick="quickPickPersona('aggressive')">
+          <div class="qp-icon">🚀</div>
+          <div class="qp-label">Aggressive</div>
+          <div class="qp-desc">Max growth. Comfortable with volatility.</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:1.25rem;">
+        <button class="btn btn-ghost btn-sm" onclick="document.getElementById('quick-pick').style.display='none';document.getElementById('quiz-gate').style.display='block'">← Back</button>
+      </div>
+    </div>
+
+    <!-- Actual quiz (hidden initially) -->
+    <div id="quiz-section" style="display:none;">
+      <div id="q-counter" class="q-counter" style="text-align:center;color:var(--muted);font-size:.85rem;margin-bottom:1rem;">Question <span id="qnum">1</span> of 6</div>
+      <div id="quiz-container"></div>
+      <div class="btn-row center">
+        <button class="btn btn-ghost btn-sm" id="q-prev-btn" onclick="quizNav(-1)" style="display:none">← Previous</button>
+        <button class="btn btn-primary" id="q-next-btn" onclick="quizNav(1)">Next →</button>
+      </div>
     </div>
   </div>
 </div>
@@ -942,6 +995,58 @@ function toggleExpand(id, open){
 }
 
 // ============================================================
+// STEP 2: LIVE SIP PREVIEW
+// ============================================================
+function previewSIP(){
+  const expEl = document.getElementById('inp-expense');
+  const yrsEl = document.getElementById('inp-years');
+  const infEl = document.getElementById('inp-inflation');
+  const retEl = document.getElementById('inp-return');
+  const box   = document.getElementById('sip-preview');
+  const valEl = document.getElementById('sip-preview-val');
+  const subEl = document.getElementById('sip-preview-sub');
+
+  const expense = parseFloat(expEl && expEl.value) || 0;
+  const years   = parseFloat(yrsEl && yrsEl.value)  || 0;
+  const inf     = parseFloat(infEl && infEl.value)   || (S.inflation || 7);
+  const ret     = parseFloat(retEl && retEl.value)   || 12;
+
+  if(!expense || !years){ if(box) box.style.display='none'; return; }
+
+  const future = expense * Math.pow(1 + inf/100, years);
+  const r      = ret / 1200;
+  const n      = years * 12;
+  const sip    = future / ((Math.pow(1+r,n)-1)/r);
+
+  if(box){ box.style.display = 'block'; }
+  if(valEl) valEl.textContent = '₹' + Math.round(sip).toLocaleString('en-IN') + '/mo';
+  if(subEl) subEl.textContent = `Corpus needed in ${years} yr: ₹${Math.round(future/100000).toLocaleString('en-IN')} L · at ${ret}% p.a.`;
+}
+
+// ============================================================
+// STEP 5: QUIZ GATE
+// ============================================================
+function startQuiz(){
+  document.getElementById('quiz-gate').style.display    = 'none';
+  document.getElementById('quick-pick').style.display   = 'none';
+  document.getElementById('quiz-section').style.display = 'block';
+  S.curQ = 0;
+  renderQuestion(0);
+}
+
+function showQuickPick(){
+  document.getElementById('quiz-gate').style.display  = 'none';
+  document.getElementById('quick-pick').style.display = 'block';
+}
+
+function quickPickPersona(key){
+  const map = { conservative: 1, balanced: 2, aggressive: 3 };
+  S.personaIdx = map[key] ?? 2;
+  S._quickPick = true;
+  submitQuiz();
+}
+
+// ============================================================
 // STEP 5: QUIZ
 // ============================================================
 function renderQuestion(idx){
@@ -950,14 +1055,14 @@ function renderQuestion(idx){
   const container = document.getElementById('quiz-container');
   container.innerHTML = `
     <div class="form-card q-wrap" style="animation:fadeIn .3s ease">
-      <div class="q-num-lbl">Question ${idx+1} of 10</div>
+      <div class="q-num-lbl">Question ${idx+1} of 6</div>
       <div class="q-text">${q.q}</div>
       <div class="opts">
         ${q.opts.map((o,i)=>`<button class="opt${S.qAnswers[idx]===i?' sel':''}" onclick="selectOpt(${idx},${i})">${o}</button>`).join('')}
       </div>
     </div>`;
   document.getElementById('q-prev-btn').style.display = idx>0?'inline-flex':'none';
-  document.getElementById('q-next-btn').textContent = idx===9?'See My Plan →':'Next →';
+  document.getElementById('q-next-btn').textContent = idx===5?'See My Plan →':'Next →';
 }
 
 function selectOpt(qIdx, optIdx){
@@ -968,7 +1073,7 @@ function selectOpt(qIdx, optIdx){
 function quizNav(dir){
   if(dir===1){
     if(S.qAnswers[S.curQ]===null){ alert('Please select an answer.'); return; }
-    if(S.curQ===9){ submitQuiz(); return; }
+    if(S.curQ===5){ submitQuiz(); return; }
     S.curQ++;
   } else { S.curQ = Math.max(0,S.curQ-1); }
   renderQuestion(S.curQ);
@@ -1175,9 +1280,12 @@ function solveFlatSIP(targetFV, rAnnual, months, existingFV){
 async function runCalculation(){
   setLoadStep(0,'cur');
 
-  // Persona
-  const pResult = getPersona();
-  S.personaIdx = PERSONAS.indexOf(pResult.effective);
+  // Persona — if quick-pick was used, personaIdx is already set; skip quiz scoring
+  const _personaKeys = ['guardian','preserver','balancer','grower','maverick'];
+  const pResult = S._quickPick
+    ? { raw: PERSONAS[S.personaIdx], effective: PERSONAS[S.personaIdx], effKey: _personaKeys[S.personaIdx], score: null }
+    : getPersona();
+  if(!S._quickPick) S.personaIdx = PERSONAS.indexOf(pResult.effective);
   S.persona = pResult;
   S.horizonKey = getHorizonKey(S.years);
   S.allocation = getAllocation(pResult.effKey, S.horizonKey);
@@ -1487,7 +1595,12 @@ document.querySelector('#step5').addEventListener('animationend',()=>{});
 const origGoStep=goStep;
 window.goStep=function(n){
   origGoStep(n);
-  if(n===5){ S.curQ=0; renderQuestion(0); }
+  if(n===5){
+    S.curQ=0; S._quickPick=false;
+    document.getElementById('quiz-gate').style.display    = 'block';
+    document.getElementById('quick-pick').style.display   = 'none';
+    document.getElementById('quiz-section').style.display = 'none';
+  }
 };
 </script>
 <footer>
