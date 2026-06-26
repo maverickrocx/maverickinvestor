@@ -167,26 +167,26 @@ input:checked+.sw-slide:before{transform:translateX(22px);background:white;}
 .psb-ret{font-size:.82rem;opacity:.75;margin-top:.2rem;}
 
 .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem;margin-bottom:2rem;}
-.sc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;}
-.sc-lbl{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.35rem;}
-.sc-val{font-size:1.45rem;font-weight:900;color:var(--orange);}
-.sc-sub{font-size:.75rem;color:var(--muted);margin-top:.15rem;}
+.sc{background:#f1f5f9;border:1px solid #cbd5e1;border-radius:var(--radius);padding:1.25rem;}
+.sc-lbl{font-size:.72rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.35rem;}
+.sc-val{font-size:1.45rem;font-weight:900;color:#ea6c0a;}
+.sc-sub{font-size:.75rem;color:#64748b;margin-top:.15rem;}
 
 .section-title{font-size:1.1rem;font-weight:800;margin-bottom:1rem;}
 
 /* SCENARIO TABLE */
-.scen-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:2rem;}
-.scen-wrap .section-title{padding:1.25rem 1.5rem 0;}
+.scen-wrap{background:#f1f5f9;border:1px solid #cbd5e1;border-radius:var(--radius);overflow:hidden;margin-bottom:2rem;}
+.scen-wrap .section-title{padding:1.25rem 1.5rem 0;color:#0f172a;}
 .scen-table{width:100%;border-collapse:collapse;}
-.scen-table th{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding:.6rem 1rem;border-bottom:1px solid var(--border);text-align:left;}
-.scen-table td{padding:.75rem 1rem;border-bottom:1px solid var(--border);font-size:.92rem;}
+.scen-table th{font-size:.75rem;color:#475569;text-transform:uppercase;letter-spacing:.04em;padding:.6rem 1rem;border-bottom:1px solid #cbd5e1;text-align:left;}
+.scen-table td{padding:.75rem 1rem;border-bottom:1px solid #e2e8f0;font-size:.92rem;color:#1e293b;}
 .scen-table tr:last-child td{border-bottom:none;}
-.scen-table tr.hl td{background:rgba(249,115,22,.08);color:var(--orange);font-weight:700;}
+.scen-table tr.hl td{background:rgba(249,115,22,.12);color:#ea6c0a;font-weight:700;}
 .scen-table tr.hl td:first-child{border-left:3px solid var(--orange);}
 .badge-rec{display:inline-block;background:var(--orange);color:#fff;font-size:.65rem;font-weight:800;padding:.1rem .45rem;border-radius:4px;margin-left:.4rem;vertical-align:middle;}
 
 /* CHART */
-.chart-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:2rem;}
+.chart-card{background:#f1f5f9;border:1px solid #cbd5e1;border-radius:var(--radius);padding:1.5rem;margin-bottom:2rem;}
 .chart-sub{color:var(--muted);font-size:.82rem;margin-bottom:1.25rem;}
 .sliders-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;}
 @media(max-width:560px){.sliders-row{grid-template-columns:1fr;}}
@@ -724,29 +724,17 @@ const QUESTIONS = [
   { q:'How stable and predictable is your primary source of income?',
     opts:['Very stable — government/PSU/established firm','Stable — private job with low job-loss risk','Somewhat variable — freelance or variable component','Uncertain — business or irregular income'],
     scores:[4,3,2,1] },
-  { q:'How many financial dependents do you currently support?',
-    opts:['None','1–2 dependents','3–4 dependents','5 or more'],
-    scores:[4,3,2,1] },
   { q:'What is your prior experience with equity investments?',
     opts:['10+ years — experienced through multiple market cycles','5–10 years — seen at least one downturn','1–5 years — relatively new to equities','None — this would be my first equity investment'],
     scores:[4,3,2,1] },
   { q:'How long can you leave this investment untouched without needing the money?',
     opts:['15+ years','7–15 years','3–7 years','Less than 3 years'],
     scores:[4,3,2,1] },
-  { q:'If a fund in your portfolio drops 25% over 6 months, what would you most likely do?',
-    opts:['Add more — I believe in the long-term story','Stay invested and do nothing','Review and maybe exit partially','Exit and move to safer options'],
-    scores:[4,3,2,1] },
   { q:'What percentage loss in a single year would truly make you lose sleep?',
     opts:['More than 50% (I\'m very risk-tolerant)','30–50%','15–30%','Any loss makes me uncomfortable'],
     scores:[4,3,2,1] },
   { q:'What is your primary investment objective?',
     opts:['Maximum long-term wealth creation','Balanced growth with some stability','Regular income or capital protection','Safety of capital above everything'],
-    scores:[4,3,2,1] },
-  { q:'Do you have an emergency fund covering at least 6 months of expenses?',
-    opts:['Yes — I have more than 12 months covered','Yes — approximately 6 months covered','Partially — 2–3 months covered','No — I am working on building one'],
-    scores:[4,3,2,1] },
-  { q:'How comfortable are you with the volatility of equity markets?',
-    opts:['Very comfortable — volatility is opportunity','Comfortable — I understand it is short-term noise','Nervous but willing to stay invested','I prefer to avoid equity markets'],
     scores:[4,3,2,1] },
 ];
 
@@ -809,7 +797,7 @@ let S = {
   corpus:0, corpusRet:11, useCorpus:false,
   existingSip:0, existingSipRet:11, useExistingSip:false,
   useStepup:true, stepup:10,
-  qAnswers:Array(10).fill(null), curQ:0,
+  qAnswers:Array(6).fill(null), curQ:0,
   persona:null, personaIdx:2, effectivePersona:null,
   horizonKey:'l',
   allocation:null, funds:[],
@@ -1006,7 +994,7 @@ function submitQuiz(){
 // ============================================================
 function getPersona(){
   const total = S.qAnswers.reduce((s,a,i)=> s + (a!==null ? QUESTIONS[i].scores[a] : 0), 0);
-  const score = Math.round((total/40)*100);
+  const score = Math.round((total/24)*100);
   let idx = PERSONAS.findIndex(p=> score>=p.range[0] && score<=p.range[1]);
   if(idx<0) idx=2;
 
@@ -1401,7 +1389,7 @@ function onSliderChange(){
   document.getElementById('sl-sip-val').textContent='₹'+fmt(sip);
   document.getElementById('sl-exp-val').textContent=fmtL(exp);
   const newTarget=exp*Math.pow(1+S.inflation,S.years);
-  renderChart(sip, newTarget, S.years, S.portCAGR);
+  renderChart(sip, S.recSip, newTarget, S.years, S.portCAGR);
 }
 
 // ============================================================
