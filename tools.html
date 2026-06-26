@@ -53,9 +53,19 @@
     footer a { color: #94a3b8 !important; }
     footer a:hover { color: #f97316 !important; }
     .float-badge { background: rgba(15,23,42,.88) !important; color: #e2e8f0 !important; border: 1px solid rgba(255,255,255,.18) !important; }
-    /* Page-hero: remove gradient, let matrix canvas show through */
-    .page-hero { background: transparent !important; overflow: visible !important; }
+    /* Page-hero: dark contained card aligned with section width (matches index hero) */
+    .page-hero {
+      background: linear-gradient(135deg, rgba(30,41,59,.98) 0%, rgba(249,115,22,.09) 55%, rgba(30,41,59,.98) 100%) !important;
+      border-radius: 18px !important;
+      border: 1px solid rgba(249,115,22,.22) !important;
+      box-shadow: 0 8px 40px rgba(0,0,0,.45) !important;
+      max-width: 1160px !important;
+      margin: 1.5rem auto !important;
+      overflow: visible !important;
+    }
     .page-hero::before { display: none !important; }
+    .page-hero h1 { color: #e2e8f0 !important; }
+    .page-hero p  { color: rgba(226,232,240,.75) !important; }
     /* Sections: strip light backgrounds (belt+suspenders: both shorthand and longhand) */
     .tools-section, .app-section, .section, main {
       background: transparent !important;
