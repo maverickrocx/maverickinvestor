@@ -52,7 +52,24 @@
     footer { background: #080f1e !important; color: #94a3b8 !important; }
     footer a { color: #94a3b8 !important; }
     footer a:hover { color: #f97316 !important; }
-    .tools-section, .app-section, .section, main { background: transparent !important; }
+    .tools-section, .app-section, .section, main {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+    /* Page-hero: dark contained card matching index layout */
+    .page-hero {
+      background: linear-gradient(135deg, rgba(30,41,59,.98) 0%, rgba(249,115,22,.09) 55%, rgba(30,41,59,.98) 100%) !important;
+      border-radius: 18px !important;
+      border: 1px solid rgba(249,115,22,.22) !important;
+      box-shadow: 0 8px 40px rgba(0,0,0,.45) !important;
+      max-width: 1160px !important;
+      margin: 1.5rem auto !important;
+      overflow: visible !important;
+    }
+    .page-hero::before { display: none !important; }
+    .page-hero h1 { color: #e2e8f0 !important; }
+    .page-hero p  { color: rgba(226,232,240,.75) !important; }
     .why-card { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; }
     .why-card h3, .why-card p { color: #e2e8f0 !important; }
     .aqb { background: #263348 !important; color: #e2e8f0 !important; }
