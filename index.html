@@ -43,7 +43,8 @@
       --shadow:     0 4px 24px rgba(0,0,0,.4);
     }
     /* Fix elements that assumed light backgrounds */
-    body { color: #e2e8f0; }
+    html { background: #0f172a; }
+    body { color: #e2e8f0; background: transparent !important; }
     .topbar { background: rgba(15,23,42,.95) !important; border-bottom: 1px solid rgba(255,255,255,.08); position: sticky !important; top: 0 !important; z-index: 1000 !important; }
     .nav-links a { color: #cbd5e1 !important; }
     .nav-links a:hover, .nav-links a.nav-active { color: #f97316 !important; }
@@ -1585,18 +1586,33 @@
     .nav-tagline .t-investor { color: rgba(255,255,255,.75); font-weight: 400; }
     @media(max-width:720px){ .nav-tagline{ display:none; } }
 
-    /* === FIX: Fund NAV tracker — dark cards + orange text (high contrast, crisp) === */
-    .fund-cat-block { background:#1e293b !important; border-color:rgba(255,255,255,.10) !important; }
-    .fcb-header     { background:#0f172a !important; border-bottom-color:rgba(255,255,255,.08) !important; }
-    .fcb-row-hdr    { background:rgba(255,255,255,.04) !important; border-bottom-color:rgba(255,255,255,.07) !important; }
-    .fcb-row        { border-bottom-color:rgba(255,255,255,.06) !important; }
-    .fcb-row:hover  { background:rgba(249,115,22,.08) !important; }
-    .fcb-name,
-    .fcb-fund-name,
-    .fcb-nav        { color:var(--orange) !important; }
-    .fcb-row-hdr span,
-    .fcb-count      { color:#94a3b8 !important; }
-    .fcb-1y:not(.positive):not(.negative) { color:var(--orange) !important; }
+    /* === Hero: contained card aligned with lower section width === */
+    .hero { background: transparent !important; overflow: visible !important; }
+    .hero::before, .hero::after { display: none !important; }
+    .hero-orb, .hero-shape { display: none !important; }
+    .hero > .container {
+      background: linear-gradient(135deg, rgba(30,41,59,.98) 0%, rgba(249,115,22,.09) 55%, rgba(30,41,59,.98) 100%) !important;
+      border-radius: 18px !important;
+      border: 1px solid rgba(249,115,22,.22) !important;
+      padding: 2.5rem !important;
+      box-shadow: 0 8px 40px rgba(0,0,0,.45) !important;
+    }
+
+    /* === Fund NAV tracker — pale white cards, orange header, dark text === */
+    .fund-cat-block { background: #fff !important; border-color: #e2e8f0 !important; box-shadow: 0 4px 20px rgba(0,0,0,.15) !important; }
+    .fcb-header     { background: #f97316 !important; border-bottom-color: #f97316 !important; }
+    .fcb-name       { color: #fff !important; }
+    .fcb-count      { background: rgba(255,255,255,.25) !important; color: #fff !important; }
+    .fcb-dot        { opacity: .85; }
+    .fcb-row-hdr    { background: #f8fafc !important; border-bottom-color: #e2e8f0 !important; }
+    .fcb-row-hdr span { color: #64748b !important; }
+    .fcb-row        { border-bottom-color: #f1f5f9 !important; }
+    .fcb-row:hover  { background: #fff7ed !important; }
+    .fcb-fund-name  { color: #1e293b !important; }
+    .fcb-nav        { color: #1e293b !important; }
+    .fcb-1y:not(.positive):not(.negative) { color: #64748b !important; }
+    .positive { color: #059669 !important; }
+    .negative { color: #dc2626 !important; }
 </style>
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns%3D'http%3A//www.w3.org/2000/svg' viewBox%3D'0 0 100 100'%3E%3Ctext y%3D'.9em' font-size%3D'90'%3E%F0%9F%93%88%3C/text%3E%3C/svg%3E">
@@ -2458,11 +2474,11 @@
   function calcGoal(key) {
     // Support both old (goals section) and new (tools tiles with g2- prefix) IDs
     const bases = [
-      { costId:`eduCost`,  yrsId:`eduYrs`,  futId:`eduFuture`,  sipId:`eduSIP`,  yrsLbl:`eduYrsVal`,  inf:8  },
-      { costId:`weddCost`, yrsId:`weddYrs`, futId:`weddFuture`, sipId:`weddSIP`, yrsLbl:`weddYrsVal`, inf:7  },
-      { costId:`carCost`,  yrsId:`carYrs`,  futId:`carFuture`,  sipId:`carSIP`,  yrsLbl:`carYrsVal`,  inf:5  },
-      { costId:`homeCost`, yrsId:`homeYrs`, futId:`homeFuture`, sipId:`homeSIP`, yrsLbl:`homeYrsVal`, inf:8  },
-      { costId:`tripCost`, yrsId:`tripYrs`, futId:`tripFuture`, sipId:`tripSIP`, yrsLbl:`tripYrsVal`, inf:5  },
+      { costId:`eduCost`,  yrsId:`eduYrs`,  futId:`eduFuture`,  sipId:`eduSIP`,  yrsLbl:`eduYrsVal`,  retId:`eduRet`,  inf:10 },
+      { costId:`weddCost`, yrsId:`weddYrs`, futId:`weddFuture`, sipId:`weddSIP`, yrsLbl:`weddYrsVal`, retId:`weddRet`, inf:7  },
+      { costId:`carCost`,  yrsId:`carYrs`,  futId:`carFuture`,  sipId:`carSIP`,  yrsLbl:`carYrsVal`,  retId:`carRet`,  inf:5  },
+      { costId:`homeCost`, yrsId:`homeYrs`, futId:`homeFuture`, sipId:`homeSIP`, yrsLbl:`homeYrsVal`, retId:`homeRet`, inf:8  },
+      { costId:`tripCost`, yrsId:`tripYrs`, futId:`tripFuture`, sipId:`tripSIP`, yrsLbl:`tripYrsVal`, retId:`tripRet`, inf:5  },
     ];
     const keyMap = { edu:0, wedd:1, car:2, home:3, trip:4 };
     const idx = keyMap[key];
@@ -2476,12 +2492,16 @@
       if (!costEl || !yrsEl) return;
       const cost = parseFloat(costEl.value) || 0;
       const yrs  = parseFloat(yrsEl.value)  || 1;
-      const r    = 12 / 1200;
+      const retEl = document.getElementById(yp + bases[idx].retId) || document.getElementById(bases[idx].retId);
+      const annRet = retEl ? (parseFloat(retEl.value) || 12) : 12;
+      const retLblEl = document.getElementById(yp + (bases[idx].retId) + 'Lbl') || document.getElementById(bases[idx].retId + 'Lbl');
+      if (retLblEl) retLblEl.textContent = annRet + '%';
+      const r    = annRet / 1200;
       const n    = yrs * 12;
       const yrsLbl = document.getElementById(yp + bases[idx].yrsLbl);
       if (yrsLbl) yrsLbl.textContent = yrs + ' yr' + (yrs>1?'s':'');
       const future = cost * Math.pow(1 + infRate/100, yrs);
-      const sip    = future / (((Math.pow(1+r,n)-1)/r)*(1+r));
+      const sip    = future / ((Math.pow(1+r,n)-1)/r);
       const futEl = document.getElementById(yp + bases[idx].futId);
       const sipEl = document.getElementById(yp + bases[idx].sipId);
       if (futEl) futEl.textContent = fmt(Math.round(future));
@@ -2499,7 +2519,7 @@
     const y = +document.getElementById('heroSipYrs').value;
     const r = +document.getElementById('heroSipRet').value / 100 / 12;
     const n = y * 12;
-    const corpus   = p * ((Math.pow(1+r,n)-1)/r) * (1+r);
+    const corpus   = p * ((Math.pow(1+r,n)-1)/r);
     const invested = p * n;
     const gain     = corpus - invested;
     document.getElementById('heroSipAmtLbl').textContent = '₹' + p.toLocaleString('en-IN');
@@ -2522,10 +2542,12 @@
     const n        = years * 12;
     // Future monthly expense (6% inflation)
     const futureExp  = exp * Math.pow(1.06, years);
-    // Corpus needed = 25× annual expenses (4% SWR)
-    const corpus     = futureExp * 12 * 25;
+    // Corpus via growing annuity: post-ret return 7.5%, inflation 6%, life exp 85
+    const lifeYrs = Math.max(20, 85 - (retAge || 60));
+    const gr = 0.06, rr = 0.075;
+    const corpus     = (futureExp * 12) * (1 - Math.pow((1+gr)/(1+rr), lifeYrs)) / (rr - gr);
     // SIP to build that corpus
-    const sip        = corpus / (((Math.pow(1+r,n)-1)/r) * (1+r));
+    const sip        = corpus / ((Math.pow(1+r,n)-1)/r);
     // Label helpers
     const fmtK = v => v >= 1e7 ? (v/1e7).toFixed(1)+' Cr' : v >= 1e5 ? (v/1e5).toFixed(1)+' L' : v >= 1e3 ? (v/1e3).toFixed(0)+'K' : Math.round(v);
     document.getElementById('heroRetAgeLbl').textContent    = curAge + ' yrs';
@@ -2548,9 +2570,10 @@
     const inflation = 0.06;
     const futureExp = exp * Math.pow(1 + inflation, yrsToRet);
     const annualExp = futureExp * 12;
-    const retYrs = 25;
-    const safeR  = 0.07;
-    const corpus = annualExp * ((1 - Math.pow(1+safeR, -retYrs)) / safeR);
+    // Growing annuity: post-ret return 7.5%, inflation 6%, life expectancy 85
+    const lifeYrs = Math.max(20, 85 - retAge);
+    const gr = 0.06, rr = 0.075;
+    const corpus = annualExp * (1 - Math.pow((1+gr)/(1+rr), lifeYrs)) / (rr - gr);
     document.getElementById('retAgeLabel').textContent = age;
     document.getElementById('retRetLabel').textContent = retAge;
     document.getElementById('retExpLabel').textContent = exp.toLocaleString('en-IN');
@@ -2564,9 +2587,8 @@
   ------------------------------------------------------- */
   const insTypes = {
     term:     { label:'Term Life Insurance',  formula:'10× income + loans + 5L/dependent', multiplier:(inc,loans,dep)=>inc*10+loans+dep*500000 },
-    health:   { label:'Health Insurance',     formula:'3–5L per person in family',         multiplier:(inc,loans,dep)=>Math.max(500000,(dep+1)*500000) },
+    health:   { label:'Health Insurance',     formula:'10L per person (2025 minimum)',     multiplier:(inc,loans,dep)=>Math.max(1000000,(dep+1)*1000000) },
     critical: { label:'Critical Illness',     formula:'3× annual income',                  multiplier:(inc,loans,dep)=>inc*3 },
-    ulip:     { label:'ULIP',                 formula:'10× annual premium target',         multiplier:(inc,loans,dep)=>inc*0.5 },
   };
   let activeInsType = 'term';
 

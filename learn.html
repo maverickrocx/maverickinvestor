@@ -44,13 +44,37 @@
       --shadow:     0 4px 24px rgba(0,0,0,.4);
     }
     /* Fix elements that assumed light backgrounds */
-    body { color: #e2e8f0; }
+    html { background: #0f172a; }
+    body { color: #e2e8f0; background: transparent !important; }
     .topbar { background: rgba(15,23,42,.95) !important; border-bottom: 1px solid rgba(255,255,255,.08); position: sticky !important; top: 0 !important; z-index: 1000 !important; }
     .nav-links a { color: #cbd5e1 !important; }
     .nav-links a:hover, .nav-links a.nav-active { color: #f97316 !important; }
     footer { background: #080f1e !important; color: #94a3b8 !important; }
     footer a { color: #94a3b8 !important; }
     footer a:hover { color: #f97316 !important; }
+    .tools-section, .app-section, .section, main {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+    /* Page-hero: dark contained card matching index layout */
+    .page-hero {
+      background: linear-gradient(135deg, rgba(30,41,59,.98) 0%, rgba(249,115,22,.09) 55%, rgba(30,41,59,.98) 100%) !important;
+      border-radius: 18px !important;
+      border: 1px solid rgba(249,115,22,.22) !important;
+      box-shadow: 0 8px 40px rgba(0,0,0,.45) !important;
+      max-width: 1160px !important;
+      margin: 1.5rem auto !important;
+      overflow: visible !important;
+    }
+    .page-hero::before { display: none !important; }
+    .page-hero h1 { color: #e2e8f0 !important; }
+    .page-hero p  { color: rgba(226,232,240,.75) !important; }
+    .why-card { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; }
+    .why-card h3, .why-card p { color: #e2e8f0 !important; }
+    .aqb { background: #263348 !important; color: #e2e8f0 !important; }
+    .input-field { background: #0f172a !important; color: #e2e8f0 !important; border-color: rgba(255,255,255,.15) !important; }
+    .section-title, .section-sub { color: #e2e8f0 !important; }
     input, select, textarea { background: #0f172a !important; color: #e2e8f0 !important; border-color: rgba(255,255,255,.15) !important; }
     table { color: #e2e8f0; }
     th { background: rgba(249,115,22,.15) !important; color: #f97316 !important; }

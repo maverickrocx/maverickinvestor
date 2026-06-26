@@ -44,13 +44,49 @@
       --shadow:     0 4px 24px rgba(0,0,0,.4);
     }
     /* Fix elements that assumed light backgrounds */
-    body { color: #e2e8f0; }
+    html { background: #0f172a; }
+    body { color: #e2e8f0; background: transparent !important; }
     .topbar { background: rgba(15,23,42,.95) !important; border-bottom: 1px solid rgba(255,255,255,.08); position: sticky !important; top: 0 !important; z-index: 1000 !important; }
     .nav-links a { color: #cbd5e1 !important; }
     .nav-links a:hover, .nav-links a.nav-active { color: #f97316 !important; }
     footer { background: #080f1e !important; color: #94a3b8 !important; }
     footer a { color: #94a3b8 !important; }
     footer a:hover { color: #f97316 !important; }
+    .float-badge { background: rgba(15,23,42,.88) !important; color: #e2e8f0 !important; border: 1px solid rgba(255,255,255,.18) !important; }
+    /* Page-hero: dark contained card aligned with section width (matches index hero) */
+    .page-hero {
+      background: linear-gradient(135deg, rgba(30,41,59,.98) 0%, rgba(249,115,22,.09) 55%, rgba(30,41,59,.98) 100%) !important;
+      border-radius: 18px !important;
+      border: 1px solid rgba(249,115,22,.22) !important;
+      box-shadow: 0 8px 40px rgba(0,0,0,.45) !important;
+      max-width: 1160px !important;
+      margin: 1.5rem auto !important;
+      overflow: visible !important;
+    }
+    .page-hero::before { display: none !important; }
+    .page-hero h1 { color: #e2e8f0 !important; }
+    .page-hero p  { color: rgba(226,232,240,.75) !important; }
+    /* Sections: strip light backgrounds (belt+suspenders: both shorthand and longhand) */
+    .tools-section, .app-section, .section, main {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+    .goal-tile { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; color: #e2e8f0 !important; }
+    .goal-tile .gt-name { color: #e2e8f0 !important; }
+    .goal-tile .gt-amount { color: #f97316 !important; }
+    .tab-btn { background: #1e293b !important; color: #94a3b8 !important; border-color: rgba(255,255,255,.12) !important; }
+    .tab-btn.active { background: #f97316 !important; color: #fff !important; border-color: #f97316 !important; }
+    .fund-table-wrap { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; }
+    .ins-type-card, .ins-calc-card { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; color: #e2e8f0 !important; }
+    .why-card { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; }
+    .why-card h3, .why-card p { color: #e2e8f0 !important; }
+    .aqb { background: #263348 !important; color: #e2e8f0 !important; }
+    .app-fund-row { background: #263348 !important; border-color: rgba(255,255,255,.08) !important; }
+    .app-fund-row span { color: #e2e8f0 !important; }
+    .input-field { background: #0f172a !important; color: #e2e8f0 !important; border-color: rgba(255,255,255,.15) !important; }
+    .section-title, .section-sub { color: #e2e8f0 !important; }
+    .app-card-label { color: #94a3b8 !important; }
     input, select, textarea { background: #0f172a !important; color: #e2e8f0 !important; border-color: rgba(255,255,255,.15) !important; }
     table { color: #e2e8f0; }
     th { background: rgba(249,115,22,.15) !important; color: #f97316 !important; }
@@ -1723,9 +1759,13 @@
           <label>Years away · <span class="gt-yrs-val" id="g2-eduYrsVal">10 yrs</span></label>
           <input type="range" class="gt-slider" min="1" max="25" value="10" id="g2-eduYrs" oninput="calcGoal('edu')">
         </div>
+        <div class="gt-inp-row">
+          <label>Expected return · <span id="g2-eduRetLbl">12%</span></label>
+          <input type="range" class="gt-slider" min="6" max="18" step="0.5" value="12" id="g2-eduRet" oninput="calcGoal('edu')">
+        </div>
         <div class="gt-result">
-          <div class="gt-result-row"><span>Future cost (8% inf.)</span><strong id="g2-eduFuture">—</strong></div>
-          <div class="gt-result-row"><span>Monthly SIP @12%</span><strong class="gt-sip" id="g2-eduSIP">—</strong></div>
+          <div class="gt-result-row"><span>Future cost (10% inf.)</span><strong id="g2-eduFuture">—</strong></div>
+          <div class="gt-result-row"><span>Monthly SIP needed</span><strong class="gt-sip" id="g2-eduSIP">—</strong></div>
         </div>
       </div>
 
@@ -1740,9 +1780,13 @@
           <label>Years away · <span class="gt-yrs-val" id="g2-weddYrsVal">7 yrs</span></label>
           <input type="range" class="gt-slider" min="1" max="20" value="7" id="g2-weddYrs" oninput="calcGoal('wedd')">
         </div>
+        <div class="gt-inp-row">
+          <label>Expected return · <span id="g2-weddRetLbl">12%</span></label>
+          <input type="range" class="gt-slider" min="6" max="18" step="0.5" value="12" id="g2-weddRet" oninput="calcGoal('wedd')">
+        </div>
         <div class="gt-result">
           <div class="gt-result-row"><span>Future cost (7% inf.)</span><strong id="g2-weddFuture">—</strong></div>
-          <div class="gt-result-row"><span>Monthly SIP @12%</span><strong class="gt-sip" id="g2-weddSIP">—</strong></div>
+          <div class="gt-result-row"><span>Monthly SIP needed</span><strong class="gt-sip" id="g2-weddSIP">—</strong></div>
         </div>
       </div>
 
@@ -1757,9 +1801,13 @@
           <label>Years away · <span class="gt-yrs-val" id="g2-carYrsVal">3 yrs</span></label>
           <input type="range" class="gt-slider" min="1" max="10" value="3" id="g2-carYrs" oninput="calcGoal('car')">
         </div>
+        <div class="gt-inp-row">
+          <label>Expected return · <span id="g2-carRetLbl">12%</span></label>
+          <input type="range" class="gt-slider" min="6" max="18" step="0.5" value="12" id="g2-carRet" oninput="calcGoal('car')">
+        </div>
         <div class="gt-result">
           <div class="gt-result-row"><span>Future cost (5% inf.)</span><strong id="g2-carFuture">—</strong></div>
-          <div class="gt-result-row"><span>Monthly SIP @12%</span><strong class="gt-sip" id="g2-carSIP">—</strong></div>
+          <div class="gt-result-row"><span>Monthly SIP needed</span><strong class="gt-sip" id="g2-carSIP">—</strong></div>
         </div>
       </div>
 
@@ -1774,9 +1822,13 @@
           <label>Years away · <span class="gt-yrs-val" id="g2-homeYrsVal">6 yrs</span></label>
           <input type="range" class="gt-slider" min="1" max="15" value="6" id="g2-homeYrs" oninput="calcGoal('home')">
         </div>
+        <div class="gt-inp-row">
+          <label>Expected return · <span id="g2-homeRetLbl">12%</span></label>
+          <input type="range" class="gt-slider" min="6" max="18" step="0.5" value="12" id="g2-homeRet" oninput="calcGoal('home')">
+        </div>
         <div class="gt-result">
           <div class="gt-result-row"><span>Future cost (8% inf.)</span><strong id="g2-homeFuture">—</strong></div>
-          <div class="gt-result-row"><span>Monthly SIP @12%</span><strong class="gt-sip" id="g2-homeSIP">—</strong></div>
+          <div class="gt-result-row"><span>Monthly SIP needed</span><strong class="gt-sip" id="g2-homeSIP">—</strong></div>
         </div>
       </div>
 
@@ -1791,9 +1843,13 @@
           <label>Years away · <span class="gt-yrs-val" id="g2-tripYrsVal">2 yrs</span></label>
           <input type="range" class="gt-slider" min="1" max="10" value="2" id="g2-tripYrs" oninput="calcGoal('trip')">
         </div>
+        <div class="gt-inp-row">
+          <label>Expected return · <span id="g2-tripRetLbl">12%</span></label>
+          <input type="range" class="gt-slider" min="6" max="18" step="0.5" value="12" id="g2-tripRet" oninput="calcGoal('trip')">
+        </div>
         <div class="gt-result">
           <div class="gt-result-row"><span>Future cost (5% inf.)</span><strong id="g2-tripFuture">—</strong></div>
-          <div class="gt-result-row"><span>Monthly SIP @12%</span><strong class="gt-sip" id="g2-tripSIP">—</strong></div>
+          <div class="gt-result-row"><span>Monthly SIP needed</span><strong class="gt-sip" id="g2-tripSIP">—</strong></div>
         </div>
       </div>
 
@@ -1801,6 +1857,97 @@
   </div>
 </section>
 
+<!-- ============================================================
+     ADDITIONAL CALCULATORS
+============================================================ -->
+<section style="padding:3rem 0;">
+  <div class="container">
+    <div class="center">
+      <div class="section-label">More Calculators</div>
+      <h2 class="section-title">Step-up SIP · Lump Sum · EMI</h2>
+      <p class="section-sub">Industry-standard calculators benchmarked against Groww and ET Money.</p>
+    </div>
+    <div class="calc-grid" style="max-width:900px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:2.5rem;">
+
+      <!-- Step-up SIP -->
+      <div class="calc-card">
+        <h3>📈 Step-up SIP</h3>
+        <div class="calc-form">
+          <div class="form-group">
+            <label>Monthly SIP · <strong id="suSipAmtLbl">₹10,000</strong></label>
+            <input type="range" min="500" max="100000" step="500" value="10000" id="suSipAmt" oninput="calcStepupSIP()">
+          </div>
+          <div class="form-group">
+            <label>Annual step-up · <strong id="suStepPctLbl">10%</strong></label>
+            <input type="range" min="0" max="30" step="1" value="10" id="suStepPct" oninput="calcStepupSIP()">
+          </div>
+          <div class="form-group">
+            <label>Duration · <strong id="suYrsLbl">15 yrs</strong></label>
+            <input type="range" min="1" max="30" step="1" value="15" id="suYrs" oninput="calcStepupSIP()">
+          </div>
+          <div class="form-group">
+            <label>Expected return · <strong id="suRetLbl">12%</strong></label>
+            <input type="range" min="6" max="20" step="0.5" value="12" id="suRet" oninput="calcStepupSIP()">
+          </div>
+          <div class="calc-result">
+            <div class="res-label">Corpus at maturity</div>
+            <div class="res-value" id="suCorpus">—</div>
+            <div class="res-sub" id="suVsFlat">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lump Sum -->
+      <div class="calc-card">
+        <h3>💰 Lump Sum</h3>
+        <div class="calc-form">
+          <div class="form-group">
+            <label>Investment amount · <strong id="lsAmtLbl">₹1,00,000</strong></label>
+            <input type="range" min="10000" max="10000000" step="10000" value="100000" id="lsAmt" oninput="calcLumpsum()">
+          </div>
+          <div class="form-group">
+            <label>Duration · <strong id="lsYrsLbl">10 yrs</strong></label>
+            <input type="range" min="1" max="30" step="1" value="10" id="lsYrs" oninput="calcLumpsum()">
+          </div>
+          <div class="form-group">
+            <label>Expected return · <strong id="lsRetLbl">12%</strong></label>
+            <input type="range" min="4" max="20" step="0.5" value="12" id="lsRet" oninput="calcLumpsum()">
+          </div>
+          <div class="calc-result">
+            <div class="res-label">Future value</div>
+            <div class="res-value" id="lsCorpus">—</div>
+            <div class="res-sub" id="lsGain">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMI -->
+      <div class="calc-card">
+        <h3>🏦 Loan EMI</h3>
+        <div class="calc-form">
+          <div class="form-group">
+            <label>Loan amount · <strong id="emiPrincipalLbl">₹30,00,000</strong></label>
+            <input type="range" min="100000" max="50000000" step="100000" value="3000000" id="emiPrincipal" oninput="calcEMI()">
+          </div>
+          <div class="form-group">
+            <label>Tenure · <strong id="emiTenureLbl">20 yrs</strong></label>
+            <input type="range" min="1" max="30" step="1" value="20" id="emiTenure" oninput="calcEMI()">
+          </div>
+          <div class="form-group">
+            <label>Interest rate · <strong id="emiRateLbl">8%</strong></label>
+            <input type="range" min="4" max="20" step="0.25" value="8" id="emiRate" oninput="calcEMI()">
+          </div>
+          <div class="calc-result">
+            <div class="res-label">Monthly EMI</div>
+            <div class="res-value" id="emiResult">—</div>
+            <div class="res-sub" id="emiInterest">—</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <footer>
   <div class="footer-grid">
@@ -1861,41 +2008,101 @@
     return n.toLocaleString('en-IN', { maximumFractionDigits: 2 });
   }
   function calcGoal(key) {
-    // Support both old (goals section) and new (tools tiles with g2- prefix) IDs
     const bases = [
-      { costId:`eduCost`,  yrsId:`eduYrs`,  futId:`eduFuture`,  sipId:`eduSIP`,  yrsLbl:`eduYrsVal`,  inf:8  },
-      { costId:`weddCost`, yrsId:`weddYrs`, futId:`weddFuture`, sipId:`weddSIP`, yrsLbl:`weddYrsVal`, inf:7  },
-      { costId:`carCost`,  yrsId:`carYrs`,  futId:`carFuture`,  sipId:`carSIP`,  yrsLbl:`carYrsVal`,  inf:5  },
-      { costId:`homeCost`, yrsId:`homeYrs`, futId:`homeFuture`, sipId:`homeSIP`, yrsLbl:`homeYrsVal`, inf:8  },
-      { costId:`tripCost`, yrsId:`tripYrs`, futId:`tripFuture`, sipId:`tripSIP`, yrsLbl:`tripYrsVal`, inf:5  },
+      { costId:`eduCost`,  yrsId:`eduYrs`,  futId:`eduFuture`,  sipId:`eduSIP`,  yrsLbl:`eduYrsVal`,  retId:`eduRet`,  inf:10 },
+      { costId:`weddCost`, yrsId:`weddYrs`, futId:`weddFuture`, sipId:`weddSIP`, yrsLbl:`weddYrsVal`, retId:`weddRet`, inf:7  },
+      { costId:`carCost`,  yrsId:`carYrs`,  futId:`carFuture`,  sipId:`carSIP`,  yrsLbl:`carYrsVal`,  retId:`carRet`,  inf:5  },
+      { costId:`homeCost`, yrsId:`homeYrs`, futId:`homeFuture`, sipId:`homeSIP`, yrsLbl:`homeYrsVal`, retId:`homeRet`, inf:8  },
+      { costId:`tripCost`, yrsId:`tripYrs`, futId:`tripFuture`, sipId:`tripSIP`, yrsLbl:`tripYrsVal`, retId:`tripRet`, inf:5  },
     ];
     const keyMap = { edu:0, wedd:1, car:2, home:3, trip:4 };
     const idx = keyMap[key];
     if (idx === undefined) return;
     const infRate = bases[idx].inf;
 
-    // Compute for each prefix (old section + new tiles)
     [['', ''], ['g2-', 'g2-']].forEach(([cp, yp]) => {
       const costEl = document.getElementById(cp + bases[idx].costId);
       const yrsEl  = document.getElementById(yp + bases[idx].yrsId);
       if (!costEl || !yrsEl) return;
       const cost = parseFloat(costEl.value) || 0;
       const yrs  = parseFloat(yrsEl.value)  || 1;
-      const r    = 12 / 1200;
-      const n    = yrs * 12;
+      const retEl = document.getElementById(yp + bases[idx].retId);
+      const annRet = retEl ? (parseFloat(retEl.value) || 12) : 12;
+      const retLblEl = document.getElementById(yp + bases[idx].retId + 'Lbl');
+      if (retLblEl) retLblEl.textContent = annRet + '%';
+      const r = annRet / 1200;
+      const n = yrs * 12;
       const yrsLbl = document.getElementById(yp + bases[idx].yrsLbl);
       if (yrsLbl) yrsLbl.textContent = yrs + ' yr' + (yrs>1?'s':'');
       const future = cost * Math.pow(1 + infRate/100, yrs);
-      const sip    = future / (((Math.pow(1+r,n)-1)/r)*(1+r));
-      const futEl = document.getElementById(yp + bases[idx].futId);
-      const sipEl = document.getElementById(yp + bases[idx].sipId);
+      const sip    = future / ((Math.pow(1+r,n)-1)/r);
+      const futEl  = document.getElementById(yp + bases[idx].futId);
+      const sipEl  = document.getElementById(yp + bases[idx].sipId);
       if (futEl) futEl.textContent = fmt(Math.round(future));
       if (sipEl) sipEl.textContent = fmt(Math.round(sip));
     });
   }
 
+  // ── Step-up SIP Calculator ───────────────────────────────
+  function calcStepupSIP() {
+    const p   = +document.getElementById('suSipAmt').value  || 0;
+    const s   = +document.getElementById('suStepPct').value || 0;
+    const y   = +document.getElementById('suYrs').value     || 1;
+    const ret = +document.getElementById('suRet').value     || 12;
+    const r   = ret / 1200;
+    document.getElementById('suSipAmtLbl').textContent  = fmt(p);
+    document.getElementById('suStepPctLbl').textContent = s + '%';
+    document.getElementById('suYrsLbl').textContent     = y + ' yr' + (y>1?'s':'');
+    document.getElementById('suRetLbl').textContent     = ret + '%';
+    // Growing annuity FV: Σ P*(1+s/12)^(n-t) * (1+r)^t  — simplified annual step-up
+    let corpus = 0, monthly = p;
+    for (let yr = 0; yr < y; yr++) {
+      for (let m = 0; m < 12; m++) {
+        const remaining = (y - yr) * 12 - m;
+        corpus += monthly * Math.pow(1 + r, remaining);
+      }
+      monthly *= (1 + s/100);
+    }
+    const invested = p * 12 * (Math.pow(1 + s/100, y) - 1) / (s/100 || 1);
+    const flat     = p * ((Math.pow(1+r, y*12)-1)/r);
+    document.getElementById('suCorpus').textContent  = fmt(Math.round(corpus));
+    document.getElementById('suVsFlat').textContent  = fmt(Math.round(corpus - flat)) + ' more than flat SIP';
+  }
+
+  // ── Lump Sum Calculator ──────────────────────────────────
+  function calcLumpsum() {
+    const p   = +document.getElementById('lsAmt').value || 0;
+    const y   = +document.getElementById('lsYrs').value || 1;
+    const ret = +document.getElementById('lsRet').value || 12;
+    document.getElementById('lsAmtLbl').textContent = fmt(p);
+    document.getElementById('lsYrsLbl').textContent = y + ' yr' + (y>1?'s':'');
+    document.getElementById('lsRetLbl').textContent = ret + '%';
+    const corpus = p * Math.pow(1 + ret/100, y);
+    document.getElementById('lsCorpus').textContent = fmt(Math.round(corpus));
+    document.getElementById('lsGain').textContent   = fmt(Math.round(corpus - p)) + ' gain';
+  }
+
+  // ── EMI Calculator ───────────────────────────────────────
+  function calcEMI() {
+    const P   = +document.getElementById('emiPrincipal').value || 0;
+    const y   = +document.getElementById('emiTenure').value    || 1;
+    const ret = +document.getElementById('emiRate').value      || 8;
+    document.getElementById('emiPrincipalLbl').textContent = fmt(P);
+    document.getElementById('emiTenureLbl').textContent    = y + ' yr' + (y>1?'s':'');
+    document.getElementById('emiRateLbl').textContent      = ret + '%';
+    const r = ret / 1200;
+    const n = y * 12;
+    const emi = r === 0 ? P/n : P * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1);
+    const total = emi * n;
+    document.getElementById('emiResult').textContent   = fmt(Math.round(emi)) + '/mo';
+    document.getElementById('emiInterest').textContent = fmt(Math.round(total - P)) + ' total interest';
+  }
+
   // Init goal calculators on load
   ['edu','wedd','car','home','trip'].forEach(g => calcGoal(g));
+  calcStepupSIP();
+  calcLumpsum();
+  calcEMI();
 </script>
 </body>
 </html>
