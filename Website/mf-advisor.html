@@ -27,11 +27,11 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--dark);color:va
 @media(max-width:720px){}
 
 /* STEPS */
-.step{display:none;min-height:100vh;padding-top:64px;}
+.step{display:none;min-height:100vh;padding-top:64px;background:var(--dark);}
 .step.active{display:block;}
-#step0,#step6{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding-top:64px;}
+#step0,#step6{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding-top:64px;background:var(--dark);}
 #step0.active,#step6.active{display:flex;}
-#step7{display:none;padding-top:64px;}
+#step7{display:none;padding-top:64px;background:#f8fafc;}
 #step7.active{display:block;}
 
 /* GOAL HERO */
@@ -160,9 +160,9 @@ input:checked+.sw-slide:before{transform:translateX(22px);background:white;}
 .rgb-text h2{font-size:1.6rem;font-weight:900;}
 .rgb-text .rgb-sub{color:var(--muted);font-size:.9rem;margin-top:.2rem;}
 
-.persona-pill{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,rgba(249,115,22,.2),rgba(249,115,22,.05));border:1px solid rgba(249,115,22,.35);border-radius:12px;padding:.75rem 1.25rem;margin-bottom:2rem;}
-.pp-name{font-size:1.1rem;font-weight:900;color:var(--orange);}
-.pp-desc{font-size:.82rem;color:var(--muted);line-height:1.45;}
+.persona-pill{display:inline-flex;align-items:center;gap:.5rem;background:#fff;border:2px solid #f97316;border-radius:12px;padding:.75rem 1.25rem;margin-bottom:2rem;}
+.pp-name{font-size:1.1rem;font-weight:900;color:#f97316;}
+.pp-desc{font-size:.82rem;color:#475569;line-height:1.45;}
 
 .primary-sip-box{background:linear-gradient(135deg,#f97316 0%,#fb923c 40%,#fbbf24 100%);border-radius:var(--radius);padding:2.2rem 2rem;text-align:center;margin-bottom:2rem;color:#fff;box-shadow:0 12px 50px rgba(249,115,22,.45),0 0 0 1px rgba(255,255,255,.15);position:relative;overflow:hidden;}
 .primary-sip-box::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(255,255,255,.18),transparent 60%);pointer-events:none;}
@@ -171,64 +171,69 @@ input:checked+.sw-slide:before{transform:translateX(22px);background:white;}
 .psb-sub{font-size:.88rem;opacity:.85;}
 .psb-ret{font-size:.82rem;opacity:.75;margin-top:.2rem;}
 
+/* Summary stat cards — orange bg, white text for the big number */
 .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem;margin-bottom:2rem;}
-.sc{background:#f1f5f9;border:1px solid #cbd5e1;border-radius:var(--radius);padding:1.25rem;}
-.sc-lbl{font-size:.72rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.35rem;}
-.sc-val{font-size:1.45rem;font-weight:900;color:#ea6c0a;}
-.sc-sub{font-size:.75rem;color:#64748b;margin-top:.15rem;}
+.sc{background:#f97316;border-radius:var(--radius);padding:1.25rem;}
+.sc-lbl{font-size:.72rem;font-weight:700;color:rgba(255,255,255,.8);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.35rem;}
+.sc-val{font-size:1.45rem;font-weight:900;color:#fff;}
+.sc-sub{font-size:.75rem;color:rgba(255,255,255,.75);margin-top:.15rem;}
 
-.section-title{font-size:1.1rem;font-weight:800;margin-bottom:1rem;}
+.section-title{font-size:1.1rem;font-weight:800;margin-bottom:1rem;color:#1e293b;}
 
-/* SCENARIO TABLE */
-.scen-wrap{background:#f1f5f9;border:1px solid #cbd5e1;border-radius:var(--radius);overflow:hidden;margin-bottom:2rem;}
+/* SCENARIO TABLE — white bg, orange accents */
+.scen-wrap{background:#fff;border:1px solid #e2e8f0;border-radius:var(--radius);overflow:hidden;margin-bottom:2rem;box-shadow:0 2px 12px rgba(0,0,0,.06);}
 .scen-wrap .section-title{padding:1.25rem 1.5rem 0;color:#0f172a;}
 .scen-table{width:100%;border-collapse:collapse;}
-.scen-table th{font-size:.75rem;color:#475569;text-transform:uppercase;letter-spacing:.04em;padding:.6rem 1rem;border-bottom:1px solid #cbd5e1;text-align:left;}
-.scen-table td{padding:.75rem 1rem;border-bottom:1px solid #e2e8f0;font-size:.92rem;color:#1e293b;}
+.scen-table th{font-size:.75rem;color:#fff;text-transform:uppercase;letter-spacing:.04em;padding:.65rem 1rem;border-bottom:none;text-align:left;background:#f97316;}
+.scen-table td{padding:.75rem 1rem;border-bottom:1px solid #f1f5f9;font-size:.92rem;color:#1e293b;}
 .scen-table tr:last-child td{border-bottom:none;}
-.scen-table tr.hl td{background:rgba(249,115,22,.12);color:#ea6c0a;font-weight:700;}
-.scen-table tr.hl td:first-child{border-left:3px solid var(--orange);}
-.badge-rec{display:inline-block;background:var(--orange);color:#fff;font-size:.65rem;font-weight:800;padding:.1rem .45rem;border-radius:4px;margin-left:.4rem;vertical-align:middle;}
+.scen-table tr.hl td{background:#fff7ed;color:#f97316;font-weight:700;}
+.scen-table tr.hl td:first-child{border-left:4px solid #f97316;}
+.badge-rec{display:inline-block;background:#f97316;color:#fff;font-size:.65rem;font-weight:800;padding:.1rem .45rem;border-radius:4px;margin-left:.4rem;vertical-align:middle;}
 
-/* CHART */
-.chart-card{background:#f1f5f9;border:1px solid #cbd5e1;border-radius:var(--radius);padding:1.5rem;margin-bottom:2rem;}
-.chart-sub{color:var(--muted);font-size:.82rem;margin-bottom:1.25rem;}
+/* CHART — white card */
+.chart-card{background:#fff;border:1px solid #e2e8f0;border-radius:var(--radius);padding:1.5rem;margin-bottom:2rem;box-shadow:0 2px 12px rgba(0,0,0,.06);}
+.chart-card .section-title{color:#1e293b;}
+.chart-sub{color:#64748b;font-size:.82rem;margin-bottom:1.25rem;}
 .sliders-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;}
 @media(max-width:560px){.sliders-row{grid-template-columns:1fr;}}
 .sl-group{}
-.sl-group label{font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem;}
-.sl-group label span{color:var(--orange);font-size:.95rem;font-weight:800;}
-input[type=range]{width:100%;accent-color:var(--orange);cursor:pointer;height:6px;}
+.sl-group label{font-size:.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem;}
+.sl-group label span{color:#f97316;font-size:.95rem;font-weight:800;}
+input[type=range]{width:100%;accent-color:#f97316;cursor:pointer;height:6px;}
 .chart-h{height:300px;position:relative;}
 
-/* PORTFOLIO TABLE */
-.ptable-wrap{margin-bottom:2rem;overflow-x:auto;}
+/* PORTFOLIO TABLE — white bg, orange header */
+.portfolio-section{background:#fff;border:1px solid #e2e8f0;border-radius:var(--radius);padding:1.5rem;margin-bottom:2rem;box-shadow:0 2px 12px rgba(0,0,0,.06);}
+.portfolio-section .section-title{color:#1e293b;}
+.ptable-wrap{margin-top:.75rem;overflow-x:auto;}
 .ptable{width:100%;border-collapse:collapse;font-size:.83rem;min-width:680px;}
-.ptable th{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding:.55rem .8rem;border-bottom:1px solid var(--border);text-align:left;background:var(--card);position:sticky;top:0;}
-.ptable td{padding:.7rem .8rem;border-bottom:1px solid var(--border);}
+.ptable th{font-size:.7rem;color:#fff;text-transform:uppercase;letter-spacing:.04em;padding:.6rem .8rem;border:none;text-align:left;background:#f97316;}
+.ptable td{padding:.7rem .8rem;border-bottom:1px solid #f1f5f9;color:#1e293b;}
 .ptable tr:last-child td{border-bottom:none;}
-.ptable tr:hover td{background:rgba(255,255,255,.02);}
+.ptable tr:hover td{background:#fff7ed;}
 .cat-pill{display:inline-block;padding:.18rem .55rem;border-radius:20px;font-size:.7rem;font-weight:700;}
-.c-lc{background:rgba(59,130,246,.15);color:#60a5fa;}
-.c-fc{background:rgba(168,85,247,.15);color:#c084fc;}
-.c-mc{background:rgba(249,115,22,.15);color:#fb923c;}
-.c-sc{background:rgba(234,179,8,.15);color:#facc15;}
-.c-debt{background:rgba(34,197,94,.15);color:#4ade80;}
-.alloc-bar-wrap{background:var(--card2);border-radius:4px;height:6px;width:80px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:.4rem;}
-.alloc-bar{height:100%;background:var(--orange);border-radius:4px;}
+.c-lc{background:#dbeafe;color:#1d4ed8;}
+.c-fc{background:#ede9fe;color:#7c3aed;}
+.c-mc{background:#ffedd5;color:#c2410c;}
+.c-sc{background:#fef9c3;color:#854d0e;}
+.c-debt{background:#dcfce7;color:#166534;}
+.alloc-bar-wrap{background:#f1f5f9;border-radius:4px;height:6px;width:80px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:.4rem;}
+.alloc-bar{height:100%;background:#f97316;border-radius:4px;}
 
 /* REBALANCING */
-.rebal-wrap{margin-bottom:2rem;}
+.rebal-wrap{background:#fff;border:1px solid #e2e8f0;border-radius:var(--radius);padding:1.5rem;margin-bottom:2rem;box-shadow:0 2px 12px rgba(0,0,0,.06);}
+.rebal-wrap .section-title{color:#1e293b;}
 .rebal-line{position:relative;padding-left:2rem;}
-.rebal-line::before{content:'';position:absolute;left:.5rem;top:4px;bottom:4px;width:2px;background:var(--border);}
+.rebal-line::before{content:'';position:absolute;left:.5rem;top:4px;bottom:4px;width:2px;background:#e2e8f0;}
 .rebal-item{position:relative;margin-bottom:1.5rem;}
-.rebal-dot{position:absolute;left:-1.65rem;top:.3rem;width:12px;height:12px;border-radius:50%;background:var(--orange);border:2px solid var(--dark);}
-.rebal-yr{font-size:.75rem;color:var(--orange);font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.15rem;}
-.rebal-action{font-size:.9rem;font-weight:700;margin-bottom:.2rem;}
-.rebal-why{font-size:.8rem;color:var(--muted);line-height:1.55;}
+.rebal-dot{position:absolute;left:-1.65rem;top:.3rem;width:12px;height:12px;border-radius:50%;background:#f97316;border:2px solid #fff;}
+.rebal-yr{font-size:.75rem;color:#f97316;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.15rem;}
+.rebal-action{font-size:.9rem;font-weight:700;color:#1e293b;margin-bottom:.2rem;}
+.rebal-why{font-size:.8rem;color:#64748b;line-height:1.55;}
 
 /* DISCLAIMER */
-.disclaimer{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:10px;padding:1rem 1.25rem;margin-bottom:2rem;font-size:.78rem;color:#f87171;line-height:1.65;}
+.disclaimer{background:#fff8f0;border:1px solid #fed7aa;border-radius:10px;padding:1rem 1.25rem;margin-bottom:2rem;font-size:.78rem;color:#9a3412;line-height:1.65;}
 
 /* BTN */
 .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.75rem;border-radius:10px;font-weight:700;font-size:.95rem;cursor:pointer;border:none;transition:all .2s;text-decoration:none;}
@@ -1539,43 +1544,165 @@ function renderRebalancing(){
 function downloadPDF(){
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF({unit:'mm',format:'a4'});
+  const PW=210, ML=12, MR=12, CW=PW-ML-MR;
+  const OR=[249,115,22], WHITE=[255,255,255], DARK=[15,23,42], GREY=[71,85,105], LIGHT=[241,245,249];
   const g=GOALS[S.goal];
-  let y=20;
-  doc.setFont('helvetica','bold');
-  doc.setFontSize(20); doc.setTextColor(249,115,22);
-  doc.text('Maverick Investor — MF Advisor Report',15,y); y+=10;
-  doc.setFontSize(12); doc.setTextColor(100,100,100);
-  doc.text(`${g.emoji} ${S.name}'s ${g.label} Plan · Generated ${new Date().toLocaleDateString('en-IN')}`,15,y); y+=12;
+  let y=0;
 
-  doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(30,30,30);
-  doc.text('Goal Summary',15,y); y+=7;
-  doc.setFont('helvetica','normal'); doc.setFontSize(11); doc.setTextColor(60,60,60);
-  const lines=[
-    `Goal: ${g.label}`,
-    `Target Corpus (inflation-adjusted): ${fmtL(S.targetCorpus)}`,
-    `Time Horizon: ${S.years} years`,
-    `Inflation Assumed: ${(S.inflation*100).toFixed(1)}%`,
-    `Risk Persona: ${S.persona.raw.name} → Effective: ${S.persona.effective.name}`,
-    `Portfolio Backtested CAGR: ${(S.portCAGR*100).toFixed(1)}%`,
-    `Recommended Monthly SIP: ₹${fmt(S.recSip)}${S.useStepup?' (step-up '+S.stepup+'% per year)':''}`,
-  ];
-  lines.forEach(l=>{ doc.text(l,15,y); y+=6; });
-  y+=5;
+  function checkPage(need=20){ if(y+need>278){doc.addPage();y=16;} }
 
-  doc.setFont('helvetica','bold'); doc.setFontSize(13); doc.setTextColor(30,30,30);
-  doc.text('Recommended Portfolio',15,y); y+=7;
-  doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(60,60,60);
-  S.funds.forEach(f=>{
-    const fundSip=Math.ceil(S.recSip*f.alloc/100/100)*100;
-    doc.text(`• ${f.name} — ${f.alloc}% (₹${fmt(fundSip)}/mo) | XIRR: ${f.xirr!==null?f.xirr+'%':f.fallback+'%*'} | Sharpe: ${f.sharpe} | TER: ${f.ter}%`,15,y);
-    y+=6; if(y>260){doc.addPage();y=20;}
+  // ── Header banner ──
+  doc.setFillColor(...OR);
+  doc.rect(0,0,PW,28,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(...WHITE);
+  doc.text('Maverick Investor  —  MF Advisor Report',ML,11);
+  doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(255,220,180);
+  doc.text(`${g.emoji}  ${S.name}'s ${g.label} Plan   |   Generated ${new Date().toLocaleDateString('en-IN')}`,ML,19);
+  doc.setFont('helvetica','italic'); doc.setFontSize(8);
+  doc.text('Not SEBI-registered advice. For educational purposes only.',ML,25);
+  y=36;
+
+  // ── Section header helper ──
+  function sectionHeader(title){
+    checkPage(14);
+    doc.setFillColor(...OR);
+    doc.roundedRect(ML,y,CW,8,2,2,'F');
+    doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(...WHITE);
+    doc.text(title,ML+4,y+5.5);
+    y+=13;
+  }
+
+  // ── Key-value table helper ──
+  function kvTable(rows){
+    const col1=70, col2=CW-col1;
+    rows.forEach(([k,v],i)=>{
+      checkPage(8);
+      doc.setFillColor(...(i%2===0?LIGHT:WHITE));
+      doc.rect(ML,y,CW,7,'F');
+      doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(...GREY);
+      doc.text(k,ML+3,y+5);
+      doc.setFont('helvetica','bold'); doc.setTextColor(...DARK);
+      doc.text(String(v),ML+col1,y+5);
+      y+=7;
+    });
+    // bottom border
+    doc.setDrawColor(203,213,225); doc.setLineWidth(0.2);
+    doc.line(ML,y,ML+CW,y);
+    y+=6;
+  }
+
+  // ── Data table helper ──
+  function dataTable(headers, rows, highlightFn){
+    checkPage(12);
+    const colW = CW / headers.length;
+    // header row
+    doc.setFillColor(...OR);
+    doc.rect(ML,y,CW,7,'F');
+    doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.setTextColor(...WHITE);
+    headers.forEach((h,i)=> doc.text(h,ML+i*colW+2,y+5));
+    y+=7;
+    // data rows
+    rows.forEach((row,ri)=>{
+      checkPage(8);
+      const isHL = highlightFn && highlightFn(row,ri);
+      doc.setFillColor(...(isHL?[255,247,237]:(ri%2===0?LIGHT:WHITE)));
+      doc.rect(ML,y,CW,7,'F');
+      if(isHL){
+        doc.setFillColor(...OR);
+        doc.rect(ML,y,3,7,'F');
+      }
+      doc.setFont('helvetica',isHL?'bold':'normal');
+      doc.setFontSize(8.5);
+      doc.setTextColor(...(isHL?OR:DARK));
+      row.forEach((cell,ci)=> doc.text(String(cell),ML+(ci===0&&isHL?4:ci*colW+2),y+5));
+      y+=7;
+    });
+    doc.setDrawColor(203,213,225); doc.setLineWidth(0.2);
+    doc.line(ML,y,ML+CW,y);
+    y+=6;
+  }
+
+  // ══ SECTION 1: Goal Summary ══
+  sectionHeader('1.  Goal Summary');
+  kvTable([
+    ['Goal',g.label],
+    ['Name / Age',`${S.name}, ${S.age} years`],
+    ['Time Horizon',`${S.years} years`],
+    ['Inflation Assumed',`${S.inflation}%`],
+    ['Target Corpus (inflation-adj.)',fmtL(S.targetCorpus)],
+    ['Risk Persona',`${S.persona.raw?S.persona.raw.name:S.persona.effective.name} → Effective: ${S.persona.effective.name}`],
+    ['Portfolio Backtested CAGR',`${(S.portCAGR*100).toFixed(1)}%`],
+  ]);
+
+  // ══ SECTION 2: Recommended SIP ══
+  sectionHeader('2.  Recommended Monthly SIP');
+  // Big orange highlight box
+  checkPage(20);
+  doc.setFillColor(...OR);
+  doc.roundedRect(ML,y,CW,18,3,3,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(22); doc.setTextColor(...WHITE);
+  doc.text(`Rs.${fmt(S.recSip)} / month`,PW/2,y+11,{align:'center'});
+  doc.setFont('helvetica','normal'); doc.setFontSize(8.5);
+  doc.text(S.useStepup?`With ${S.stepup}% annual step-up`:'Fixed SIP (no step-up)',PW/2,y+16,{align:'center'});
+  y+=24;
+
+  // ══ SECTION 3: SIP Scenarios ══
+  sectionHeader('3.  SIP Scenarios');
+  const scenRows=[];
+  const scenTbody=document.getElementById('scen-body');
+  if(scenTbody) scenTbody.querySelectorAll('tr').forEach(tr=>{
+    const cells=[...tr.querySelectorAll('td')].map(td=>td.innerText.replace(/\n.*/,'').trim());
+    if(cells.length) scenRows.push(cells);
   });
-  y+=6;
-  doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(30,30,30);
-  doc.text('Disclaimer',15,y); y+=6;
-  doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(150,50,50);
-  const disc=doc.splitTextToSize('This report is generated by an AI algorithm using historical NAV data. It does not constitute SEBI-registered investment advice. Past performance does not guarantee future returns. Consult a qualified financial adviser before making investment decisions.',175);
-  doc.text(disc,15,y);
+  if(scenRows.length){
+    dataTable(
+      ['Return Assumption','Monthly SIP','Total Invested','Expected Corpus'],
+      scenRows,
+      (row)=>row.some(c=>c.includes('Recommended'))
+    );
+  }
+
+  // ══ SECTION 4: Recommended Portfolio ══
+  checkPage(14);
+  sectionHeader('4.  Recommended Portfolio');
+  const portRows=S.funds.map(f=>{
+    const sip=Math.ceil(S.recSip*f.alloc/100/100)*100;
+    const xirr=f.xirr!==null?f.xirr+'%':f.fallback+'%*';
+    return [
+      f.name.length>28?f.name.slice(0,26)+'…':f.name,
+      f.cat||'—',
+      f.alloc+'%',
+      'Rs.'+fmt(sip)+'/mo',
+      xirr,
+      String(f.sharpe),
+      f.ter+'%'
+    ];
+  });
+  dataTable(['Fund','Category','Alloc','SIP','XIRR','Sharpe','TER'],portRows,null);
+
+  // ══ SECTION 5: Rebalancing Schedule ══
+  checkPage(14);
+  sectionHeader('5.  Rebalancing Schedule');
+  const rebalItems=document.querySelectorAll('#rebal-line .rebal-item');
+  if(rebalItems.length){
+    const rebalRows=[...rebalItems].map(el=>[
+      (el.querySelector('.rebal-yr')||{}).innerText||'',
+      (el.querySelector('.rebal-action')||{}).innerText||'',
+      (el.querySelector('.rebal-why')||{}).innerText||''
+    ]);
+    dataTable(['Year','Action','Rationale'],rebalRows,null);
+  }
+
+  // ══ DISCLAIMER ══
+  checkPage(22);
+  doc.setFillColor(255,237,213);
+  doc.roundedRect(ML,y,CW,18,2,2,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.setTextColor(154,52,18);
+  doc.text('Disclaimer',ML+3,y+5.5);
+  doc.setFont('helvetica','normal'); doc.setFontSize(7.5);
+  const disc=doc.splitTextToSize('This report is generated by an algorithm analysing historical NAV data. It does not constitute SEBI-registered investment advice. Past performance does not guarantee future returns. Mutual fund investments are subject to market risks. Consult a qualified financial adviser before making investment decisions.',CW-6);
+  doc.text(disc,ML+3,y+10);
+
   doc.save(`MF_Advisor_${S.name.replace(/ /g,'_')}_${g.label.replace(/ /g,'_')}.pdf`);
 }
 
