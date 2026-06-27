@@ -4,11 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Maverick Investor — Smart Money for Every Indian</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <style>
     /* ============================================================
        DESIGN TOKENS
     ============================================================ */
     :root {
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
       --green:      #0d6e47;
       --green-dark: #094d32;
       --green-light:#12925f;
@@ -78,6 +83,9 @@
     .section-title, h1, h2, h3, h4 { color: #e2e8f0; }
     p, li, label { color: #cbd5e1; }
     strong { color: #e2e8f0; }
+    /* WCAG AA fixes — dark text on transparent tints fails on dark cards; flip to bright text */
+    .tag-free { background: rgba(74,222,128,.12) !important; color: #4ade80 !important; }
+    .tag-live { background: rgba(244,124,32,.12) !important; color: #fb923c !important; }
     .hint, .note { color: #94a3b8 !important; }
     .card, .form-card, [class*=card], [class*=-card] { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; color: #e2e8f0 !important; }
 
@@ -144,7 +152,17 @@
       border: none;
     }
     .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.18); }
-    .btn-primary { background: var(--orange); color: var(--white); }
+    .btn-primary {
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+      color: var(--white);
+      box-shadow: 0 4px 14px rgba(249,115,22,.35);
+      transition: transform .18s, box-shadow .18s, filter .18s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(249,115,22,.55);
+      filter: brightness(1.08);
+    }
     .btn-secondary { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,.5); }
     .btn-secondary:hover { background: rgba(255,255,255,.1); }
     .btn-outline { background: transparent; color: var(--green); border: 2px solid var(--green); }
@@ -230,7 +248,7 @@
        HERO
     ============================================================ */
     .hero {
-      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 60%, #1a7a52 100%);
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0f172a 100%);
       padding: 3rem 0 2.4rem;
       position: relative;
       overflow: hidden;
@@ -318,7 +336,7 @@
       padding: .75rem 1.25rem;
       text-align: center;
     }
-    .stat-pill .val { font-size: 1.5rem; font-weight: 800; color: var(--white); }
+    .stat-pill .val { font-size: 1.5rem; font-weight: 800; color: var(--white); font-family: var(--font-mono); }
     .stat-pill .lbl { font-size: .72rem; color: rgba(255,255,255,.65); text-transform: uppercase; letter-spacing: .08em; }
 
     /* Hero visual */
@@ -329,9 +347,13 @@
       align-items: center;
     }
     .dashboard-card {
-      background: rgba(255,255,255,.1);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(15,23,42,.55);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255,255,255,.12);
+      border-top: 1px solid rgba(255,255,255,.22);
+      border-left: 1px solid rgba(255,255,255,.16);
+      box-shadow: 0 8px 32px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);
       border-radius: var(--radius);
       padding: 1.5rem;
       width: 100%;
@@ -340,8 +362,8 @@
     }
     .dc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
     .dc-title { font-size: .85rem; font-weight: 700; opacity: .7; }
-    .dc-badge { background: #4ade80; color: #064e3b; font-size: .7rem; font-weight: 800; padding: .2rem .6rem; border-radius: 99px; }
-    .dc-amount { font-size: 2.2rem; font-weight: 900; margin-bottom: .25rem; }
+    .dc-badge { background: rgba(74,222,128,.18); color: #4ade80; font-size: .7rem; font-weight: 800; padding: .2rem .6rem; border-radius: 99px; }
+    .dc-amount { font-size: 2.2rem; font-weight: 900; margin-bottom: .25rem; font-family: var(--font-mono); }
     .dc-change { font-size: .85rem; color: #4ade80; margin-bottom: 1.25rem; }
     .dc-chart {
       height: 80px;
@@ -418,7 +440,7 @@
       padding: .4rem .5rem;
       text-align: center;
     }
-    .ds-val { font-size: .88rem; font-weight: 800; }
+    .ds-val { font-size: .88rem; font-weight: 800; font-family: var(--font-mono); }
     .ds-lbl { font-size: .6rem; opacity: .6; letter-spacing: .04em; text-transform: uppercase; }
 
     /* ── Tools Section ────────────────────────────────────── */
@@ -1613,9 +1635,34 @@
     .fcb-1y:not(.positive):not(.negative) { color: #64748b !important; }
     .positive { color: #059669 !important; }
     .negative { color: #dc2626 !important; }
+
+    /* ── SVG icon sizing ─────────────────────────────────── */
+    .icon-svg { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .logo-icon .icon-svg svg    { width:20px; height:20px; color:#fff; }
+    .why-icon                   { display:flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:12px; background:rgba(249,115,22,.1); margin-bottom:.75rem; }
+    .why-icon svg               { width:22px; height:22px; color:#f97316; }
+    .af-icon svg                { width:20px; height:20px; color:#f97316; }
+    .fb-icon svg                { width:15px; height:15px; }
+    .ret-cta-icon               { font-size:0; display:flex; align-items:center; }
+    .ret-cta-icon svg           { width:48px; height:48px; color:#f97316; }
+    .section-label svg          { width:13px; height:13px; vertical-align:middle; margin-right:3px; }
+    .sebi-badge svg             { width:13px; height:13px; }
+    .social-btn                 { display:flex !important; align-items:center !important; justify-content:center !important; }
+    .social-btn svg             { width:16px; height:16px; }
+    .btn svg                    { width:15px; height:15px; flex-shrink:0; }
+    .tool-dl-btn svg            { width:13px; height:13px; }
+    .hsc-title                  { display:flex; align-items:center; gap:.35rem; }
+    .hsc-title svg              { width:12px; height:12px; flex-shrink:0; }
+    .gsl-item svg               { width:15px; height:15px; flex-shrink:0; }
+    .goal-icon-wrap svg         { width:26px; height:26px; }
+    .btn-ret-cta svg            { width:15px; height:15px; }
+    .sb-icon                    { font-size:0; display:flex; align-items:center; justify-content:center; }
+    .sb-icon svg                { width:28px; height:28px; }
+    .hero-label svg             { width:14px; height:14px; vertical-align:middle; }
+    .disclaimer-icon svg        { width:16px; height:16px; vertical-align:middle; margin-right:4px; }
 </style>
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns%3D'http%3A//www.w3.org/2000/svg' viewBox%3D'0 0 100 100'%3E%3Ctext y%3D'.9em' font-size%3D'90'%3E%F0%9F%93%88%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f97316'/%3E%3Cpolyline points='26,9 16.5,18.5 11,13 5,19.5' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpolyline points='21,9 26,9 26,14' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="icon" type="image/svg+xml" href="favicon.svg"></head>
 <body>
 
@@ -1667,7 +1714,7 @@
 <nav class="topbar">
   <div class="topbar-inner">
     <a href="index.html" class="logo">
-      <div class="logo-icon">📈</div>
+      <div class="logo-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span></div>
       Maverick Investor
     </a>
     <ul class="nav-links">
@@ -1698,6 +1745,7 @@
      HERO
 ============================================================ -->
 <section class="hero" id="hero">
+  <canvas id="hero-candles" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.18;z-index:0;"></canvas>
   <div class="hero-orb orb-1"></div>
   <div class="hero-orb orb-2"></div>
   <div class="hero-orb orb-3"></div>
@@ -1707,16 +1755,16 @@
   <div class="container">
     <div class="hero-grid">
       <div class="hero-copy">
-        <div class="hero-label">🇮🇳 Built for Indian Investors</div>
+        <div class="hero-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Built for Indian Investors</div>
         <h1>Invest Smart.<br>Retire <span>Fearless</span>.</h1>
         <p>Expert guidance on mutual funds, insurance, and retirement planning — tailored for the Indian market. Track live NAVs, calculate your future corpus, and make every rupee count.</p>
         <div class="hero-btns">
-          <a href="tools.html" class="btn btn-primary">⬇ Download Free Tools</a>
-          <a href="#tracker" class="btn btn-secondary">Live Fund Tracker →</a>
+          <a href="tools.html" class="btn btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg> Download Free Tools</a>
+          <a href="#tracker" class="btn btn-secondary">Live Fund Tracker <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
         </div>
         <div class="hero-stats">
           <div class="stat-pill">
-            <div class="val">2,000+</div>
+            <div class="val" data-count="2000" data-suffix="+">0</div>
             <div class="lbl">Funds Tracked</div>
           </div>
           <div class="stat-pill">
@@ -1748,7 +1796,7 @@
               <div class="alloc-bar-wrap" title="Asset Allocation">
                 <div class="alloc-seg" style="width:60%;background:rgba(74,222,128,.65);">Equity&nbsp;60%</div>
                 <div class="alloc-seg" style="width:25%;background:rgba(96,165,250,.65);">Debt&nbsp;25%</div>
-                <div class="alloc-seg" style="width:10%;background:rgba(251,146,60,.75);">🌍10%</div>
+                <div class="alloc-seg" style="width:10%;background:rgba(251,146,60,.75);">INT 10%</div>
                 <div class="alloc-seg" style="width:5%;background:rgba(250,204,21,.75);" title="Gold 5%">Au</div>
               </div>
               <div class="dc-amount">₹1,00,36,000</div>
@@ -1768,8 +1816,8 @@
                 <div class="dc-fund"><span class="fname">HDFC Short Term Debt</span><span class="fval fup">▲ 7.2% CAGR</span></div>
               </div>
             </div>
-            <div class="float-badge one"><span class="fb-icon">🏦</span> SIP ₹1L/month · Jan '21</div>
-            <div class="float-badge two"><span class="fb-icon">🎯</span> ₹66L → ₹1.0 Cr ✓</div>
+            <div class="float-badge one"><span class="fb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg></span> SIP ₹1L/month · Jan '21</div>
+            <div class="float-badge two"><span class="fb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span> ₹66L → ₹1.0 Cr ✓</div>
           </div>
 
           <!-- Right: Calculators stacked vertically -->
@@ -1777,7 +1825,7 @@
 
             <!-- SIP Calculator -->
             <div class="hero-sip-calc">
-              <div class="hsc-title">⚡ SIP Calculator</div>
+              <div class="hsc-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> SIP Calculator</div>
               <div class="hsc-row">
                 <label>Monthly SIP</label>
                 <input type="range" min="500" max="100000" step="500" value="10000" id="heroSipAmt" oninput="updateHeroSIP()">
@@ -1801,7 +1849,7 @@
 
             <!-- Retirement Corpus Calculator -->
             <div class="hero-sip-calc">
-              <div class="hsc-title">🏖️ Retirement Corpus</div>
+              <div class="hsc-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><line x1="12" x2="12" y1="2" y2="6"/><line x1="12" x2="12" y1="18" y2="22"/><line x1="4.93" x2="7.76" y1="4.93" y2="7.76"/><line x1="16.24" x2="19.07" y1="16.24" y2="19.07"/><line x1="2" x2="6" y1="12" y2="12"/><line x1="18" x2="22" y1="12" y2="12"/><line x1="4.93" x2="7.76" y1="19.07" y2="16.24"/><line x1="16.24" x2="19.07" y1="7.76" y2="4.93"/></svg> Retirement Corpus</div>
               <div class="hsc-row">
                 <label>Age now</label>
                 <input type="range" min="20" max="55" step="1" value="30" id="heroRetAge" oninput="updateHeroRetirement()">
@@ -1859,7 +1907,7 @@
     <div class="goals-grid">
 
       <div class="goal-card-main" data-goal="education">
-        <div class="goal-icon-wrap" style="background:rgba(13,110,71,.1)">🎓</div>
+        <div class="goal-icon-wrap" style="background:rgba(249,115,22,.12);color:#f97316"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
         <h3>Education</h3>
         <p>School fees, engineering, MBA, foreign university — plan the full education journey.</p>
         <div class="goal-calc-inline">
@@ -1877,11 +1925,11 @@
             <div class="gr-row"><span>Monthly SIP needed</span><strong id="eduSIP" class="sip-highlight">₹12,440</strong></div>
           </div>
         </div>
-        <a href="Goals_Planner_Maverick.xlsx" download class="tool-dl-btn" style="margin-top:1rem;">⬇ Full Education Planner</a>
+        <a href="Goals_Planner_Maverick.xlsx" download class="tool-dl-btn" style="margin-top:1rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg> Full Education Planner</a>
       </div>
 
       <div class="goal-card-main" data-goal="marriage">
-        <div class="goal-icon-wrap" style="background:rgba(244,124,32,.1)">💍</div>
+        <div class="goal-icon-wrap" style="background:rgba(249,115,22,.12);color:#f97316"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
         <h3>Marriage</h3>
         <p>Wedding ceremony, jewellery, honeymoon — plan all components of a big Indian wedding.</p>
         <div class="goal-calc-inline">
@@ -1899,11 +1947,11 @@
             <div class="gr-row"><span>Monthly SIP needed</span><strong id="weddSIP" class="sip-highlight">₹24,300</strong></div>
           </div>
         </div>
-        <a href="Goals_Planner_Maverick.xlsx" download class="tool-dl-btn" style="margin-top:1rem; color:var(--orange); border-color:var(--orange);">⬇ Full Marriage Planner</a>
+        <a href="Goals_Planner_Maverick.xlsx" download class="tool-dl-btn" style="margin-top:1rem; color:var(--orange); border-color:var(--orange);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg> Full Marriage Planner</a>
       </div>
 
       <div class="goal-card-main" data-goal="car">
-        <div class="goal-icon-wrap" style="background:rgba(13,110,71,.1)">🚗</div>
+        <div class="goal-icon-wrap" style="background:rgba(249,115,22,.12);color:#f97316"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v9a2 2 0 0 1-2 2h-2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg></div>
         <h3>Car</h3>
         <p>Next car, upgrade, or electric vehicle — plan your auto purchase without a loan.</p>
         <div class="goal-calc-inline">
@@ -1921,11 +1969,11 @@
             <div class="gr-row"><span>Monthly SIP needed</span><strong id="carSIP" class="sip-highlight">₹29,700</strong></div>
           </div>
         </div>
-        <a href="Goals_Planner_Maverick.xlsx" download class="tool-dl-btn" style="margin-top:1rem;">⬇ Full Car Planner</a>
+        <a href="Goals_Planner_Maverick.xlsx" download class="tool-dl-btn" style="margin-top:1rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg> Full Car Planner</a>
       </div>
 
       <div class="goal-card-main" data-goal="home">
-        <div class="goal-icon-wrap" style="background:rgba(244,124,32,.1)">🏡</div>
+        <div class="goal-icon-wrap" style="background:rgba(249,115,22,.12);color:#f97316"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
         <h3>Home</h3>
         <p>Down payment, renovation, or second property — plan your real estate milestone.</p>
         <div class="goal-calc-inline">
@@ -1943,11 +1991,11 @@
             <div class="gr-row"><span>Monthly SIP needed</span><strong id="homeSIP" class="sip-highlight">₹38,200</strong></div>
           </div>
         </div>
-        <a href="Goals_Planner_Maverick.xlsx" download class="tool-dl-btn" style="margin-top:1rem; color:var(--orange); border-color:var(--orange);">⬇ Full Home Planner</a>
+        <a href="Goals_Planner_Maverick.xlsx" download class="tool-dl-btn" style="margin-top:1rem; color:var(--orange); border-color:var(--orange);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg> Full Home Planner</a>
       </div>
 
       <div class="goal-card-main" data-goal="travel">
-        <div class="goal-icon-wrap" style="background:rgba(13,110,71,.1)">✈️</div>
+        <div class="goal-icon-wrap" style="background:rgba(249,115,22,.12);color:#f97316"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></div>
         <h3>Foreign Trips</h3>
         <p>Europe, USA, South-East Asia, World Tour — plan and fund your travel dreams.</p>
         <div class="goal-calc-inline">
@@ -1965,7 +2013,7 @@
             <div class="gr-row"><span>Monthly SIP needed</span><strong id="tripSIP" class="sip-highlight">₹16,900</strong></div>
           </div>
         </div>
-        <a href="Goals_Planner_Maverick.xlsx" download class="tool-dl-btn" style="margin-top:1rem;">⬇ Full Travel Planner</a>
+        <a href="Goals_Planner_Maverick.xlsx" download class="tool-dl-btn" style="margin-top:1rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg> Full Travel Planner</a>
       </div>
 
       <!-- Summary card -->
@@ -1974,16 +2022,16 @@
         <h3>All Goals Combined</h3>
         <p>Download the complete Goals Planner Excel — covers 20+ life goals across 6 categories with inflation-adjusted SIP calculations.</p>
         <div class="goal-summary-list">
-          <div class="gsl-item"><span>🎓</span>Education (4 sub-goals)</div>
-          <div class="gsl-item"><span>💍</span>Marriage (3 sub-goals)</div>
-          <div class="gsl-item"><span>🚗</span>Car (3 variants)</div>
-          <div class="gsl-item"><span>🏡</span>Home (3 goals)</div>
-          <div class="gsl-item"><span>✈️</span>Foreign Trips (4 destinations)</div>
-          <div class="gsl-item"><span>🎯</span>Emergency Fund + Retirement</div>
+          <div class="gsl-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Education (4 sub-goals)</div>
+          <div class="gsl-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Marriage (3 sub-goals)</div>
+          <div class="gsl-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v9a2 2 0 0 1-2 2h-2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>Car (3 variants)</div>
+          <div class="gsl-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home (3 goals)</div>
+          <div class="gsl-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>Foreign Trips (4 destinations)</div>
+          <div class="gsl-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>Emergency Fund + Retirement</div>
         </div>
         <div style="margin-top:auto; padding-top:1.25rem; display:flex; flex-direction:column; gap:.75rem;">
-          <a href="Goals_Planner_Maverick.xlsx" download class="btn btn-green" style="justify-content:center;">⬇ Download Goals Planner (Excel)</a>
-          <a href="Retirement_Planner_Maverick.xlsx" download class="btn btn-outline" style="justify-content:center;">⬇ Retirement Corpus Planner</a>
+          <a href="Goals_Planner_Maverick.xlsx" download class="btn btn-green" style="justify-content:center;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg> Download Goals Planner (Excel)</a>
+          <a href="Retirement_Planner_Maverick.xlsx" download class="btn btn-outline" style="justify-content:center;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg> Retirement Corpus Planner</a>
         </div>
       </div>
 
@@ -2006,32 +2054,32 @@
     </div>
     <div class="why-grid">
       <div class="why-card">
-        <div class="why-icon">🏛️</div>
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <h3>SEBI-Compliant Information</h3>
         <p>All content follows SEBI's investor education guidelines. We clearly distinguish between education and personalised advice.</p>
       </div>
       <div class="why-card">
-        <div class="why-icon">🇮🇳</div>
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
         <h3>India-First Context</h3>
         <p>Built around AMFI fund data, RBI policies, and the Indian inflation reality.</p>
       </div>
       <div class="why-card">
-        <div class="why-icon">🔒</div>
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
         <h3>No Product Bias</h3>
         <p>We don't earn trail commissions or referral fees. Our guidance is research-led, not commission-driven.</p>
       </div>
       <div class="why-card">
-        <div class="why-icon">📡</div>
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" x2="12.01" y1="20" y2="20"/></svg></div>
         <h3>Live AMFI Data</h3>
         <p>Fund NAVs pulled directly from AMFI's daily data feed — no stale numbers, no third-party delays.</p>
       </div>
       <div class="why-card">
-        <div class="why-icon">📱</div>
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg></div>
         <h3>Android &amp; iOS Apps Coming</h3>
         <p>NAV alerts, goal tracker, and all calculators on the go — apps for both Android and iPhone in development.</p>
       </div>
       <div class="why-card">
-        <div class="why-icon">🎓</div>
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
         <h3>Education First</h3>
         <p>Every tool comes with plain-language explanations — because the best investment decision is an informed one.</p>
       </div>
@@ -2048,13 +2096,13 @@
 <section class="ret-cta-section" id="retirement-request">
   <div class="container">
     <div class="ret-cta-card">
-      <div class="ret-cta-icon">📊</div>
+      <div class="ret-cta-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg></div>
       <div class="ret-cta-text">
         <h3>Get Your Personalised Goal Based Investment Plan</h3>
         <p>A comprehensive goal-based investment plan — tailored to your age, income, goals, and risk profile — available free on request. Covers retirement corpus, child's education, home purchase, and all major life goals with SIP schedules.</p>
       </div>
       <a href="mailto:jileshkadi@gmail.com?subject=Retirement%20Planner%20Request&body=Hi%20Jilesh%2C%0A%0AI%27d%20like%20to%20receive%20the%20comprehensive%20retirement%20planner.%0A%0AMy%20details%3A%0AName%3A%20%0AAge%3A%20%0AMonthly%20income%3A%20%0ARisk%20profile%3A%20" class="btn-ret-cta">
-        📧 Request by Email
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Request by Email
       </a>
     </div>
   </div>
@@ -2067,34 +2115,34 @@
   <div class="container">
     <div class="app-grid">
       <div>
-        <div class="section-label">📱 Mobile App</div>
+        <div class="section-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg> Mobile App</div>
         <h2 class="section-title">Maverick Investor<br>in Your Pocket</h2>
         <p class="section-sub">Everything from the website — live NAVs, calculators, risk quiz, and retirement planner — optimised for mobile.</p>
 
         <div class="app-features">
           <div class="app-feat">
-            <div class="af-icon">📡</div>
+            <div class="af-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
             <div class="af-text">
               <h4>Live NAV Alerts</h4>
               <p>Get push notifications when your watched funds hit target NAVs or gain/drop beyond thresholds.</p>
             </div>
           </div>
           <div class="app-feat">
-            <div class="af-icon">🎯</div>
+            <div class="af-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
             <div class="af-text">
               <h4>Goal Tracker</h4>
               <p>Set financial goals — house, car, child's education, retirement — and track progress in real time.</p>
             </div>
           </div>
           <div class="app-feat">
-            <div class="af-icon">🧮</div>
+            <div class="af-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/></svg></div>
             <div class="af-text">
               <h4>All Calculators Offline</h4>
               <p>SIP, lump sum, retirement, insurance, and step-up SIP calculators — no internet needed.</p>
             </div>
           </div>
           <div class="app-feat">
-            <div class="af-icon">🎯</div>
+            <div class="af-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div>
             <div class="af-text">
               <h4>Fund Advisor On the Go</h4>
               <p>Take the risk questionnaire and get personalised fund recommendations anytime, anywhere.</p>
@@ -2104,14 +2152,14 @@
 
         <div class="app-store-btns">
           <div class="store-btn soon">
-            <div class="sb-icon">🤖</div>
+            <div class="sb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></div>
             <div class="sb-text">
               <span class="sb-sup">COMING SOON</span>
               <span class="sb-main">Google Play</span>
             </div>
           </div>
           <div class="store-btn soon">
-            <div class="sb-icon">🍎</div>
+            <div class="sb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg></div>
             <div class="sb-text">
               <span class="sb-sup">COMING SOON</span>
               <span class="sb-main">App Store</span>
@@ -2128,7 +2176,7 @@
             display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;box-shadow:0 8px 32px rgba(0,0,0,.5);">
             <div style="width:40px;height:4px;background:#444;border-radius:2px;position:absolute;top:10px;"></div>
             <div style="text-align:center;padding:0 10px;">
-              <div style="font-size:1.5rem;margin-bottom:.5rem;">🤖</div>
+              <div style="margin-bottom:.5rem;display:flex;justify-content:center;"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="var(--orange)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></div>
               <div style="color:var(--orange);font-size:.65rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;">Coming Soon</div>
               <div style="color:#888;font-size:.58rem;margin-top:.4rem;line-height:1.4;">Maverick Investor<br>for Android</div>
             </div>
@@ -2142,7 +2190,7 @@
             display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;box-shadow:0 8px 32px rgba(0,0,0,.5);">
             <div style="width:44px;height:10px;background:#1a1a1a;border-radius:6px;position:absolute;top:12px;border:2px solid #2a2a2a;"></div>
             <div style="text-align:center;padding:0 10px;">
-              <div style="font-size:1.5rem;margin-bottom:.5rem;">🍎</div>
+              <div style="margin-bottom:.5rem;display:flex;justify-content:center;"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="var(--orange)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg></div>
               <div style="color:var(--orange);font-size:.65rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;">Coming Soon</div>
               <div style="color:#888;font-size:.58rem;margin-top:.4rem;line-height:1.4;">Maverick Investor<br>for iPhone</div>
             </div>
@@ -2160,7 +2208,7 @@
 ============================================================ -->
 <div class="container" style="padding-bottom:3rem;">
   <div class="disclaimer">
-    <strong>⚠️ Important Disclaimer:</strong> Maverick Investor provides general financial education and information only. This is not personalised investment advice. Mutual fund investments are subject to market risks — please read all scheme-related documents carefully before investing. Past returns are not indicative of future performance. For personalised advice, consult a SEBI-registered investment advisor (RIA). Insurance premium and coverage estimates are indicative only.
+    <strong><span class="disclaimer-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span> Important Disclaimer:</strong> Maverick Investor provides general financial education and information only. This is not personalised investment advice. Mutual fund investments are subject to market risks — please read all scheme-related documents carefully before investing. Past returns are not indicative of future performance. For personalised advice, consult a SEBI-registered investment advisor (RIA). Insurance premium and coverage estimates are indicative only.
   </div>
 </div>
 
@@ -2171,13 +2219,13 @@
   <div class="footer-grid">
     <div class="footer-brand">
       <a href="index.html" class="logo" style="color:#e2e8f0;text-decoration:none;">
-        <div class="logo-icon">📈</div> Maverick Investor
+        <div class="logo-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span></div> Maverick Investor
       </a>
       <p>Empowering Indian investors with unbiased, research-backed guidance on mutual funds, insurance, and retirement planning.</p>
-      <div class="sebi-badge">🏛️ SEBI Investor Education Compliant</div>
+      <div class="sebi-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> SEBI Investor Education Compliant</div>
       <div class="social-row">
-        <a href="https://www.linkedin.com/in/jilesh/" target="_blank" rel="noopener" class="social-btn">in</a>
-        <a href="mailto:jileshkadi@gmail.com" class="social-btn" title="Email us">✉</a>
+        <a href="https://www.linkedin.com/in/jilesh/" target="_blank" rel="noopener" class="social-btn" title="LinkedIn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="mailto:jileshkadi@gmail.com" class="social-btn" title="Email us" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
       </div>
     </div>
     <div class="footer-col">
@@ -2209,7 +2257,7 @@
   </div>
   <div class="footer-bottom">
     <div>© 2026 Maverick Investor. All rights reserved.</div>
-    <div>Built with ❤️ for Indian investors · Not SEBI-registered · Educational use only</div>
+    <div>Built with <svg viewBox="0 0 24 24" width="12" height="12" fill="#f97316" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:middle;margin:0 1px"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> for Indian investors · Not SEBI-registered · Educational use only</div>
   </div>
 </footer>
 
@@ -2400,13 +2448,14 @@
 
   // Group funds by their 'group' field
   const GROUP_ORDER = ['Large Cap', 'Mid Cap', 'Small Cap', 'Flexi Cap', 'Index', 'Global & Gold'];
+  const _svg = (path, extra) => `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${extra||''}>${path}</svg>`;
   const GROUP_META = {
-    'Large Cap':    { icon:'🏢', dot:'#e63946' },
-    'Mid Cap':      { icon:'🏗️', dot:'#0077b6' },
-    'Small Cap':    { icon:'🚀', dot:'#e76f51' },
-    'Flexi Cap':    { icon:'🔀', dot:'#2d6a4f' },
-    'Index':        { icon:'📊', dot:'#457b9d' },
-    'Global & Gold':{ icon:'🌍', dot:'#f4c430' },
+    'Large Cap':    { icon: _svg('<rect width="16" height="20" x="4" y="2" rx="1"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/>'), dot:'#e63946' },
+    'Mid Cap':      { icon: _svg('<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>'), dot:'#0077b6' },
+    'Small Cap':    { icon: _svg('<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>'), dot:'#e76f51' },
+    'Flexi Cap':    { icon: _svg('<path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/>'), dot:'#2d6a4f' },
+    'Index':        { icon: _svg('<line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/>'), dot:'#457b9d' },
+    'Global & Gold':{ icon: _svg('<circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>'), dot:'#f4c430' },
   };
 
   function renderFundTable() {
@@ -2425,7 +2474,7 @@
     });
 
     grid.innerHTML = groupsToShow.map(grpName => {
-      const meta = GROUP_META[grpName] || { icon:'📁', dot:'#888' };
+      const meta = GROUP_META[grpName] || { icon: _svg('<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>'), dot:'#888' };
       const grpFunds = funds.filter(f => f.group === grpName);
       const rows = grpFunds.map(f => {
         const navStr = (f.nav && f.nav !== '—') ? '₹' + parseFloat(f.nav).toFixed(2) : '—';
@@ -2670,6 +2719,131 @@
   const _toastStyle = document.createElement('style');
   _toastStyle.textContent = '@keyframes fadeInUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}';
   document.head.appendChild(_toastStyle);
+</script>
+
+<!-- Hero candlestick canvas + GSAP animations -->
+<script>
+(function() {
+  /* ── Candlestick background ── */
+  function initCandleCanvas() {
+    var canvas = document.getElementById('hero-candles');
+    if (!canvas) return;
+    var hero = document.querySelector('.hero');
+    canvas.width  = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+    var ctx = canvas.getContext('2d');
+
+    var cols = Math.ceil(canvas.width / 28);
+    var candles = [];
+    for (var i = 0; i < cols; i++) {
+      candles.push(makeCandle(i, canvas.height));
+    }
+
+    function makeCandle(col, h) {
+      var isUp   = Math.random() > 0.42;
+      var bodyH  = 10 + Math.random() * 38;
+      var bodyY  = 20 + Math.random() * (h - bodyH - 40);
+      return {
+        x: col * 28 + 6,
+        bodyY: bodyY,
+        bodyH: bodyH,
+        wickTop: bodyY - 4 - Math.random() * 14,
+        wickBot: bodyY + bodyH + 4 + Math.random() * 14,
+        isUp: isUp,
+        alpha: 0,
+        targetAlpha: 0.55 + Math.random() * 0.45,
+        speed: 0.012 + Math.random() * 0.018,
+        delay: Math.random() * 120,
+        timer: 0
+      };
+    }
+
+    var frame = 0;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      frame++;
+      candles.forEach(function(c, idx) {
+        c.timer++;
+        if (c.timer < c.delay) return;
+        if (c.alpha < c.targetAlpha) c.alpha = Math.min(c.targetAlpha, c.alpha + c.speed);
+
+        var color = c.isUp ? 'rgba(74,222,128,' + c.alpha + ')' : 'rgba(248,113,113,' + c.alpha + ')';
+        /* wick */
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.5;
+        ctx.moveTo(c.x + 5, c.wickTop);
+        ctx.lineTo(c.x + 5, c.wickBot);
+        ctx.stroke();
+        /* body */
+        ctx.fillStyle = color;
+        ctx.fillRect(c.x, c.bodyY, 10, c.bodyH);
+
+        /* slowly drift upward and reset */
+        c.bodyY -= 0.12;
+        c.wickTop -= 0.12;
+        c.wickBot -= 0.12;
+        if (c.bodyY + c.bodyH < -20) {
+          var nc = makeCandle(idx, canvas.height);
+          nc.bodyY = canvas.height + 10;
+          nc.wickTop = nc.bodyY - 4 - Math.random() * 14;
+          nc.wickBot = nc.bodyY + nc.bodyH + 4 + Math.random() * 14;
+          nc.alpha = nc.targetAlpha;
+          nc.delay = 0;
+          candles[idx] = nc;
+        }
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    window.addEventListener('resize', function() {
+      canvas.width  = hero.offsetWidth;
+      canvas.height = hero.offsetHeight;
+    });
+  }
+
+  /* ── GSAP: counter + pill entrance ── */
+  function initGSAP() {
+    if (typeof gsap === 'undefined') { setTimeout(initGSAP, 200); return; }
+
+    /* stat pills entrance */
+    gsap.from('.stat-pill', {
+      opacity: 0, y: 20, stagger: 0.12, duration: 0.6, ease: 'power2.out', delay: 0.4
+    });
+
+    /* number counter on data-count elements */
+    document.querySelectorAll('.val[data-count]').forEach(function(el) {
+      var target = parseInt(el.dataset.count, 10);
+      var suffix = el.dataset.suffix || '';
+      var obj = { val: 0 };
+      gsap.to(obj, {
+        val: target,
+        duration: 1.8,
+        delay: 0.6,
+        ease: 'power2.out',
+        onUpdate: function() {
+          el.textContent = Math.round(obj.val).toLocaleString('en-IN') + suffix;
+        }
+      });
+    });
+
+    /* hero copy entrance */
+    gsap.from('.hero-copy > *', {
+      opacity: 0, y: 24, stagger: 0.1, duration: 0.7, ease: 'power2.out', delay: 0.1
+    });
+
+    /* dashboard card entrance */
+    gsap.from('.dashboard-card', {
+      opacity: 0, y: 30, scale: 0.97, duration: 0.8, ease: 'power2.out', delay: 0.3
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    initCandleCanvas();
+    initGSAP();
+  });
+})();
 </script>
 </body>
 </html>
