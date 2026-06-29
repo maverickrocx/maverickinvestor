@@ -1919,6 +1919,15 @@
     document.getElementById(panelMap[tab] || 'learnMf').classList.add('active');
     btn.classList.add('active');
   }
+  (function() {
+    const hash = window.location.hash.replace('#', '');
+    const tabMap = {mf: 0, ins: 1, nps: 2};
+    if (hash in tabMap) {
+      const tabs = document.querySelectorAll('.learn-tab');
+      switchLearnTab(hash, tabs[tabMap[hash]]);
+      document.querySelector('.learn-section').scrollIntoView({behavior: 'smooth', block: 'start'});
+    }
+  })();
   function toggleAcc(btn) {
     const body = btn.nextElementSibling;
     const isOpen = body.classList.contains('open');
