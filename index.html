@@ -1916,6 +1916,10 @@
             <input type="number" class="gci-inp" id="eduCost" value="2500000" oninput="calcGoal('edu')">
           </div>
           <div class="gci-row">
+            <label>Already saved towards this (₹)</label>
+            <input type="number" class="gci-inp" id="eduSaved" value="0" oninput="calcGoal('edu')" placeholder="0">
+          </div>
+          <div class="gci-row">
             <label>Years until needed</label>
             <input type="range" min="1" max="25" value="10" id="eduYrs" oninput="calcGoal('edu')">
             <div class="gci-val" id="eduYrsVal">10 years</div>
@@ -1936,6 +1940,10 @@
           <div class="gci-row">
             <label>Estimated wedding budget today (₹)</label>
             <input type="number" class="gci-inp" id="weddCost" value="2000000" oninput="calcGoal('wedd')">
+          </div>
+          <div class="gci-row">
+            <label>Already saved towards this (₹)</label>
+            <input type="number" class="gci-inp" id="weddSaved" value="0" oninput="calcGoal('wedd')" placeholder="0">
           </div>
           <div class="gci-row">
             <label>Years until wedding</label>
@@ -1960,6 +1968,10 @@
             <input type="number" class="gci-inp" id="carCost" value="1200000" oninput="calcGoal('car')">
           </div>
           <div class="gci-row">
+            <label>Already saved towards this (₹)</label>
+            <input type="number" class="gci-inp" id="carSaved" value="0" oninput="calcGoal('car')" placeholder="0">
+          </div>
+          <div class="gci-row">
             <label>Years until purchase</label>
             <input type="range" min="1" max="10" value="3" id="carYrs" oninput="calcGoal('car')">
             <div class="gci-val" id="carYrsVal">3 years</div>
@@ -1982,6 +1994,10 @@
             <input type="number" class="gci-inp" id="homeCost" value="3000000" oninput="calcGoal('home')">
           </div>
           <div class="gci-row">
+            <label>Already saved towards this (₹)</label>
+            <input type="number" class="gci-inp" id="homeSaved" value="0" oninput="calcGoal('home')" placeholder="0">
+          </div>
+          <div class="gci-row">
             <label>Years until purchase</label>
             <input type="range" min="1" max="15" value="6" id="homeYrs" oninput="calcGoal('home')">
             <div class="gci-val" id="homeYrsVal">6 years</div>
@@ -2002,6 +2018,10 @@
           <div class="gci-row">
             <label>Trip budget today (₹)</label>
             <input type="number" class="gci-inp" id="tripCost" value="400000" oninput="calcGoal('trip')">
+          </div>
+          <div class="gci-row">
+            <label>Already saved towards this (₹)</label>
+            <input type="number" class="gci-inp" id="tripSaved" value="0" oninput="calcGoal('trip')" placeholder="0">
           </div>
           <div class="gci-row">
             <label>Years until trip</label>
@@ -2507,11 +2527,11 @@
   function calcGoal(key) {
     // Support both old (goals section) and new (tools tiles with g2- prefix) IDs
     const bases = [
-      { costId:`eduCost`,  yrsId:`eduYrs`,  futId:`eduFuture`,  sipId:`eduSIP`,  yrsLbl:`eduYrsVal`,  retId:`eduRet`,  inf:10 },
-      { costId:`weddCost`, yrsId:`weddYrs`, futId:`weddFuture`, sipId:`weddSIP`, yrsLbl:`weddYrsVal`, retId:`weddRet`, inf:7  },
-      { costId:`carCost`,  yrsId:`carYrs`,  futId:`carFuture`,  sipId:`carSIP`,  yrsLbl:`carYrsVal`,  retId:`carRet`,  inf:5  },
-      { costId:`homeCost`, yrsId:`homeYrs`, futId:`homeFuture`, sipId:`homeSIP`, yrsLbl:`homeYrsVal`, retId:`homeRet`, inf:8  },
-      { costId:`tripCost`, yrsId:`tripYrs`, futId:`tripFuture`, sipId:`tripSIP`, yrsLbl:`tripYrsVal`, retId:`tripRet`, inf:5  },
+      { costId:`eduCost`,  yrsId:`eduYrs`,  futId:`eduFuture`,  sipId:`eduSIP`,  yrsLbl:`eduYrsVal`,  retId:`eduRet`,  savedId:`eduSaved`,  inf:10 },
+      { costId:`weddCost`, yrsId:`weddYrs`, futId:`weddFuture`, sipId:`weddSIP`, yrsLbl:`weddYrsVal`, retId:`weddRet`, savedId:`weddSaved`, inf:7  },
+      { costId:`carCost`,  yrsId:`carYrs`,  futId:`carFuture`,  sipId:`carSIP`,  yrsLbl:`carYrsVal`,  retId:`carRet`,  savedId:`carSaved`,  inf:5  },
+      { costId:`homeCost`, yrsId:`homeYrs`, futId:`homeFuture`, sipId:`homeSIP`, yrsLbl:`homeYrsVal`, retId:`homeRet`, savedId:`homeSaved`, inf:8  },
+      { costId:`tripCost`, yrsId:`tripYrs`, futId:`tripFuture`, sipId:`tripSIP`, yrsLbl:`tripYrsVal`, retId:`tripRet`, savedId:`tripSaved`, inf:5  },
     ];
     const keyMap = { edu:0, wedd:1, car:2, home:3, trip:4 };
     const idx = keyMap[key];
@@ -2534,7 +2554,11 @@
       const yrsLbl = document.getElementById(yp + bases[idx].yrsLbl);
       if (yrsLbl) yrsLbl.textContent = yrs + ' yr' + (yrs>1?'s':'');
       const future = cost * Math.pow(1 + infRate/100, yrs);
-      const sip    = future / ((Math.pow(1+r,n)-1)/r);
+      const savedEl = document.getElementById(cp + bases[idx].savedId);
+      const saved = savedEl ? (parseFloat(savedEl.value) || 0) : 0;
+      const savedFV = saved * Math.pow(1 + r, n);
+      const netNeeded = Math.max(0, future - savedFV);
+      const sip = netNeeded > 0 ? netNeeded / ((Math.pow(1+r,n)-1)/r) : 0;
       const futEl = document.getElementById(yp + bases[idx].futId);
       const sipEl = document.getElementById(yp + bases[idx].sipId);
       if (futEl) futEl.textContent = fmt(Math.round(future));
@@ -2577,7 +2601,7 @@
     const futureExp  = exp * Math.pow(1.06, years);
     // Corpus via growing annuity: post-ret return 7.5%, inflation 6%, life exp 85
     const lifeYrs = Math.max(20, 85 - (retAge || 60));
-    const gr = 0.06, rr = 0.075;
+    const gr = 0.06, rr = 0.07;
     const corpus     = (futureExp * 12) * (1 - Math.pow((1+gr)/(1+rr), lifeYrs)) / (rr - gr);
     // SIP to build that corpus
     const sip        = corpus / ((Math.pow(1+r,n)-1)/r);
@@ -2605,7 +2629,7 @@
     const annualExp = futureExp * 12;
     // Growing annuity: post-ret return 7.5%, inflation 6%, life expectancy 85
     const lifeYrs = Math.max(20, 85 - retAge);
-    const gr = 0.06, rr = 0.075;
+    const gr = 0.06, rr = 0.07;
     const corpus = annualExp * (1 - Math.pow((1+gr)/(1+rr), lifeYrs)) / (rr - gr);
     document.getElementById('retAgeLabel').textContent = age;
     document.getElementById('retRetLabel').textContent = retAge;
