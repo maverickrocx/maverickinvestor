@@ -1874,7 +1874,7 @@
       <div class="sebi-badge">🏛️ SEBI Investor Education Compliant</div>
       <div class="social-row">
         <a href="https://www.linkedin.com/in/jilesh/" target="_blank" rel="noopener" class="social-btn">in</a>
-        <a href="mailto:jileshkadi@gmail.com" class="social-btn" title="Email us">✉</a>
+        <a href="#" onclick="showEmailPopup();return false;" class="social-btn" title="Email us">✉</a>
       </div>
     </div>
     <div class="footer-col">
@@ -1896,11 +1896,11 @@
     <div class="footer-col">
       <h4>Learn</h4>
       <ul>
-        <li><a href="learn.html">Mutual Fund Basics</a></li>
-        <li><a href="learn.html">Insurance Basics</a></li>
-        <li><a href="learn.html">NPS Guide</a></li>
+        <li><a href="learn.html#mf">Mutual Fund Basics</a></li>
+        <li><a href="learn.html#ins">Insurance Basics</a></li>
+        <li><a href="learn.html#nps">NPS Guide</a></li>
         <li><a href="about.html">About Us</a></li>
-        <li><a href="mailto:jileshkadi@gmail.com">Contact</a></li>
+        <li><a href="#" onclick="showEmailPopup();return false;">Contact</a></li>
       </ul>
     </div>
   </div>
@@ -1939,6 +1939,24 @@
       btn.classList.add('open');
     }
   }
+</script>
+
+<div id="email-popup" onclick="if(event.target===this)closeEmailPopup()" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);align-items:center;justify-content:center;">
+  <div style="background:#1e293b;border:1px solid rgba(249,115,22,.3);border-radius:16px;padding:2rem 2.5rem;text-align:center;max-width:360px;width:90%;box-shadow:0 24px 64px rgba(0,0,0,.55);">
+    <p style="color:#94a3b8;font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem;">Get in touch</p>
+    <p style="font-size:1.05rem;font-weight:700;color:#e2e8f0;margin-bottom:1.5rem;font-family:monospace;">jileshkadi@gmail.com</p>
+    <div style="display:flex;gap:.75rem;justify-content:center;">
+      <button onclick="copyEmail()" style="background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;border:none;border-radius:8px;padding:.6rem 1.4rem;font-weight:700;cursor:pointer;font-size:.9rem;">Copy</button>
+      <button onclick="closeEmailPopup()" style="background:rgba(255,255,255,.08);color:#e2e8f0;border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:.6rem 1.4rem;font-weight:700;cursor:pointer;font-size:.9rem;">Close</button>
+    </div>
+    <p id="copy-confirm" style="color:#4ade80;font-size:.8rem;margin-top:.75rem;opacity:0;transition:opacity .2s;height:1em;">Copied to clipboard!</p>
+  </div>
+</div>
+<script>
+  function showEmailPopup(){document.getElementById('email-popup').style.display='flex';document.getElementById('copy-confirm').style.opacity='0';}
+  function closeEmailPopup(){document.getElementById('email-popup').style.display='none';}
+  function copyEmail(){navigator.clipboard.writeText('jileshkadi@gmail.com').then(()=>{const c=document.getElementById('copy-confirm');c.style.opacity='1';setTimeout(()=>c.style.opacity='0',2500);});}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeEmailPopup();});
 </script>
 </body>
 </html>
