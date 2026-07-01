@@ -338,6 +338,12 @@
     }
     .stat-pill .val { font-size: 1.5rem; font-weight: 800; color: var(--white); font-family: var(--font-mono); }
     .stat-pill .lbl { font-size: .72rem; color: rgba(255,255,255,.65); text-transform: uppercase; letter-spacing: .08em; }
+    .stat-pill.pill-pop { animation: pillPop .35s ease-out; }
+    @keyframes pillPop {
+      0%   { transform: scale(1);    box-shadow: 0 0 0 rgba(249,115,22,0); }
+      40%  { transform: scale(1.06); box-shadow: 0 0 18px rgba(249,115,22,.55); }
+      100% { transform: scale(1);    box-shadow: 0 0 0 rgba(249,115,22,0); }
+    }
 
     /* Hero visual */
     .hero-visual {
@@ -1800,12 +1806,12 @@
             <div class="lbl">Funds Tracked</div>
           </div>
           <div class="stat-pill">
-            <div class="val">SEBI</div>
-            <div class="lbl">Compliant Info</div>
+            <div class="val" data-count="14" data-suffix="%">0</div>
+            <div class="lbl">Track Record XIRR</div>
           </div>
           <div class="stat-pill">
-            <div class="val">Free</div>
-            <div class="lbl">All Calculators</div>
+            <div class="val" data-count="100" data-suffix="%">0</div>
+            <div class="lbl">Free Calculators</div>
           </div>
         </div>
       </div>
@@ -2886,6 +2892,11 @@
         ease: 'power2.out',
         onUpdate: function() {
           el.textContent = Math.round(obj.val).toLocaleString('en-IN') + suffix;
+        },
+        onComplete: function() {
+          var pill = el.closest('.stat-pill');
+          pill.classList.add('pill-pop');
+          setTimeout(function() { pill.classList.remove('pill-pop'); }, 350);
         }
       });
     });
