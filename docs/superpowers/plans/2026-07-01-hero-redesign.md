@@ -376,14 +376,18 @@ git commit -m "Hero stat pills: all three counted (2000+/14%/100%) with completi
 
 ---
 
-### Task 4: Extract shared candlestick module (`assets/candles.js`)
+### Task 4: Extract shared candlestick + counter modules (`assets/candles.js`, `assets/counter.js`)
 
 **Files:**
 - Create: `assets/candles.js`
-- Modify: `index.html:2732-2855` (remove the now-duplicated `initCandleCanvas` function and its call; load the shared script and call it with hero-specific options)
+- Create: `assets/counter.js`
+- Modify: `index.html:2732-2855` (remove the now-duplicated `initCandleCanvas` function and its call; load both shared scripts and call them with hero-specific options)
 
 **Interfaces:**
 - Produces: `window.initMaverickCandles(options)` — `options.canvasId` (string, required), `options.sizeToWindow` (bool, default `false`), `options.containerSelector` (string, used only when `sizeToWindow` is `false`, default `'.hero'`). Consumed by Tasks 5-9.
+- Produces: `window.initMaverickCounters(selector)` — `selector` (string, a CSS selector matching `.val[data-count]` elements). Reads `data-count` (int, required), `data-prefix` (string, optional), `data-suffix` (string, optional) off each matched element; animates each from 0 to `data-count` over 1.8s with a 0.6s delay via GSAP, then adds/removes a `.pill-pop` class on the closest `.stat-pill` ancestor as a completion flourish. No-ops if `gsap` is undefined. Consumed by Task 5.
+
+Note: this task adds the shared counter module in response to a pre-dispatch review finding — Task 3's inline counter script (below) and Task 5's original inline counter script were near-duplicates; extracting now avoids that duplication before Task 5 is implemented.
 
 - [ ] **Step 1: Create `assets/candles.js`**
 
@@ -493,12 +497,46 @@ git commit -m "Hero stat pills: all three counted (2000+/14%/100%) with completi
 })(window);
 ```
 
-- [ ] **Step 2: Point `index.html` at the shared script**
+- [ ] **Step 2: Create `assets/counter.js`**
+
+```javascript
+(function (global) {
+  function initMaverickCounters(selector) {
+    if (typeof gsap === 'undefined') return;
+    document.querySelectorAll(selector).forEach(function (el) {
+      var target = parseInt(el.dataset.count, 10);
+      var prefix = el.dataset.prefix || '';
+      var suffix = el.dataset.suffix || '';
+      var obj = { val: 0 };
+      gsap.to(obj, {
+        val: target,
+        duration: 1.8,
+        delay: 0.6,
+        ease: 'power2.out',
+        onUpdate: function () {
+          el.textContent = prefix + Math.round(obj.val).toLocaleString('en-IN') + suffix;
+        },
+        onComplete: function () {
+          var pill = el.closest('.stat-pill');
+          if (!pill) return;
+          pill.classList.add('pill-pop');
+          setTimeout(function () { pill.classList.remove('pill-pop'); }, 350);
+        }
+      });
+    });
+  }
+
+  global.initMaverickCounters = initMaverickCounters;
+})(window);
+```
+
+- [ ] **Step 3: Point `index.html` at both shared scripts**
 
 In `index.html`'s `<head>`, immediately after the existing GSAP `<script>` tag (`index.html:10`), add:
 
 ```html
   <script src="assets/candles.js" defer></script>
+  <script src="assets/counter.js" defer></script>
 ```
 
 Then replace the whole `initCandleCanvas` function body and its call site (the block produced by Task 1, now at approximately `index.html:2733-2855`) — i.e. delete the `function initCandleCanvas() { ... }` definition entirely, and change:
@@ -519,17 +557,49 @@ to:
   });
 ```
 
-(`initGSAP` and everything inside it stays exactly as Task 3 left it.)
+Also, inside `initGSAP()`, replace the counter block that Task 3 wrote:
 
-- [ ] **Step 3: Visual verification**
+```javascript
+    /* number counter on data-count elements */
+    document.querySelectorAll('.val[data-count]').forEach(function(el) {
+      var target = parseInt(el.dataset.count, 10);
+      var suffix = el.dataset.suffix || '';
+      var obj = { val: 0 };
+      gsap.to(obj, {
+        val: target,
+        duration: 1.8,
+        delay: 0.6,
+        ease: 'power2.out',
+        onUpdate: function() {
+          el.textContent = Math.round(obj.val).toLocaleString('en-IN') + suffix;
+        },
+        onComplete: function() {
+          var pill = el.closest('.stat-pill');
+          pill.classList.add('pill-pop');
+          setTimeout(function() { pill.classList.remove('pill-pop'); }, 350);
+        }
+      });
+    });
+```
 
-Reload the preview, confirm via `preview_console_logs` there's no "initMaverickCandles is not defined" or 404 on `assets/candles.js` (check `preview_network`), and `preview_screenshot` to confirm the hero candlestick animation looks identical to how it looked after Task 1 (same trend-clustering, same progressive formation) — this task is a pure refactor, not a visual change.
+with:
 
-- [ ] **Step 4: Commit**
+```javascript
+    /* number counter on data-count elements */
+    initMaverickCounters('.val[data-count]');
+```
+
+(the rest of `initGSAP` — pill entrance, hero-copy entrance, dashboard-card entrance — stays exactly as Task 3 left it.)
+
+- [ ] **Step 4: Visual verification**
+
+Reload the preview, confirm via `preview_console_logs` there's no "initMaverickCandles is not defined" / "initMaverickCounters is not defined" or 404s on `assets/candles.js` / `assets/counter.js` (check `preview_network`), and `preview_screenshot` + `preview_snapshot` to confirm the hero candlestick animation and the stat-pill counters (2,000+ / 14% / 100%, with the pop flourish) look identical to how they looked after Tasks 1 and 3 — this task is a pure refactor, not a visual change.
+
+- [ ] **Step 5: Commit**
 
 ```bash
-git add assets/candles.js index.html
-git commit -m "Extract candlestick canvas into shared assets/candles.js module"
+git add assets/candles.js assets/counter.js index.html
+git commit -m "Extract candlestick canvas and stat-pill counter into shared assets/ modules"
 ```
 
 ---
@@ -544,7 +614,7 @@ git commit -m "Extract candlestick canvas into shared assets/candles.js module"
 - Modify: `about.html` (add `.about-stats`/`.stat-pill` CSS block and the 4-pill markup inside `.about-hero-inner`)
 
 **Interfaces:**
-- Consumes: `window.initMaverickCandles` (Task 4), GSAP's `.val[data-count]` counter convention (same pattern as `index.html` Task 3, duplicated here since `about.html` is a separate standalone page with its own inline script).
+- Consumes: `window.initMaverickCandles` (Task 4) and `window.initMaverickCounters(selector)` (Task 4) — no duplicate counter script here, `about.html` calls the shared module.
 
 - [ ] **Step 1: Add font, GSAP, and shared-script tags to `<head>`**
 
@@ -556,6 +626,7 @@ After `about.html:7` (`<link rel="icon" ...>`), add:
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="assets/candles.js" defer></script>
+  <script src="assets/counter.js" defer></script>
 ```
 
 - [ ] **Step 2: Add `--font-mono` token**
@@ -665,27 +736,7 @@ with:
     </div>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-      if (typeof gsap === 'undefined') return;
-      document.querySelectorAll('.about-stats .val[data-count]').forEach(function(el) {
-        var target = parseInt(el.dataset.count, 10);
-        var prefix = el.dataset.prefix || '';
-        var suffix = el.dataset.suffix || '';
-        var obj = { val: 0 };
-        gsap.to(obj, {
-          val: target,
-          duration: 1.8,
-          delay: 0.6,
-          ease: 'power2.out',
-          onUpdate: function() {
-            el.textContent = prefix + Math.round(obj.val).toLocaleString('en-IN') + suffix;
-          },
-          onComplete: function() {
-            var pill = el.closest('.stat-pill');
-            pill.classList.add('pill-pop');
-            setTimeout(function() { pill.classList.remove('pill-pop'); }, 350);
-          }
-        });
-      });
+      initMaverickCounters('.about-stats .val[data-count]');
     });
     </script>
 ```
