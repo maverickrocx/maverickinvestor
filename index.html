@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="assets/candles.js" defer></script>
+  <script src="assets/counter.js" defer></script>
   <style>
     /* ============================================================
        DESIGN TOKENS
@@ -2770,107 +2772,6 @@
 <!-- Hero candlestick canvas + GSAP animations -->
 <script>
 (function() {
-  /* ── Candlestick background ── */
-  function initCandleCanvas() {
-    var canvas = document.getElementById('hero-candles');
-    if (!canvas) return;
-    var hero = document.querySelector('.hero');
-    canvas.width  = hero.offsetWidth;
-    canvas.height = hero.offsetHeight;
-    var ctx = canvas.getContext('2d');
-
-    var cols = Math.ceil(canvas.width / 28);
-    var candles = [];
-    var globalTrend = 0;
-    var trendTimer = 0;
-
-    function updateTrend() {
-      trendTimer++;
-      if (trendTimer > 40 + Math.random() * 60) {
-        globalTrend += (Math.random() - 0.5) * 0.6;
-        globalTrend = Math.max(-0.8, Math.min(0.8, globalTrend));
-        trendTimer = 0;
-      }
-    }
-
-    for (var i = 0; i < cols; i++) {
-      candles.push(makeCandle(i, canvas.height));
-    }
-
-    function makeCandle(col, h) {
-      var isUp   = Math.random() > (0.5 - globalTrend * 0.35);
-      var bodyH  = 10 + Math.random() * 38;
-      var bodyY  = 20 + Math.random() * (h - bodyH - 40);
-      return {
-        x: col * 28 + 6,
-        bodyY: bodyY,
-        targetBodyH: bodyH,
-        bodyH: 0,
-        wickTop: bodyY - 4 - Math.random() * 14,
-        wickBot: bodyY + bodyH + 4 + Math.random() * 14,
-        isUp: isUp,
-        alpha: 0,
-        targetAlpha: 0.55 + Math.random() * 0.45,
-        speed: 0.012 + Math.random() * 0.018,
-        delay: Math.random() * 120,
-        timer: 0,
-        formTimer: 0,
-        formDuration: 12 + Math.random() * 10
-      };
-    }
-
-    var frame = 0;
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      frame++;
-      updateTrend();
-      candles.forEach(function(c, idx) {
-        c.timer++;
-        if (c.timer < c.delay) return;
-        if (c.alpha < c.targetAlpha) c.alpha = Math.min(c.targetAlpha, c.alpha + c.speed);
-        if (c.bodyH < c.targetBodyH) {
-          c.formTimer++;
-          c.bodyH = Math.min(c.targetBodyH, (c.formTimer / c.formDuration) * c.targetBodyH);
-        }
-
-        var color = c.isUp ? 'rgba(74,222,128,' + c.alpha + ')' : 'rgba(248,113,113,' + c.alpha + ')';
-        /* wick */
-        ctx.beginPath();
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 1.5;
-        ctx.moveTo(c.x + 5, c.wickTop);
-        ctx.lineTo(c.x + 5, c.wickBot);
-        ctx.stroke();
-        /* body (grows in from bodyY as it forms) */
-        ctx.fillStyle = color;
-        ctx.fillRect(c.x, c.bodyY, 10, c.bodyH);
-
-        /* slowly drift upward and reset */
-        c.bodyY -= 0.12;
-        c.wickTop -= 0.12;
-        c.wickBot -= 0.12;
-        if (c.bodyY + c.targetBodyH < -20) {
-          var nc = makeCandle(idx, canvas.height);
-          nc.bodyY = canvas.height + 10;
-          nc.wickTop = nc.bodyY - 4 - Math.random() * 14;
-          nc.wickBot = nc.bodyY + nc.targetBodyH + 4 + Math.random() * 14;
-          nc.alpha = nc.targetAlpha;
-          nc.bodyH = 0;
-          nc.formTimer = 0;
-          nc.delay = 0;
-          candles[idx] = nc;
-        }
-      });
-      requestAnimationFrame(draw);
-    }
-    draw();
-
-    window.addEventListener('resize', function() {
-      canvas.width  = hero.offsetWidth;
-      canvas.height = hero.offsetHeight;
-    });
-  }
-
   /* ── GSAP: counter + pill entrance ── */
   function initGSAP() {
     if (typeof gsap === 'undefined') { setTimeout(initGSAP, 200); return; }
@@ -2881,25 +2782,7 @@
     });
 
     /* number counter on data-count elements */
-    document.querySelectorAll('.val[data-count]').forEach(function(el) {
-      var target = parseInt(el.dataset.count, 10);
-      var suffix = el.dataset.suffix || '';
-      var obj = { val: 0 };
-      gsap.to(obj, {
-        val: target,
-        duration: 1.8,
-        delay: 0.6,
-        ease: 'power2.out',
-        onUpdate: function() {
-          el.textContent = Math.round(obj.val).toLocaleString('en-IN') + suffix;
-        },
-        onComplete: function() {
-          var pill = el.closest('.stat-pill');
-          pill.classList.add('pill-pop');
-          setTimeout(function() { pill.classList.remove('pill-pop'); }, 350);
-        }
-      });
-    });
+    initMaverickCounters('.val[data-count]');
 
     /* hero copy entrance */
     gsap.from('.hero-copy > *', {
@@ -2913,7 +2796,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    initCandleCanvas();
+    initMaverickCandles({ canvasId: 'hero-candles', containerSelector: '.hero', sizeToWindow: false });
     initGSAP();
   });
 })();
