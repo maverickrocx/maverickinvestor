@@ -347,18 +347,50 @@
       align-items: center;
     }
     .dashboard-card {
-      background: rgba(15,23,42,.55);
+      position: relative;
+      z-index: 1;
+      background:
+        linear-gradient(rgba(15,23,42,.55), rgba(15,23,42,.55)) padding-box,
+        conic-gradient(from 180deg, rgba(249,115,22,.6), rgba(255,255,255,0) 35%, rgba(74,222,128,.5) 65%, rgba(255,255,255,0) 100%) border-box;
       backdrop-filter: blur(24px) saturate(180%);
       -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border: 1px solid rgba(255,255,255,.12);
-      border-top: 1px solid rgba(255,255,255,.22);
-      border-left: 1px solid rgba(255,255,255,.16);
+      border: 1px solid transparent;
       box-shadow: 0 8px 32px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);
       border-radius: var(--radius);
       padding: 1.5rem;
       width: 100%;
       max-width: 380px;
       color: var(--white);
+      overflow: hidden;
+    }
+    .dashboard-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      transform: translate(-10px, 10px);
+      background: rgba(15,23,42,.35);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: var(--radius);
+      z-index: -1;
+    }
+    .dashboard-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -60%;
+      width: 40%; height: 100%;
+      background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,.16) 50%, transparent 100%);
+      transform: skewX(-20deg);
+      pointer-events: none;
+      opacity: 0;
+      animation: dcSheen 1.4s ease-out 1s 1 forwards;
+    }
+    @keyframes dcSheen {
+      0%   { left: -60%; opacity: 0; }
+      15%  { opacity: 1; }
+      60%  { opacity: 1; }
+      100% { left: 130%; opacity: 0; }
     }
     .dc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
     .dc-title { font-size: .85rem; font-weight: 700; opacity: .7; }
