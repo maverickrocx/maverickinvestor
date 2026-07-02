@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="20" fill="#e85d04"/>
-  <text x="50" y="72" text-anchor="middle" font-size="60" font-family="sans-serif" fill="white">M</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="8" fill="#f97316"/>
+  <polygon points="7,23 13,17 16,20 10,26" fill="white" opacity="0.5"/>
+  <polygon points="12,18 19,10 22,13 15,21" fill="white" opacity="0.75"/>
+  <polygon points="17,12 23,5 26,8 20,15" fill="white"/>
 </svg>
