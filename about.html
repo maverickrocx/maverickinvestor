@@ -47,7 +47,7 @@
     }
     /* Fix elements that assumed light backgrounds */
     html { background: #0f172a; }
-    body { color: #e2e8f0; background: transparent !important; padding-top: 64px; }
+    body { color: #e2e8f0; background: transparent !important; }
     .topbar { background: rgba(15,23,42,.95) !important; border-bottom: 1px solid rgba(255,255,255,.08); position: sticky !important; top: 0 !important; z-index: 1000 !important; }
     .nav-links a { color: #cbd5e1 !important; }
     .nav-links a:hover, .nav-links a.nav-active { color: #f97316 !important; }
@@ -91,9 +91,6 @@
     body { font-family: var(--font); background: var(--cream); color: var(--dark); line-height: 1.6; }
     a { text-decoration: none; color: inherit; }
     ul { list-style: none; }
-
-    /* ── NAV ── */
-    .topbar { position: fixed; top: 0; left:0; right:0; z-index: 100; background: rgba(15,23,42,.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,.08); }
 
     /* ── NAV LAYOUT: logo left | links center | right spacer ── */
     .topbar-inner {
@@ -287,6 +284,10 @@ document.addEventListener('DOMContentLoaded', function() {
     <script>
     document.addEventListener('DOMContentLoaded', function() {
       initMaverickCounters('.about-stats .val[data-count]');
+      if (typeof gsap !== 'undefined') {
+        gsap.from('.founder-photo-lg', { opacity: 0, y: -20, scale: .92, duration: .8, ease: 'power2.out' });
+        gsap.from('.about-hero-inner > *:not(.founder-photo-lg)', { opacity: 0, y: 20, stagger: .08, duration: .6, ease: 'power2.out', delay: .3 });
+      }
     });
     </script>
 
