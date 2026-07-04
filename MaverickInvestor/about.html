@@ -108,7 +108,9 @@
     .nav-active { color: var(--orange) !important; }
     .nav-cta { display: none; }
     .logo { display: flex; align-items: center; gap: .6rem; font-weight: 800; font-size: 1.15rem; color: var(--white); }
-    .logo-icon { width: 34px; height: 34px; background: var(--orange); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .logo-icon { width: 54px; height: 54px; background: #0f172a; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .logo-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .logo-mav { background: linear-gradient(135deg, #fed7aa 0%, #f97316 45%, #c2410c 75%, #fdba74 100%); -webkit-background-clip: text; background-clip: text; color: transparent; text-transform: uppercase; }
     /* ── NAV TAGLINE (right side) ── */
     .nav-tagline { text-align: right; font-size: .72rem; font-weight: 700; line-height: 1.3; letter-spacing: .03em; text-transform: uppercase; white-space: nowrap; }
     .nav-tagline .t-maverick { color: var(--orange); }
@@ -226,6 +228,14 @@
       .about-hero { padding: 3.5rem 1.25rem 3rem; }
       .hero-stats { gap: 1.5rem; }
     }
+    @media (max-height: 820px) {
+      .about-hero          { padding: 1.8rem 1.5rem 1.6rem; }
+      .founder-photo-lg    { width: 110px; height: 110px; margin: 0 auto .6rem; }
+      .about-hero .tagline { margin-bottom: .6rem; }
+      .about-hero-inner p:not(.tagline) { margin: .6rem auto 0 !important; }
+      .about-stats         { margin-top: 1rem; }
+      .hero-social         { margin-top: 1rem; }
+    }
     @media(max-width:480px) {
       .footer-grid { grid-template-columns: 1fr; }
       .timeline { padding-left: 1.5rem; }
@@ -247,8 +257,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <nav class="topbar">
   <div class="topbar-inner">
     <a href="index.html" class="logo">
-      <div class="logo-icon"><img src="assets/logo.png" alt="Maverick Investor" width="36" height="36" style="border-radius:9px;object-fit:cover;display:block;"></div>
-      Maverick Investor
+      <div class="logo-icon"><img src="assets/logo.png" alt="Maverick Investor"></div>
+      <span class="logo-mav">Maverick</span> Investor
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
@@ -442,7 +452,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="footer-grid">
     <div class="footer-brand">
       <a href="index.html" class="logo" style="color:#e2e8f0;text-decoration:none;">
-        <div class="logo-icon"><img src="assets/logo.png" alt="Maverick Investor" width="36" height="36" style="border-radius:9px;object-fit:cover;display:block;"></div> Maverick Investor
+        <div class="logo-icon"><img src="assets/logo.png" alt="Maverick Investor"></div> <span class="logo-mav">Maverick</span> Investor
       </a>
       <p>Empowering Indian investors with unbiased, research-backed guidance on mutual funds, insurance, and retirement planning.</p>
       <div class="sebi-badge">🏛️ SEBI Investor Education Compliant</div>

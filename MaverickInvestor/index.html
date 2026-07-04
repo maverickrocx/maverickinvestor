@@ -199,11 +199,21 @@
       color: var(--white);
     }
     .logo-icon {
-      width: 36px; height: 36px;
-      background: var(--orange);
-      border-radius: 9px;
+      width: 54px; height: 54px;
+      background: #0f172a;
+      border-radius: 12px;
+      overflow: hidden;
       display: flex; align-items: center; justify-content: center;
       font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .logo-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .logo-mav {
+      background: linear-gradient(135deg, #fed7aa 0%, #f97316 45%, #c2410c 75%, #fdba74 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-transform: uppercase;
     }
     .nav-links {
       display: flex;
@@ -225,7 +235,6 @@
       padding: .45rem 0;
       overflow: hidden;
       border-bottom: 1px solid rgba(255,255,255,.06);
-      margin-top: 64px;
     }
     .ticker-track {
       display: flex;
@@ -297,7 +306,7 @@
     @keyframes spinSlow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
     .hero-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
       gap: 3rem;
       align-items: center;
       position: relative;
@@ -424,6 +433,7 @@
     /* Floating badges */
     .float-badge {
       position: absolute;
+      z-index: 2;
       background: var(--white);
       border-radius: 12px;
       padding: .65rem 1rem;
@@ -1267,7 +1277,7 @@
     /* Portfolio card + calc stack sit side-by-side inside hero-visual */
     .hero-cards-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
       gap: 1.25rem;
       align-items: stretch;
       width: 100%;
@@ -1403,13 +1413,23 @@
     /* ============================================================
        RESPONSIVE — fluid across all display sizes
        XL Desktop  ≥ 1600px
-       Desktop      1280 – 1599px  (no changes needed — base styles)
-       13" Laptop   1100 – 1279px
+       13/14" Laptop 1100 – 1599px  (covers common 14" laptop widths)
        11" Laptop    900 – 1099px
        Tablet        600 –  899px
        Mobile        480 –  599px
        Small Mobile      < 480px
     ============================================================ */
+
+    /* ── Short viewport (14" laptops, ~768–900px tall) — compact hero so it doesn't clip ── */
+    @media (max-height: 820px) {
+      .hero            { padding: 1.8rem 0 1.4rem; }
+      .hero-label      { margin-bottom: .4rem; }
+      .hero h1         { margin-bottom: .75rem; }
+      .hero p          { margin-bottom: 1.1rem; }
+      .hero-stats      { margin-top: 1.25rem; gap: 1rem; }
+      .stat-pill       { padding: .55rem 1rem; }
+      .stat-pill .val  { font-size: 1.2rem; }
+    }
 
     /* ── XL Desktop (≥ 1600px) — more breathing room ──────── */
     @media (min-width: 1600px) {
@@ -1421,8 +1441,8 @@
       section             { padding: 3.6rem 0; }
     }
 
-    /* ── 13" Laptop (1100 – 1279px) — compact but full layout ─ */
-    @media (max-width: 1279px) {
+    /* ── 13/14" Laptop (1100 – 1599px) — compact but full layout ─ */
+    @media (max-width: 1599px) {
       .container          { padding: 0 2rem; }
       .hero-grid          { gap: 2rem; }
       .hero               { padding: 2.7rem 0 2.1rem; }
@@ -1714,8 +1734,8 @@
 <nav class="topbar">
   <div class="topbar-inner">
     <a href="index.html" class="logo">
-      <div class="logo-icon"><span class="icon-svg"><img src="assets/logo.png" alt="Maverick Investor" width="36" height="36" style="border-radius:9px;object-fit:cover;display:block;"></span></div>
-      Maverick Investor
+      <div class="logo-icon"><img src="assets/logo.png" alt="Maverick Investor"></div>
+      <span class="logo-mav">Maverick</span> Investor
     </a>
     <ul class="nav-links">
       <li><a href="index.html" class="nav-active">Home</a></li>
@@ -2223,7 +2243,7 @@
   <div class="footer-grid">
     <div class="footer-brand">
       <a href="index.html" class="logo" style="color:#e2e8f0;text-decoration:none;">
-        <div class="logo-icon"><span class="icon-svg"><img src="assets/logo.png" alt="Maverick Investor" width="36" height="36" style="border-radius:9px;object-fit:cover;display:block;"></span></div> Maverick Investor
+        <div class="logo-icon"><img src="assets/logo.png" alt="Maverick Investor"></div> <span class="logo-mav">Maverick</span> Investor
       </a>
       <p>Empowering Indian investors with unbiased, research-backed guidance on mutual funds, insurance, and retirement planning.</p>
       <div class="sebi-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> SEBI Investor Education Compliant</div>

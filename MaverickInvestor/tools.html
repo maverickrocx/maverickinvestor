@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Investment Basics — Maverick Investor</title>
+  <title>Tools & Goals — Maverick Investor</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <script src="assets/candles.js" defer></script>
     <style>
     /* ============================================================
        DESIGN TOKENS
@@ -53,12 +52,8 @@
     footer { background: #080f1e !important; color: #94a3b8 !important; }
     footer a { color: #94a3b8 !important; }
     footer a:hover { color: #f97316 !important; }
-    .tools-section, .app-section, .section, main {
-      background: transparent !important;
-      background-color: transparent !important;
-      background-image: none !important;
-    }
-    /* Page-hero: dark contained card matching index layout */
+    .float-badge { background: rgba(15,23,42,.88) !important; color: #e2e8f0 !important; border: 1px solid rgba(255,255,255,.18) !important; }
+    /* Page-hero: dark contained card aligned with section width (matches index hero) */
     .page-hero {
       background: linear-gradient(135deg, rgba(30,41,59,.98) 0%, rgba(249,115,22,.09) 55%, rgba(30,41,59,.98) 100%) !important;
       border-radius: 18px !important;
@@ -71,11 +66,27 @@
     .page-hero::before { display: none !important; }
     .page-hero h1 { color: #e2e8f0 !important; }
     .page-hero p  { color: rgba(226,232,240,.75) !important; }
+    /* Sections: strip light backgrounds (belt+suspenders: both shorthand and longhand) */
+    .tools-section, .app-section, .section, main {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+    .goal-tile { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; color: #e2e8f0 !important; }
+    .goal-tile .gt-name { color: #e2e8f0 !important; }
+    .goal-tile .gt-amount { color: #f97316 !important; }
+    .tab-btn { background: #1e293b !important; color: #94a3b8 !important; border-color: rgba(255,255,255,.12) !important; }
+    .tab-btn.active { background: #f97316 !important; color: #fff !important; border-color: #f97316 !important; }
+    .fund-table-wrap { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; }
+    .ins-type-card, .ins-calc-card { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; color: #e2e8f0 !important; }
     .why-card { background: #1e293b !important; border-color: rgba(255,255,255,.1) !important; }
     .why-card h3, .why-card p { color: #e2e8f0 !important; }
     .aqb { background: #263348 !important; color: #e2e8f0 !important; }
+    .app-fund-row { background: #263348 !important; border-color: rgba(255,255,255,.08) !important; }
+    .app-fund-row span { color: #e2e8f0 !important; }
     .input-field { background: #0f172a !important; color: #e2e8f0 !important; border-color: rgba(255,255,255,.15) !important; }
     .section-title, .section-sub { color: #e2e8f0 !important; }
+    .app-card-label { color: #94a3b8 !important; }
     input, select, textarea { background: #0f172a !important; color: #e2e8f0 !important; border-color: rgba(255,255,255,.15) !important; }
     table { color: #e2e8f0; }
     th { background: rgba(249,115,22,.15) !important; color: #f97316 !important; }
@@ -185,12 +196,16 @@
       color: var(--white);
     }
     .logo-icon {
-      width: 36px; height: 36px;
-      background: var(--orange);
-      border-radius: 9px;
+      width: 54px; height: 54px;
+      background: #0f172a;
+      border-radius: 12px;
+      overflow: hidden;
       display: flex; align-items: center; justify-content: center;
       font-size: 1.1rem;
+      flex-shrink: 0;
     }
+    .logo-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .logo-mav { background: linear-gradient(135deg, #fed7aa 0%, #f97316 45%, #c2410c 75%, #fdba74 100%); -webkit-background-clip: text; background-clip: text; color: transparent; text-transform: uppercase; }
     .nav-links {
       display: flex;
       gap: 1.75rem;
@@ -1604,20 +1619,14 @@
     .page-hero > * { position: relative; z-index: 1; }
     .page-hero h1 { font-size: clamp(1.8rem,4vw,2.4rem); font-weight: 800; margin-bottom: .5rem; }
     .page-hero p { color: rgba(255,255,255,.8); font-size: 1rem; max-width: 520px; margin: 0 auto; }
-    .learn-wrap { background: var(--cream); padding: 4rem 1.5rem; }
-    /* === FIX: Learn accordion — dark cards + orange text (high contrast, crisp) === */
-    .accordion       { border-color:rgba(255,255,255,.10) !important; }
-    .accordion-hdr   { background:#1e293b !important; color:var(--orange) !important; }
-    .accordion-hdr:hover { background:#243247 !important; }
-    .accordion-body  { background:#16212f !important; border-top-color:rgba(255,255,255,.08) !important; color:#e2e8f0 !important; }
-    .accordion-body strong { color:var(--orange) !important; }
-</style>
+  </style>
+  <script src="assets/candles.js" defer></script>
 </head>
 <body>
 
 <style>nav,main,.topbar,.hero,.section,footer,.hero-section,.about-hero,.page-hero,.step,#app,.container,.topbar-inner{position:relative;z-index:1;}</style>
 
-<!-- Candlestick background (shared module) -->
+<!-- Candlestick background -->
 <canvas id="mi-bg-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.55"></canvas>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -1628,15 +1637,15 @@ document.addEventListener('DOMContentLoaded', function() {
 <nav class="topbar">
   <div class="topbar-inner">
     <a href="index.html" class="logo">
-      <div class="logo-icon"><img src="assets/logo.png" alt="Maverick Investor" width="36" height="36" style="border-radius:9px;object-fit:cover;display:block;"></div>
-      Maverick Investor
+      <div class="logo-icon"><img src="assets/logo.png" alt="Maverick Investor"></div>
+      <span class="logo-mav">Maverick</span> Investor
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="tools.html">Tools &amp; Goals</a></li>
+      <li><a href="tools.html" class="nav-active">Tools &amp; Goals</a></li>
       <li><a href="mf-advisor.html">MF Advisor</a></li>
       <li><a href="stock-screener.html">Stock Screener</a></li>
-      <li><a href="learn.html" class="nav-active">Learn</a></li>
+      <li><a href="learn.html">Learn</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
     <div class="nav-tagline">
@@ -1647,197 +1656,274 @@ document.addEventListener('DOMContentLoaded', function() {
 </nav>
 
 <div class="page-hero">
-  <h1>📚 Investment Basics</h1>
-  <p>Plain-language guides drawn from AMFI and IRDAI — everything you need before your first investment.</p>
+  <h1>📥 Tools & Goal Calculators</h1>
+  <p>Free downloadable planners and live goal calculators — built for Indian investors.</p>
 </div>
 
-<div class="learn-wrap">
-  <!-- ============================================================
-     LEARN — MF BASICS + INSURANCE BASICS
+<!-- ============================================================
+     DOWNLOADABLE TOOLS
 ============================================================ -->
-<div class="container" style="max-width:860px;">
+<section class="tools-section" id="tools">
+  <div class="container">
     <div class="center">
-      <div class="section-label">Investor Education</div>
-      <h2 class="section-title">Investment Basics</h2>
-      <p class="section-sub">Plain-language guides drawn from AMFI and IRDAI resources — everything you need before making your first investment.</p>
+      <div class="section-label">Free Downloads</div>
+      <h2 class="section-title">Tools Built for Your Financial Journey</h2>
+      <p class="section-sub">Downloadable planners, calculators, and questionnaires — designed for Indian investors, usable offline.</p>
     </div>
-    <div class="learn-tabs">
-      <button class="learn-tab active" onclick="switchLearnTab('mf', this)">📊 Mutual Fund Basics</button>
-      <button class="learn-tab" onclick="switchLearnTab('ins', this)">🛡️ Insurance Basics</button>
-      <button class="learn-tab" onclick="switchLearnTab('nps', this)">🏦 NPS Guide</button>
-    </div>
+    <div class="tools-grid">
 
-    <!-- MF PANEL -->
-    <div id="learnMf" class="learn-panel active">
-      <div class="accordion">
-        <button class="accordion-hdr" onclick="toggleAcc(this)">What is a Mutual Fund? <span class="acc-icon">+</span></button>
-        <div class="accordion-body">
-          A mutual fund pools money from many investors and invests it in a diversified portfolio of stocks, bonds, or other securities — managed by a professional fund manager. Each investor holds units proportional to their investment. As the portfolio value rises or falls, so does the NAV (Net Asset Value) of each unit.
-          <br><br><strong>Key benefit:</strong> You get diversification and professional management even with small amounts like ₹500/month via a SIP.
-          <span class="source-badge">Source: AMFI</span>
-        </div>
+      <div class="tool-card">
+        <span class="tool-tag tag-free">FREE</span>
+        <div class="tool-icon">🏖️</div>
+        <h3>Retirement Corpus Planner</h3>
+        <p>Calculate how much you need to retire comfortably in India. Accounts for inflation, EPF, PPF, NPS, and SWP strategy.</p>
+        <a href="Retirement_Planner_Maverick.xlsx" download class="tool-dl-btn">⬇ Download Excel Planner</a>
       </div>
-      <div class="accordion">
-        <button class="accordion-hdr" onclick="toggleAcc(this)">Types of Mutual Funds <span class="acc-icon">+</span></button>
-        <div class="accordion-body">
-          <strong>Equity Funds</strong> — Invest primarily in stocks. Higher risk, higher long-term return potential. Best for 5+ year horizons.<br><br>
-          <strong>Debt Funds</strong> — Invest in bonds and fixed-income instruments. Lower risk, stable returns. Suitable for 1-3 year goals.<br><br>
-          <strong>Hybrid Funds</strong> — Mix of equity and debt. Moderate risk. Good for first-time investors.<br><br>
-          <strong>Index Funds</strong> — Passively track an index (e.g. Nifty 50). Very low expense ratios (&lt;0.1%). Recommended for most long-term investors.
-          <span class="source-badge">Source: AMFI</span>
-        </div>
-      </div>
-      <div class="accordion">
-        <button class="accordion-hdr" onclick="toggleAcc(this)">SIP vs Lump Sum <span class="acc-icon">+</span></button>
-        <div class="accordion-body">
-          <strong>SIP (Systematic Investment Plan)</strong> — Invest a fixed amount monthly. Averages out purchase cost over time (rupee cost averaging). Ideal for salaried investors. Minimum: ₹500/month.<br><br>
-          <strong>Lump Sum</strong> — Invest a large amount at once. Works well when markets are low but requires timing judgment.<br><br>
-          <strong>Our recommendation:</strong> Start with SIP for equity funds. Use lump sum for debt funds when you have surplus cash.
-          <span class="source-badge">Source: AMFI</span>
-        </div>
-      </div>
-      <div class="accordion">
-        <button class="accordion-hdr" onclick="toggleAcc(this)">Direct vs Regular Plans <span class="acc-icon">+</span></button>
-        <div class="accordion-body">
-          <strong>Regular Plans</strong> — Bought through a distributor/broker. The fund pays a trail commission (0.5–1.5%) to the distributor from your fund's assets every year, resulting in a higher expense ratio.<br><br>
-          <strong>Direct Plans</strong> — Bought directly from the AMC (via AMFI or platforms like MFCentral, Kuvera). No commission → lower expense ratio → higher returns over time.<br><br>
-          <strong>The difference over 20 years:</strong> On ₹10,000/month SIP at 12% CAGR, direct plan can give ~₹5–8L more than regular plan.
-          <span class="source-badge">Source: SEBI / AMFI</span>
-        </div>
-      </div>
-      <div class="accordion">
-        <button class="accordion-hdr" onclick="toggleAcc(this)">Understanding Expense Ratio &amp; NAV <span class="acc-icon">+</span></button>
-        <div class="accordion-body">
-          <strong>Expense Ratio (ER)</strong> — Annual fee charged by the AMC as a % of your investment. Lower is better. Index funds: 0.05–0.2%. Actively managed: 0.5–1.5%.<br><br>
-          <strong>NAV (Net Asset Value)</strong> — Price per unit of the fund, calculated daily after markets close. NAV = (Total Assets − Liabilities) ÷ Total Units.<br><br>
-          A higher NAV does not mean the fund is expensive — it simply reflects the fund's history. Always compare CAGR and ER, not NAV price.
-          <span class="source-badge">Source: AMFI</span>
-        </div>
-      </div>    </div>
 
-    <!-- INSURANCE PANEL -->
-    <div id="learnIns" class="learn-panel">
-      <div class="accordion">
-        <button class="accordion-hdr" onclick="toggleAcc(this)">Why Do You Need Insurance? <span class="acc-icon">+</span></button>
-        <div class="accordion-body">
-          Insurance protects you and your family from financial loss due to unexpected events — death, illness, accident, or property damage. It should be treated as <strong>protection, not investment</strong>. Avoid ULIPs and endowment plans that mix both; they typically underperform both pure term insurance + mutual funds.
-          <span class="source-badge">Source: IRDAI</span>
-        </div>
+      <div class="tool-card orange">
+        <span class="tool-tag tag-free">FREE</span>
+        <div class="tool-icon" style="background:rgba(244,124,32,.1)">🛡️</div>
+        <h3>Insurance Need Calculator</h3>
+        <p>Find your ideal term life cover, health insurance sum assured, and critical illness cover — based on your income, liabilities & family size.</p>
+        <a href="Insurance_Calculator_Maverick.xlsx" download class="tool-dl-btn">⬇ Download Excel Calculator</a>
       </div>
-      <div class="accordion">
-        <button class="accordion-hdr" onclick="toggleAcc(this)">Term Life Insurance <span class="acc-icon">+</span></button>
-        <div class="accordion-body">
-          A pure protection plan — pays a lump sum (sum assured) to nominees if the policyholder dies during the policy term. No maturity benefit if you survive.<br><br>
-          <strong>How much cover?</strong> IRDAI recommends at least 10–15× your annual income. Also factor in outstanding loans and future family expenses.<br><br>
-          <strong>When to buy:</strong> As early as possible — premiums are lowest when you're young and healthy. A ₹1 crore cover at age 28 costs ~₹700–1,000/month.
-          <span class="source-badge">Source: IRDAI</span>
-        </div>
+
+      <div class="tool-card">
+        <span class="tool-tag tag-free">FREE</span>
+        <div class="tool-icon">📊</div>
+        <h3>Risk Tolerance Questionnaire</h3>
+        <p>A 10-question assessment that maps you to one of 5 investor profiles — conservative to aggressive — with recommended asset allocation.</p>
+        <a href="Risk_Questionnaire_Maverick.pdf" download class="tool-dl-btn">⬇ Download PDF</a>
       </div>
-      <div class="accordion">
-        <button class="accordion-hdr" onclick="toggleAcc(this)">Health Insurance <span class="acc-icon">+</span></button>
-        <div class="accordion-body">
-          Covers hospitalisation, surgery, and treatment costs. Without it, a single hospitalisation can wipe out years of savings.<br><br>
-          <strong>Minimum cover:</strong> ₹5L for individuals, ₹10–15L for families in metro cities (medical inflation runs at 10–12%/year).<br><br>
-          <strong>Key features to check:</strong> Pre-existing disease waiting period, room rent limit, co-payment clause, restoration benefit, and lifetime renewability.<br><br>
-          <strong>Tip:</strong> Buy a separate individual policy — don't rely solely on employer-provided group health cover.
-          <span class="source-badge">Source: IRDAI</span>
-        </div>
-      </div>
-      <div class="accordion">
-        <button class="accordion-hdr" onclick="toggleAcc(this)">Critical Illness &amp; Accident Cover <span class="acc-icon">+</span></button>
-        <div class="accordion-body">
-          <strong>Critical Illness Cover</strong> — Pays a lump sum on diagnosis of serious illnesses like cancer, heart attack, or stroke. The payout can be used for treatment, income replacement, or debt repayment — unlike health insurance which only reimburses hospital bills.<br><br>
-          <strong>Personal Accident Cover</strong> — Covers death or disability due to accidents. Very affordable (₹500–2,000/year for ₹50L cover). Especially important for sole breadwinners.
-          <span class="source-badge">Source: IRDAI</span>
-        </div>
-      </div>
-      <div class="accordion">
-        <button class="accordion-hdr" onclick="toggleAcc(this)">What to Avoid <span class="acc-icon">+</span></button>
-        <div class="accordion-body">
-          <strong>ULIPs (Unit-Linked Insurance Plans)</strong> — Mix insurance with investment. High charges in early years (up to 5–6% of premium), lower transparency, poor returns compared to direct mutual funds + term plan.<br><br>
-          <strong>Endowment &amp; Money-Back Plans</strong> — Promise a maturity payout but returns are typically 4–5% — lower than FDs and far below equity mutual funds.<br><br>
-          <strong>Rule of thumb:</strong> Keep insurance and investment separate. Buy the cheapest term plan, then invest the rest in mutual funds.
-          <span class="source-badge">Source: IRDAI / SEBI</span>
-        </div>
+
+      <div class="tool-card orange">
+        <span class="tool-tag tag-free">FREE</span>
+        <div class="tool-icon" style="background:rgba(244,124,32,.1)">💰</div>
+        <h3>SIP Goal Tracker Sheet</h3>
+        <p>Track multiple SIPs, visualize your goal progress, simulate step-up SIPs, and project your XIRR — all in one spreadsheet.</p>
+        <a href="SIP_Tracker_Maverick.xlsx" download class="tool-dl-btn">⬇ Download Excel Sheet</a>
       </div>
 
     </div>
 
-    <!-- NPS PANEL -->
-    <div id="learnNps" class="learn-panel">
-      <div class="accordion">
-        <button class="accordion-hdr" onclick="toggleAcc(this)">What is the National Pension System (NPS)? <span class="acc-icon">+</span></button>
-        <div class="accordion-body">
-          The National Pension System (NPS) is a voluntary, long-term retirement savings scheme regulated by the <strong>Pension Fund Regulatory and Development Authority (PFRDA)</strong>. Launched by the Government of India in 2004 (for government employees) and opened to all citizens in 2009, NPS allows you to build a retirement corpus through regular contributions invested across equity, corporate bonds, government securities, and alternative assets.
-          <br><br>
-          On retirement at 60, you can withdraw up to <strong>60% as a lump sum</strong>; the remaining 40% must be used to purchase an annuity (pension).
-          <br><br>
-          <strong>Who should consider NPS?</strong> Salaried individuals looking to build a dedicated retirement corpus, self-employed individuals seeking structured retirement savings, and anyone wanting a low-cost, long-term pension vehicle.
-          <span class="source-badge">Source: PFRDA / npstrust.org.in</span>
+    <!-- ── Goal Calculators ─────────────────────────────── -->
+    <div class="goals-banner">
+      <div class="gb-icon">🎯</div>
+      <div class="gb-text">
+        <h3>Goal Calculators</h3>
+        <p>Inflation-adjusted SIP planner for every life milestone — education, marriage, car, home, travel</p>
+      </div>
+      <a href="Goals_Planner_Maverick.xlsx" download class="gb-dl-link">⬇ Download Full Goals Planner</a>
+    </div>
+
+    <div class="goal-tiles-grid">
+
+      <!-- Education -->
+      <div class="goal-tile">
+        <div class="gt-header"><span class="gt-icon">🎓</span><span class="gt-name">Education</span></div>
+        <div class="gt-inp-row">
+          <label>Cost today (₹)</label>
+          <input type="number" class="gt-number" id="g2-eduCost" value="2500000" oninput="calcGoal('edu')">
+        </div>
+        <div class="gt-inp-row">
+          <label>Years away · <span class="gt-yrs-val" id="g2-eduYrsVal">10 yrs</span></label>
+          <input type="range" class="gt-slider" min="1" max="25" value="10" id="g2-eduYrs" oninput="calcGoal('edu')">
+        </div>
+        <div class="gt-inp-row">
+          <label>Expected return · <span id="g2-eduRetLbl">12%</span></label>
+          <input type="range" class="gt-slider" min="6" max="18" step="0.5" value="12" id="g2-eduRet" oninput="calcGoal('edu')">
+        </div>
+        <div class="gt-result">
+          <div class="gt-result-row"><span>Future cost (10% inf.)</span><strong id="g2-eduFuture">—</strong></div>
+          <div class="gt-result-row"><span>Monthly SIP needed</span><strong class="gt-sip" id="g2-eduSIP">—</strong></div>
         </div>
       </div>
-      <div class="accordion">
-        <button class="accordion-hdr" onclick="toggleAcc(this)">Tier I vs Tier II Accounts <span class="acc-icon">+</span></button>
-        <div class="accordion-body">
-          <strong>Tier I (Mandatory / Pension Account)</strong><br>
-          — Minimum contribution: ₹500/year (₹1,000 minimum to open)<br>
-          — Withdrawals locked until age 60 (with limited exceptions)<br>
-          — Mandatory for government employees; voluntary for others<br><br>
-          <strong>Tier II (Voluntary / Savings Account)</strong><br>
-          — No lock-in — withdraw anytime<br>
-          — Minimum contribution: ₹250<br>
-          — Useful as a low-cost investment account; fund expense ratios are among the lowest in India (&lt;0.1%)<br><br>
-          <strong>Key difference:</strong> Tier I is for retirement; Tier II is flexible savings.
-          <span class="source-badge">Source: PFRDA</span>
+
+      <!-- Marriage -->
+      <div class="goal-tile">
+        <div class="gt-header"><span class="gt-icon">💍</span><span class="gt-name">Marriage</span></div>
+        <div class="gt-inp-row">
+          <label>Budget today (₹)</label>
+          <input type="number" class="gt-number" id="g2-weddCost" value="2000000" oninput="calcGoal('wedd')">
         </div>
-      </div>      <div class="accordion">
-        <button class="accordion-hdr" onclick="toggleAcc(this)">Asset Classes &amp; Investment Choice <span class="acc-icon">+</span></button>
-        <div class="accordion-body">
-          NPS invests across four asset classes:<br><br>
-          <strong>Class E (Equity)</strong> — Invests in equity and equity-related instruments. Maximum 75% allocation. Highest risk, highest return potential. Cap reduces to 50% after age 50.<br><br>
-          <strong>Class C (Corporate Bonds)</strong> — Fixed-income debt securities from companies. Moderate risk.<br><br>
-          <strong>Class G (Government Securities)</strong> — Central and state government bonds. Lowest risk, stable returns.<br><br>
-          <strong>Class A (Alternative Assets)</strong> — REITs, InvITs, and other alternatives. Maximum 5% allocation.<br><br>
-          <strong>Two investment approaches:</strong><br>
-          — <strong>Active Choice:</strong> You decide the allocation across E, C, G, A within limits.<br>
-          — <strong>Auto Choice (Lifecycle Fund):</strong> Allocation is age-based — higher equity when young, automatically shifting to debt as you approach retirement. Three options: Aggressive (LC-75), Moderate (LC-50), Conservative (LC-25).
-          <span class="source-badge">Source: PFRDA</span>
+        <div class="gt-inp-row">
+          <label>Years away · <span class="gt-yrs-val" id="g2-weddYrsVal">7 yrs</span></label>
+          <input type="range" class="gt-slider" min="1" max="20" value="7" id="g2-weddYrs" oninput="calcGoal('wedd')">
+        </div>
+        <div class="gt-inp-row">
+          <label>Expected return · <span id="g2-weddRetLbl">12%</span></label>
+          <input type="range" class="gt-slider" min="6" max="18" step="0.5" value="12" id="g2-weddRet" oninput="calcGoal('wedd')">
+        </div>
+        <div class="gt-result">
+          <div class="gt-result-row"><span>Future cost (7% inf.)</span><strong id="g2-weddFuture">—</strong></div>
+          <div class="gt-result-row"><span>Monthly SIP needed</span><strong class="gt-sip" id="g2-weddSIP">—</strong></div>
         </div>
       </div>
-      <div class="accordion">
-        <button class="accordion-hdr" onclick="toggleAcc(this)">Pension Fund Managers &amp; Returns <span class="acc-icon">+</span></button>
-        <div class="accordion-body">
-          PFRDA-registered Pension Fund Managers (PFMs) manage NPS investments. You choose one:<br><br>
-          SBI Pension Funds · LIC Pension Fund · HDFC Pension · ICICI Pru Pension · Kotak Mahindra Pension · Aditya Birla Sun Life Pension · Axis Pension Fund · Tata Pension · Max Life Pension · DSP Pension<br><br>
-          <strong>Historical equity (Class E) returns (approximate 5-year CAGR):</strong> Most leading PFMs have delivered 12–15% CAGR on the equity option — comparable to actively managed large-cap mutual funds but at a fraction of the cost.<br><br>
-          <strong>Expense ratios:</strong> NPS has one of the lowest fund management charges in India — as low as 0.01–0.09% per annum vs 0.5–2% for mutual funds. Over 30 years this cost advantage compounds significantly.
-          <span class="source-badge">Source: NPS Trust / npstrust.org.in</span>
+
+      <!-- Car -->
+      <div class="goal-tile">
+        <div class="gt-header"><span class="gt-icon">🚗</span><span class="gt-name">Car</span></div>
+        <div class="gt-inp-row">
+          <label>Car price today (₹)</label>
+          <input type="number" class="gt-number" id="g2-carCost" value="1200000" oninput="calcGoal('car')">
+        </div>
+        <div class="gt-inp-row">
+          <label>Years away · <span class="gt-yrs-val" id="g2-carYrsVal">3 yrs</span></label>
+          <input type="range" class="gt-slider" min="1" max="10" value="3" id="g2-carYrs" oninput="calcGoal('car')">
+        </div>
+        <div class="gt-inp-row">
+          <label>Expected return · <span id="g2-carRetLbl">12%</span></label>
+          <input type="range" class="gt-slider" min="6" max="18" step="0.5" value="12" id="g2-carRet" oninput="calcGoal('car')">
+        </div>
+        <div class="gt-result">
+          <div class="gt-result-row"><span>Future cost (5% inf.)</span><strong id="g2-carFuture">—</strong></div>
+          <div class="gt-result-row"><span>Monthly SIP needed</span><strong class="gt-sip" id="g2-carSIP">—</strong></div>
         </div>
       </div>
-      <div class="accordion">
-        <button class="accordion-hdr" onclick="toggleAcc(this)">How to Open an NPS Account <span class="acc-icon">+</span></button>
-        <div class="accordion-body">
-          <strong>Online (eNPS) — fastest option:</strong><br>
-          1. Visit <strong>enps.nsdl.com</strong> or <strong>cra-nsdl.com</strong><br>
-          2. Register using PAN + Aadhaar (OTP-based e-KYC) or net banking<br>
-          3. Choose your PFM, asset class, and investment choice<br>
-          4. You receive a <strong>PRAN</strong> (Permanent Retirement Account Number) — your lifelong NPS identifier<br>
-          5. Minimum first contribution: ₹500 (Tier I)<br><br>
-          <strong>Offline:</strong> Visit any <strong>Point of Presence (PoP)</strong> — most major banks (SBI, HDFC, ICICI, Axis, Kotak) and post offices act as PoPs.<br><br>
-          <strong>Employer route:</strong> Many corporates offer NPS through payroll — ask your HR.<br><br>
-          <strong>Important:</strong> You can have only one PRAN. It stays with you even if you change jobs or cities.
-          <span class="source-badge">Source: enps.nsdl.com / PFRDA</span>
+
+      <!-- Home -->
+      <div class="goal-tile">
+        <div class="gt-header"><span class="gt-icon">🏡</span><span class="gt-name">Home</span></div>
+        <div class="gt-inp-row">
+          <label>Down payment (₹)</label>
+          <input type="number" class="gt-number" id="g2-homeCost" value="3000000" oninput="calcGoal('home')">
         </div>
-      </div>    </div>
+        <div class="gt-inp-row">
+          <label>Years away · <span class="gt-yrs-val" id="g2-homeYrsVal">6 yrs</span></label>
+          <input type="range" class="gt-slider" min="1" max="15" value="6" id="g2-homeYrs" oninput="calcGoal('home')">
+        </div>
+        <div class="gt-inp-row">
+          <label>Expected return · <span id="g2-homeRetLbl">12%</span></label>
+          <input type="range" class="gt-slider" min="6" max="18" step="0.5" value="12" id="g2-homeRet" oninput="calcGoal('home')">
+        </div>
+        <div class="gt-result">
+          <div class="gt-result-row"><span>Future cost (8% inf.)</span><strong id="g2-homeFuture">—</strong></div>
+          <div class="gt-result-row"><span>Monthly SIP needed</span><strong class="gt-sip" id="g2-homeSIP">—</strong></div>
+        </div>
+      </div>
+
+      <!-- Foreign Trip -->
+      <div class="goal-tile">
+        <div class="gt-header"><span class="gt-icon">✈️</span><span class="gt-name">Foreign Trip</span></div>
+        <div class="gt-inp-row">
+          <label>Trip budget today (₹)</label>
+          <input type="number" class="gt-number" id="g2-tripCost" value="400000" oninput="calcGoal('trip')">
+        </div>
+        <div class="gt-inp-row">
+          <label>Years away · <span class="gt-yrs-val" id="g2-tripYrsVal">2 yrs</span></label>
+          <input type="range" class="gt-slider" min="1" max="10" value="2" id="g2-tripYrs" oninput="calcGoal('trip')">
+        </div>
+        <div class="gt-inp-row">
+          <label>Expected return · <span id="g2-tripRetLbl">12%</span></label>
+          <input type="range" class="gt-slider" min="6" max="18" step="0.5" value="12" id="g2-tripRet" oninput="calcGoal('trip')">
+        </div>
+        <div class="gt-result">
+          <div class="gt-result-row"><span>Future cost (5% inf.)</span><strong id="g2-tripFuture">—</strong></div>
+          <div class="gt-result-row"><span>Monthly SIP needed</span><strong class="gt-sip" id="g2-tripSIP">—</strong></div>
+        </div>
+      </div>
+
     </div>
   </div>
-</div>
+</section>
+
+<!-- ============================================================
+     ADDITIONAL CALCULATORS
+============================================================ -->
+<section style="padding:3rem 0;">
+  <div class="container">
+    <div class="center">
+      <div class="section-label">More Calculators</div>
+      <h2 class="section-title">Step-up SIP · Lump Sum · EMI</h2>
+      <p class="section-sub">Industry-standard calculators benchmarked against Groww and ET Money.</p>
+    </div>
+    <div class="calc-grid" style="max-width:900px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:2.5rem;">
+
+      <!-- Step-up SIP -->
+      <div class="calc-card">
+        <h3>📈 Step-up SIP</h3>
+        <div class="calc-form">
+          <div class="form-group">
+            <label>Monthly SIP · <strong id="suSipAmtLbl">₹10,000</strong></label>
+            <input type="range" min="500" max="100000" step="500" value="10000" id="suSipAmt" oninput="calcStepupSIP()">
+          </div>
+          <div class="form-group">
+            <label>Annual step-up · <strong id="suStepPctLbl">10%</strong></label>
+            <input type="range" min="0" max="30" step="1" value="10" id="suStepPct" oninput="calcStepupSIP()">
+          </div>
+          <div class="form-group">
+            <label>Duration · <strong id="suYrsLbl">15 yrs</strong></label>
+            <input type="range" min="1" max="30" step="1" value="15" id="suYrs" oninput="calcStepupSIP()">
+          </div>
+          <div class="form-group">
+            <label>Expected return · <strong id="suRetLbl">12%</strong></label>
+            <input type="range" min="6" max="20" step="0.5" value="12" id="suRet" oninput="calcStepupSIP()">
+          </div>
+          <div class="calc-result">
+            <div class="res-label">Corpus at maturity</div>
+            <div class="res-value" id="suCorpus">—</div>
+            <div class="res-sub" id="suVsFlat">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lump Sum -->
+      <div class="calc-card">
+        <h3>💰 Lump Sum</h3>
+        <div class="calc-form">
+          <div class="form-group">
+            <label>Investment amount · <strong id="lsAmtLbl">₹1,00,000</strong></label>
+            <input type="range" min="10000" max="10000000" step="10000" value="100000" id="lsAmt" oninput="calcLumpsum()">
+          </div>
+          <div class="form-group">
+            <label>Duration · <strong id="lsYrsLbl">10 yrs</strong></label>
+            <input type="range" min="1" max="30" step="1" value="10" id="lsYrs" oninput="calcLumpsum()">
+          </div>
+          <div class="form-group">
+            <label>Expected return · <strong id="lsRetLbl">12%</strong></label>
+            <input type="range" min="4" max="20" step="0.5" value="12" id="lsRet" oninput="calcLumpsum()">
+          </div>
+          <div class="calc-result">
+            <div class="res-label">Future value</div>
+            <div class="res-value" id="lsCorpus">—</div>
+            <div class="res-sub" id="lsGain">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMI -->
+      <div class="calc-card">
+        <h3>🏦 Loan EMI</h3>
+        <div class="calc-form">
+          <div class="form-group">
+            <label>Loan amount · <strong id="emiPrincipalLbl">₹30,00,000</strong></label>
+            <input type="range" min="100000" max="50000000" step="100000" value="3000000" id="emiPrincipal" oninput="calcEMI()">
+          </div>
+          <div class="form-group">
+            <label>Tenure · <strong id="emiTenureLbl">20 yrs</strong></label>
+            <input type="range" min="1" max="30" step="1" value="20" id="emiTenure" oninput="calcEMI()">
+          </div>
+          <div class="form-group">
+            <label>Interest rate · <strong id="emiRateLbl">8%</strong></label>
+            <input type="range" min="4" max="20" step="0.25" value="8" id="emiRate" oninput="calcEMI()">
+          </div>
+          <div class="calc-result">
+            <div class="res-label">Monthly EMI</div>
+            <div class="res-value" id="emiResult">—</div>
+            <div class="res-sub" id="emiInterest">—</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
       <a href="index.html" class="logo" style="color:#e2e8f0;text-decoration:none;">
-        <div class="logo-icon"><img src="assets/logo.png" alt="Maverick Investor" width="36" height="36" style="border-radius:9px;object-fit:cover;display:block;"></div> Maverick Investor
+        <div class="logo-icon"><img src="assets/logo.png" alt="Maverick Investor"></div> <span class="logo-mav">Maverick</span> Investor
       </a>
       <p>Empowering Indian investors with unbiased, research-backed guidance on mutual funds, insurance, and retirement planning.</p>
       <div class="sebi-badge">🏛️ SEBI Investor Education Compliant</div>
@@ -1881,33 +1967,112 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <script>
-  function switchLearnTab(tab, btn) {
-    document.querySelectorAll('.learn-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.learn-tab').forEach(b => b.classList.remove('active'));
-    const panelMap = {mf:'learnMf', ins:'learnIns', nps:'learnNps'};
-    document.getElementById(panelMap[tab] || 'learnMf').classList.add('active');
-    btn.classList.add('active');
+  function fmt(n) {
+    if (n >= 1e7) return '₹' + (n/1e7).toFixed(2) + ' Cr';
+    if (n >= 1e5) return '₹' + (n/1e5).toFixed(2) + ' L';
+    return '₹' + n.toLocaleString('en-IN');
   }
-  (function() {
-    const hash = window.location.hash.replace('#', '');
-    const tabMap = {mf: 0, ins: 1, nps: 2};
-    if (hash in tabMap) {
-      const tabs = document.querySelectorAll('.learn-tab');
-      switchLearnTab(hash, tabs[tabMap[hash]]);
-      document.querySelector('.learn-section').scrollIntoView({behavior: 'smooth', block: 'start'});
-    }
-  })();
-  function toggleAcc(btn) {
-    const body = btn.nextElementSibling;
-    const isOpen = body.classList.contains('open');
-    // close all in same panel
-    btn.closest('.learn-panel').querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
-    btn.closest('.learn-panel').querySelectorAll('.accordion-hdr').forEach(h => h.classList.remove('open'));
-    if (!isOpen) {
-      body.classList.add('open');
-      btn.classList.add('open');
-    }
+  function fmtNum(n) {
+    if (n >= 1e7) return (n/1e7).toFixed(2) + ' Cr';
+    if (n >= 1e5) return (n/1e5).toFixed(2) + ' L';
+    return n.toLocaleString('en-IN', { maximumFractionDigits: 2 });
   }
+  function calcGoal(key) {
+    const bases = [
+      { costId:`eduCost`,  yrsId:`eduYrs`,  futId:`eduFuture`,  sipId:`eduSIP`,  yrsLbl:`eduYrsVal`,  retId:`eduRet`,  inf:10 },
+      { costId:`weddCost`, yrsId:`weddYrs`, futId:`weddFuture`, sipId:`weddSIP`, yrsLbl:`weddYrsVal`, retId:`weddRet`, inf:7  },
+      { costId:`carCost`,  yrsId:`carYrs`,  futId:`carFuture`,  sipId:`carSIP`,  yrsLbl:`carYrsVal`,  retId:`carRet`,  inf:5  },
+      { costId:`homeCost`, yrsId:`homeYrs`, futId:`homeFuture`, sipId:`homeSIP`, yrsLbl:`homeYrsVal`, retId:`homeRet`, inf:8  },
+      { costId:`tripCost`, yrsId:`tripYrs`, futId:`tripFuture`, sipId:`tripSIP`, yrsLbl:`tripYrsVal`, retId:`tripRet`, inf:5  },
+    ];
+    const keyMap = { edu:0, wedd:1, car:2, home:3, trip:4 };
+    const idx = keyMap[key];
+    if (idx === undefined) return;
+    const infRate = bases[idx].inf;
+
+    [['', ''], ['g2-', 'g2-']].forEach(([cp, yp]) => {
+      const costEl = document.getElementById(cp + bases[idx].costId);
+      const yrsEl  = document.getElementById(yp + bases[idx].yrsId);
+      if (!costEl || !yrsEl) return;
+      const cost = parseFloat(costEl.value) || 0;
+      const yrs  = parseFloat(yrsEl.value)  || 1;
+      const retEl = document.getElementById(yp + bases[idx].retId);
+      const annRet = retEl ? (parseFloat(retEl.value) || 12) : 12;
+      const retLblEl = document.getElementById(yp + bases[idx].retId + 'Lbl');
+      if (retLblEl) retLblEl.textContent = annRet + '%';
+      const r = annRet / 1200;
+      const n = yrs * 12;
+      const yrsLbl = document.getElementById(yp + bases[idx].yrsLbl);
+      if (yrsLbl) yrsLbl.textContent = yrs + ' yr' + (yrs>1?'s':'');
+      const future = cost * Math.pow(1 + infRate/100, yrs);
+      const sip    = future / ((Math.pow(1+r,n)-1)/r);
+      const futEl  = document.getElementById(yp + bases[idx].futId);
+      const sipEl  = document.getElementById(yp + bases[idx].sipId);
+      if (futEl) futEl.textContent = fmt(Math.round(future));
+      if (sipEl) sipEl.textContent = fmt(Math.round(sip));
+    });
+  }
+
+  // ── Step-up SIP Calculator ───────────────────────────────
+  function calcStepupSIP() {
+    const p   = +document.getElementById('suSipAmt').value  || 0;
+    const s   = +document.getElementById('suStepPct').value || 0;
+    const y   = +document.getElementById('suYrs').value     || 1;
+    const ret = +document.getElementById('suRet').value     || 12;
+    const r   = ret / 1200;
+    document.getElementById('suSipAmtLbl').textContent  = fmt(p);
+    document.getElementById('suStepPctLbl').textContent = s + '%';
+    document.getElementById('suYrsLbl').textContent     = y + ' yr' + (y>1?'s':'');
+    document.getElementById('suRetLbl').textContent     = ret + '%';
+    // Growing annuity FV: Σ P*(1+s/12)^(n-t) * (1+r)^t  — simplified annual step-up
+    let corpus = 0, monthly = p;
+    for (let yr = 0; yr < y; yr++) {
+      for (let m = 0; m < 12; m++) {
+        const remaining = (y - yr) * 12 - m;
+        corpus += monthly * Math.pow(1 + r, remaining);
+      }
+      monthly *= (1 + s/100);
+    }
+    const invested = p * 12 * (Math.pow(1 + s/100, y) - 1) / (s/100 || 1);
+    const flat     = p * ((Math.pow(1+r, y*12)-1)/r);
+    document.getElementById('suCorpus').textContent  = fmt(Math.round(corpus));
+    document.getElementById('suVsFlat').textContent  = fmt(Math.round(corpus - flat)) + ' more than flat SIP';
+  }
+
+  // ── Lump Sum Calculator ──────────────────────────────────
+  function calcLumpsum() {
+    const p   = +document.getElementById('lsAmt').value || 0;
+    const y   = +document.getElementById('lsYrs').value || 1;
+    const ret = +document.getElementById('lsRet').value || 12;
+    document.getElementById('lsAmtLbl').textContent = fmt(p);
+    document.getElementById('lsYrsLbl').textContent = y + ' yr' + (y>1?'s':'');
+    document.getElementById('lsRetLbl').textContent = ret + '%';
+    const corpus = p * Math.pow(1 + ret/100, y);
+    document.getElementById('lsCorpus').textContent = fmt(Math.round(corpus));
+    document.getElementById('lsGain').textContent   = fmt(Math.round(corpus - p)) + ' gain';
+  }
+
+  // ── EMI Calculator ───────────────────────────────────────
+  function calcEMI() {
+    const P   = +document.getElementById('emiPrincipal').value || 0;
+    const y   = +document.getElementById('emiTenure').value    || 1;
+    const ret = +document.getElementById('emiRate').value      || 8;
+    document.getElementById('emiPrincipalLbl').textContent = fmt(P);
+    document.getElementById('emiTenureLbl').textContent    = y + ' yr' + (y>1?'s':'');
+    document.getElementById('emiRateLbl').textContent      = ret + '%';
+    const r = ret / 1200;
+    const n = y * 12;
+    const emi = r === 0 ? P/n : P * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1);
+    const total = emi * n;
+    document.getElementById('emiResult').textContent   = fmt(Math.round(emi)) + '/mo';
+    document.getElementById('emiInterest').textContent = fmt(Math.round(total - P)) + ' total interest';
+  }
+
+  // Init goal calculators on load
+  ['edu','wedd','car','home','trip'].forEach(g => calcGoal(g));
+  calcStepupSIP();
+  calcLumpsum();
+  calcEMI();
 </script>
 
 <div id="email-popup" onclick="if(event.target===this)closeEmailPopup()" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);align-items:center;justify-content:center;">
