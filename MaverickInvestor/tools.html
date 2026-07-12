@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tools & Goals — Maverick Investor</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     <style>
     /* ============================================================
        DESIGN TOKENS
@@ -766,6 +767,25 @@
     .calc-result .res-label { font-size: .75rem; opacity: .7; text-transform: uppercase; letter-spacing: .08em; }
     .calc-result .res-value { font-size: 1.6rem; font-weight: 900; color: var(--orange-light); }
     .calc-result .res-sub { font-size: .78rem; opacity: .7; }
+
+    /* ============================================================
+       BUY VS RENT
+    ============================================================ */
+    .bvr-grid { display: grid; grid-template-columns: 400px 1fr; gap: 1.5rem; max-width: 1100px; margin: 2.5rem auto 0; align-items: start; }
+    .bvr-toggle { display: flex; gap: .5rem; margin-bottom: 1.25rem; }
+    .bvr-toggle .tab-btn { flex: 1; }
+    .bvr-verdict { border-radius: 12px; padding: 1rem 1.25rem; font-weight: 800; font-size: 1rem; margin-bottom: 1rem; background: rgba(249,115,22,.12); border: 1px solid rgba(249,115,22,.35); line-height: 1.45; }
+    .bvr-chart-wrap { height: 300px; position: relative; }
+    .bvr-note { font-size: .85rem; color: #94a3b8; margin-top: .6rem; text-align: center; }
+    .bvr-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; margin-top: 1rem; }
+    .bvr-stat { background: #0f172a; border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: .6rem .7rem; }
+    .bvr-stat .lbl { font-size: .62rem; text-transform: uppercase; letter-spacing: .05em; color: #94a3b8; margin-bottom: .15rem; }
+    .bvr-stat .val { font-size: .95rem; font-weight: 800; color: #f97316; }
+    .bvr-disc { font-size: .72rem; color: #64748b; margin-top: .9rem; }
+    @media (max-width: 960px) {
+      .bvr-grid { grid-template-columns: 1fr; }
+      .bvr-stats { grid-template-columns: repeat(2, 1fr); }
+    }
 
     /* ============================================================
        INSURANCE ADVISOR
@@ -1919,6 +1939,88 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </section>
 
+<!-- ============================================================
+     BUY VS RENT
+============================================================ -->
+<section style="padding:3rem 0;" id="buy-vs-rent">
+  <div class="container">
+    <div class="center">
+      <div class="section-label">Buy vs Rent</div>
+      <h2 class="section-title">Should You Buy a House — or Rent & Invest?</h2>
+      <p class="section-sub">Compare buying (down payment + EMI + appreciation) against renting the same house and investing the difference in mutual funds.</p>
+    </div>
+    <div class="bvr-grid">
+
+      <!-- Inputs -->
+      <div class="calc-card">
+        <h3>🏡 Your Numbers</h3>
+        <div class="bvr-toggle">
+          <button class="tab-btn active" id="bvrModeLive" onclick="setBvrMode('live')">Buy to live</button>
+          <button class="tab-btn" id="bvrModeLet" onclick="setBvrMode('let')">Buy to let</button>
+        </div>
+        <div class="calc-form">
+          <div class="form-group">
+            <label>Property price · <strong id="bvrPriceLbl">₹80.00 L</strong></label>
+            <input type="range" min="2000000" max="100000000" step="500000" value="8000000" id="bvrPrice" oninput="calcBvr()">
+          </div>
+          <div class="form-group">
+            <label>Down payment · <strong id="bvrDpLbl">20% (₹16.00 L)</strong></label>
+            <input type="range" min="10" max="100" step="5" value="20" id="bvrDp" oninput="calcBvr()">
+          </div>
+          <div class="form-group">
+            <label>Stamp duty &amp; registration · <strong id="bvrDutyLbl">7%</strong></label>
+            <input type="range" min="0" max="10" step="0.5" value="7" id="bvrDuty" oninput="calcBvr()">
+          </div>
+          <div class="form-group">
+            <label>Loan interest rate · <strong id="bvrRateLbl">8.5%</strong></label>
+            <input type="range" min="6" max="12" step="0.25" value="8.5" id="bvrRate" oninput="calcBvr()">
+          </div>
+          <div class="form-group">
+            <label>Loan tenure · <strong id="bvrTenureLbl">20 yrs</strong></label>
+            <input type="range" min="5" max="30" step="1" value="20" id="bvrTenure" oninput="calcBvr()">
+          </div>
+          <div class="form-group">
+            <label><span id="bvrRentTitle">Monthly rent (same house)</span> · <strong id="bvrRentLbl">₹25,000</strong></label>
+            <input type="range" min="5000" max="500000" step="1000" value="25000" id="bvrRent" oninput="calcBvr()">
+          </div>
+          <div class="form-group">
+            <label>Rent escalation · <strong id="bvrEscLbl">5%/yr</strong></label>
+            <input type="range" min="0" max="10" step="0.5" value="5" id="bvrEsc" oninput="calcBvr()">
+          </div>
+          <div class="form-group">
+            <label>Property appreciation · <strong id="bvrAppLbl">6%/yr</strong></label>
+            <input type="range" min="0" max="15" step="0.5" value="6" id="bvrApp" oninput="calcBvr()">
+          </div>
+          <div class="form-group">
+            <label>MF expected return · <strong id="bvrMfRetLbl">12%/yr</strong></label>
+            <input type="range" min="6" max="18" step="0.5" value="12" id="bvrMfRet" oninput="calcBvr()">
+          </div>
+          <div class="form-group">
+            <label>Comparison horizon · <strong id="bvrYearsLbl">20 yrs</strong></label>
+            <input type="range" min="5" max="30" step="1" value="20" id="bvrYears" oninput="calcBvr()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="calc-card">
+        <h3>⚖️ The Verdict</h3>
+        <div class="bvr-verdict" id="bvrVerdict">—</div>
+        <div class="bvr-chart-wrap"><canvas id="bvrChart"></canvas></div>
+        <div class="bvr-note" id="bvrNote">—</div>
+        <div class="bvr-stats">
+          <div class="bvr-stat"><div class="lbl">Monthly EMI</div><div class="val" id="bvrEmiStat">—</div></div>
+          <div class="bvr-stat"><div class="lbl">Total interest paid</div><div class="val" id="bvrIntStat">—</div></div>
+          <div class="bvr-stat"><div class="lbl">Property value @ end</div><div class="val" id="bvrPropStat">—</div></div>
+          <div class="bvr-stat"><div class="lbl">MF corpus @ end</div><div class="val" id="bvrMfStat">—</div></div>
+        </div>
+        <div class="bvr-disc">Ignores maintenance, property tax, income tax &amp; vacancy. Educational only — not investment advice.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
@@ -1944,6 +2046,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <li><a href="tools.html">SIP Calculator</a></li>
         <li><a href="tools.html">Retirement Planner</a></li>
         <li><a href="tools.html">Goal Tracker</a></li>
+        <li><a href="tools.html#buy-vs-rent">Buy vs Rent</a></li>
         <li><a href="mf-advisor.html">MF Advisor</a></li>
         <li><a href="stock-screener.html">Stock Screener</a></li>
       </ul>
@@ -2068,11 +2171,148 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('emiInterest').textContent = fmt(Math.round(total - P)) + ' total interest';
   }
 
+  // ── Buy vs Rent ──────────────────────────────────────────
+  let bvrMode = 'live', bvrChartObj = null;
+
+  function setBvrMode(m) {
+    bvrMode = m;
+    document.getElementById('bvrModeLive').classList.toggle('active', m === 'live');
+    document.getElementById('bvrModeLet').classList.toggle('active', m === 'let');
+    document.getElementById('bvrRentTitle').textContent = m === 'live' ? 'Monthly rent (same house)' : 'Monthly rental income';
+    calcBvr();
+  }
+
+  function calcBvr() {
+    const price  = +document.getElementById('bvrPrice').value;
+    const dpPct  = +document.getElementById('bvrDp').value;
+    const duty   = +document.getElementById('bvrDuty').value;
+    const rate   = +document.getElementById('bvrRate').value;
+    const tenure = +document.getElementById('bvrTenure').value;
+    const rent0  = +document.getElementById('bvrRent').value;
+    const esc    = +document.getElementById('bvrEsc').value;
+    const app    = +document.getElementById('bvrApp').value;
+    const mfRet  = +document.getElementById('bvrMfRet').value;
+    const years  = +document.getElementById('bvrYears').value;
+
+    const D = price * dpPct / 100, S = price * duty / 100, L = price - D;
+    const r = rate / 1200, n = tenure * 12;
+    const emi = L > 0 ? (r === 0 ? L / n : L * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1)) : 0;
+    const mfR = Math.pow(1 + mfRet / 100, 1 / 12) - 1;
+
+    document.getElementById('bvrPriceLbl').textContent  = fmt(price);
+    document.getElementById('bvrDpLbl').textContent     = dpPct + '% (' + fmt(D) + ')';
+    document.getElementById('bvrDutyLbl').textContent   = duty + '%';
+    document.getElementById('bvrRateLbl').textContent   = rate + '%';
+    document.getElementById('bvrTenureLbl').textContent = tenure + ' yrs';
+    document.getElementById('bvrRentLbl').textContent   = '₹' + rent0.toLocaleString('en-IN');
+    document.getElementById('bvrEscLbl').textContent    = esc + '%/yr';
+    document.getElementById('bvrAppLbl').textContent    = app + '%/yr';
+    document.getElementById('bvrMfRetLbl').textContent  = mfRet + '%/yr';
+    document.getElementById('bvrYearsLbl').textContent  = years + ' yrs';
+
+    // Equal-cash-outflow simulation: both paths spend the same total each month;
+    // whichever path spends less invests the difference in MFs that month.
+    let mfPot = D + S;      // rent/MF path: down payment + stamp duty as lumpsum
+    let buyerPot = 0;       // buyer-side MF pot (used when rent > EMI, or after loan ends)
+    let outstanding = L;
+    let totalInterest = 0;
+    const buySeries = [price - L], mfSeries = [mfPot];
+
+    for (let m = 1; m <= years * 12; m++) {
+      const rentNow = rent0 * Math.pow(1 + esc / 100, Math.floor((m - 1) / 12));
+      mfPot *= (1 + mfR);
+      buyerPot *= (1 + mfR);
+      let emiNow = 0;
+      if (outstanding > 0.01 && m <= n) {
+        const interest = outstanding * r;
+        totalInterest += interest;
+        outstanding -= Math.min(emi - interest, outstanding);
+        emiNow = emi;
+      }
+      // rent is a cost avoided (live) or income earned (let) — same net flows either way
+      const diff = emiNow - rentNow;
+      if (diff > 0) mfPot += diff; else buyerPot += -diff;
+
+      if (m % 12 === 0) {
+        const y = m / 12;
+        buySeries.push(price * Math.pow(1 + app / 100, y) - outstanding + buyerPot);
+        mfSeries.push(mfPot);
+      }
+    }
+
+    const buyFinal = buySeries[buySeries.length - 1];
+    const mfFinal  = mfSeries[mfSeries.length - 1];
+    const propFinal = price * Math.pow(1 + app / 100, years);
+    const buyLbl = bvrMode === 'live' ? 'Buying' : 'Property investment';
+    const mfLbl  = bvrMode === 'live' ? 'Renting + SIP' : 'Mutual funds';
+
+    const verdictEl = document.getElementById('bvrVerdict');
+    if (buyFinal >= mfFinal) {
+      verdictEl.innerHTML = '🏡 <strong>' + buyLbl + ' wins</strong> — you end up ' + fmt(Math.round(buyFinal - mfFinal)) + ' ahead after ' + years + ' years.';
+    } else {
+      verdictEl.innerHTML = '📈 <strong>' + mfLbl + ' wins</strong> — you end up ' + fmt(Math.round(mfFinal - buyFinal)) + ' ahead after ' + years + ' years.';
+    }
+
+    // Crossover: first year the eventual winner permanently overtakes
+    let note;
+    if (buyFinal >= mfFinal) {
+      let cross = null;
+      for (let y = years; y >= 0 && buySeries[y] >= mfSeries[y]; y--) cross = y;
+      note = cross > 0 ? buyLbl + ' overtakes in year ' + cross + '.' : buyLbl + ' stays ahead throughout.';
+    } else {
+      let cross = null;
+      for (let y = years; y >= 0 && mfSeries[y] >= buySeries[y]; y--) cross = y;
+      note = cross > 0 ? mfLbl + ' overtakes in year ' + cross + '.' : mfLbl + ' stays ahead throughout.';
+    }
+    document.getElementById('bvrNote').textContent = note;
+
+    document.getElementById('bvrEmiStat').textContent  = emi > 0 ? fmt(Math.round(emi)) + '/mo' : 'No loan';
+    document.getElementById('bvrIntStat').textContent  = fmt(Math.round(totalInterest));
+    document.getElementById('bvrPropStat').textContent = fmt(Math.round(propFinal));
+    document.getElementById('bvrMfStat').textContent   = fmt(Math.round(mfFinal));
+
+    renderBvrChart(years, buySeries, mfSeries, buyLbl, mfLbl);
+  }
+
+  function renderBvrChart(years, buySeries, mfSeries, buyLbl, mfLbl) {
+    const canvas = document.getElementById('bvrChart');
+    if (!canvas || typeof Chart === 'undefined') return;
+    if (bvrChartObj) bvrChartObj.destroy();
+    // Auto-select unit (Cr vs L) from the largest value shown
+    const maxVal = Math.max(...buySeries, ...mfSeries);
+    const useCr = maxVal >= 1e7;
+    const div = useCr ? 1e7 : 1e5, unit = useCr ? 'Cr' : 'L', mult = useCr ? 100 : 10;
+    const conv = v => Math.round(v / div * mult) / mult;
+    bvrChartObj = new Chart(canvas.getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: Array.from({ length: years + 1 }, (_, i) => 'Yr ' + i),
+        datasets: [
+          { label: buyLbl + ' (property equity)', data: buySeries.map(conv), borderColor: '#f97316', backgroundColor: 'rgba(249,115,22,.08)', borderWidth: 3, pointRadius: 0, fill: false, tension: .35 },
+          { label: mfLbl + ' (MF corpus)', data: mfSeries.map(conv), borderColor: '#4ade80', borderWidth: 3, pointRadius: 0, fill: false, tension: .35 },
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { position: 'bottom', labels: { color: '#94a3b8', font: { size: 11 }, boxWidth: 20, padding: 12 } },
+          tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ₹' + ctx.parsed.y + unit } }
+        },
+        scales: {
+          x: { ticks: { color: '#94a3b8', font: { size: 10 }, maxTicksLimit: 8 }, grid: { color: 'rgba(255,255,255,.04)' } },
+          y: { ticks: { color: '#94a3b8', font: { size: 10 }, callback: v => '₹' + v + unit }, grid: { color: 'rgba(255,255,255,.06)' } }
+        }
+      }
+    });
+  }
+
   // Init goal calculators on load
   ['edu','wedd','car','home','trip'].forEach(g => calcGoal(g));
   calcStepupSIP();
   calcLumpsum();
   calcEMI();
+  calcBvr();
 </script>
 
 <div id="email-popup" onclick="if(event.target===this)closeEmailPopup()" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);align-items:center;justify-content:center;">
