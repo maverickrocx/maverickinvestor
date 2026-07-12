@@ -1007,7 +1007,7 @@ function previewSIP(){
 
   if(box){ box.style.display = 'block'; }
   if(valEl) valEl.textContent = '₹' + Math.round(sip).toLocaleString('en-IN') + '/mo';
-  if(subEl) subEl.textContent = `Corpus needed in ${years} yr: ₹${Math.round(future/100000).toLocaleString('en-IN')} L · at ${ret}% p.a.`;
+  if(subEl) subEl.textContent = `Corpus needed in ${years} yr: ${fmtL(future)} · at ${ret}% p.a.`;
 }
 
 // ============================================================
@@ -1427,7 +1427,7 @@ function renderResults(){
 function renderChart(sipBuf, sipExact, target, years, cagr){
   const ctx=document.getElementById('wealthChart').getContext('2d');
   if(wealthChart) wealthChart.destroy();
-  const labels=[],d10=[],d15=[],dBt=[],dExact=[],dTarget=[];
+  const labels=[],r10=[],r15=[],rBt=[],rExact=[];
 
   const corpRet = S.useCorpus ? (S.corpusRet/100) : cagr;
   const corpus0 = S.useCorpus ? S.corpus : 0;
@@ -1443,14 +1443,22 @@ function renderChart(sipBuf, sipExact, target, years, cagr){
     const fv15  = S.useStepup?stepupSIPFV(sipExact,0.15,y,S.stepup):sipFV(sipExact,0.15,m);
     const fvBuf = S.useStepup?stepupSIPFV(sipBuf,cagr,y,S.stepup):sipFV(sipBuf,cagr,m);
     const fvExact=S.useStepup?stepupSIPFV(sipExact,cagr,y,S.stepup):sipFV(sipExact,cagr,m);
-    const lakh=v=>Math.round((fvBase+v)/100000)/10;
-    d10.push(lakh(fv10));
-    d15.push(lakh(fv15));
-    dBt.push(lakh(fvBuf));
-    dExact.push(lakh(fvExact));
-    dTarget.push(Math.round(target/100000)/10);
+    r10.push(fvBase+fv10);
+    r15.push(fvBase+fv15);
+    rBt.push(fvBase+fvBuf);
+    rExact.push(fvBase+fvExact);
   }
-  const tLakh=Math.round(target/100000)/10;
+
+  // Auto-select unit (Crore vs Lakh) for the whole chart based on the largest value shown —
+  // keeps units consistent instead of always forcing Lakhs on multi-crore corpuses.
+  const maxVal=Math.max(target,...r15,...rBt);
+  const useCr=maxVal>=10000000;
+  const div=useCr?10000000:100000, unit=useCr?'Cr':'L', dp=useCr?2:1, mult=Math.pow(10,dp);
+  const conv=v=>Math.round((v/div)*mult)/mult;
+
+  const d10=r10.map(conv), d15=r15.map(conv), dBt=rBt.map(conv), dExact=rExact.map(conv);
+  const dTarget=labels.map(()=>conv(target));
+  const tDisp=conv(target);
   wealthChart=new Chart(ctx,{
     type:'line',
     data:{
@@ -1460,7 +1468,7 @@ function renderChart(sipBuf, sipExact, target, years, cagr){
         {label:'@ 10% (conservative, exact SIP)',data:d10,borderColor:'rgba(148,163,184,.35)',borderDash:[5,4],borderWidth:1.5,pointRadius:0,fill:false,tension:.4},
         {label:`Exact SIP @ backtested ${(cagr*100).toFixed(1)}%`,data:dExact,borderColor:'rgba(251,191,36,.7)',borderDash:[3,3],borderWidth:2,pointRadius:0,fill:false,tension:.4},
         {label:'Recommended SIP (+20% buffer)',data:dBt,borderColor:'#f97316',borderWidth:3.5,pointRadius:0,fill:{target:'origin',above:'rgba(249,115,22,.08)'},tension:.4},
-        {label:`⭐ Target ₹${tLakh}L`,data:dTarget,borderColor:'rgba(239,68,68,.85)',borderDash:[7,3],borderWidth:2.5,pointRadius:0,fill:false},
+        {label:`⭐ Target ₹${tDisp}${unit}`,data:dTarget,borderColor:'rgba(239,68,68,.85)',borderDash:[7,3],borderWidth:2.5,pointRadius:0,fill:false},
       ]
     },
     options:{
@@ -1468,11 +1476,11 @@ function renderChart(sipBuf, sipExact, target, years, cagr){
       interaction:{mode:'index',intersect:false},
       plugins:{
         legend:{position:'bottom',labels:{color:'#94a3b8',font:{size:11},boxWidth:20,padding:16}},
-        tooltip:{callbacks:{label:ctx=>`₹${ctx.parsed.y}L`}}
+        tooltip:{callbacks:{label:ctx=>`₹${ctx.parsed.y}${unit}`}}
       },
       scales:{
         x:{ticks:{color:'#94a3b8',font:{size:10},maxTicksLimit:8},grid:{color:'rgba(255,255,255,.04)'}},
-        y:{ticks:{color:'#94a3b8',font:{size:10},callback:v=>`₹${v}L`},grid:{color:'rgba(255,255,255,.06)'}}
+        y:{ticks:{color:'#94a3b8',font:{size:10},callback:v=>`₹${v}${unit}`},grid:{color:'rgba(255,255,255,.06)'}}
       }
     }
   });
