@@ -1,0 +1,80 @@
+{
+  "reviewedOn": "2026-07-13",
+  "note": "Curated shortlist per category. Scheme codes are Direct-Growth, verified 2026-07-13. ter (%) and aum (Rs cr) are indicative, confirmed each quarterly review. Passive index funds (isIndex:true) compete within their category. Gold and debt use absolute metrics (no equity benchmark).",
+  "categories": {
+    "largeCap": {
+      "benchmarkSchemeCode": 120716,
+      "benchmarkName": "Nifty 50",
+      "profile": "activeEquity",
+      "funds": [
+        { "label": "Mirae Asset Large Cap", "schemeCode": 118825, "ter": 0.54, "aum": 38420, "isIndex": false },
+        { "label": "Axis Large Cap", "schemeCode": 120465, "ter": 0.52, "aum": 35280, "isIndex": false },
+        { "label": "ICICI Pru Bluechip (Large Cap)", "schemeCode": 120586, "ter": 0.85, "aum": 63200, "isIndex": false },
+        { "label": "Nippon India Large Cap", "schemeCode": 118632, "ter": 0.66, "aum": 34500, "isIndex": false },
+        { "label": "Axis Nifty 100 Index", "schemeCode": 147666, "ter": 0.21, "aum": 1750, "isIndex": true }
+      ]
+    },
+    "flexiCap": {
+      "benchmarkSchemeCode": 152731,
+      "benchmarkName": "Nifty 500",
+      "profile": "activeEquity",
+      "funds": [
+        { "label": "Parag Parikh Flexi Cap", "schemeCode": 122639, "ter": 0.63, "aum": 75300, "isIndex": false },
+        { "label": "HDFC Flexi Cap", "schemeCode": 118955, "ter": 0.78, "aum": 58320, "isIndex": false },
+        { "label": "Kotak Flexicap", "schemeCode": 120166, "ter": 0.58, "aum": 50800, "isIndex": false },
+        { "label": "UTI Flexi Cap", "schemeCode": 120662, "ter": 0.90, "aum": 25600, "isIndex": false },
+        { "label": "Aditya Birla SL Flexi Cap", "schemeCode": 120564, "ter": 0.80, "aum": 22100, "isIndex": false },
+        { "label": "DSP Flexi Cap", "schemeCode": 119076, "ter": 0.75, "aum": 11800, "isIndex": false },
+        { "label": "Axis Nifty 500 Index", "schemeCode": 152731, "ter": 0.25, "aum": 1000, "isIndex": true }
+      ]
+    },
+    "midCap": {
+      "benchmarkSchemeCode": 147622,
+      "benchmarkName": "Nifty Midcap 150",
+      "profile": "activeEquity",
+      "funds": [
+        { "label": "HDFC Mid-Cap Opportunities", "schemeCode": 118989, "ter": 0.82, "aum": 72150, "isIndex": false },
+        { "label": "Kotak Emerging Equity", "schemeCode": 120505, "ter": 0.40, "aum": 40280, "isIndex": false },
+        { "label": "Motilal Oswal Midcap", "schemeCode": 127042, "ter": 0.65, "aum": 20200, "isIndex": false },
+        { "label": "Edelweiss Mid Cap", "schemeCode": 140228, "ter": 0.38, "aum": 7600, "isIndex": false }
+      ]
+    },
+    "smallCap": {
+      "benchmarkSchemeCode": 148519,
+      "benchmarkName": "Nifty Smallcap 250",
+      "profile": "activeEquity",
+      "funds": [
+        { "label": "SBI Small Cap", "schemeCode": 125497, "ter": 0.67, "aum": 28450, "isIndex": false },
+        { "label": "Nippon India Small Cap", "schemeCode": 118778, "ter": 0.62, "aum": 55320, "isIndex": false },
+        { "label": "Axis Small Cap", "schemeCode": 125354, "ter": 0.53, "aum": 22800, "isIndex": false },
+        { "label": "HDFC Small Cap", "schemeCode": 130503, "ter": 0.68, "aum": 31200, "isIndex": false },
+        { "label": "Quant Small Cap", "schemeCode": 120828, "ter": 0.64, "aum": 26500, "isIndex": false },
+        { "label": "Kotak Small Cap", "schemeCode": 120164, "ter": 0.44, "aum": 16400, "isIndex": false }
+      ]
+    },
+    "gold": {
+      "benchmarkSchemeCode": null,
+      "benchmarkName": null,
+      "profile": "tracker",
+      "funds": [
+        { "label": "Nippon India Gold Savings FoF", "schemeCode": 118663, "ter": 0.34, "aum": 1850, "isIndex": true },
+        { "label": "SBI Gold FoF", "schemeCode": 119788, "ter": 0.42, "aum": 2500, "isIndex": true },
+        { "label": "Axis Gold FoF", "schemeCode": 120473, "ter": 0.17, "aum": 600, "isIndex": true },
+        { "label": "Kotak Gold FoF", "schemeCode": 119781, "ter": 0.16, "aum": 2000, "isIndex": true }
+      ]
+    },
+    "debt": {
+      "benchmarkSchemeCode": null,
+      "benchmarkName": null,
+      "profile": "debt",
+      "funds": [
+        { "label": "HDFC Short Term Debt", "schemeCode": 119016, "ter": 0.35, "aum": 18750, "isIndex": false },
+        { "label": "ICICI Pru Corporate Bond", "schemeCode": 120692, "ter": 0.38, "aum": 28350, "isIndex": false },
+        { "label": "HDFC Corporate Bond", "schemeCode": 118987, "ter": 0.40, "aum": 32100, "isIndex": false },
+        { "label": "Aditya Birla SL Corporate Bond", "schemeCode": 119533, "ter": 0.40, "aum": 23600, "isIndex": false },
+        { "label": "Kotak Corporate Bond", "schemeCode": 133791, "ter": 0.36, "aum": 14200, "isIndex": false },
+        { "label": "Axis Corporate Bond", "schemeCode": 141588, "ter": 0.35, "aum": 6100, "isIndex": false }
+      ]
+    }
+  }
+}

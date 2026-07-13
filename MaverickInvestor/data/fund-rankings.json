@@ -1,0 +1,748 @@
+{
+  "asOf": "2026-07-13",
+  "categories": {
+    "largeCap": {
+      "benchmark": "Nifty 50",
+      "ranked": [
+        {
+          "rank": 1,
+          "label": "Mirae Asset Large Cap",
+          "schemeCode": 118825,
+          "composite": 71.8,
+          "metrics": {
+            "cagr3": 0.1095,
+            "cagr5": 0.1055,
+            "cagr7": 0.1317,
+            "sortino": 0.794,
+            "sharpe": 0.5834,
+            "maxdd": -0.3744,
+            "vol": 0.1583,
+            "alpha": 0.0317,
+            "beta": 0.9753,
+            "upcap": 104.5654,
+            "dncap": 87.8176,
+            "ir": 0.8973,
+            "consistency": 0.1369,
+            "ter": 0.54,
+            "aum": 38420
+          }
+        },
+        {
+          "rank": 2,
+          "label": "ICICI Pru Bluechip (Large Cap)",
+          "schemeCode": 120586,
+          "composite": 62.2,
+          "metrics": {
+            "cagr3": 0.1376,
+            "cagr5": 0.1418,
+            "cagr7": 0.1529,
+            "sortino": 0.7915,
+            "sharpe": 0.5763,
+            "maxdd": -0.373,
+            "vol": 0.153,
+            "alpha": 0.0289,
+            "beta": 0.9364,
+            "upcap": 100.1709,
+            "dncap": 83.1307,
+            "ir": 0.7834,
+            "consistency": 0.1619,
+            "ter": 0.85,
+            "aum": 63200
+          }
+        },
+        {
+          "rank": 3,
+          "label": "Nippon India Large Cap",
+          "schemeCode": 118632,
+          "composite": 46.8,
+          "metrics": {
+            "cagr3": 0.1409,
+            "cagr5": 0.1622,
+            "cagr7": 0.1554,
+            "sortino": 0.7779,
+            "sharpe": 0.5721,
+            "maxdd": -0.3996,
+            "vol": 0.1667,
+            "alpha": 0.0319,
+            "beta": 1.0472,
+            "upcap": 110.8687,
+            "dncap": 96.3696,
+            "ir": 0.6481,
+            "consistency": 0.1708,
+            "ter": 0.66,
+            "aum": 34500
+          }
+        },
+        {
+          "rank": 4,
+          "label": "Axis Large Cap",
+          "schemeCode": 120465,
+          "composite": 38.2,
+          "metrics": {
+            "cagr3": 0.0998,
+            "cagr5": 0.0836,
+            "cagr7": 0.1199,
+            "sortino": 0.7214,
+            "sharpe": 0.522,
+            "maxdd": -0.301,
+            "vol": 0.1471,
+            "alpha": 0.022,
+            "beta": 0.873,
+            "upcap": 96.6796,
+            "dncap": 83.9571,
+            "ir": 0.275,
+            "consistency": 0.1523,
+            "ter": 0.52,
+            "aum": 35280
+          }
+        },
+        {
+          "rank": 5,
+          "label": "Axis Nifty 100 Index",
+          "schemeCode": 147666,
+          "composite": 31.0,
+          "metrics": {
+            "cagr3": 0.1044,
+            "cagr5": 0.1061,
+            "cagr7": null,
+            "sortino": 0.5712,
+            "sharpe": 0.4278,
+            "maxdd": -0.3703,
+            "vol": 0.1739,
+            "alpha": 0.0041,
+            "beta": 0.9903,
+            "upcap": 101.2595,
+            "dncap": 100.1472,
+            "ir": 0.2026,
+            "consistency": 0.1517,
+            "ter": 0.21,
+            "aum": 1750
+          }
+        }
+      ]
+    },
+    "flexiCap": {
+      "benchmark": "Nifty 500",
+      "ranked": [
+        {
+          "rank": 1,
+          "label": "Parag Parikh Flexi Cap",
+          "schemeCode": 122639,
+          "composite": 75.0,
+          "metrics": {
+            "cagr3": 0.1508,
+            "cagr5": 0.1455,
+            "cagr7": 0.1967,
+            "sortino": 1.3408,
+            "sharpe": 0.9608,
+            "maxdd": -0.312,
+            "vol": 0.1194,
+            "alpha": 0.0012,
+            "beta": 0.5581,
+            "upcap": 62.4965,
+            "dncap": 47.6051,
+            "ir": 0.2921,
+            "consistency": 0.1775,
+            "ter": 0.63,
+            "aum": 75300
+          }
+        },
+        {
+          "rank": 2,
+          "label": "Aditya Birla SL Flexi Cap",
+          "schemeCode": 120564,
+          "composite": 60.8,
+          "metrics": {
+            "cagr3": 0.1691,
+            "cagr5": 0.1347,
+            "cagr7": 0.1629,
+            "sortino": 0.862,
+            "sharpe": 0.6388,
+            "maxdd": -0.3859,
+            "vol": 0.1611,
+            "alpha": 0.0484,
+            "beta": 0.941,
+            "upcap": 107.7286,
+            "dncap": 81.8407,
+            "ir": 2.5211,
+            "consistency": 0.1696,
+            "ter": 0.8,
+            "aum": 22100
+          }
+        },
+        {
+          "rank": 3,
+          "label": "HDFC Flexi Cap",
+          "schemeCode": 118955,
+          "composite": 60.6,
+          "metrics": {
+            "cagr3": 0.1807,
+            "cagr5": 0.1894,
+            "cagr7": 0.1788,
+            "sortino": 0.8212,
+            "sharpe": 0.6001,
+            "maxdd": -0.4184,
+            "vol": 0.1717,
+            "alpha": 0.0326,
+            "beta": 0.7801,
+            "upcap": 91.4441,
+            "dncap": 68.3268,
+            "ir": 0.8498,
+            "consistency": 0.1737,
+            "ter": 0.78,
+            "aum": 58320
+          }
+        },
+        {
+          "rank": 4,
+          "label": "Kotak Flexicap",
+          "schemeCode": 120166,
+          "composite": 55.6,
+          "metrics": {
+            "cagr3": 0.1449,
+            "cagr5": 0.1301,
+            "cagr7": 0.1458,
+            "sortino": 0.839,
+            "sharpe": 0.6183,
+            "maxdd": -0.3731,
+            "vol": 0.1583,
+            "alpha": 0.0126,
+            "beta": 0.9559,
+            "upcap": 99.3157,
+            "dncap": 91.6474,
+            "ir": 0.4503,
+            "consistency": 0.1477,
+            "ter": 0.58,
+            "aum": 50800
+          }
+        },
+        {
+          "rank": 5,
+          "label": "DSP Flexi Cap",
+          "schemeCode": 119076,
+          "composite": 30.8,
+          "metrics": {
+            "cagr3": 0.1449,
+            "cagr5": 0.1208,
+            "cagr7": 0.1637,
+            "sortino": 0.7357,
+            "sharpe": 0.5451,
+            "maxdd": -0.3571,
+            "vol": 0.1644,
+            "alpha": 0.0097,
+            "beta": 0.9546,
+            "upcap": 102.6893,
+            "dncap": 96.7619,
+            "ir": 0.3635,
+            "consistency": 0.1875,
+            "ter": 0.75,
+            "aum": 11800
+          }
+        },
+        {
+          "rank": 6,
+          "label": "UTI Flexi Cap",
+          "schemeCode": 120662,
+          "composite": 17.2,
+          "metrics": {
+            "cagr3": 0.0927,
+            "cagr5": 0.0686,
+            "cagr7": 0.1345,
+            "sortino": 0.671,
+            "sharpe": 0.4952,
+            "maxdd": -0.3386,
+            "vol": 0.1493,
+            "alpha": -0.0017,
+            "beta": 0.8726,
+            "upcap": 92.5224,
+            "dncap": 89.5744,
+            "ir": 0.0856,
+            "consistency": 0.1838,
+            "ter": 0.9,
+            "aum": 25600
+          }
+        }
+      ]
+    },
+    "midCap": {
+      "benchmark": "Nifty Midcap 150",
+      "ranked": [
+        {
+          "rank": 1,
+          "label": "Edelweiss Mid Cap",
+          "schemeCode": 140228,
+          "composite": 60.3,
+          "metrics": {
+            "cagr3": 0.2493,
+            "cagr5": 0.2032,
+            "cagr7": 0.2471,
+            "sortino": 1.101,
+            "sharpe": 0.8232,
+            "maxdd": -0.3921,
+            "vol": 0.1727,
+            "alpha": 0.0267,
+            "beta": 0.9476,
+            "upcap": 99.8018,
+            "dncap": 88.2825,
+            "ir": 0.3958,
+            "consistency": 0.2266,
+            "ter": 0.38,
+            "aum": 7600
+          }
+        },
+        {
+          "rank": 2,
+          "label": "Motilal Oswal Midcap",
+          "schemeCode": 127042,
+          "composite": 54.3,
+          "metrics": {
+            "cagr3": 0.2068,
+            "cagr5": 0.2348,
+            "cagr7": 0.2381,
+            "sortino": 1.1708,
+            "sharpe": 0.8573,
+            "maxdd": -0.3723,
+            "vol": 0.1778,
+            "alpha": 0.0172,
+            "beta": 0.9188,
+            "upcap": 93.8435,
+            "dncap": 82.6595,
+            "ir": 0.0421,
+            "consistency": 0.2544,
+            "ter": 0.65,
+            "aum": 20200
+          }
+        },
+        {
+          "rank": 3,
+          "label": "HDFC Mid-Cap Opportunities",
+          "schemeCode": 118989,
+          "composite": 46.3,
+          "metrics": {
+            "cagr3": 0.2127,
+            "cagr5": 0.209,
+            "cagr7": 0.2269,
+            "sortino": 1.1756,
+            "sharpe": 0.8794,
+            "maxdd": -0.3951,
+            "vol": 0.1568,
+            "alpha": 0.0181,
+            "beta": 0.9155,
+            "upcap": 93.2579,
+            "dncap": 81.0455,
+            "ir": 0.1071,
+            "consistency": 0.1975,
+            "ter": 0.82,
+            "aum": 72150
+          }
+        },
+        {
+          "rank": 4,
+          "label": "Kotak Emerging Equity",
+          "schemeCode": 120505,
+          "composite": 39.0,
+          "metrics": {
+            "cagr3": 0.1889,
+            "cagr5": 0.1557,
+            "cagr7": 0.2042,
+            "sortino": 1.1093,
+            "sharpe": 0.8176,
+            "maxdd": -0.2936,
+            "vol": 0.1498,
+            "alpha": 0.004,
+            "beta": 0.7851,
+            "upcap": 82.7316,
+            "dncap": 77.5748,
+            "ir": -0.4488,
+            "consistency": 0.1939,
+            "ter": 0.4,
+            "aum": 40280
+          }
+        }
+      ]
+    },
+    "smallCap": {
+      "benchmark": "Nifty Smallcap 250",
+      "ranked": [
+        {
+          "rank": 1,
+          "label": "Axis Small Cap",
+          "schemeCode": 125354,
+          "composite": 70.0,
+          "metrics": {
+            "cagr3": 0.1767,
+            "cagr5": 0.1776,
+            "cagr7": 0.235,
+            "sortino": 1.4229,
+            "sharpe": 1.0574,
+            "maxdd": -0.3464,
+            "vol": 0.1477,
+            "alpha": 0.0442,
+            "beta": 0.7132,
+            "upcap": 79.9459,
+            "dncap": 55.9587,
+            "ir": -0.106,
+            "consistency": 0.213,
+            "ter": 0.53,
+            "aum": 22800
+          }
+        },
+        {
+          "rank": 2,
+          "label": "Nippon India Small Cap",
+          "schemeCode": 118778,
+          "composite": 57.2,
+          "metrics": {
+            "cagr3": 0.1904,
+            "cagr5": 0.2066,
+            "cagr7": 0.2603,
+            "sortino": 1.3191,
+            "sharpe": 0.9898,
+            "maxdd": -0.4858,
+            "vol": 0.1738,
+            "alpha": 0.0632,
+            "beta": 0.8657,
+            "upcap": 95.064,
+            "dncap": 65.6548,
+            "ir": 0.7732,
+            "consistency": 0.2766,
+            "ter": 0.62,
+            "aum": 55320
+          }
+        },
+        {
+          "rank": 3,
+          "label": "Kotak Small Cap",
+          "schemeCode": 120164,
+          "composite": 51.6,
+          "metrics": {
+            "cagr3": 0.1495,
+            "cagr5": 0.1486,
+            "cagr7": 0.2302,
+            "sortino": 1.0851,
+            "sharpe": 0.8121,
+            "maxdd": -0.4061,
+            "vol": 0.1543,
+            "alpha": 0.0263,
+            "beta": 0.8228,
+            "upcap": 85.7653,
+            "dncap": 68.8756,
+            "ir": -0.0795,
+            "consistency": 0.2814,
+            "ter": 0.44,
+            "aum": 16400
+          }
+        },
+        {
+          "rank": 4,
+          "label": "Quant Small Cap",
+          "schemeCode": 120828,
+          "composite": 50.2,
+          "metrics": {
+            "cagr3": 0.2175,
+            "cagr5": 0.2046,
+            "cagr7": 0.3218,
+            "sortino": 1.0145,
+            "sharpe": 0.7465,
+            "maxdd": -0.4671,
+            "vol": 0.1545,
+            "alpha": 0.0748,
+            "beta": 0.9102,
+            "upcap": 105.3657,
+            "dncap": 79.1947,
+            "ir": 0.7655,
+            "consistency": 0.353,
+            "ter": 0.64,
+            "aum": 26500
+          }
+        },
+        {
+          "rank": 5,
+          "label": "SBI Small Cap",
+          "schemeCode": 125497,
+          "composite": 48.0,
+          "metrics": {
+            "cagr3": 0.1431,
+            "cagr5": 0.1509,
+            "cagr7": 0.2133,
+            "sortino": 1.5355,
+            "sharpe": 1.1219,
+            "maxdd": -0.4026,
+            "vol": 0.1519,
+            "alpha": 0.0211,
+            "beta": 0.7377,
+            "upcap": 77.6651,
+            "dncap": 61.2223,
+            "ir": -0.3564,
+            "consistency": 0.2034,
+            "ter": 0.67,
+            "aum": 28450
+          }
+        },
+        {
+          "rank": 6,
+          "label": "HDFC Small Cap",
+          "schemeCode": 130503,
+          "composite": 23.0,
+          "metrics": {
+            "cagr3": 0.1437,
+            "cagr5": 0.1691,
+            "cagr7": 0.2027,
+            "sortino": 0.9667,
+            "sharpe": 0.7322,
+            "maxdd": -0.4826,
+            "vol": 0.1651,
+            "alpha": 0.0389,
+            "beta": 0.836,
+            "upcap": 89.3803,
+            "dncap": 69.0186,
+            "ir": 0.1568,
+            "consistency": 0.2556,
+            "ter": 0.68,
+            "aum": 31200
+          }
+        }
+      ]
+    },
+    "gold": {
+      "benchmark": null,
+      "ranked": [
+        {
+          "rank": 1,
+          "label": "Kotak Gold FoF",
+          "schemeCode": 119781,
+          "composite": 70.0,
+          "metrics": {
+            "cagr3": 0.3314,
+            "cagr5": 0.2303,
+            "cagr7": 0.2173,
+            "sortino": 0.5057,
+            "sharpe": 0.3494,
+            "maxdd": -0.2626,
+            "vol": 0.1564,
+            "alpha": null,
+            "beta": null,
+            "upcap": null,
+            "dncap": null,
+            "ir": null,
+            "consistency": 0.2175,
+            "ter": 0.16,
+            "aum": 2000
+          }
+        },
+        {
+          "rank": 2,
+          "label": "SBI Gold FoF",
+          "schemeCode": 119788,
+          "composite": 48.3,
+          "metrics": {
+            "cagr3": 0.3321,
+            "cagr5": 0.2333,
+            "cagr7": 0.2179,
+            "sortino": 0.5124,
+            "sharpe": 0.3562,
+            "maxdd": -0.2501,
+            "vol": 0.1536,
+            "alpha": null,
+            "beta": null,
+            "upcap": null,
+            "dncap": null,
+            "ir": null,
+            "consistency": 0.2203,
+            "ter": 0.42,
+            "aum": 2500
+          }
+        },
+        {
+          "rank": 3,
+          "label": "Axis Gold FoF",
+          "schemeCode": 120473,
+          "composite": 46.7,
+          "metrics": {
+            "cagr3": 0.3291,
+            "cagr5": 0.2321,
+            "cagr7": 0.2162,
+            "sortino": 0.4515,
+            "sharpe": 0.3055,
+            "maxdd": -0.2615,
+            "vol": 0.1804,
+            "alpha": null,
+            "beta": null,
+            "upcap": null,
+            "dncap": null,
+            "ir": null,
+            "consistency": 0.215,
+            "ter": 0.17,
+            "aum": 600
+          }
+        },
+        {
+          "rank": 4,
+          "label": "Nippon India Gold Savings FoF",
+          "schemeCode": 118663,
+          "composite": 35.0,
+          "metrics": {
+            "cagr3": 0.3297,
+            "cagr5": 0.2305,
+            "cagr7": 0.2142,
+            "sortino": 0.4791,
+            "sharpe": 0.3348,
+            "maxdd": -0.2466,
+            "vol": 0.1521,
+            "alpha": null,
+            "beta": null,
+            "upcap": null,
+            "dncap": null,
+            "ir": null,
+            "consistency": 0.2229,
+            "ter": 0.34,
+            "aum": 1850
+          }
+        }
+      ]
+    },
+    "debt": {
+      "benchmark": null,
+      "ranked": [
+        {
+          "rank": 1,
+          "label": "ICICI Pru Corporate Bond",
+          "schemeCode": 120692,
+          "composite": 84.0,
+          "metrics": {
+            "cagr3": 0.0785,
+            "cagr5": 0.0699,
+            "cagr7": 0.0744,
+            "sortino": 2.2073,
+            "sharpe": 1.414,
+            "maxdd": -0.0201,
+            "vol": 0.0119,
+            "alpha": null,
+            "beta": null,
+            "upcap": null,
+            "dncap": null,
+            "ir": null,
+            "consistency": 0.0177,
+            "ter": 0.38,
+            "aum": 28350
+          }
+        },
+        {
+          "rank": 2,
+          "label": "HDFC Short Term Debt",
+          "schemeCode": 119016,
+          "composite": 63.6,
+          "metrics": {
+            "cagr3": 0.078,
+            "cagr5": 0.0677,
+            "cagr7": 0.0739,
+            "sortino": 1.76,
+            "sharpe": 1.1525,
+            "maxdd": -0.0267,
+            "vol": 0.0134,
+            "alpha": null,
+            "beta": null,
+            "upcap": null,
+            "dncap": null,
+            "ir": null,
+            "consistency": 0.0197,
+            "ter": 0.35,
+            "aum": 18750
+          }
+        },
+        {
+          "rank": 3,
+          "label": "Aditya Birla SL Corporate Bond",
+          "schemeCode": 119533,
+          "composite": 50.4,
+          "metrics": {
+            "cagr3": 0.0759,
+            "cagr5": 0.0663,
+            "cagr7": 0.0729,
+            "sortino": 1.7591,
+            "sharpe": 1.1691,
+            "maxdd": -0.0238,
+            "vol": 0.0139,
+            "alpha": null,
+            "beta": null,
+            "upcap": null,
+            "dncap": null,
+            "ir": null,
+            "consistency": 0.0203,
+            "ter": 0.4,
+            "aum": 23600
+          }
+        },
+        {
+          "rank": 4,
+          "label": "Axis Corporate Bond",
+          "schemeCode": 141588,
+          "composite": 43.0,
+          "metrics": {
+            "cagr3": 0.0801,
+            "cagr5": 0.0696,
+            "cagr7": 0.0772,
+            "sortino": 0.6871,
+            "sharpe": 0.5398,
+            "maxdd": -0.0381,
+            "vol": 0.0203,
+            "alpha": null,
+            "beta": null,
+            "upcap": null,
+            "dncap": null,
+            "ir": null,
+            "consistency": 0.0202,
+            "ter": 0.35,
+            "aum": 6100
+          }
+        },
+        {
+          "rank": 5,
+          "label": "Kotak Corporate Bond",
+          "schemeCode": 133791,
+          "composite": 39.6,
+          "metrics": {
+            "cagr3": 0.0774,
+            "cagr5": 0.0668,
+            "cagr7": 0.0708,
+            "sortino": 1.265,
+            "sharpe": 0.8193,
+            "maxdd": -0.0192,
+            "vol": 0.014,
+            "alpha": null,
+            "beta": null,
+            "upcap": null,
+            "dncap": null,
+            "ir": null,
+            "consistency": 0.0204,
+            "ter": 0.36,
+            "aum": 14200
+          }
+        },
+        {
+          "rank": 6,
+          "label": "HDFC Corporate Bond",
+          "schemeCode": 118987,
+          "composite": 19.4,
+          "metrics": {
+            "cagr3": 0.0759,
+            "cagr5": 0.0657,
+            "cagr7": 0.072,
+            "sortino": 1.2338,
+            "sharpe": 0.8667,
+            "maxdd": -0.04,
+            "vol": 0.0178,
+            "alpha": null,
+            "beta": null,
+            "upcap": null,
+            "dncap": null,
+            "ir": null,
+            "consistency": 0.022,
+            "ter": 0.4,
+            "aum": 32100
+          }
+        }
+      ]
+    }
+  }
+}
