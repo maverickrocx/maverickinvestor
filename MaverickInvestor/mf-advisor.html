@@ -229,6 +229,7 @@ input[type=range]{width:100%;accent-color:#f97316;cursor:pointer;height:6px;}
 .c-fc{background:#ede9fe;color:#7c3aed;}
 .c-mc{background:#ffedd5;color:#c2410c;}
 .c-sc{background:#fef9c3;color:#854d0e;}
+.c-gold{background:#fef3c7;color:#b45309;}
 .c-debt{background:#dcfce7;color:#166534;}
 .alloc-bar-wrap{background:#f1f5f9;border-radius:4px;height:6px;width:80px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:.4rem;}
 .alloc-bar{height:100%;background:#f97316;border-radius:4px;}
@@ -823,10 +824,29 @@ const FUND_DB = {
     ['ICICI Pru Corporate Bond Fund',120687,0.88,0.38,28350,7.5],
   ],
 };
-const CAT_KEYS = ['largeCap','flexiCap','midCap','smallCap','debt'];
-const CAT_LABELS = ['Large Cap','Flexi Cap','Mid Cap','Small Cap','Debt'];
-const CAT_CSS = ['c-lc','c-fc','c-mc','c-sc','c-debt'];
-const FALLBACK_CAGR = [12.8,14.2,16.1,18.2,7.2]; // per category
+const CAT_KEYS = ['largeCap','flexiCap','midCap','smallCap','gold','debt'];
+const CAT_LABELS = ['Large Cap','Flexi Cap','Mid Cap','Small Cap','Gold','Debt'];
+const CAT_CSS = ['c-lc','c-fc','c-mc','c-sc','c-gold','c-debt'];
+const FALLBACK_CAGR = [12.8,14.2,16.1,18.2,10.0,7.2]; // per category (incl. Gold)
+
+// Live fund rankings (data/fund-rankings.json); null → bundled fallback below
+let RANKINGS = null;
+async function loadRankings(){
+  try { RANKINGS = await (await fetch('data/fund-rankings.json',{cache:'no-store'})).json(); }
+  catch(e){ RANKINGS = null; }
+}
+// Gold sleeve % by [effective persona][horizon]; 0 for short horizon
+const GOLD = {
+  guardian:{s:0,m:5,l:5,xl:5}, preserver:{s:0,m:5,l:7,xl:7},
+  balancer:{s:0,m:5,l:7,xl:10}, grower:{s:0,m:5,l:7,xl:7}, maverick:{s:0,m:0,l:5,xl:5}
+};
+// Insert the Gold sleeve into a 5-way base [lc,fc,mc,sc,debt] → 6-way [lc,fc,mc,sc,gold,debt]
+function insertGold(base5, effKey, hKey){
+  const g = (GOLD[effKey] && GOLD[effKey][hKey]) || 0;
+  if(!g) return [base5[0],base5[1],base5[2],base5[3],0,base5[4]];
+  const sc = (100-g)/100;
+  return [base5[0]*sc, base5[1]*sc, base5[2]*sc, base5[3]*sc, g, base5[4]*sc];
+}
 
 // ============================================================
 // STATE
@@ -1147,20 +1167,36 @@ function getAllocation(effKey, hKey){
       base[4] += (100 - newSum);
     }
   }
-  return base;
+  // Carve the Gold sleeve → 6-way [lc,fc,mc,sc,gold,debt]
+  return insertGold(base, effKey, hKey);
 }
 
 function buildFundList(allocation){
   const funds = [];
   CAT_KEYS.forEach((cat,ci)=>{
     const pct = allocation[ci];
-    if(pct===0) return;
-    const db = FUND_DB[cat];
-    if(!db||db.length===0) return;
-    const pick = pct>=20 ? db.slice(0,2) : db.slice(0,1);
+    if(pct<=0) return;
+    // pick rule: >20% → top 2 funds, else top 1
+    const n = pct>20 ? 2 : 1;
+    const ranked = (RANKINGS && RANKINGS.categories[cat] && RANKINGS.categories[cat].ranked) || null;
+    let pick;
+    if(ranked && ranked.length){
+      pick = ranked.slice(0,n).map(f=>({
+        name:f.label, code:f.schemeCode,
+        sharpe:(f.metrics&&f.metrics.sharpe!=null)?Math.round(f.metrics.sharpe*100)/100:null,
+        ter:(f.metrics&&f.metrics.ter!=null)?f.metrics.ter:null,
+        aum:(f.metrics&&f.metrics.aum!=null)?f.metrics.aum:null,
+        fallback:(f.metrics&&f.metrics.cagr5!=null)?Math.round(f.metrics.cagr5*1000)/10:FALLBACK_CAGR[ci]
+      }));
+    } else {
+      // bundled fallback if rankings unavailable
+      const db = FUND_DB[cat]; if(!db||db.length===0) return;
+      pick = db.slice(0,n).map(f=>({name:f[0],code:f[1],sharpe:f[2],ter:f[3],aum:f[4],fallback:f[5]}));
+    }
+    if(!pick || pick.length===0) return;
     const perFund = pct/pick.length;
     pick.forEach(f=>{
-      funds.push({ name:f[0], code:f[1], sharpe:f[2], ter:f[3], aum:f[4], fallback:f[5],
+      funds.push({ name:f.name, code:f.code, sharpe:f.sharpe, ter:f.ter, aum:f.aum, fallback:f.fallback,
         cat, catLabel:CAT_LABELS[ci], catCSS:CAT_CSS[ci], alloc:perFund, xirr:null });
     });
   });
@@ -1266,6 +1302,7 @@ function solveFlatSIP(targetFV, rAnnual, months, existingFV){
 // ============================================================
 async function runCalculation(){
   setLoadStep(0,'cur');
+  if(!RANKINGS) await loadRankings();
 
   // Persona — if quick-pick was used, personaIdx is already set; skip quiz scoring
   const _personaKeys = ['guardian','preserver','balancer','grower','maverick'];
@@ -1402,7 +1439,7 @@ function renderResults(){
       <td>${f.alloc}%<div class="alloc-bar-wrap"><div class="alloc-bar" style="width:${Math.min(f.alloc,100)}%"></div></div></td>
       <td>₹${fmt(fundSip)}</td>
       <td>${xirrTxt}</td>
-      <td>${f.sharpe}</td><td>${f.ter}%</td><td>${fmt(f.aum)}</td>
+      <td>${f.sharpe!=null?f.sharpe:'—'}</td><td>${f.ter!=null?f.ter+'%':'—'}</td><td>${f.aum!=null?fmt(f.aum):'—'}</td>
     </tr>`;
   });
 
