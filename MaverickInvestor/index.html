@@ -1724,86 +1724,49 @@
 
 <link rel="icon" type="image/svg+xml" href="favicon.svg"></head>
 <body>
-<!-- ===== Maverick intro: compounding curve morphs into ₹ ===== -->
+<!-- ===== Maverick intro (video) ===== -->
 <style>
-#mv-intro{position:fixed;inset:0;z-index:99999;background:#0f172a;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:1.6rem;cursor:pointer;
-  transition:opacity .35s ease-in,transform .35s ease-in;}
-#mv-intro.mv-out{opacity:0;transform:translateY(-12px);pointer-events:none;}
-#mv-intro svg{width:min(52vw,280px);height:auto;overflow:visible;}
-#mv-intro .mv-stroke{fill:none;stroke:url(#mv-grad);stroke-width:7;stroke-linecap:round;stroke-linejoin:round;}
-/* phase 1 — the compounding curve draws itself (slow, readable) */
-#mv-morph{stroke-dasharray:420;stroke-dashoffset:420;
-  animation:mvDraw 1.05s cubic-bezier(.25,.6,.2,1) forwards;
-  filter:drop-shadow(0 0 6px rgba(249,115,22,.35));}
-/* phase 2 — the rest of the rupee draws on, staggered */
-#mv-intro .mv-r{stroke-dasharray:320;stroke-dashoffset:320;opacity:0;
-  filter:drop-shadow(0 0 6px rgba(249,115,22,.35));}
-#mv-intro.mv-phase2 .mv-r{opacity:1;animation:mvDraw .75s cubic-bezier(.25,.6,.2,1) forwards;}
-#mv-intro.mv-phase2 #mv-r1{animation-delay:0ms;}
-#mv-intro.mv-phase2 #mv-r2{animation-delay:130ms;}
-#mv-intro.mv-phase2 #mv-r3{animation-delay:260ms;}
-@keyframes mvDraw{to{stroke-dashoffset:0;}}
-#mv-intro .mv-word{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;font-weight:800;font-size:1.1rem;
-  letter-spacing:.18em;color:#e2e8f0;opacity:0;transform:translateY(10px);}
-#mv-intro.mv-phase3 .mv-word{animation:mvWord .5s ease-out forwards;}
-#mv-intro .mv-word span{background:linear-gradient(135deg,#fed7aa 0%,#f97316 45%,#c2410c 75%,#fdba74 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;}
-@keyframes mvWord{to{opacity:1;transform:none;}}
-#mv-intro .mv-skip{position:absolute;bottom:6%;font-size:.7rem;letter-spacing:.12em;color:#64748b;
-  opacity:0;animation:mvWord .4s ease-out 1.6s forwards;}
+#mv-intro{position:fixed;inset:0;z-index:99999;background:#0f172a;display:flex;align-items:center;
+  justify-content:center;cursor:pointer;transition:opacity .55s ease;}
+#mv-intro.mv-out{opacity:0;pointer-events:none;}
+#mv-intro video{width:100%;height:100%;object-fit:cover;}
+#mv-intro .mv-fade{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 50% 45%,transparent 55%,rgba(15,23,42,.55) 100%);}
+#mv-skip{position:absolute;bottom:6%;right:6%;background:rgba(15,23,42,.55);
+  border:1px solid rgba(255,255,255,.22);color:#e2e8f0;font:700 .78rem 'Segoe UI',system-ui,sans-serif;
+  letter-spacing:.12em;padding:.5rem 1.1rem;border-radius:8px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);}
 @media (prefers-reduced-motion: reduce){#mv-intro{display:none!important;}}
 </style>
-<div id="mv-intro" aria-hidden="true" data-always="1">
-  <svg viewBox="0 0 240 190" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="mv-grad" gradientUnits="userSpaceOnUse" x1="28" y1="170" x2="210" y2="20">
-        <stop offset="0" stop-color="#fed7aa"/><stop offset=".45" stop-color="#f97316"/>
-        <stop offset=".75" stop-color="#c2410c"/><stop offset="1" stop-color="#fdba74"/>
-      </linearGradient>
-    </defs>
-    <!-- the compounding curve; morphs into the rupee's diagonal leg -->
-    <path id="mv-morph" class="mv-stroke"
-          d="M28 158 C70 156 104 146 130 118 C156 90 172 46 208 26">
-      <animate id="mv-anim" attributeName="d" begin="indefinite" dur="850ms" fill="freeze"
-               calcMode="spline" keySplines="0.65 0 0.35 1"
-               from="M28 158 C70 156 104 146 130 118 C156 90 172 46 208 26"
-               to="M100 100 C120 121 133 134 146 147 C150 151 155 156 162 166"/>
-    </path>
-    <path id="mv-r1" class="mv-stroke mv-r" d="M84 36 H166"/>
-    <path id="mv-r2" class="mv-stroke mv-r" d="M84 66 H166"/>
-    <path id="mv-r3" class="mv-stroke mv-r" d="M100 36 C142 36 158 50 158 66 C158 86 136 100 100 100 H86"/>
-  </svg>
-  <div class="mv-word"><span>MAVERICK</span> INVESTOR</div>
-  <div class="mv-skip">CLICK TO SKIP</div>
+<div id="mv-intro" aria-hidden="true" title="Skip intro">
+  <video id="mv-vid" muted autoplay playsinline preload="auto">
+    <source src="assets/intro.mp4" type="video/mp4">
+  </video>
+  <div class="mv-fade"></div>
+  <div id="mv-skip">SKIP ▶</div>
 </div>
 <script>
 (function(){
-  var el = document.getElementById('mv-intro');
-  if(!el) return;
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var always = el.hasAttribute('data-always');          // home page: replay every visit
-  var seen;
-  try { seen = sessionStorage.getItem('mvIntroSeen'); } catch(e){ seen = null; }
-  if (reduce || (!always && seen)) { el.parentNode.removeChild(el); return; }
-  try { sessionStorage.setItem('mvIntroSeen','1'); } catch(e){}
-
-  var done = false;
-  function finish(){
-    if(done) return; done = true;
+  var el=document.getElementById('mv-intro'); if(!el) return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce){ el.parentNode.removeChild(el); return; }   // no autoplay for reduced-motion users
+  var seen; try{ seen=sessionStorage.getItem('mvIntroSeen'); }catch(e){}
+  if(seen){ el.parentNode.removeChild(el); return; }        // once per session
+  try{ sessionStorage.setItem('mvIntroSeen','1'); }catch(e){}
+  var vid=document.getElementById('mv-vid'), done=false;
+  function finish(){ if(done) return; done=true;
     el.classList.add('mv-out');
-    setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 380);
-  }
-  el.addEventListener('click', finish);                                    // skippable
+    setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 560); }
+  el.addEventListener('click', finish);                     // click anywhere / SKIP to dismiss
   document.addEventListener('keydown', function(e){ if(e.key==='Escape') finish(); });
-
-  setTimeout(function(){                                                   // curve -> rupee
-    var a = document.getElementById('mv-anim');
-    if (a && a.beginElement) { try { a.beginElement(); } catch(e){} }
-    el.classList.add('mv-phase2');
-  }, 1050);
-  setTimeout(function(){ el.classList.add('mv-phase3'); }, 1900);          // wordmark
-  setTimeout(finish, 2650);                                                // hold, then lift
+  if(vid){
+    vid.addEventListener('ended', finish);                  // reveal site when the clip ends
+    function tryPlay(){ var p=vid.play(); if(p && p.catch) p.catch(function(){}); }
+    tryPlay();
+    ['pointerdown','touchstart','keydown'].forEach(function(ev){   // if autoplay blocked, start on first gesture
+      window.addEventListener(ev, function(){ if(vid.paused && !done) tryPlay(); }, {once:true, passive:true});
+    });
+  }
+  setTimeout(finish, 12000);                                // safety net: never trap the user
 })();
 </script>
 <!-- ===== /Maverick intro ===== -->
