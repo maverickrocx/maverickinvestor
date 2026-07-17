@@ -1738,7 +1738,7 @@
 @media (prefers-reduced-motion: reduce){#mv-intro{display:none!important;}}
 </style>
 <div id="mv-intro" aria-hidden="true" title="Skip intro">
-  <video id="mv-vid" muted autoplay playsinline preload="auto">
+  <video id="mv-vid" muted autoplay playsinline webkit-playsinline preload="auto" disablepictureinpicture>
     <source src="assets/intro.mp4" type="video/mp4">
   </video>
   <div class="mv-fade"></div>
@@ -2847,5 +2847,42 @@
   function copyEmail(){navigator.clipboard.writeText('jileshkadi@gmail.com').then(()=>{const c=document.getElementById('copy-confirm');c.style.opacity='1';setTimeout(()=>c.style.opacity='0',2500);});}
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeEmailPopup();});
 </script>
+
+<!-- ===== responsive nav + mobile overflow fixes ===== -->
+<style>
+html,body{overflow-x:clip}
+.mv-burger{display:none;align-items:center;justify-content:center;width:44px;height:44px;background:none;border:0;cursor:pointer;margin-left:auto;padding:0}
+.mv-burger span{position:relative;display:block;width:22px;height:2px;background:#e2e8f0;border-radius:2px}
+.mv-burger span::before,.mv-burger span::after{content:'';position:absolute;left:0;width:22px;height:2px;background:#e2e8f0;border-radius:2px}
+.mv-burger span::before{top:-7px}.mv-burger span::after{top:7px}
+@media(max-width:820px){
+  .topbar-inner{flex-wrap:wrap;position:relative}
+  .nav-tagline{display:none!important}
+  .mv-burger{display:flex}
+  .nav-links{display:none!important;position:absolute;top:100%;left:0;right:0;z-index:1001;
+    flex-direction:column;gap:0!important;background:#0f172a;border-top:1px solid rgba(255,255,255,.08);
+    box-shadow:0 14px 34px rgba(0,0,0,.55);padding:.3rem 0;margin:0;max-height:80vh;overflow-y:auto}
+  .topbar.mv-open .nav-links{display:flex!important}
+  .nav-links li{width:100%;list-style:none}
+  .nav-links a{display:block;padding:.9rem 1.3rem;font-size:1rem!important}
+  .orb{display:none!important}
+  .ticker-bar,.ticker,.indices-track,.marquee,.ticker-wrap,.indices-section{overflow:hidden!important;max-width:100%}
+  .footer-grid{grid-template-columns:repeat(2,1fr)!important}
+  .calc-grid,.bvr-grid{grid-template-columns:1fr!important}
+}
+</style>
+<script>
+(function(){function init(){var bar=document.querySelector('.topbar');if(!bar)return;
+var inner=bar.querySelector('.topbar-inner'),links=bar.querySelector('.nav-links');
+if(!inner||!links||bar.querySelector('.mv-burger'))return;
+var b=document.createElement('button');b.className='mv-burger';b.setAttribute('aria-label','Toggle menu');
+b.setAttribute('aria-expanded','false');b.innerHTML='<span></span>';inner.insertBefore(b,links);
+b.addEventListener('click',function(e){e.stopPropagation();var o=bar.classList.toggle('mv-open');b.setAttribute('aria-expanded',o)});
+links.addEventListener('click',function(){bar.classList.remove('mv-open');b.setAttribute('aria-expanded','false')});
+document.addEventListener('click',function(e){if(!bar.contains(e.target)){bar.classList.remove('mv-open');b.setAttribute('aria-expanded','false')}});
+}if(document.readyState!=='loading')init();else document.addEventListener('DOMContentLoaded',init)})();
+</script>
+<!-- ===== /responsive nav ===== -->
+
 </body>
 </html>
