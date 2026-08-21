@@ -1,15 +1,15 @@
-name: Refresh fund rankings
+name: Refresh stock prices
 
 on:
   schedule:
-    - cron: "30 12 * * 5"   # Fridays 12:30 UTC = 18:00 IST, post market close
+    - cron: "40 12 * * 5"   # Fridays 12:40 UTC = 18:10 IST, post market close
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  rank:
+  prices:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,15 +18,15 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Regenerate rankings
+      - name: Refresh stock screener prices
         run: |
           cd tools
-          python rank_funds.py
+          python update_stock_prices.py
 
       - name: Commit if changed
         run: |
           git config user.name "maverick-bot"
           git config user.email "noreply@maverickinvestor.in"
-          git add MaverickInvestor/data/fund-rankings.json
-          git diff --staged --quiet || git commit -m "chore: weekly fund-rankings refresh"
+          git add MaverickInvestor/stock-screener.html
+          git diff --staged --quiet || git commit -m "chore: weekly stock price refresh"
           git push
