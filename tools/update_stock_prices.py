@@ -117,7 +117,8 @@ def get_crumb():
             _session.open(urllib.request.Request("https://fc.yahoo.com", headers={"User-Agent": UA}), timeout=15).read()
             req = urllib.request.Request("https://query2.finance.yahoo.com/v1/test/getcrumb", headers={"User-Agent": UA})
             _crumb = _session.open(req, timeout=15).read().decode("utf-8").strip()
-        except Exception:
+        except Exception as e:
+            print(f"crumb fetch failed: {type(e).__name__}: {e}")
             _crumb_unavailable = True
         return _crumb
 
