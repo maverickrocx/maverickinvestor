@@ -8,7 +8,7 @@ on:
     # Weekly data-refresh jobs commit with the default GITHUB_TOKEN, which
     # does not trigger `on: push` in other workflows — chain off completion
     # instead so a refresh always ends with a redeploy.
-    workflows: ["Refresh fund rankings", "Refresh stock prices"]
+    workflows: ["Weekly data refresh"]
     types: [completed]
     branches: [main]
 

@@ -1536,6 +1536,16 @@
     .accordion-body.open { display: block; }
     .accordion-hdr.open .acc-icon { transform: rotate(45deg); }
     .source-badge { display: inline-block; margin-top: .75rem; font-size: .75rem; background: #e8f5ee; color: var(--green-dark); padding: .25rem .65rem; border-radius: 99px; font-weight: 600; }
+    .rate-stats { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+    .rate-chip { flex: 1 1 200px; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1rem 1.25rem; }
+    .rate-chip-label { font-size: .8rem; color: var(--mid); font-weight: 600; text-transform: uppercase; letter-spacing: .03em; }
+    .rate-chip-value { font-size: 1.8rem; font-weight: 800; color: var(--green); margin: .25rem 0; }
+    .rate-chip-sub { font-size: .8rem; color: var(--mid); }
+    .rates-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .rates-table th, .rates-table td { text-align: left; padding: .6rem .75rem; border-bottom: 1px solid var(--border); }
+    .rates-table th { color: var(--mid); font-weight: 600; font-size: .78rem; text-transform: uppercase; letter-spacing: .03em; }
+    .rates-table td:nth-child(2) { font-weight: 700; color: var(--green-dark); }
+    .rates-note { font-size: .8rem; color: var(--mid); margin-top: .75rem; line-height: 1.6; }
 
     /* ── RETIREMENT CTA SECTION ─────────────────────────────── */
     .ret-cta-section { background: var(--green-dark); padding: 2.1rem 0; }
@@ -1676,6 +1686,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <button class="learn-tab active" onclick="switchLearnTab('mf', this)">📊 Mutual Fund Basics</button>
       <button class="learn-tab" onclick="switchLearnTab('ins', this)">🛡️ Insurance Basics</button>
       <button class="learn-tab" onclick="switchLearnTab('nps', this)">🏦 NPS Guide</button>
+      <button class="learn-tab" onclick="switchLearnTab('rates', this)">📈 Rates &amp; Small Savings</button>
     </div>
 
     <!-- MF PANEL -->
@@ -1840,6 +1851,31 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="source-badge">Source: enps.nsdl.com / PFRDA</span>
         </div>
       </div>    </div>
+
+    <!-- RATES PANEL -->
+    <div id="learnRates" class="learn-panel">
+      <div class="rate-stats">
+        <div class="rate-chip">
+          <div class="rate-chip-label">EPF Interest Rate</div>
+          <div class="rate-chip-value" id="rateEpf">—</div>
+          <div class="rate-chip-sub" id="rateEpfSub">—</div>
+        </div>
+        <div class="rate-chip">
+          <div class="rate-chip-label">RBI Repo Rate</div>
+          <div class="rate-chip-value" id="rateRepo">—</div>
+          <div class="rate-chip-sub" id="rateRepoSub">—</div>
+        </div>
+      </div>
+      <h3 style="margin:0 0 .75rem;font-size:1.05rem;">Small Savings Schemes <span id="rateQuarter" style="font-weight:400;color:var(--mid);font-size:.85rem;"></span></h3>
+      <div style="overflow-x:auto;">
+        <table class="rates-table">
+          <thead><tr><th>Scheme</th><th>Rate</th><th>Compounding</th></tr></thead>
+          <tbody id="ratesTableBody"><tr><td colspan="3">Loading…</td></tr></tbody>
+        </table>
+      </div>
+      <p class="rates-note" id="ratesNote"></p>
+      <span class="source-badge">Source: Dept. of Economic Affairs (Ministry of Finance) · EPFO · RBI</span>
+    </div>
     </div>
   </div>
 </div>
@@ -1879,6 +1915,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <li><a href="learn.html#mf">Mutual Fund Basics</a></li>
         <li><a href="learn.html#ins">Insurance Basics</a></li>
         <li><a href="learn.html#nps">NPS Guide</a></li>
+        <li><a href="learn.html#rates">Rates &amp; Small Savings</a></li>
         <li><a href="about.html">About Us</a></li>
         <li><a href="#" onclick="showEmailPopup();return false;">Contact</a></li>
       </ul>
@@ -1895,13 +1932,34 @@ document.addEventListener('DOMContentLoaded', function() {
   function switchLearnTab(tab, btn) {
     document.querySelectorAll('.learn-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.learn-tab').forEach(b => b.classList.remove('active'));
-    const panelMap = {mf:'learnMf', ins:'learnIns', nps:'learnNps'};
+    const panelMap = {mf:'learnMf', ins:'learnIns', nps:'learnNps', rates:'learnRates'};
     document.getElementById(panelMap[tab] || 'learnMf').classList.add('active');
     btn.classList.add('active');
+    if (tab === 'rates') loadRates();
+  }
+  let ratesLoaded = false;
+  function loadRates() {
+    if (ratesLoaded) return;
+    ratesLoaded = true;
+    fetch('data/rates.json').then(r => r.json()).then(d => {
+      document.getElementById('rateEpf').textContent = d.epf.rate + '%';
+      document.getElementById('rateEpfSub').textContent = d.epf.fy;
+      document.getElementById('rateRepo').textContent = d.repoRate.rate + '%';
+      document.getElementById('rateRepoSub').textContent = 'as of ' + d.repoRate.asOf;
+      document.getElementById('rateQuarter').textContent = '· ' + d.quarter;
+      document.getElementById('ratesTableBody').innerHTML = d.smallSavings.map(s =>
+        `<tr><td>${s.scheme}</td><td>${s.rate}%</td><td>${s.compounding}</td></tr>`
+      ).join('');
+      document.getElementById('ratesNote').textContent =
+        `Verified as of ${d.asOf}. ${d.note}`;
+    }).catch(() => {
+      document.getElementById('ratesTableBody').innerHTML = '<tr><td colspan="3">Could not load rates data.</td></tr>';
+      ratesLoaded = false;
+    });
   }
   (function() {
     const hash = window.location.hash.replace('#', '');
-    const tabMap = {mf: 0, ins: 1, nps: 2};
+    const tabMap = {mf: 0, ins: 1, nps: 2, rates: 3};
     if (hash in tabMap) {
       const tabs = document.querySelectorAll('.learn-tab');
       switchLearnTab(hash, tabs[tabMap[hash]]);
