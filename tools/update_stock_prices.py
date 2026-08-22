@@ -114,11 +114,16 @@ def get_crumb():
         if _crumb or _crumb_unavailable:
             return _crumb
         try:
-            _session.open(urllib.request.Request("https://fc.yahoo.com", headers={"User-Agent": UA}), timeout=15).read()
-            req = urllib.request.Request("https://query2.finance.yahoo.com/v1/test/getcrumb", headers={"User-Agent": UA})
-            _crumb = _session.open(req, timeout=15).read().decode("utf-8").strip()
+            _session.open(urllib.request.Request("https://finance.yahoo.com", headers={"User-Agent": UA}), timeout=15).read()
+            req = urllib.request.Request("https://query1.finance.yahoo.com/v1/test/getcrumb", headers={"User-Agent": UA})
+            crumb = _session.open(req, timeout=15).read().decode("utf-8").strip()
+            if crumb and "Not Found" not in crumb and "{" not in crumb:
+                _crumb = crumb
+            else:
+                print(f"crumb fetch returned unusable body: {crumb!r}")
         except Exception as e:
             print(f"crumb fetch failed: {type(e).__name__}: {e}")
+        if not _crumb:
             _crumb_unavailable = True
         return _crumb
 
