@@ -26,7 +26,7 @@ data:
 Stdlib only. Run:
     python tools/update_stock_prices.py
 """
-import json, os, re, sys, tempfile, datetime, urllib.request, urllib.parse
+import json, os, re, sys, tempfile, datetime, urllib.request, urllib.parse, http.cookiejar, threading
 from concurrent.futures import ThreadPoolExecutor
 
 HTML_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
@@ -94,6 +94,34 @@ def _raw(mod, key):
     return v.get("raw") if isinstance(v, dict) else None
 
 
+# quoteSummary requires a session cookie + crumb (Yahoo tightened this after
+# the chart/v8 endpoint used elsewhere here was already stable and cookie-
+# free). Fetched once, shared read-only across worker threads — CPython's
+# http.cookiejar is safe for concurrent reads once populated.
+_session = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
+_crumb_lock = threading.Lock()
+_crumb = None
+_crumb_unavailable = False
+
+
+def get_crumb():
+    """Fetches the crumb once; every subsequent call reuses it. Returns
+    None (and stops retrying for the rest of this run) if Yahoo's crumb
+    flow fails, so callers can skip quoteSummary entirely rather than
+    let every one of 150 requests fail slowly one by one."""
+    global _crumb, _crumb_unavailable
+    with _crumb_lock:
+        if _crumb or _crumb_unavailable:
+            return _crumb
+        try:
+            _session.open(urllib.request.Request("https://fc.yahoo.com", headers={"User-Agent": UA}), timeout=15).read()
+            req = urllib.request.Request("https://query2.finance.yahoo.com/v1/test/getcrumb", headers={"User-Agent": UA})
+            _crumb = _session.open(req, timeout=15).read().decode("utf-8").strip()
+        except Exception:
+            _crumb_unavailable = True
+        return _crumb
+
+
 def fetch_price_chart(ticker):
     """The plain, long-stable quote endpoint — price only. Used as a
     fallback when quoteSummary (below) has no usable price for a stock."""
@@ -109,16 +137,17 @@ def fetch_price_chart(ticker):
     return float(price) if price else None
 
 
-def fetch_quote_summary(ticker):
-    """Price + fundamentals in one call. This endpoint is undocumented and
-    occasionally requires a session cookie/crumb Yahoo doesn't always
-    enforce — if it fails, callers fall back to fetch_price_chart for the
-    price and simply skip fundamentals for that stock."""
+def fetch_quote_summary(ticker, crumb):
+    """Price + fundamentals in one call. Undocumented endpoint that now
+    requires the session cookie + crumb obtained via get_crumb() — if this
+    fails for a stock, the caller falls back to fetch_price_chart for the
+    price and simply skips fundamentals for that stock."""
     sym = urllib.parse.quote(ticker + ".NS", safe="")
     modules = "price,summaryDetail,financialData"
-    url = f"https://query1.finance.yahoo.com/v10/finance/quoteSummary/{sym}?modules={modules}"
+    url = (f"https://query2.finance.yahoo.com/v10/finance/quoteSummary/{sym}"
+           f"?modules={modules}&crumb={urllib.parse.quote(crumb, safe='')}")
     req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=20) as r:
+    with _session.open(req, timeout=20) as r:
         data = json.load(r)
     result = data.get("quoteSummary", {}).get("result")
     return result[0] if result else None
@@ -126,15 +155,17 @@ def fetch_quote_summary(ticker):
 
 def fetch_stock(name):
     """Runs in a worker thread: resolve name -> ticker, fetch, return a
-    plain result tuple. No shared state, so no locking needed."""
+    plain result tuple. No shared state beyond the read-only crumb/session,
+    so no per-stock locking needed."""
     ticker = TICKERS.get(name)
     if not ticker:
         return name, ticker, None, "no ticker mapped"
 
     fields = {}
     price = None
+    crumb = get_crumb()
     try:
-        qs = fetch_quote_summary(ticker)
+        qs = fetch_quote_summary(ticker, crumb) if crumb else None
         if qs:
             price_mod, summary, fin = qs.get("price", {}), qs.get("summaryDetail", {}), qs.get("financialData", {})
             price = _raw(price_mod, "regularMarketPrice")
@@ -198,6 +229,11 @@ def main():
         sys.exit("STOCKS array not found in stock-screener.html — aborting without writes")
     stocks = json.loads(m.group(1))
     by_name = {s["n"]: s for s in stocks}
+
+    if get_crumb():
+        print("quoteSummary crumb obtained — fetching real fundamentals (P/E, div yield, mcap, growth)")
+    else:
+        print("quoteSummary crumb unavailable — falling back to price-only refresh with proportional scaling")
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
         results = list(ex.map(fetch_stock, by_name.keys()))
