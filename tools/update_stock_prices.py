@@ -5,15 +5,25 @@ Reads MaverickInvestor/stock-screener.html and rewrites the STOCKS array
 in place with live-sourced numbers, fetched concurrently (I/O-bound HTTP
 calls, so a thread pool is most of the wall-clock win here):
 
-  - price, market cap, trailing P/E, dividend yield, and YoY revenue/
-    earnings growth: fetched fresh per stock from Yahoo Finance's
-    quoteSummary endpoint (NSE tickers, ".NS" suffix)
-  - if quoteSummary has no usable price for a stock (endpoint hiccup,
-    delisting, etc.), price alone falls back to the plainer, more
-    reliable `chart` endpoint — the fundamentals just stay unchanged
-    for that stock rather than blocking its price update
-  - ROCE has no free live-data equivalent and is left untouched — it
-    stays a periodic manual snapshot from Screener.in (see the page note)
+  - price: fetched fresh per stock from Yahoo Finance's plain `chart`
+    endpoint (NSE tickers, ".NS" suffix) — cookie-free and reliable
+  - market cap, trailing P/E, dividend yield: attempted fresh per stock
+    from Yahoo's quoteSummary endpoint first (real values, plus YoY
+    revenue/earnings growth). As of this writing quoteSummary requires a
+    session cookie + crumb Yahoo now actively blocks from datacenter/CI
+    IPs (confirmed: the crumb handshake itself gets rejected with a
+    401/404 that varies run to run — this is Yahoo's anti-scraping
+    posture, not a bug here to keep chasing). When it's unavailable —
+    currently every run — these three fields fall back to being scaled
+    by the same ratio the price moved, which tracks reality closely
+    between full refreshes without being a genuine new data point.
+  - YoY revenue/earnings growth and ROCE have no free live-data
+    equivalent that currently works from here — they stay a periodic
+    manual snapshot from Screener.in (see the page note)
+
+If Yahoo's crumb flow ever starts working from GitHub's IP ranges again,
+real fundamentals will flow through automatically — get_crumb() is
+already wired up and only needs the handshake to stop being rejected.
 
 Safety rules, since a bad ticker match would silently corrupt investment
 data:
