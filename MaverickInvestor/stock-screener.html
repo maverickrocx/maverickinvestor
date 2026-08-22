@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="hero">
     <h1>Maverick <span>Stock Screener</span></h1>
     <p>Total-return screening across Nifty 50, Nifty Midcap 50 &amp; Nifty Smallcap 50 — showing the <strong>top 10 stocks for your risk profile</strong>, ranked by price-appreciation potential and dividend income.</p>
-    <div class="asof">Fundamentals sourced from Screener.in as of <span id="fundAsOf">7 August 2026</span> · Price updated <span id="priceAsOf">7 August 2026</span></div>
+    <div class="asof">ROCE from Screener.in as of <span id="fundAsOf">7 August 2026</span> (manual) · Price, P/E, market cap &amp; growth auto-updated <span id="priceAsOf">7 August 2026</span></div>
   </div>
   <div class="panel">
     <h3>1 · Your investor profile</h3>
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <p class="legend">The three cap indices come first &mdash; their <strong>Mkt Cap is the index total</strong>, while the ratio columns (P/E, yields, ROCE, growth) are the median of their constituents &mdash; followed by the top 5 stocks of the chosen sector. Switch profile above to re-rank.</p>
   </div>
   <div class="disclaimer"><strong>Disclaimer:</strong> This screener is an analytical tool, not investment advice and not SEBI-registered research. Scores rank stocks on a transparent factor model using point-in-time data; they do not predict returns and are not buy/sell recommendations. Equity investments carry market risk. Consult a qualified, registered adviser before investing.</div>
-  <p class="note"><strong>About the data:</strong> Fundamentals are a curated snapshot (P/E, dividend yield, ROCE, YoY profit &amp; sales growth) from Screener.in, refreshed periodically. Technical signals (RSI, moving averages, Bollinger Bands, patterns) are a planned phase-2 addition.</p>
+  <p class="note"><strong>About the data:</strong> Price, market cap, P/E, dividend yield, and YoY profit &amp; sales growth are auto-refreshed weekly from live market data. ROCE remains a periodic manual snapshot from Screener.in, since no free live feed publishes it. Technical signals (RSI, moving averages, Bollinger Bands, patterns) are a planned phase-2 addition.</p>
 </div>
 <footer>
   <div class="footer-inner">

@@ -9,6 +9,7 @@ Stdlib only. Run:
     python -c "import rank_funds; rank_funds.write_rankings(CAND, OUT)"
 """
 import json, os, tempfile, urllib.request, datetime, statistics, math
+from concurrent.futures import ThreadPoolExecutor
 
 RF = 0.065  # risk-free assumption for Sharpe/Sortino
 
@@ -190,12 +191,22 @@ def _corr(a, b):
     return num/den if den else 0
 
 
-def rank_category(cat, bench_series):
+def fetch_all_series(codes, max_workers=12):
+    """Fetch NAV series for every scheme code concurrently — these are
+    independent I/O-bound HTTP calls, so a thread pool cuts wall-clock time
+    roughly max_workers-fold versus fetching one at a time."""
+    codes = sorted(set(c for c in codes if c))
+    with ThreadPoolExecutor(max_workers=max_workers) as ex:
+        results = list(ex.map(navseries, codes))
+    return {code: series for code, (series, _name) in zip(codes, results)}
+
+
+def rank_category(cat, bench_series, series_cache):
     prof = cat['profile']
     bench = bench_series if prof == 'activeEquity' else None
     eligible = []
     for fd in cat['funds']:
-        s, nm = navseries(fd['schemeCode'])
+        s = series_cache.get(fd['schemeCode'], [])
         yrs = round((s[-1][0]-s[0][0]).days/365, 1) if s else 0
         min_yrs = 3 if fd.get('isIndex') else 5
         if yrs < min_yrs:
@@ -210,17 +221,15 @@ def rank_category(cat, bench_series):
 
 def write_rankings(candidates_path, out_path):
     cfg = json.load(open(candidates_path))
-    # benchmarks
-    bench_cache = {}
+    all_codes = [bcode for cat in cfg["categories"].values() if (bcode := cat.get("benchmarkSchemeCode"))]
+    all_codes += [fd['schemeCode'] for cat in cfg["categories"].values() for fd in cat['funds']]
+    series_cache = fetch_all_series(all_codes)
+
     out = {"asOf": datetime.date.today().isoformat(), "categories": {}}
     for catkey, cat in cfg["categories"].items():
-        for fd in cat["funds"]:
-            fd  # noqa
         bcode = cat.get("benchmarkSchemeCode")
-        if bcode and bcode not in bench_cache:
-            bench_cache[bcode] = navseries(bcode)[0]
-        bench = bench_cache.get(bcode) if bcode else None
-        funds = rank_category(cat, bench)
+        bench = series_cache.get(bcode) if bcode else None
+        funds = rank_category(cat, bench, series_cache)
         for f in funds:
             f['_catkey'] = catkey
         ranked = composite(funds, cat['profile'])

@@ -1,29 +1,39 @@
 """
-Maverick Investor — weekly stock price refresh.
+Maverick Investor — weekly stock data refresh.
 
-Reads MaverickInvestor/stock-screener.html, fetches each stock's latest
-closing price from Yahoo Finance's public quote endpoint (NSE tickers,
-".NS" suffix), and rewrites the STOCKS array in place: price, and mcap/pe/
-divYield scaled by the same ratio the price moved. ROCE and profit/sales
-growth are fundamentals from Screener.in and are left untouched here —
-those still need a manual refresh (see the "Fundamentals sourced from
-Screener.in" note on the page).
+Reads MaverickInvestor/stock-screener.html and rewrites the STOCKS array
+in place with live-sourced numbers, fetched concurrently (I/O-bound HTTP
+calls, so a thread pool is most of the wall-clock win here):
+
+  - price, market cap, trailing P/E, dividend yield, and YoY revenue/
+    earnings growth: fetched fresh per stock from Yahoo Finance's
+    quoteSummary endpoint (NSE tickers, ".NS" suffix)
+  - if quoteSummary has no usable price for a stock (endpoint hiccup,
+    delisting, etc.), price alone falls back to the plainer, more
+    reliable `chart` endpoint — the fundamentals just stay unchanged
+    for that stock rather than blocking its price update
+  - ROCE has no free live-data equivalent and is left untouched — it
+    stays a periodic manual snapshot from Screener.in (see the page note)
 
 Safety rules, since a bad ticker match would silently corrupt investment
 data:
   - a stock with no ticker mapping, a failed fetch, or a >45% implied
-    weekly move is skipped and logged, not guessed at
-  - if fewer than 70% of stocks refresh successfully, nothing is written
+    weekly price move is skipped and logged, not guessed at
+  - an implausible fundamentals value (e.g. a mis-parsed market cap) is
+    dropped for that field only; the price update still applies
+  - if fewer than 70% of stocks get a price refresh, nothing is written
 
 Stdlib only. Run:
     python tools/update_stock_prices.py
 """
 import json, os, re, sys, tempfile, datetime, urllib.request, urllib.parse
+from concurrent.futures import ThreadPoolExecutor
 
 HTML_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                          "MaverickInvestor", "stock-screener.html")
 
 MAX_WEEKLY_MOVE = 0.45
+MAX_WORKERS = 16
 UA = "Mozilla/5.0 (compatible; MaverickInvestorBot/1.0; +https://maverickinvestor.in)"
 
 # Curated name -> NSE ticker (Yahoo Finance symbol is TICKER.NS).
@@ -79,7 +89,14 @@ TICKERS = {
 }
 
 
-def fetch_price(ticker):
+def _raw(mod, key):
+    v = mod.get(key)
+    return v.get("raw") if isinstance(v, dict) else None
+
+
+def fetch_price_chart(ticker):
+    """The plain, long-stable quote endpoint — price only. Used as a
+    fallback when quoteSummary (below) has no usable price for a stock."""
     sym = urllib.parse.quote(ticker + ".NS", safe="")
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}"
     req = urllib.request.Request(url, headers={"User-Agent": UA})
@@ -92,39 +109,127 @@ def fetch_price(ticker):
     return float(price) if price else None
 
 
+def fetch_quote_summary(ticker):
+    """Price + fundamentals in one call. This endpoint is undocumented and
+    occasionally requires a session cookie/crumb Yahoo doesn't always
+    enforce — if it fails, callers fall back to fetch_price_chart for the
+    price and simply skip fundamentals for that stock."""
+    sym = urllib.parse.quote(ticker + ".NS", safe="")
+    modules = "price,summaryDetail,financialData"
+    url = f"https://query1.finance.yahoo.com/v10/finance/quoteSummary/{sym}?modules={modules}"
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=20) as r:
+        data = json.load(r)
+    result = data.get("quoteSummary", {}).get("result")
+    return result[0] if result else None
+
+
+def fetch_stock(name):
+    """Runs in a worker thread: resolve name -> ticker, fetch, return a
+    plain result tuple. No shared state, so no locking needed."""
+    ticker = TICKERS.get(name)
+    if not ticker:
+        return name, ticker, None, "no ticker mapped"
+
+    fields = {}
+    price = None
+    try:
+        qs = fetch_quote_summary(ticker)
+        if qs:
+            price_mod, summary, fin = qs.get("price", {}), qs.get("summaryDetail", {}), qs.get("financialData", {})
+            price = _raw(price_mod, "regularMarketPrice")
+            fields = {
+                "mcap_rupees": _raw(price_mod, "marketCap"),
+                "pe": _raw(summary, "trailingPE"),
+                "divYield_raw": _raw(summary, "dividendYield"),
+                "salesGr_frac": _raw(fin, "revenueGrowth"),
+                "profitGr_frac": _raw(fin, "earningsGrowth"),
+            }
+    except Exception:
+        pass  # quoteSummary is best-effort; chart fallback below covers price
+
+    if not price:
+        try:
+            price = fetch_price_chart(ticker)
+        except Exception as e:
+            return name, ticker, None, str(e)
+
+    if not price or price <= 0:
+        return name, ticker, None, "no usable price"
+    return name, ticker, (float(price), fields), None
+
+
+def apply_fundamentals(s, fields):
+    """Applies whatever real fundamentals fields came back; each one is
+    independently sanity-checked and simply skipped (not guessed) if it
+    looks like a parsing error, rather than risking bad data on the page."""
+    mcap_rupees = fields.get("mcap_rupees")
+    if mcap_rupees and mcap_rupees > 0:
+        mcap_cr = mcap_rupees / 1e7
+        old_mcap = s.get("mcap") or 0
+        if old_mcap <= 0 or 0.2 < mcap_cr / old_mcap < 5:
+            s["mcap"] = round(mcap_cr, 2)
+
+    pe = fields.get("pe")
+    if pe and 0 < pe < 1000:
+        s["pe"] = round(pe, 2)
+
+    div_raw = fields.get("divYield_raw")
+    if div_raw is not None and div_raw >= 0:
+        # Yahoo has historically returned dividendYield as either a
+        # fraction (0.018) or already as percent (1.8) — normalize.
+        pct = div_raw * 100 if div_raw < 1 else div_raw
+        if pct < 25:
+            s["divYield"] = round(pct, 2)
+
+    sales_gr = fields.get("salesGr_frac")
+    if sales_gr is not None and abs(sales_gr) < 10:
+        s["salesGr"] = round(sales_gr * 100, 2)
+
+    profit_gr = fields.get("profitGr_frac")
+    if profit_gr is not None and abs(profit_gr) < 10:
+        s["profitGr"] = round(profit_gr * 100, 2)
+
+
 def main():
     text = open(HTML_PATH, encoding="utf-8").read()
     m = re.search(r"const STOCKS=(\[.*?\]);", text, re.DOTALL)
     if not m:
         sys.exit("STOCKS array not found in stock-screener.html — aborting without writes")
     stocks = json.loads(m.group(1))
+    by_name = {s["n"]: s for s in stocks}
+
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
+        results = list(ex.map(fetch_stock, by_name.keys()))
 
     updated, skipped, review = 0, [], []
-    for s in stocks:
-        ticker = TICKERS.get(s["n"])
-        if not ticker:
-            skipped.append(f"{s['n']} (no ticker mapped)")
+    for name, ticker, payload, err in results:
+        s = by_name[name]
+        if err:
+            skipped.append(f"{name} ({ticker or '?'}): {err}")
             continue
-        try:
-            price = fetch_price(ticker)
-        except Exception as e:
-            skipped.append(f"{s['n']} ({ticker}): {e}")
-            continue
+        price, fields = payload
         old = s.get("price") or 0
-        if not price or price <= 0 or old <= 0:
-            skipped.append(f"{s['n']} ({ticker}): no usable price")
+        if old <= 0:
+            skipped.append(f"{name} ({ticker}): no existing price to compare against")
             continue
         ratio = price / old
         if abs(ratio - 1) > MAX_WEEKLY_MOVE:
-            review.append(f"{s['n']} ({ticker}): {old} -> {price} ({(ratio - 1) * 100:+.1f}%)")
+            review.append(f"{name} ({ticker}): {old} -> {price} ({(ratio - 1) * 100:+.1f}%)")
             continue
         s["price"] = round(price, 2)
-        if s.get("mcap"):
-            s["mcap"] = round(s["mcap"] * ratio, 2)
-        if s.get("pe"):
-            s["pe"] = round(s["pe"] * ratio, 2)
-        if s.get("divYield"):
-            s["divYield"] = round(s["divYield"] / ratio, 2)
+        if fields:
+            apply_fundamentals(s, fields)
+        else:
+            # quoteSummary failed for this stock — chart fallback still
+            # scales mcap/PE/divYield proportionally so they stay roughly
+            # consistent with the new price rather than going stale.
+            if s.get("mcap"):
+                s["mcap"] = round(s["mcap"] * ratio, 2)
+            if s.get("pe"):
+                s["pe"] = round(s["pe"] * ratio, 2)
+            if s.get("divYield"):
+                s["divYield"] = round(s["divYield"] / ratio, 2)
         updated += 1
 
     print(f"updated {updated}/{len(stocks)} · skipped {len(skipped)} · flagged for review {len(review)}")

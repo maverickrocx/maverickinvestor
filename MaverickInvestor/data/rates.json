@@ -1,0 +1,25 @@
+{
+  "quarter": "Jul-Sep 2026 (Q2 FY2026-27)",
+  "asOf": "2026-08-22",
+  "nextReviewDue": "2026-09-30",
+  "smallSavings": [
+    { "scheme": "Public Provident Fund (PPF)", "rate": 7.1, "compounding": "Annual" },
+    { "scheme": "Sukanya Samriddhi Yojana (SSY)", "rate": 8.2, "compounding": "Annual" },
+    { "scheme": "Senior Citizen Savings Scheme (SCSS)", "rate": 8.2, "compounding": "Quarterly" },
+    { "scheme": "National Savings Certificate (NSC)", "rate": 7.7, "compounding": "Annual" },
+    { "scheme": "Kisan Vikas Patra (KVP)", "rate": 7.5, "compounding": "Matures in 115 months" },
+    { "scheme": "Post Office Monthly Income Scheme (POMIS)", "rate": 7.4, "compounding": "Monthly payout" },
+    { "scheme": "Post Office Time Deposit — 1 yr", "rate": 6.9, "compounding": "Quarterly" },
+    { "scheme": "Post Office Time Deposit — 2 yr", "rate": 7.0, "compounding": "Quarterly" },
+    { "scheme": "Post Office Time Deposit — 3 yr", "rate": 7.1, "compounding": "Quarterly" },
+    { "scheme": "Post Office Time Deposit — 5 yr", "rate": 7.5, "compounding": "Quarterly" }
+  ],
+  "epf": { "rate": 8.25, "fy": "FY 2025-26", "source": "EPFO / Ministry of Labour & Employment" },
+  "repoRate": { "rate": 5.25, "asOf": "2026-08-05", "source": "RBI Monetary Policy Committee" },
+  "sources": [
+    "Department of Economic Affairs, Ministry of Finance (small savings schemes, notified quarterly)",
+    "EPFO (EPF rate, notified annually)",
+    "RBI MPC (repo rate, reviewed bi-monthly)"
+  ],
+  "note": "Small savings rates are notified quarterly by the Finance Ministry and have no free machine-readable feed, so this file is a manually verified snapshot rather than a live API pull. The weekly refresh job only checks whether nextReviewDue has passed and flags it for manual re-verification — it does not overwrite these numbers automatically."
+}

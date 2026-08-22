@@ -1,0 +1,44 @@
+name: Weekly data refresh
+
+on:
+  schedule:
+    # Saturdays 01:00 UTC = 06:30 IST — well after Friday's close data has
+    # settled on both mfapi.in and Yahoo Finance, before the site sees
+    # weekend traffic.
+    - cron: "0 1 * * 6"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Each script fetches its own data set concurrently (ThreadPoolExecutor)
+      # rather than sequentially — the run time here is dominated by network
+      # I/O, not CPU, so parallel HTTP requests are the real speed lever.
+      # They run as separate steps (not one script) so a failure in one
+      # doesn't block the other, and each leaves a clear log to debug from.
+      - name: Refresh MF NAV rankings
+        run: python tools/rank_funds.py
+
+      - name: Refresh stock prices & fundamentals
+        run: python tools/update_stock_prices.py
+
+      - name: Check small-savings/repo rate review due
+        run: python tools/check_rates_due.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "maverick-bot"
+          git config user.email "noreply@maverickinvestor.in"
+          git add MaverickInvestor/data/fund-rankings.json MaverickInvestor/stock-screener.html
+          git diff --staged --quiet || git commit -m "chore: weekly data refresh (NAV rankings + stock prices)"
+          git push
