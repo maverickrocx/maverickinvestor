@@ -1,0 +1,46 @@
+name: Monthly data review
+
+on:
+  schedule:
+    # 1st of the month, 02:00 UTC. Deliberately not weekly: the figures this
+    # job touches change quarterly at most, and the Screener.in crawl below
+    # should be asked for sparingly.
+    - cron: "0 2 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    # The fundamentals crawl is one request at a time with real spacing, so
+    # it is ~13 minutes of mostly waiting. Generous ceiling in case Screener
+    # is running slow.
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Refresh stock fundamentals from Screener.in
+        run: python tools/update_fundamentals.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "maverick-bot"
+          git config user.email "noreply@maverickinvestor.in"
+          git add MaverickInvestor/stock-screener.html
+          git diff --staged --quiet || git commit -m "chore: monthly fundamentals refresh (Screener.in)"
+          git push
+
+      # Runs even if the crawl above failed — the review issue is how a failed
+      # refresh gets noticed at all, so it must not be skipped by one.
+      - name: Raise/refresh the manual-data review issue
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python tools/monthly_review.py

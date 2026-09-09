@@ -21,19 +21,22 @@ jobs:
         with:
           python-version: "3.12"
 
-      # Each script fetches its own data set concurrently (ThreadPoolExecutor)
-      # rather than sequentially — the run time here is dominated by network
-      # I/O, not CPU, so parallel HTTP requests are the real speed lever.
-      # They run as separate steps (not one script) so a failure in one
-      # doesn't block the other, and each leaves a clear log to debug from.
+      # Weekly cadence covers the two things that actually move week to week.
+      # Stock fundamentals (P/E, ROCE, growth) only change when a company
+      # reports, so they refresh monthly instead — see monthly-review.yml.
+      # Separate steps so a failure in one doesn't block the other, and each
+      # leaves a clear log to debug from.
       - name: Refresh MF NAV rankings
         run: python tools/rank_funds.py
 
-      - name: Refresh stock prices & fundamentals
+      - name: Refresh stock prices
         run: python tools/update_stock_prices.py
 
-      - name: Check small-savings/repo rate review due
-        run: python tools/check_rates_due.py
+      # Warn-only: a drifted scheme code is worth knowing about, but it is not
+      # a reason to fail a data refresh. monthly_review.py raises the issue.
+      - name: Verify AMFI scheme codes
+        run: python tools/verify_scheme_codes.py
+        continue-on-error: true
 
       - name: Commit if changed
         run: |
