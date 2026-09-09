@@ -31,7 +31,12 @@ import urllib.parse
 import urllib.request
 
 UA = "Mozilla/5.0 (compatible; MaverickInvestorBot/1.0; +https://maverickinvestor.in)"
-BASE = "https://www.screener.in/company/{sym}/consolidated/"
+# Consolidated figures first — they are the right view for a group with
+# subsidiaries. Companies that file standalone-only (most banks and insurers,
+# and a few others like Castrol) still serve /consolidated/, but without the
+# ratio block, so fall back to the plain page for those.
+BASE_CONSOLIDATED = "https://www.screener.in/company/{sym}/consolidated/"
+BASE_STANDALONE = "https://www.screener.in/company/{sym}/"
 TIMEOUT = 25
 
 # Deliberate spacing between requests, enforced across any callers.
@@ -51,10 +56,9 @@ def _polite_wait():
         _last_request[0] = time.monotonic()
 
 
-def _fetch(sym):
-    """A company page. `sym` is an NSE ticker; & and friends need encoding
-    (M&M is a real symbol) or the URL silently truncates."""
-    url = BASE.format(sym=urllib.parse.quote(sym, safe=""))
+def _fetch(url):
+    """One company page. The symbol is URL-encoded by the caller; & and
+    friends need it (M&M is a real symbol) or the URL silently truncates."""
     req = urllib.request.Request(url, headers={
         "User-Agent": UA,
         "Accept": "text/html,application/xhtml+xml",
@@ -114,14 +118,19 @@ def fetch(sym):
     fields come back as None rather than raising — a page that omits ROCE
     should still yield its P/E.
     """
-    try:
-        text = _fetch(sym)
-    except Exception as e:
-        return None, f"{type(e).__name__}: {str(e)[:120]}"
+    quoted = urllib.parse.quote(sym, safe="")
+    text, ratios = None, {}
+    for template in (BASE_CONSOLIDATED, BASE_STANDALONE):
+        try:
+            text = _fetch(template.format(sym=quoted))
+        except Exception as e:
+            return None, f"{type(e).__name__}: {str(e)[:120]}"
+        ratios = parse_ratios(text)
+        if ratios:
+            break
 
-    ratios = parse_ratios(text)
     if not ratios:
-        return None, "no ratio block found (page layout changed?)"
+        return None, "no ratio block found on either the consolidated or standalone page"
 
     return {
         "price": ratios.get("Current Price"),
