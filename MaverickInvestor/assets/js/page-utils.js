@@ -1,6 +1,7 @@
 // assets/js/page-utils.js — floating back + back-to-top circles on every page.
 //
-// Back shows whenever there is history to go back to; back-to-top only fades
+// Back shows only when the previous page was on this site (so it never sends
+// a reader off the website) and never on the Home page. Back-to-top only fades
 // in once the reader has scrolled past the fold.
 (function () {
   var wrap = document.createElement('div');
@@ -27,7 +28,12 @@
   wrap.appendChild(top);
   document.body.appendChild(wrap);
 
-  back.classList.toggle('show', window.history.length > 1);
+  var file = location.pathname.split('/').pop();
+  var isHome = file === '' || file === 'index.html';
+  var fromSite = false;
+  try { fromSite = !!document.referrer && new URL(document.referrer).origin === location.origin; } catch (e) {}
+  if (isHome || !fromSite) back.remove();
+  else back.classList.add('show');
   function update() { top.classList.toggle('show', window.scrollY > 300); }
   window.addEventListener('scroll', update, { passive: true });
   update();

@@ -93,7 +93,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; overflow-x: clip; background: var(--bg); }
 body {
-  position: relative; background: var(--bg); color: var(--ink);
+  position: relative; color: var(--ink);
   font-family: var(--font); font-size: 15px; line-height: 1.6;
   min-height: 100vh; overflow-x: clip;
 }
@@ -168,7 +168,7 @@ section { padding: var(--s8) 0; }
 }
 .ticker-track {
   display: flex; gap: 2.5rem; width: max-content; white-space: nowrap;
-  animation: ticker 40s linear infinite;
+  animation: ticker 90s linear infinite;
 }
 .ticker-track:hover { animation-play-state: paused; }
 @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -197,6 +197,13 @@ mi-nav, mi-footer { display: contents; }
 .logo-icon img { width: 100%; height: 100%; object-fit: cover; }
 .logo-word { font: 800 18px/1 var(--font); letter-spacing: -.01em; color: var(--ink); }
 .logo-word strong { color: var(--accent-text); font-weight: 800; }
+.nav-brand { display: flex; align-items: center; gap: 16px; justify-self: start; min-width: 0; }
+.nav-tagline { padding-left: 16px; border-left: 1px solid var(--border); font: 400 16px/1.15 var(--font-display); color: var(--ink-muted); white-space: nowrap; }
+.nav-tagline em { color: var(--accent-text); }
+/* Room for it beside six links only on wide screens; the collapsed (burger)
+   nav has room again until phone widths. */
+@media (max-width: 1180px) and (min-width: 901px) { .nav-tagline { display: none; } }
+@media (max-width: 640px) { .nav-tagline { display: none; } }
 .nav-links { display: flex; align-items: center; gap: 24px; justify-self: end; }
 .nav-links a { color: var(--ink-muted); font: 600 14px/1 var(--font); padding: 6px 0; border-bottom: 2px solid transparent; transition: color var(--m-micro); }
 .nav-links a:hover { color: var(--ink); }
@@ -273,7 +280,8 @@ mi-nav, mi-footer { display: contents; }
    PAGE UTILITIES — floating back / back-to-top circles
    (created by assets/js/page-utils.js)
 ══════════════════════════════════════════════════════════ */
-.pageutils { position: fixed; right: var(--edge); bottom: var(--edge); z-index: 70; display: flex; flex-direction: column; gap: 10px; }
+/* 1mm inside the right guide line. */
+.pageutils { position: fixed; right: calc(var(--edge) + 1mm); bottom: var(--edge); z-index: 70; display: flex; flex-direction: column; gap: 10px; }
 .pageutils button {
   width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface);
   color: var(--ink-muted); font: 600 16px/1 var(--mono); cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,.14);
@@ -338,8 +346,12 @@ mi-nav, mi-footer { display: contents; }
 /* ══════════════════════════════════════════════════════════
    HOME — hero
 ══════════════════════════════════════════════════════════ */
-.hero { position: relative; padding: var(--s7) 0 var(--s8); border-bottom: 1px solid var(--border); overflow: hidden; }
-.hero-candles { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .12; z-index: 0; }
+.hero { position: relative; padding: var(--s7) 0 var(--s8); border-bottom: 1px solid var(--border); }
+/* Page-wide candlestick backdrop (Home). Fixed behind everything; tiles and
+   cards have solid backgrounds, so the candles show only in the gaps. */
+.page-candles { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; opacity: .2; }
+[data-theme="dark"] .page-candles { opacity: .24; }
+@media (prefers-reduced-motion: reduce) { .page-candles { display: none; } }
 .hero > .container { position: relative; z-index: 1; }
 .hero-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: var(--s7); align-items: center; }
 .hero-label { display: inline-flex; align-items: center; gap: var(--s3); font: 500 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: var(--s5); }
@@ -463,7 +475,7 @@ mi-nav, mi-footer { display: contents; }
 /* ══════════════════════════════════════════════════════════
    HOME — why us
 ══════════════════════════════════════════════════════════ */
-.why-section { background: var(--bg-elev); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.why-section { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .why-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s4); margin-top: var(--s7); }
 .why-card {
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: var(--s5);

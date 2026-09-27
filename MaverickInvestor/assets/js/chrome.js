@@ -40,7 +40,10 @@
     }).join('');
     return '<header class="nav">' +
       '<div class="nav-inner">' +
-        '<a class="logo" href="index.html" aria-label="Maverick Investor — home">' + logo() + '</a>' +
+        '<div class="nav-brand">' +
+          '<a class="logo" href="index.html" aria-label="Maverick Investor — home">' + logo() + '</a>' +
+          '<span class="nav-tagline"><em>Maverick</em> thinking.<br>Investor returns.</span>' +
+        '</div>' +
         '<nav class="nav-links" id="navLinks" aria-label="Main">' + links + '</nav>' +
         '<div class="nav-act">' +
           '<button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to dark mode">' + SUN + MOON + '</button>' +

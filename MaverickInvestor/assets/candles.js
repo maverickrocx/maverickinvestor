@@ -58,6 +58,11 @@
 
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // opts.palette() -> { up: 'r,g,b', down: 'r,g,b' }, read every frame so a
+      // theme switch recolours the candles without a reload.
+      var pal = (opts.palette && opts.palette()) || { up: '74,222,128', down: '248,113,113' };
+      var need = Math.ceil(canvas.width / 28);
+      while (candles.length < need) candles.push(makeCandle(candles.length, canvas.height));
       updateTrend();
       candles.forEach(function (c, idx) {
         c.timer++;
@@ -67,7 +72,7 @@
           c.formTimer++;
           c.bodyH = Math.min(c.targetBodyH, (c.formTimer / c.formDuration) * c.targetBodyH);
         }
-        var color = c.isUp ? 'rgba(74,222,128,' + c.alpha + ')' : 'rgba(248,113,113,' + c.alpha + ')';
+        var color = 'rgba(' + (c.isUp ? pal.up : pal.down) + ',' + c.alpha + ')';
         ctx.beginPath();
         ctx.strokeStyle = color;
         ctx.lineWidth = 1.5;

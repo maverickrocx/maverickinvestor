@@ -53,6 +53,9 @@
 <!-- ===== /Maverick intro ===== -->
 
 
+<!-- Candlestick backdrop for the whole page; the tiles sit on top of it -->
+<canvas id="page-candles" class="page-candles" aria-hidden="true"></canvas>
+
 <!-- Live ticker (filled by buildTicker) -->
 <div class="ticker-bar" aria-label="Fund NAV ticker">
   <div class="ticker-track" id="tickerTrack"></div>
@@ -65,7 +68,6 @@
      HERO
 ============================================================ -->
 <section class="hero" id="hero">
-  <canvas id="hero-candles" class="hero-candles" aria-hidden="true"></canvas>
   <div class="container">
     <div class="hero-grid">
       <div class="hero-copy">
@@ -1005,7 +1007,15 @@
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    initMaverickCandles({ canvasId: 'hero-candles', containerSelector: '.hero', sizeToWindow: false });
+    initMaverickCandles({
+      canvasId: 'page-candles', sizeToWindow: true,
+      // Deeper greens/reds on the light canvas; the originals read well on dark.
+      palette: function () {
+        return document.documentElement.getAttribute('data-theme') === 'dark'
+          ? { up: '74,222,128', down: '248,113,113' }
+          : { up: '21,128,61', down: '185,28,28' };
+      }
+    });
     initGSAP();
   });
 })();
