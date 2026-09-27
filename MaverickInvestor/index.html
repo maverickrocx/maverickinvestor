@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>(function(){try{if(localStorage.getItem('mi-theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();</script>
+  <script>(function(){var d=document.documentElement;try{if(localStorage.getItem('mi-theme')==='dark'){d.setAttribute('data-theme','dark');}}catch(e){}if(!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)){d.classList.add('rv');}})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Maverick Investor — Smart Money for Every Indian</title>
   <meta name="description" content="Live mutual fund NAVs, SIP and retirement calculators, and unbiased, commission-free guidance for Indian investors.">
@@ -26,15 +26,21 @@
   <div id="mv-skip">SKIP ▶</div>
 </div>
 <script>
+// Animations that should be seen (hero entrance, tile reveals) wait for the
+// intro to start fading: miAfterIntro(fn) runs fn then, or at once if no intro.
+(function(){var q=[],open=false;
+  window.miAfterIntro=function(f){ if(open) f(); else q.push(f); };
+  window.miIntroDone=function(){ if(open) return; open=true; q.splice(0).forEach(function(f){ f(); }); };
+})();
 (function(){
-  var el=document.getElementById('mv-intro'); if(!el) return;
+  var el=document.getElementById('mv-intro'); if(!el){ miIntroDone(); return; }
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduce){ el.parentNode.removeChild(el); return; }   // no autoplay for reduced-motion users
+  if(reduce){ el.parentNode.removeChild(el); miIntroDone(); return; }   // no autoplay for reduced-motion users
   var seen; try{ seen=sessionStorage.getItem('mvIntroSeen'); }catch(e){}
-  if(seen){ el.parentNode.removeChild(el); return; }        // once per session
+  if(seen){ el.parentNode.removeChild(el); miIntroDone(); return; }        // once per session
   try{ sessionStorage.setItem('mvIntroSeen','1'); }catch(e){}
   var vid=document.getElementById('mv-vid'), done=false;
-  function finish(){ if(done) return; done=true;
+  function finish(){ if(done) return; done=true; miIntroDone();
     el.classList.add('mv-out');
     setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 560); }
   el.addEventListener('click', finish);                     // click anywhere / SKIP to dismiss
@@ -1016,7 +1022,7 @@
           : { up: '21,128,61', down: '185,28,28' };
       }
     });
-    initGSAP();
+    miAfterIntro(initGSAP);
   });
 })();
 </script>
@@ -1025,6 +1031,7 @@
 <script src="assets/js/theme.js"></script>
 <script src="assets/js/edge-guide.js"></script>
 <script src="assets/js/page-utils.js"></script>
+<script src="assets/js/reveal.js"></script>
 
 </body>
 </html>

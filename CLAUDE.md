@@ -44,7 +44,10 @@ Design rationale: `MaverickInvestor/docs/superpowers/specs/`.
 - Shared nav/footer: `assets/js/chrome.js` renders `<mi-nav>` / `<mi-footer>`
   (load it synchronously in `<head>`). Edit links there, once.
 - Also per page: the inline no-flash `mi-theme` script first in `<head>`, then
-  `theme.js`, `edge-guide.js`, `page-utils.js` before `</body>`.
+  `theme.js`, `edge-guide.js`, `page-utils.js`, `reveal.js` before `</body>`.
+  The head script also adds `html.rv` (tile entrance animation) unless the
+  reader prefers reduced motion; tiles to animate are listed in `reveal.js`
+  and the matching `.rv :is(...)` rule in `site.css`.
 - Converted so far: `index.html`. The other pages still carry their own inline
   palettes until they are converted.
 - Screener.in tarpits fast crawls: keep `update_fundamentals.py` sequential

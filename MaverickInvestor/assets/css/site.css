@@ -329,6 +329,19 @@ mi-nav, mi-footer { display: contents; }
 }
 
 /* ══════════════════════════════════════════════════════════
+   TILE REVEAL — the hero portfolio card's entrance, for every tile
+   (assets/js/reveal.js; html.rv is set in <head> unless reduced motion)
+══════════════════════════════════════════════════════════ */
+.rv :is(.hero-sip-calc, .fund-cat-block, .why-card, .ret-cta-card, .phone):not(.is-in) {
+  opacity: 0; transform: translateY(30px) scale(.97);
+}
+/* power2.out, 0.8s — the same curve GSAP uses for the portfolio card. Once the
+   entrance ends (.is-done) each tile's own hover transition applies again. */
+.rv :is(.hero-sip-calc, .fund-cat-block, .why-card, .ret-cta-card, .phone).is-in:not(.is-done) {
+  transition: opacity .8s cubic-bezier(.25,.46,.45,.94), transform .8s cubic-bezier(.25,.46,.45,.94);
+}
+
+/* ══════════════════════════════════════════════════════════
    HOME — intro video
 ══════════════════════════════════════════════════════════ */
 #mv-intro { position: fixed; inset: 0; z-index: 99999; background: #0A0B0D; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: opacity .55s ease; }
