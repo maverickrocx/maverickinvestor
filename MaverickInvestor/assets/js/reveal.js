@@ -6,7 +6,7 @@
 // Tiles that a script re-renders (the fund tables refresh every 5 minutes)
 // are recognised by data-group and shown at once instead of replaying.
 (function () {
-  var SEL = '.hero-sip-calc, .fund-cat-block, .why-card, .ret-cta-card, .app-grid, .disclaimer';
+  var SEL = '.hero-sip-calc, .fund-cat-block, .why-card, .ret-cta-card, .app-grid, .disclaimer, .tile';
   var root = document.documentElement;
   if (!root.classList.contains('rv')) return;
 

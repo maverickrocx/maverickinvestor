@@ -1,155 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maverick Stock Screener</title>
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<script src="assets/candles.js" defer></script>
-<style>
-:root{--orange:#f97316;--dark:#0f172a;--card:#1e293b;--card2:#263348;--text:#e2e8f0;--muted:#94a3b8;
- --border:rgba(255,255,255,.10);--radius:16px;--green:#22c55e;--red:#f87171;--blue:#3b82f6;--orange-light:#fb923c;--green-dark:#0f172a;--font:'Segoe UI',system-ui,sans-serif;}
-*{box-sizing:border-box;margin:0;padding:0;}
-html{background:var(--dark);}
-body{font-family:var(--font);background:transparent;color:var(--text);line-height:1.6;}
-.topbar{background:rgba(15,23,42,.95);border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:1000;backdrop-filter:blur(12px);}
-.topbar-inner{display:grid;grid-template-columns:auto 1fr auto;align-items:center;max-width:1160px;margin:0 auto;padding:0 1.5rem;height:64px;}
-.logo{display:flex;align-items:center;gap:.6rem;font-weight:800;font-size:1.2rem;color:var(--text);text-decoration:none;}
-.logo-icon{width:54px;height:54px;background:#0f172a;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
-.logo-icon img{width:100%;height:100%;object-fit:cover;display:block;}
-.logo-mav{background:linear-gradient(135deg,#fed7aa 0%,#f97316 45%,#c2410c 75%,#fdba74 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-transform:uppercase;}
-.nav-links{display:flex;align-items:center;justify-content:center;gap:2rem;list-style:none;margin:0;padding:0;}
-.nav-links a{font-size:.9rem;font-weight:600;color:rgba(255,255,255,.85);text-decoration:none;transition:color .15s;}
-.nav-links a:hover{color:var(--text);}
-.nav-active{color:var(--orange)!important;}
-.nav-tagline{text-align:right;font-size:.72rem;font-weight:700;line-height:1.3;letter-spacing:.03em;text-transform:uppercase;white-space:nowrap;}
-.nav-tagline .t-maverick{color:var(--orange);}
-.nav-tagline .t-investor{color:rgba(255,255,255,.75);font-weight:400;}
-@media(max-width:820px){.nav-links{display:none;}}
-@media(max-width:720px){.nav-tagline{display:none;}}
-.wrap{max-width:1160px;margin:0 auto;padding:2.25rem 1.5rem 4rem;position:relative;z-index:1;}
-.hero{background:linear-gradient(135deg,rgba(30,41,59,.98) 0%,rgba(249,115,22,.09) 55%,rgba(30,41,59,.98) 100%);border-radius:18px;border:1px solid rgba(249,115,22,.22);padding:2rem 2.5rem;box-shadow:0 8px 40px rgba(0,0,0,.45);margin-bottom:1.5rem;}
-.hero h1{font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:900;margin-bottom:.4rem;}
-.hero h1 span{color:var(--orange);}
-.hero p{color:var(--muted);max-width:760px;font-size:.95rem;}
-.asof{display:inline-block;margin-top:.6rem;font-size:.72rem;color:var(--muted);background:var(--card);border:1px solid var(--border);border-radius:20px;padding:.25rem .8rem;}
-.panel{background:linear-gradient(145deg,rgba(30,41,59,.98),rgba(22,32,50,.98));border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-top:1.5rem;box-shadow:0 8px 32px rgba(0,0,0,.3);}
-.panel h3{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:1rem;}
-.seg{display:flex;gap:.5rem;flex-wrap:wrap;}
-.seg button{flex:1;min-width:150px;background:var(--card);border:1.5px solid var(--border);color:var(--text);border-radius:12px;padding:.85rem 1rem;cursor:pointer;transition:all .18s;text-align:left;}
-.seg button .st{font-weight:800;font-size:.95rem;display:block;}
-.seg button .ss{font-size:.74rem;color:var(--muted);}
-.seg button.active{border-color:var(--orange);background:rgba(249,115,22,.12);}
-.seg button.active .st{color:var(--orange);}
-.weights{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem;font-size:.74rem;}
-.wchip{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:.35rem .7rem;color:var(--muted);}
-.wchip-v{color:var(--orange);font-weight:800;}
-.controls{display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;margin-top:1.25rem;}
-.ctl{display:flex;flex-direction:column;gap:.35rem;}
-.ctl label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);}
-.ctl select,.ctl input{background:var(--dark);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:.55rem .8rem;font-size:.85rem;min-width:150px;}
-.tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-left:auto;}
-.tab{background:var(--card);border:1px solid var(--border);color:var(--muted);border-radius:99px;padding:.5rem 1.1rem;font-size:.8rem;font-weight:700;cursor:pointer;}
-.tab.active{background:var(--orange);color:#fff;border-color:var(--orange);}
-.count{font-size:.78rem;color:var(--muted);margin-top:1rem;}
-.tbl-wrap{overflow-x:auto;margin-top:.75rem;border-radius:var(--radius);border:1px solid var(--border);}
-table{width:100%;border-collapse:collapse;font-size:.84rem;min-width:1000px;}
-thead th{background:#263348;color:var(--orange);font-size:.66rem;text-transform:uppercase;letter-spacing:.04em;font-weight:800;padding:.7rem .7rem;text-align:center;white-space:nowrap;border-bottom:2px solid rgba(249,115,22,.35);}
-thead th.l{text-align:center;}
-tbody td{padding:.6rem .7rem;border-top:1px solid var(--border);text-align:center;white-space:nowrap;}
-tbody td.l{text-align:center;}
-tbody tr:hover{background:rgba(255,255,255,.03);}
-.rank{color:var(--muted);font-weight:800;}
-.nm{font-weight:700;}
-.sec{font-size:.72rem;color:var(--muted);}
+  <meta charset="UTF-8" />
+  <script>(function(){var d=document.documentElement;try{if(localStorage.getItem('mi-theme')==='dark'){d.setAttribute('data-theme','dark');}}catch(e){}if(!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)){d.classList.add('rv');}})();</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maverick Stock Screener — Maverick Investor</title>
+  <meta name="description" content="Screen Nifty 50, Midcap 50 and Smallcap 50 stocks for your risk profile, ranked by growth, quality, dividends and valuation.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/chrome.js"></script>
+  <script src="assets/candles.js" defer></script>
+  <script src="assets/js/backdrop.js" defer></script>
+</head>
+<body class="page-screener">
+<!-- Candlestick backdrop for the whole page; the tiles sit on top of it -->
+<canvas id="page-candles" class="page-candles" aria-hidden="true"></canvas>
 
-.idx-badge{display:inline-block;font-size:.63rem;font-weight:800;padding:.12rem .5rem;border-radius:6px;}
-.idx-large{background:rgba(59,130,246,.15);color:#93c5fd;}
-.idx-mid{background:rgba(168,85,247,.15);color:#d8b4fe;}
-.idx-small{background:rgba(34,197,94,.15);color:#86efac;}
-.pos{color:var(--green);font-weight:700;}.neg{color:var(--red);font-weight:700;}
-.score{font-weight:900;color:var(--orange);}
-.tag{font-size:.65rem;font-weight:700;padding:.15rem .5rem;border-radius:6px;background:rgba(249,115,22,.12);color:var(--orange);}
-.bar{height:6px;background:var(--card2);border-radius:3px;overflow:hidden;width:48px;display:inline-block;vertical-align:middle;margin-left:6px;}
-.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--orange),#fbbf24);}
-.cmp{display:flex;gap:1rem;overflow-x:auto;padding-bottom:.5rem;}
-.cmp-card{flex:0 0 210px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem;}
-.cmp-card.lead{border-color:var(--orange);box-shadow:0 0 0 1px rgba(249,115,22,.3);}
-.cmp-h{border-bottom:1px solid var(--border);padding-bottom:.6rem;margin-bottom:.5rem;}
-.cmp-rank{font-size:.7rem;font-weight:800;color:var(--orange);}
-.cmp-nm{font-weight:800;font-size:.92rem;margin-top:.3rem;line-height:1.25;}
-.cmp-sec{font-size:.7rem;color:var(--muted);}
-.cmp-row{display:flex;justify-content:space-between;font-size:.78rem;padding:.26rem 0;border-bottom:1px dashed rgba(255,255,255,.06);}
-.cmp-row:last-child{border-bottom:none;}
-.cmp-row span{color:var(--muted);}
-.cmp-row b{color:var(--text);font-weight:700;}
-.cmp-clear{background:var(--card);border:1px solid var(--border);color:var(--muted);border-radius:10px;padding:.55rem 1rem;font-weight:700;font-size:.8rem;cursor:pointer;height:fit-content;}
-.cmp-clear:hover{color:var(--text);border-color:var(--orange);}
-.cmp-x{float:right;cursor:pointer;color:var(--muted);font-weight:800;font-size:.95rem;line-height:1;}
-.cmp-x:hover{color:var(--red);}
-.cmp-empty{color:var(--muted);font-size:.85rem;padding:1rem;border:1px dashed var(--border);border-radius:12px;width:100%;text-align:center;}
-.cmp-wrap{overflow-x:auto;margin-top:1.25rem;border:1px solid var(--border);border-radius:var(--radius);}
-.cmp-tbl{width:100%;border-collapse:collapse;font-size:.82rem;min-width:720px;}
-.cmp-tbl th{background:#263348;color:var(--orange);font-weight:800;font-size:.72rem;padding:.6rem .7rem;text-align:center;border-bottom:2px solid rgba(249,115,22,.35);white-space:nowrap;}
-.cmp-tbl th small{display:block;color:var(--muted);font-weight:600;font-size:.64rem;margin-top:.15rem;}
-.cmp-tbl td{padding:.5rem .7rem;text-align:center;border-top:1px solid var(--border);white-space:nowrap;}
-.cmp-tbl td.mlabel,.cmp-tbl th.mlabel{text-align:left;color:var(--muted);font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.03em;position:sticky;left:0;background:var(--card2);z-index:2;}
-.cmp-tbl thead th.mlabel{background:#263348;}
-.cmp-tbl th:nth-child(2),.cmp-tbl td:nth-child(2){background:rgba(249,115,22,.07);}
-.cmp-tbl tbody tr:hover td{background:rgba(255,255,255,.04);}
-.cmp-tbl tbody tr:hover td.mlabel{background:var(--card2);}
-.cmp-wrap table{min-width:1040px;}
-.cmp-bm td{background:rgba(148,163,184,.08)!important;}
-.cmp-bm td .nm{color:#cbd5e1;font-weight:700;}
-.cmp-sec td{background:rgba(249,115,22,.13)!important;}
-.cmp-sec td .nm{color:var(--orange);font-weight:800;}
-.cmp-firststock td{border-top:2px solid rgba(249,115,22,.5)!important;}
-.legend{font-size:.72rem;color:var(--muted);margin-top:.7rem;line-height:1.7;}
-.disclaimer{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:10px;padding:1rem 1.25rem;margin-top:1.5rem;font-size:.76rem;color:#fca5a5;line-height:1.65;}
-.note{font-size:.78rem;color:var(--muted);margin-top:1rem;line-height:1.7;}.note strong{color:var(--text);}
-footer{background:#080f1e;color:rgba(255,255,255,.75);padding:2.4rem 0 1.2rem;position:relative;z-index:1;margin-top:2.5rem;}
-.footer-inner{max-width:1160px;margin:0 auto;padding:0 1.5rem;}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:2rem;}
-.footer-brand .logo{font-size:1.1rem;}
-.footer-brand p{font-size:.85rem;margin:1rem 0 1.25rem;line-height:1.6;opacity:.7;}
-.sebi-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:.4rem .8rem;font-size:.73rem;margin-bottom:1rem;}
-.social-row{display:flex;gap:.75rem;}
-.social-btn{width:36px;height:36px;background:rgba(255,255,255,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:#e2e8f0;text-decoration:none;transition:background .2s;}
-.social-btn:hover{background:var(--orange);}
-.footer-col h4{font-weight:800;font-size:.9rem;color:var(--text);margin-bottom:1rem;}
-.footer-col ul{display:flex;flex-direction:column;gap:.6rem;list-style:none;}
-.footer-col li a{font-size:.85rem;color:rgba(255,255,255,.75);text-decoration:none;transition:color .2s;}
-.footer-col li a:hover{color:var(--orange-light);}
-.footer-bottom{max-width:1160px;margin:0 auto;padding:0 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:.78rem;opacity:.6;}
-@media(max-width:760px){.footer-grid{grid-template-columns:1fr 1fr;gap:1.5rem;}}
-</style></head>
-<body>
+<!-- Shared nav — rendered by assets/js/chrome.js -->
+<mi-nav></mi-nav>
 
-<canvas id="mi-bg-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.55"></canvas>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  initMaverickCandles({ canvasId: 'mi-bg-canvas', sizeToWindow: true });
-});
-</script>
-<nav class="topbar"><div class="topbar-inner">
-  <a href="index.html" class="logo"><div class="logo-icon"><img src="assets/logo.png" alt="Maverick Investor"></div> <span class="logo-mav">Maverick</span> Investor</a>
-  <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="tools.html">Tools &amp; Goals</a></li>
-      <li><a href="mf-advisor.html">MF Advisor</a></li>
-      <li><a href="stock-screener.html" class="nav-active">Stock Screener</a></li>
-      <li><a href="learn.html">Learn</a></li>
-      <li><a href="about.html">About</a></li>
-  </ul>
-  <div class="nav-tagline"><span class="t-maverick">Maverick</span> thinking.<br><span class="t-investor">Investor</span> returns.</div>
-</div></nav>
-<div class="wrap">
-  <div class="hero">
-    <h1>Maverick <span>Stock Screener</span></h1>
-    <p>Total-return screening across Nifty 50, Nifty Midcap 50 &amp; Nifty Smallcap 50 — showing the <strong>top 10 stocks for your risk profile</strong>, ranked by price-appreciation potential and dividend income.</p>
-    <div class="asof">Fundamentals from Screener.in · updated <span id="fundAsOf">9 September 2026</span> · Prices from live market data · updated <span id="priceAsOf">26 September 2026</span></div>
+<main>
+<section class="page-hero">
+  <div class="container">
+    <div class="section-label">Stock Screener</div>
+    <h1>Maverick <em>Stock Screener</em></h1>
+    <p class="lede">Total-return screening across Nifty 50, Nifty Midcap 50 &amp; Nifty Smallcap 50 — showing the <strong>top 10 stocks for your risk profile</strong>, ranked by price-appreciation potential and dividend income.</p>
+    <div class="meta-chip">Fundamentals from Screener.in · updated <span id="fundAsOf">9 September 2026</span> · Prices from live market data · updated <span id="priceAsOf">26 September 2026</span></div>
   </div>
-  <div class="panel">
-    <h3>1 · Your investor profile</h3>
+</section>
+
+<div class="container page-body">
+  <div class="tile panel">
+    <h3 class="tile-title">1 · Your investor profile</h3>
     <div class="seg" id="profileSeg">
       <button data-p="conservative" class="active"><span class="st">&#128737; Conservative</span><span class="ss">Stability + income · large-cap tilt</span></button>
       <button data-p="moderate"><span class="st">&#9878; Moderate</span><span class="ss">Balanced growth &amp; dividends · large + mid</span></button>
@@ -157,8 +42,8 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <div class="weights" id="weights"></div>
   </div>
-  <div class="panel">
-    <h3>2 · Screened &amp; ranked results</h3>
+  <div class="tile panel">
+    <h3 class="tile-title">2 · Screened &amp; ranked results</h3>
     <div class="controls">
       <div class="ctl"><label>Sector</label><select id="fSector"></select></div>
       <div class="tabs" id="idxTabs">
@@ -167,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </div>
     <div class="count" id="count"></div>
-    <div class="tbl-wrap"><table>
+    <div class="tbl-wrap"><table class="data-table">
       <thead><tr>
         <th class="l">#</th><th class="l">Stock</th><th class="l">Index</th>
         <th>Price &#8377;</th><th>Mkt Cap</th><th>Div Yld</th><th>Profit Gr</th><th>Sales Gr</th><th>ROCE</th><th>P/E</th><th>PEG</th><th>E-Yld</th>
@@ -176,8 +61,8 @@ document.addEventListener('DOMContentLoaded', function() {
     </table></div>
     <p class="legend">Profit/Sales Gr = latest reported YoY quarterly growth. ROCE = return on capital employed. PEG = P/E ÷ profit growth (lower is cheaper for the growth). E-Yld = earnings yield (inverse of P/E). *Est Tot Ret = illustrative model estimate (valuation-tempered earnings growth + dividend yield) — not a forecast. Score = profile-weighted composite of growth, quality (ROCE), dividend yield, valuation (P/E) and cap-stability (0&ndash;100).</p>
   </div>
-  <div class="panel">
-    <h3>3 · Compare top 5 by sector vs the broad market</h3>
+  <div class="tile panel">
+    <h3 class="tile-title">3 · Compare top 5 by sector vs the broad market</h3>
     <div class="controls">
       <div class="ctl"><label>Sector</label><select id="cmpSector"></select></div>
     </div>
@@ -185,36 +70,12 @@ document.addEventListener('DOMContentLoaded', function() {
     <p class="legend">The three cap indices come first &mdash; their <strong>Mkt Cap is the index total</strong>, while the ratio columns (P/E, yields, ROCE, growth) are the median of their constituents &mdash; followed by the top 5 stocks of the chosen sector. Switch profile above to re-rank.</p>
   </div>
   <div class="disclaimer"><strong>Disclaimer:</strong> This screener is an analytical tool, not investment advice and not SEBI-registered research. Scores rank stocks on a transparent factor model using point-in-time data; they do not predict returns and are not buy/sell recommendations. Equity investments carry market risk. Consult a qualified, registered adviser before investing.</div>
-  <p class="note"><strong>About the data:</strong> Price is refreshed weekly from live market data. P/E, market cap, dividend yield, ROCE and growth are refreshed monthly from Screener.in; growth is the trailing-twelve-month figure, covering the most recent four reported quarters. Technical signals (RSI, moving averages, Bollinger Bands, patterns) are a planned phase-2 addition.</p>
+  <p class="note tile"><strong>About the data:</strong> Price is refreshed weekly from live market data. P/E, market cap, dividend yield, ROCE and growth are refreshed monthly from Screener.in; growth is the trailing-twelve-month figure, covering the most recent four reported quarters. Technical signals (RSI, moving averages, Bollinger Bands, patterns) are a planned phase-2 addition.</p>
 </div>
-<footer>
-  <div class="footer-inner">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="index.html" class="logo" style="color:#e2e8f0;text-decoration:none;"><div class="logo-icon"><img src="assets/logo.png" alt="Maverick Investor"></div> <span class="logo-mav">Maverick</span> Investor</a>
-        <p>Empowering Indian investors with unbiased, research-backed guidance on mutual funds, insurance, and retirement planning.</p>
-        <div class="sebi-badge">🏛 SEBI Investor Education Compliant</div>
-        <div class="social-row">
-          <a href="https://www.linkedin.com/in/jilesh/" target="_blank" rel="noopener" class="social-btn">in</a>
-          <a href="mailto:jileshkadi@gmail.com" class="social-btn" title="Email us">✉</a>
-        </div>
-      </div>
-      <div class="footer-col"><h4>Navigate</h4><ul>
-        <li><a href="index.html">Home</a></li><li><a href="tools.html">Tools &amp; Goals</a></li><li><a href="mf-advisor.html">MF Advisor</a></li><li><a href="stock-screener.html">Stock Screener</a></li><li><a href="learn.html">Learn</a></li><li><a href="about.html">About</a></li>
-      </ul></div>
-      <div class="footer-col"><h4>Tools</h4><ul>
-        <li><a href="tools.html">SIP Calculator</a></li><li><a href="tools.html">Retirement Planner</a></li><li><a href="mf-advisor.html">MF Advisor</a></li><li><a href="stock-screener.html">Stock Screener</a></li>
-      </ul></div>
-      <div class="footer-col"><h4>Learn</h4><ul>
-        <li><a href="learn.html">Mutual Fund Basics</a></li><li><a href="learn.html">Insurance Basics</a></li><li><a href="learn.html">NPS Guide</a></li><li><a href="about.html">About Us</a></li>
-      </ul></div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div>© 2026 Maverick Investor. All rights reserved.</div>
-    <div>Built with ❤ for Indian investors · Not SEBI-registered · Educational use only</div>
-  </div>
-</footer>
+</main>
+
+<!-- Shared footer — rendered by assets/js/chrome.js -->
+<mi-footer></mi-footer>
 <script>
 const STOCKS=[{"n": "Reliance Industries", "sec": "Energy & Power", "i": "large", "price": 1226.0, "pe": 23.2, "divYield": 0.46, "roce": 10.3, "profitGr": 0.0, "salesGr": 15.0, "mcap": 1731217.0}, {"n": "Bharti Airtel", "sec": "Telecom", "i": "large", "price": 1785.4, "pe": 36.3, "divYield": 1.32, "roce": 17.6, "profitGr": 6.0, "salesGr": 20.0, "mcap": 1133930.0}, {"n": "HDFC Bank", "sec": "Financials", "i": "large", "price": 735.6, "pe": 13.6, "divYield": 1.87, "roce": 7.02, "profitGr": 12.0, "salesGr": 3.0, "mcap": 1074368.0}, {"n": "SBI", "sec": "Financials", "i": "large", "price": 983.0, "pe": 10.9, "divYield": 1.75, "roce": 6.13, "profitGr": 6.0, "salesGr": 6.0, "mcap": 918446.0}, {"n": "ICICI Bank", "sec": "Financials", "i": "large", "price": 1326.8, "pe": 17.8, "divYield": 0.86, "roce": 7.18, "profitGr": 6.0, "salesGr": 4.0, "mcap": 997209.0}, {"n": "TCS", "sec": "IT", "i": "large", "price": 2082.0, "pe": 14.9, "divYield": 2.9, "roce": 63.0, "profitGr": 9.0, "salesGr": 8.0, "mcap": 798313.0}, {"n": "Bajaj Finance", "sec": "Financials", "i": "large", "price": 996.9, "pe": 31.8, "divYield": 0.52, "roce": 10.9, "profitGr": 18.0, "salesGr": 18.0, "mcap": 651795.0}, {"n": "Larsen & Toubro", "sec": "Industrials", "i": "large", "price": 3876.2, "pe": 31.0, "divYield": 0.95, "roce": 14.6, "profitGr": 13.0, "salesGr": 10.0, "mcap": 547196.0}, {"n": "Hind. Unilever", "sec": "Consumer", "i": "large", "price": 1942.9, "pe": 41.9, "divYield": 2.08, "roce": 28.4, "profitGr": 4.0, "salesGr": 6.0, "mcap": 462400.0}, {"n": "Infosys", "sec": "IT", "i": "large", "price": 1000.2, "pe": 13.7, "divYield": 4.57, "roce": 40.0, "profitGr": 14.0, "salesGr": 11.0, "mcap": 427616.0}, {"n": "Sun Pharma", "sec": "Pharma & Healthcare", "i": "large", "price": 1852.2, "pe": 36.0, "divYield": 0.84, "roce": 20.5, "profitGr": 10.0, "salesGr": 11.0, "mcap": 455154.0}, {"n": "Maruti Suzuki", "sec": "Auto", "i": "large", "price": 12065.0, "pe": 27.7, "divYield": 1.11, "roce": 18.9, "profitGr": -1.0, "salesGr": 27.0, "mcap": 397436.0}, {"n": "Titan Company", "sec": "Consumer", "i": "large", "price": 4884.0, "pe": 75.9, "divYield": 0.3, "roce": 20.5, "profitGr": 57.0, "salesGr": 45.0, "mcap": 443050.0}, {"n": "M & M", "sec": "Auto", "i": "large", "price": 3035.0, "pe": 20.3, "divYield": 1.04, "roce": 15.1, "profitGr": 38.0, "salesGr": 26.0, "mcap": 390213.0}, {"n": "Adani Enterprises", "sec": "Industrials", "i": "large", "price": 2916.5, "pe": 170.0, "divYield": 0.04, "roce": 5.8, "profitGr": -36.0, "salesGr": 18.0, "mcap": 403160.0}, {"n": "Adani Ports", "sec": "Industrials", "i": "large", "price": 1788.0, "pe": 29.7, "divYield": 0.44, "roce": 14.1, "profitGr": 17.0, "salesGr": 24.0, "mcap": 394242.0}, {"n": "Kotak Mah. Bank", "sec": "Financials", "i": "large", "price": 404.0, "pe": 20.8, "divYield": 0.16, "roce": 6.98, "profitGr": 5.0, "salesGr": 6.0, "mcap": 417453.0}, {"n": "Axis Bank", "sec": "Financials", "i": "large", "price": 1222.4, "pe": 13.9, "divYield": 0.08, "roce": 6.24, "profitGr": 0.0, "salesGr": 6.0, "mcap": 385108.0}, {"n": "HCL Technologies", "sec": "IT", "i": "large", "price": 1258.0, "pe": 18.6, "divYield": 4.33, "roce": 30.4, "profitGr": 7.0, "salesGr": 13.0, "mcap": 337648.0}, {"n": "ITC", "sec": "Consumer", "i": "large", "price": 269.0, "pe": 16.7, "divYield": 5.51, "roce": 38.9, "profitGr": -1.0, "salesGr": -3.0, "mcap": 329345.0}, {"n": "UltraTech Cement", "sec": "Materials", "i": "large", "price": 11155.0, "pe": 37.4, "divYield": 2.18, "roce": 12.7, "profitGr": 27.0, "salesGr": 17.0, "mcap": 322970.0}, {"n": "NTPC", "sec": "Energy & Power", "i": "large", "price": 326.6, "pe": 11.6, "divYield": 2.71, "roce": 8.92, "profitGr": 16.0, "salesGr": 2.0, "mcap": 321638.0}, {"n": "Bajaj Auto", "sec": "Auto", "i": "large", "price": 11281.0, "pe": 27.6, "divYield": 1.26, "roce": 28.2, "profitGr": 55.0, "salesGr": 37.0, "mcap": 325728.0}, {"n": "Bajaj Finserv", "sec": "Financials", "i": "large", "price": 1771.0, "pe": 30.2, "divYield": 0.08, "roce": 10.6, "profitGr": 8.0, "salesGr": 15.0, "mcap": 309983.0}, {"n": "JSW Steel", "sec": "Materials", "i": "large", "price": 1277.0, "pe": 26.4, "divYield": 0.55, "roce": 11.0, "profitGr": 136.0, "salesGr": 12.0, "mcap": 317347.0}, {"n": "Nestle India", "sec": "Consumer", "i": "large", "price": 1362.6, "pe": 73.0, "divYield": 0.86, "roce": 85.3, "profitGr": 25.0, "salesGr": 19.0, "mcap": 270350.0}, {"n": "Eternal (Zomato)", "sec": "Internet", "i": "large", "price": 335.0, "pe": 713.0, "divYield": 0.0, "roce": 2.48, "profitGr": 45.0, "salesGr": 191.0, "mcap": 308522.0}, {"n": "ONGC", "sec": "Energy & Power", "i": "large", "price": 235.86, "pe": 6.88, "divYield": 5.54, "roce": 14.2, "profitGr": 21.0, "salesGr": 7.0, "mcap": 300606.0}, {"n": "Bharat Electronics", "sec": "Industrials", "i": "large", "price": 393.55, "pe": 49.0, "divYield": 0.61, "roce": 36.4, "profitGr": 12.0, "salesGr": 20.0, "mcap": 301346.0}, {"n": "Asian Paints", "sec": "Consumer", "i": "large", "price": 2444.0, "pe": 48.6, "divYield": 1.12, "roce": 26.3, "profitGr": 27.0, "salesGr": 10.0, "mcap": 237176.0}, {"n": "Shriram Finance", "sec": "Financials", "i": "large", "price": 994.1, "pe": 21.3, "divYield": 1.06, "roce": 11.5, "profitGr": 33.0, "salesGr": 14.0, "mcap": 240781.0}, {"n": "Coal India", "sec": "Energy & Power", "i": "large", "price": 426.1, "pe": 8.41, "divYield": 6.23, "roce": 35.0, "profitGr": -6.0, "salesGr": 6.0, "mcap": 262748.0}, {"n": "Power Grid Corpn", "sec": "Energy & Power", "i": "large", "price": 269.5, "pe": 15.6, "divYield": 3.38, "roce": 9.1, "profitGr": 3.0, "salesGr": 2.0, "mcap": 247908.0}, {"n": "Hindalco Inds", "sec": "Materials", "i": "large", "price": 977.0, "pe": 11.0, "divYield": 0.5, "roce": 13.2, "profitGr": 20.0, "salesGr": 20.0, "mcap": 228093.0}, {"n": "Tata Steel", "sec": "Materials", "i": "large", "price": 187.97, "pe": 19.4, "divYield": 2.17, "roce": 12.5, "profitGr": 147.0, "salesGr": 11.0, "mcap": 229447.0}, {"n": "Grasim Inds", "sec": "Materials", "i": "large", "price": 3191.0, "pe": 39.1, "divYield": 0.3, "roce": 8.01, "profitGr": 40.0, "salesGr": 20.0, "mcap": 224403.0}, {"n": "Eicher Motors", "sec": "Auto", "i": "large", "price": 7360.0, "pe": 36.4, "divYield": 1.07, "roce": 30.5, "profitGr": 20.0, "salesGr": 28.0, "mcap": 211371.0}, {"n": "InterGlobe (IndiGo)", "sec": "Industrials", "i": "large", "price": 4940.0, "pe": null, "divYield": 0.2, "roce": 5.24, "profitGr": -110.92, "salesGr": 9.0, "mcap": 192057.0}, {"n": "Wipro", "sec": "IT", "i": "large", "price": 164.02, "pe": 12.6, "divYield": 6.52, "roce": 17.8, "profitGr": -2.0, "salesGr": 6.0, "mcap": 166795.0}, {"n": "SBI Life Insurance", "sec": "Financials", "i": "large", "price": 1742.0, "pe": 65.4, "divYield": 0.16, "roce": 15.0, "profitGr": 5.0, "salesGr": -1.0, "mcap": 170203.0}, {"n": "Jio Financial", "sec": "Financials", "i": "large", "price": 227.0, "pe": 74.0, "divYield": 0.26, "roce": 1.86, "profitGr": 29.0, "salesGr": 119.0, "mcap": 152830.0}, {"n": "Tech Mahindra", "sec": "IT", "i": "large", "price": 1548.0, "pe": 27.8, "divYield": 3.38, "roce": 23.1, "profitGr": 17.0, "salesGr": 11.0, "mcap": 147990.0}, {"n": "Trent", "sec": "Consumer", "i": "large", "price": 2669.3, "pe": 81.4, "divYield": 0.14, "roce": 28.3, "profitGr": 15.0, "salesGr": 17.0, "mcap": 148796.0}, {"n": "Apollo Hospitals", "sec": "Pharma & Healthcare", "i": "large", "price": 8889.0, "pe": 60.6, "divYield": 0.23, "roce": 17.4, "profitGr": 34.0, "salesGr": 17.0, "mcap": 127422.0}, {"n": "Tata Motors PV", "sec": "Auto", "i": "large", "price": 290.45, "pe": 112.0, "divYield": 0.99, "roce": 2.73, "profitGr": -94.0, "salesGr": -6.0, "mcap": 111518.0}, {"n": "Cipla", "sec": "Pharma & Healthcare", "i": "large", "price": 1399.7, "pe": 31.2, "divYield": 0.94, "roce": 15.5, "profitGr": -34.0, "salesGr": 2.0, "mcap": 111541.0}, {"n": "HDFC Life Insurance", "sec": "Financials", "i": "large", "price": 531.0, "pe": 57.9, "divYield": 0.39, "roce": 10.3, "profitGr": 5.0, "salesGr": 4.0, "mcap": 114278.0}, {"n": "Tata Consumer", "sec": "Consumer", "i": "large", "price": 983.2, "pe": 60.7, "divYield": 1.0, "roce": 9.24, "profitGr": 25.0, "salesGr": 16.0, "mcap": 100157.0}, {"n": "Max Healthcare", "sec": "Pharma & Healthcare", "i": "large", "price": 1014.0, "pe": 66.6, "divYield": 0.2, "roce": 14.7, "profitGr": 25.0, "salesGr": 16.0, "mcap": 99769.0}, {"n": "Dr Reddy's Labs", "sec": "Pharma & Healthcare", "i": "large", "price": 1201.0, "pe": 29.8, "divYield": 0.7, "roce": 13.0, "profitGr": -43.0, "salesGr": -1.0, "mcap": 95863.0}, {"n": "BSE", "sec": "Financials", "i": "mid", "price": 3191.5, "pe": 47.6, "divYield": 0.3, "roce": 60.0, "profitGr": 79.0, "salesGr": 61.0, "mcap": 134643.0}, {"n": "BHEL", "sec": "Industrials", "i": "mid", "price": 418.95, "pe": 61.0, "divYield": 0.33, "roce": 9.14, "profitGr": 739.0, "salesGr": 27.0, "mcap": 148458.0}, {"n": "Polycab India", "sec": "Industrials", "i": "mid", "price": 8408.5, "pe": 43.8, "divYield": 0.56, "roce": 33.2, "profitGr": 29.0, "salesGr": 32.0, "mcap": 125601.0}, {"n": "GMR Airports", "sec": "Industrials", "i": "mid", "price": 97.95, "pe": 181.0, "divYield": 0.0, "roce": 11.6, "profitGr": 159.0, "salesGr": 39.0, "mcap": 101957.0}, {"n": "Hero Motocorp", "sec": "Auto", "i": "mid", "price": 5360.0, "pe": 19.0, "divYield": 3.52, "roce": 35.2, "profitGr": 10.0, "salesGr": 26.0, "mcap": 104903.0}, {"n": "Marico", "sec": "Consumer", "i": "mid", "price": 819.0, "pe": 56.0, "divYield": 0.49, "roce": 47.0, "profitGr": 13.0, "salesGr": 25.0, "mcap": 105819.0}, {"n": "Lupin", "sec": "Pharma & Healthcare", "i": "mid", "price": 2092.0, "pe": 16.3, "divYield": 0.86, "roce": 29.9, "profitGr": 61.0, "salesGr": 28.0, "mcap": 96892.0}, {"n": "Bharat Forge", "sec": "Auto", "i": "mid", "price": 2008.0, "pe": 94.2, "divYield": 0.42, "roce": 12.6, "profitGr": -2.0, "salesGr": 18.0, "mcap": 95168.0}, {"n": "Ashok Leyland", "sec": "Auto", "i": "mid", "price": 159.08, "pe": 26.5, "divYield": 2.09, "roce": 13.6, "profitGr": 17.0, "salesGr": 17.0, "mcap": 98622.0}, {"n": "Indus Towers", "sec": "Telecom", "i": "mid", "price": 374.65, "pe": 13.7, "divYield": 3.77, "roce": 19.5, "profitGr": -27.0, "salesGr": 7.0, "mcap": 97968.0}, {"n": "Mankind Pharma", "sec": "Pharma & Healthcare", "i": "mid", "price": 2474.9, "pe": 44.8, "divYield": 0.04, "roce": 13.5, "profitGr": 13.0, "salesGr": 14.0, "mcap": 95525.0}, {"n": "Laurus Labs", "sec": "Pharma & Healthcare", "i": "mid", "price": 2007.0, "pe": 96.5, "divYield": 0.1, "roce": 17.8, "profitGr": 115.0, "salesGr": 23.0, "mcap": 105523.0}, {"n": "Aurobindo Pharma", "sec": "Pharma & Healthcare", "i": "mid", "price": 1712.0, "pe": 25.9, "divYield": 0.24, "roce": 12.9, "profitGr": 11.0, "salesGr": 9.0, "mcap": 97987.0}, {"n": "FSN E-Comm (Nykaa)", "sec": "Consumer", "i": "mid", "price": 333.7, "pe": 368.0, "divYield": 0.0, "roce": 17.2, "profitGr": 234.0, "salesGr": 27.0, "mcap": 97859.0}, {"n": "One97 (Paytm)", "sec": "Financials", "i": "mid", "price": 1674.0, "pe": 135.0, "divYield": 0.0, "roce": 4.96, "profitGr": 263.0, "salesGr": 23.0, "mcap": 109683.0}, {"n": "Federal Bank", "sec": "Financials", "i": "mid", "price": 322.0, "pe": 18.1, "divYield": 0.35, "roce": 6.39, "profitGr": 16.0, "salesGr": 7.0, "mcap": 84879.0}, {"n": "Dixon Technologies", "sec": "Industrials", "i": "mid", "price": 13390.0, "pe": 46.2, "divYield": 0.07, "roce": 29.2, "profitGr": 119.0, "salesGr": 14.0, "mcap": 86770.0}, {"n": "Persistent Systems", "sec": "IT", "i": "mid", "price": 5372.0, "pe": 43.1, "divYield": 0.73, "roce": 34.4, "profitGr": 31.0, "salesGr": 25.0, "mcap": 85769.0}, {"n": "HPCL", "sec": "Energy & Power", "i": "mid", "price": 351.0, "pe": 43.9, "divYield": 7.03, "roce": 22.2, "profitGr": -84.0, "salesGr": 9.0, "mcap": 73303.0}, {"n": "ICICI Lombard", "sec": "Financials", "i": "mid", "price": 1553.7, "pe": 30.2, "divYield": 0.92, "roce": 21.9, "profitGr": -9.0, "salesGr": 12.0, "mcap": 73329.0}, {"n": "Havells India", "sec": "Industrials", "i": "mid", "price": 1096.5, "pe": 42.9, "divYield": 0.88, "roce": 24.9, "profitGr": 18.0, "salesGr": 10.0, "mcap": 71404.0}, {"n": "IndusInd Bank", "sec": "Financials", "i": "mid", "price": 912.2, "pe": 58.6, "divYield": 0.15, "roce": 5.68, "profitGr": 31.0, "salesGr": -6.0, "mcap": 77466.0}, {"n": "Info Edge (Naukri)", "sec": "Internet", "i": "mid", "price": 1254.8, "pe": 55.5, "divYield": 0.66, "roce": 3.45, "profitGr": 43.0, "salesGr": 14.0, "mcap": 81876.0}, {"n": "AU Small Finance", "sec": "Financials", "i": "mid", "price": 1018.0, "pe": 234.0, "divYield": 0.09, "roce": 12.4, "profitGr": 38.0, "salesGr": 19.0, "mcap": 79715.0}, {"n": "Coforge", "sec": "IT", "i": "mid", "price": 1784.0, "pe": 41.9, "divYield": 0.67, "roce": 23.5, "profitGr": 98.0, "salesGr": 36.0, "mcap": 80412.0}, {"n": "Swiggy", "sec": "Internet", "i": "mid", "price": 264.85, "pe": null, "divYield": 0.0, "roce": -24.1, "profitGr": -1.0, "salesGr": 47.0, "mcap": 75743.0}, {"n": "SRF", "sec": "Materials", "i": "mid", "price": 2540.0, "pe": 33.3, "divYield": 0.36, "roce": 14.6, "profitGr": 57.0, "salesGr": 13.0, "mcap": 74623.0}, {"n": "Waaree Energies", "sec": "Energy & Power", "i": "mid", "price": 2495.0, "pe": 18.4, "divYield": 0.16, "roce": 38.8, "profitGr": 81.0, "salesGr": 94.0, "mcap": 74175.0}, {"n": "NHPC", "sec": "Energy & Power", "i": "mid", "price": 76.0, "pe": 20.2, "divYield": 2.11, "roce": 5.75, "profitGr": 24.0, "salesGr": 12.0, "mcap": 76734.0}, {"n": "NMDC", "sec": "Materials", "i": "mid", "price": 79.9, "pe": 9.97, "divYield": 2.95, "roce": 27.6, "profitGr": 14.0, "salesGr": 27.0, "mcap": 74379.0}, {"n": "PB Fintech", "sec": "Financials", "i": "mid", "price": 1166.0, "pe": 111.0, "divYield": 0.0, "roce": 10.3, "profitGr": 99.0, "salesGr": 38.0, "mcap": 83033.0}, {"n": "IDFC First Bank", "sec": "Financials", "i": "mid", "price": 83.8, "pe": 32.2, "divYield": 0.29, "roce": 5.98, "profitGr": 77.0, "salesGr": 12.0, "mcap": 74267.0}, {"n": "Dabur India", "sec": "Consumer", "i": "mid", "price": 385.6, "pe": 33.3, "divYield": 2.21, "roce": 20.3, "profitGr": 11.0, "salesGr": 7.0, "mcap": 66071.0}, {"n": "Oil India", "sec": "Energy & Power", "i": "mid", "price": 475.15, "pe": 9.73, "divYield": 2.29, "roce": 11.5, "profitGr": 27.0, "salesGr": 19.0, "mcap": 81225.0}, {"n": "Fortis Healthcare", "sec": "Pharma & Healthcare", "i": "mid", "price": 837.85, "pe": 64.4, "divYield": 0.11, "roce": 13.4, "profitGr": 16.0, "salesGr": 18.0, "mcap": 68758.0}, {"n": "Yes Bank", "sec": "Financials", "i": "mid", "price": 22.5, "pe": 18.7, "divYield": 0.0, "roce": 5.98, "profitGr": 38.0, "salesGr": 0.0, "mcap": 70530.0}, {"n": "Prestige Estates", "sec": "Realty", "i": "mid", "price": 1477.8, "pe": 58.5, "divYield": 0.13, "roce": 10.4, "profitGr": 116.0, "salesGr": 67.0, "mcap": 66604.0}, {"n": "Phoenix Mills", "sec": "Realty", "i": "mid", "price": 1978.4, "pe": 51.9, "divYield": 0.13, "roce": 12.8, "profitGr": 32.0, "salesGr": 18.0, "mcap": 67313.0}, {"n": "MCX", "sec": "Financials", "i": "mid", "price": 3324.9, "pe": 55.8, "divYield": 0.24, "roce": 71.4, "profitGr": 136.0, "salesGr": 110.0, "mcap": 86069.0}, {"n": "Alkem Lab", "sec": "Pharma & Healthcare", "i": "mid", "price": 5274.0, "pe": 27.4, "divYield": 1.02, "roce": 21.2, "profitGr": 0.0, "salesGr": 13.0, "mcap": 62365.0}, {"n": "Suzlon Energy", "sec": "Energy & Power", "i": "mid", "price": 40.8, "pe": 19.8, "divYield": 0.0, "roce": 34.2, "profitGr": 50.0, "salesGr": 45.0, "mcap": 62314.0}, {"n": "SBI Cards", "sec": "Financials", "i": "mid", "price": 611.2, "pe": 27.7, "divYield": 0.37, "roce": 10.1, "profitGr": 21.0, "salesGr": 8.0, "mcap": 63023.0}, {"n": "Godrej Properties", "sec": "Realty", "i": "mid", "price": 1700.1, "pe": 35.3, "divYield": 0.52, "roce": 7.63, "profitGr": 9.0, "salesGr": 13.0, "mcap": 57137.0}, {"n": "Colgate-Palmolive", "sec": "Consumer", "i": "mid", "price": 1855.8, "pe": 114.0, "divYield": 2.66, "roce": 179.0, "profitGr": 50.0, "salesGr": 15.0, "mcap": 49107.0}, {"n": "APL Apollo Tubes", "sec": "Materials", "i": "mid", "price": 2214.7, "pe": 49.2, "divYield": 0.39, "roce": 31.8, "profitGr": 53.0, "salesGr": 10.0, "mcap": 60510.0}, {"n": "Tube Investments", "sec": "Auto", "i": "mid", "price": 2511.1, "pe": 82.0, "divYield": 0.13, "roce": 17.1, "profitGr": -3.0, "salesGr": 18.0, "mcap": 51389.0}, {"n": "Max Financial", "sec": "Financials", "i": "mid", "price": 1458.0, "pe": 472.0, "divYield": 0.0, "roce": 2.87, "profitGr": -60.0, "salesGr": 5.0, "mcap": 51172.0}, {"n": "UPL", "sec": "Materials", "i": "mid", "price": 550.05, "pe": 24.4, "divYield": 1.05, "roce": 10.1, "profitGr": 36.0, "salesGr": 13.0, "mcap": 48212.0}, {"n": "Mphasis", "sec": "IT", "i": "mid", "price": 2234.0, "pe": 22.7, "divYield": 2.68, "roce": 22.1, "profitGr": 11.0, "salesGr": 14.0, "mcap": 43961.0}, {"n": "Supreme Inds", "sec": "Industrials", "i": "mid", "price": 3550.0, "pe": 43.7, "divYield": 1.01, "roce": 20.7, "profitGr": 16.0, "salesGr": 9.0, "mcap": 45114.0}, {"n": "Aster DM Healthcare", "sec": "Pharma & Healthcare", "i": "small", "price": 759.4, "pe": 190.0, "divYield": 0.38, "roce": 11.6, "profitGr": 2.0, "salesGr": 16.0, "mcap": 68544.0}, {"n": "RBL Bank", "sec": "Financials", "i": "small", "price": 415.05, "pe": 72.1, "divYield": 0.24, "roce": 5.81, "profitGr": 55.0, "salesGr": 5.0, "mcap": 64845.0}, {"n": "Hindustan Copper", "sec": "Materials", "i": "small", "price": 494.65, "pe": 43.4, "divYield": 0.53, "roce": 42.4, "profitGr": 148.0, "salesGr": 67.0, "mcap": 52393.0}, {"n": "Sona BLW Precision", "sec": "Auto", "i": "small", "price": 824.5, "pe": 68.4, "divYield": 0.42, "roce": 14.2, "profitGr": 20.0, "salesGr": 40.0, "mcap": 49743.0}, {"n": "Welspun Corp", "sec": "Materials", "i": "small", "price": 2832.4, "pe": 30.0, "divYield": 0.19, "roce": 22.9, "profitGr": 42.0, "salesGr": 20.0, "mcap": 69351.0}, {"n": "Aegis Logistics", "sec": "Industrials", "i": "small", "price": 1365.4, "pe": 36.9, "divYield": 0.67, "roce": 13.3, "profitGr": 89.0, "salesGr": 30.0, "mcap": 46213.0}, {"n": "Piramal Finance", "sec": "Financials", "i": "small", "price": 2142.7, "pe": 120.0, "divYield": 0.48, "roce": 6.47, "profitGr": -23.0, "salesGr": 18.0, "mcap": 54052.0}, {"n": "Gland Pharma", "sec": "Pharma & Healthcare", "i": "small", "price": 2917.2, "pe": 42.9, "divYield": 0.68, "roce": 15.1, "profitGr": 49.0, "salesGr": 18.0, "mcap": 49129.0}, {"n": "Navin Fluorine Intl", "sec": "Materials", "i": "small", "price": 8584.5, "pe": 57.2, "divYield": 0.17, "roce": 21.0, "profitGr": 124.0, "salesGr": 42.0, "mcap": 45516.0}, {"n": "Poonawalla Fincorp", "sec": "Financials", "i": "small", "price": 461.55, "pe": 50.1, "divYield": 0.0, "roce": 7.51, "profitGr": 340.0, "salesGr": 72.0, "mcap": 39428.0}, {"n": "Narayana Hrudayalaya", "sec": "Pharma & Healthcare", "i": "small", "price": 1861.4, "pe": 45.1, "divYield": 0.24, "roce": 15.5, "profitGr": 9.0, "salesGr": 60.0, "mcap": 38890.0}, {"n": "Himadri Speciality", "sec": "Materials", "i": "small", "price": 678.75, "pe": 42.2, "divYield": 0.12, "roce": 22.1, "profitGr": 30.0, "salesGr": 10.0, "mcap": 33759.0}, {"n": "Tata Technologies", "sec": "IT", "i": "small", "price": 703.05, "pe": 49.1, "divYield": 1.07, "roce": 20.9, "profitGr": -5.0, "salesGr": 15.0, "mcap": 31956.0}, {"n": "Delhivery", "sec": "Industrials", "i": "small", "price": 422.7, "pe": 283.0, "divYield": 0.0, "roce": 1.01, "profitGr": -40.0, "salesGr": 23.0, "mcap": 33716.0}, {"n": "Anand Rathi Wealth", "sec": "Financials", "i": "small", "price": 2126.8, "pe": 79.0, "divYield": 0.29, "roce": 59.2, "profitGr": 45.0, "salesGr": 23.0, "mcap": 36732.0}, {"n": "Manappuram Finance", "sec": "Financials", "i": "small", "price": 334.0, "pe": 20.8, "divYield": 0.62, "roce": 8.25, "profitGr": 81.0, "salesGr": 5.0, "mcap": 30134.0}, {"n": "Wockhardt", "sec": "Pharma & Healthcare", "i": "small", "price": 2265.6, "pe": 91.2, "divYield": 0.0, "roce": 7.55, "profitGr": 983.0, "salesGr": 18.0, "mcap": 36366.0}, {"n": "Karur Vysya Bank", "sec": "Financials", "i": "small", "price": 327.95, "pe": 12.0, "divYield": 0.76, "roce": 7.62, "profitGr": 37.0, "salesGr": 16.0, "mcap": 32998.0}, {"n": "Dr Lal Pathlabs", "sec": "Pharma & Healthcare", "i": "small", "price": 1952.3, "pe": 58.1, "divYield": 0.73, "roce": 28.0, "profitGr": 10.0, "salesGr": 14.0, "mcap": 32688.0}, {"n": "Chola Financial Hldgs", "sec": "Financials", "i": "small", "price": 1400.6, "pe": 10.7, "divYield": 0.09, "roce": 9.75, "profitGr": 21.0, "salesGr": 18.0, "mcap": 28507.0}, {"n": "PNB Housing", "sec": "Financials", "i": "small", "price": 1094.9, "pe": 13.1, "divYield": 0.69, "roce": 9.4, "profitGr": 14.0, "salesGr": 10.0, "mcap": 30305.0}, {"n": "Neuland Labs", "sec": "Pharma & Healthcare", "i": "small", "price": 21890.0, "pe": 62.0, "divYield": 0.14, "roce": 26.5, "profitGr": 278.0, "salesGr": 78.0, "mcap": 30843.0}, {"n": "Sai Life Sciences", "sec": "Pharma & Healthcare", "i": "small", "price": 1592.2, "pe": 96.2, "divYield": 0.0, "roce": 19.6, "profitGr": 51.0, "salesGr": 18.0, "mcap": 35385.0}, {"n": "Bandhan Bank", "sec": "Financials", "i": "small", "price": 187.7, "pe": 20.1, "divYield": 0.89, "roce": 6.41, "profitGr": -34.0, "salesGr": 0.0, "mcap": 27268.0}, {"n": "Piramal Pharma", "sec": "Pharma & Healthcare", "i": "small", "price": 210.31, "pe": null, "divYield": 0.06, "roce": 2.52, "profitGr": -69.39, "salesGr": 1.0, "mcap": 29855.0}, {"n": "Redington", "sec": "IT", "i": "small", "price": 407.25, "pe": 16.4, "divYield": 1.61, "roce": 18.4, "profitGr": 42.0, "salesGr": 23.0, "mcap": 29481.0}, {"n": "CDSL", "sec": "Financials", "i": "small", "price": 1318.0, "pe": 61.8, "divYield": 0.91, "roce": 32.0, "profitGr": -5.0, "salesGr": 9.0, "mcap": 29114.0}, {"n": "Angel One", "sec": "Financials", "i": "small", "price": 288.0, "pe": 25.9, "divYield": 1.38, "roce": 14.8, "profitGr": 4.0, "salesGr": 9.0, "mcap": 26717.0}, {"n": "Amber Enterprises", "sec": "Industrials", "i": "small", "price": 6960.0, "pe": 125.0, "divYield": 0.0, "roce": 10.3, "profitGr": -25.0, "salesGr": 15.0, "mcap": 25832.0}, {"n": "IIFL Finance", "sec": "Financials", "i": "small", "price": 616.95, "pe": 12.4, "divYield": 0.66, "roce": 10.9, "profitGr": 169.0, "salesGr": 36.0, "mcap": 26131.0}, {"n": "Kaynes Technology", "sec": "Industrials", "i": "small", "price": 3650.0, "pe": 70.4, "divYield": 0.0, "roce": 12.7, "profitGr": 9.0, "salesGr": 35.0, "mcap": 24433.0}, {"n": "NBCC", "sec": "Industrials", "i": "small", "price": 82.86, "pe": 33.5, "divYield": 1.17, "roce": 29.3, "profitGr": 8.0, "salesGr": 4.0, "mcap": 22950.0}, {"n": "Affle 3i", "sec": "Internet", "i": "small", "price": 1578.0, "pe": 47.1, "divYield": 0.0, "roce": 16.8, "profitGr": 19.0, "salesGr": 20.0, "mcap": 22498.0}, {"n": "CESC", "sec": "Energy & Power", "i": "small", "price": 139.86, "pe": 12.7, "divYield": 4.04, "roce": 10.9, "profitGr": 13.0, "salesGr": 9.0, "mcap": 19758.0}, {"n": "Indraprastha Gas", "sec": "Energy & Power", "i": "small", "price": 144.95, "pe": 15.9, "divYield": 2.1, "roce": 17.5, "profitGr": -18.0, "salesGr": 10.0, "mcap": 21623.0}, {"n": "City Union Bank", "sec": "Financials", "i": "small", "price": 225.57, "pe": 16.4, "divYield": 0.86, "roce": 6.74, "profitGr": 20.0, "salesGr": 20.0, "mcap": 23041.0}, {"n": "CAMS", "sec": "Financials", "i": "small", "price": 707.35, "pe": 36.0, "divYield": 1.74, "roce": 47.0, "profitGr": 5.0, "salesGr": 8.0, "mcap": 17797.0}, {"n": "Castrol India", "sec": "Energy & Power", "i": "small", "price": 201.67, "pe": 17.3, "divYield": 4.62, "roce": 60.3, "profitGr": 13.0, "salesGr": 12.0, "mcap": 18689.0}, {"n": "PG Electroplast", "sec": "Industrials", "i": "small", "price": 518.5, "pe": 76.9, "divYield": 0.05, "roce": 10.3, "profitGr": -24.0, "salesGr": 15.0, "mcap": 15832.0}, {"n": "Tata Chemicals", "sec": "Materials", "i": "small", "price": 643.75, "pe": null, "divYield": 1.82, "roce": 3.42, "profitGr": -106.75, "salesGr": 2.0, "mcap": 15422.0}, {"n": "Amara Raja Energy", "sec": "Auto", "i": "small", "price": 791.95, "pe": 20.9, "divYield": 1.27, "roce": 12.2, "profitGr": -7.0, "salesGr": 13.0, "mcap": 15281.0}, {"n": "Cohance Lifesciences", "sec": "Pharma & Healthcare", "i": "small", "price": 459.25, "pe": 156.0, "divYield": 0.0, "roce": 5.81, "profitGr": -77.0, "salesGr": -20.0, "mcap": 16848.0}, {"n": "Natco Pharma", "sec": "Pharma & Healthcare", "i": "small", "price": 839.3, "pe": 12.9, "divYield": 0.61, "roce": 17.1, "profitGr": -33.0, "salesGr": -21.0, "mcap": 14806.0}, {"n": "Syngene Intl", "sec": "Pharma & Healthcare", "i": "small", "price": 378.7, "pe": 52.9, "divYield": 0.32, "roce": 9.99, "profitGr": -42.0, "salesGr": -3.0, "mcap": 15666.0}, {"n": "Crompton Gr. Consumer", "sec": "Consumer", "i": "small", "price": 218.6, "pe": 32.5, "divYield": 1.3, "roce": 18.1, "profitGr": -14.0, "salesGr": 8.0, "mcap": 14726.0}, {"n": "KFin Technologies", "sec": "Financials", "i": "small", "price": 888.8, "pe": 45.2, "divYield": 1.33, "roce": 29.2, "profitGr": 3.0, "salesGr": 23.0, "mcap": 15834.0}, {"n": "Five-Star Business Fin", "sec": "Financials", "i": "small", "price": 520.95, "pe": 98.6, "divYield": 0.38, "roce": 17.0, "profitGr": 193.0, "salesGr": 104.0, "mcap": 15455.0}, {"n": "Inox Wind", "sec": "Energy & Power", "i": "small", "price": 74.75, "pe": 38.1, "divYield": 0.0, "roce": 10.6, "profitGr": -22.0, "salesGr": 17.0, "mcap": 13140.0}, {"n": "KEC International", "sec": "Industrials", "i": "small", "price": 396.95, "pe": 18.0, "divYield": 1.36, "roce": 16.5, "profitGr": -1.0, "salesGr": 5.0, "mcap": 10776.0}, {"n": "Reliance Power", "sec": "Energy & Power", "i": "small", "price": 20.57, "pe": null, "divYield": 0.0, "roce": 6.11, "profitGr": 125.0, "salesGr": 3.0, "mcap": 9396.0}];
 const IDXLBL={large:["Nifty 50","idx-large"],mid:["Midcap 50","idx-mid"],small:["Smallcap 50","idx-small"]};
@@ -287,7 +148,7 @@ function render(){
       +'<td class="pos">'+s._est.toFixed(1)+'%</td>'
       +'<td><span class="tag">'+fitTag(s)+'</span></td>'
       +'<td><span class="score">'+s._score.toFixed(0)+'</span><span class="bar"><i style="width:'+(s._score/mx*100).toFixed(0)+'%"></i></span></td></tr>';
-  }).join("")||'<tr><td colspan="15" style="text-align:center;padding:2rem;color:var(--muted)">No stocks match these filters.</td></tr>';
+  }).join("")||'<tr><td colspan="15" class="empty-row">No stocks match these filters.</td></tr>';
   renderCompare();
 }
 function cmedian(arr){const a=arr.filter(v=>v!=null&&!isNaN(v));if(!a.length)return 0;const s=[...a].sort((x,y)=>x-y);const m=Math.floor(s.length/2);return s.length%2?s[m]:(s[m-1]+s[m])/2;}
@@ -322,7 +183,7 @@ function renderCompare(){
       s.roce.toFixed(0)+"%",(s.pe==null?"&ndash;":s.pe.toFixed(1)),pegStr(s),eyStr(s),
       '<span class="pos">'+s._est.toFixed(1)+'%</span>','<span class="tag">'+fitTag(s)+'</span>',
       '<span class="score">'+fund(s,profile).toFixed(0)+'</span>',k===0?"cmp-firststock":"");}).join("");
-  el.innerHTML='<table>'+head+'<tbody>'+benches+stockRows+'</tbody></table>';
+  el.innerHTML='<table class="data-table">'+head+'<tbody>'+benches+stockRows+'</tbody></table>';
 }
 function initCmpSectors(){
   const secs=[...new Set(STOCKS.map(s=>s.sec))].sort();
@@ -339,40 +200,9 @@ initSectors();renderWeights();initCmpSectors();render();
 document.getElementById("cmpSector").addEventListener("change",renderCompare);
 </script>
 
-<!-- ===== responsive nav + mobile overflow fixes ===== -->
-<style>
-html,body{overflow-x:clip}
-.mv-burger{display:none;align-items:center;justify-content:center;width:44px;height:44px;background:none;border:0;cursor:pointer;margin-left:auto;padding:0}
-.mv-burger span{position:relative;display:block;width:22px;height:2px;background:#e2e8f0;border-radius:2px}
-.mv-burger span::before,.mv-burger span::after{content:'';position:absolute;left:0;width:22px;height:2px;background:#e2e8f0;border-radius:2px}
-.mv-burger span::before{top:-7px}.mv-burger span::after{top:7px}
-@media(max-width:820px){
-  .topbar-inner{flex-wrap:wrap;position:relative}
-  .nav-tagline{display:none!important}
-  .mv-burger{display:flex}
-  .nav-links{display:none!important;position:absolute;top:100%;left:0;right:0;z-index:1001;
-    flex-direction:column;gap:0!important;background:#0f172a;border-top:1px solid rgba(255,255,255,.08);
-    box-shadow:0 14px 34px rgba(0,0,0,.55);padding:.3rem 0;margin:0;max-height:80vh;overflow-y:auto}
-  .topbar.mv-open .nav-links{display:flex!important}
-  .nav-links li{width:100%;list-style:none}
-  .nav-links a{display:block;padding:.9rem 1.3rem;font-size:1rem!important}
-  .orb{display:none!important}
-  .ticker-bar,.ticker,.indices-track,.marquee,.ticker-wrap,.indices-section{overflow:hidden!important;max-width:100%}
-  .footer-grid{grid-template-columns:repeat(2,1fr)!important}
-  .calc-grid,.bvr-grid{grid-template-columns:1fr!important}
-}
-</style>
-<script>
-(function(){function init(){var bar=document.querySelector('.topbar');if(!bar)return;
-var inner=bar.querySelector('.topbar-inner'),links=bar.querySelector('.nav-links');
-if(!inner||!links||bar.querySelector('.mv-burger'))return;
-var b=document.createElement('button');b.className='mv-burger';b.setAttribute('aria-label','Toggle menu');
-b.setAttribute('aria-expanded','false');b.innerHTML='<span></span>';inner.insertBefore(b,links);
-b.addEventListener('click',function(e){e.stopPropagation();var o=bar.classList.toggle('mv-open');b.setAttribute('aria-expanded',o)});
-links.addEventListener('click',function(){bar.classList.remove('mv-open');b.setAttribute('aria-expanded','false')});
-document.addEventListener('click',function(e){if(!bar.contains(e.target)){bar.classList.remove('mv-open');b.setAttribute('aria-expanded','false')}});
-}if(document.readyState!=='loading')init();else document.addEventListener('DOMContentLoaded',init)})();
-</script>
-<!-- ===== /responsive nav ===== -->
+<script src="assets/js/theme.js"></script>
+<script src="assets/js/edge-guide.js"></script>
+<script src="assets/js/page-utils.js"></script>
+<script src="assets/js/reveal.js"></script>
 
 </body></html>

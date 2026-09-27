@@ -42,7 +42,7 @@ Design rationale: `MaverickInvestor/docs/superpowers/specs/`.
 - Check page changes with Playwright at 1440px and 390px: no JS errors, no
   horizontal overflow.
 
-## Design system (RiskMaverick port — in progress)
+## Design system (RiskMaverick port)
 
 - One stylesheet: `MaverickInvestor/assets/css/site.css`. Light palette is the
   default; `[data-theme="dark"]` switches. Tokens mirror RiskMaverick's.
@@ -53,8 +53,17 @@ Design rationale: `MaverickInvestor/docs/superpowers/specs/`.
   The head script also adds `html.rv` (tile entrance animation) unless the
   reader prefers reduced motion; tiles to animate are listed in `reveal.js`
   and the matching `.rv :is(...)` rule in `site.css`.
-- Converted so far: `index.html`. The other pages still carry their own inline
-  palettes until they are converted.
+- Every page is on the system (Home, Tools & Goals, MF Advisor, Stock Screener,
+  Learn, About). Each has `<body class="page-xxx">`; page-only styles live in
+  `site.css` under a `PAGE — X` header, scoped to that class. No inline
+  `<style>` blocks or per-page palettes.
+- Inner-page layout: `section.page-hero` (section-label, h1 with an `<em>`,
+  `.lede`), then `.container.page-body` holding `.tile` / `.tile--accent`
+  cards. Tiles are opaque so the backdrop never shows through them.
+- Backdrop: `<canvas id="page-candles" class="page-candles">` right after
+  `<body>`, drawn by `assets/js/backdrop.js` (uses `assets/candles.js`).
+- Charts read colours from the tokens (`cssVar('--ink-muted')` etc.) so they
+  follow the theme.
 
 ## Cloud sessions
 
