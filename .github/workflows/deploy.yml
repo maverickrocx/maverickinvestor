@@ -5,10 +5,11 @@ on:
     branches: [main]
   workflow_dispatch:
   workflow_run:
-    # Weekly data-refresh jobs commit with the default GITHUB_TOKEN, which
-    # does not trigger `on: push` in other workflows — chain off completion
-    # instead so a refresh always ends with a redeploy.
-    workflows: ["Weekly data refresh"]
+    # Data-refresh jobs commit with the default GITHUB_TOKEN, which does not
+    # trigger `on: push` in other workflows — chain off completion instead so
+    # a refresh always ends with a redeploy. Every workflow that commits site
+    # data must be listed here, or its commit waits for the next unrelated push.
+    workflows: ["Weekly data refresh", "Monthly data review"]
     types: [completed]
     branches: [main]
 
