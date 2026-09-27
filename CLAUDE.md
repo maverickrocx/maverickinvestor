@@ -36,6 +36,11 @@ Design rationale: `MaverickInvestor/docs/superpowers/specs/`.
   than the Edit tool (Edit has truncated it before). Afterwards check it ends
   with `</html>`, still calls `loadFundNAVs();`, and has exactly 1
   `Promise.allSettled`.
+- Screener.in tarpits fast crawls: keep `update_fundamentals.py` sequential
+  with its spacing. Yahoo `quoteSummary` is blocked outright; only
+  `v8/finance/chart` works.
+- Check page changes with Playwright at 1440px and 390px: no JS errors, no
+  horizontal overflow.
 
 ## Design system (RiskMaverick port — in progress)
 
@@ -50,11 +55,6 @@ Design rationale: `MaverickInvestor/docs/superpowers/specs/`.
   and the matching `.rv :is(...)` rule in `site.css`.
 - Converted so far: `index.html`. The other pages still carry their own inline
   palettes until they are converted.
-- Screener.in tarpits fast crawls: keep `update_fundamentals.py` sequential
-  with its spacing. Yahoo `quoteSummary` is blocked outright; only
-  `v8/finance/chart` works.
-- Check page changes with Playwright at 1440px and 390px: no JS errors, no
-  horizontal overflow.
 
 ## Cloud sessions
 
