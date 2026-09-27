@@ -20,6 +20,9 @@
   --accent-fg: #12141A;     /* Text on an accent fill */
   --accent-dim: rgba(255,122,26,.16);
   --accent-border: rgba(255,122,26,.35);
+  /* Opaque orange-tinted tile: the tint laid over the card colour, so the
+     page-wide candles don't show through. */
+  --tile-accent: linear-gradient(var(--accent-dim), var(--accent-dim)), var(--surface);
   --pos: #16A34A;
   --neg: #DC2626;
   --amber: #B45309;
@@ -306,8 +309,8 @@ mi-nav, mi-footer { display: contents; }
 .negative { color: var(--neg); font-weight: 700; }
 
 .disclaimer {
-  background: var(--accent-dim); border-left: 3px solid var(--accent);
-  border-radius: 0 var(--r) var(--r) 0; padding: var(--s4) var(--s5);
+  background: var(--tile-accent); border: 1px solid var(--accent-border); border-left: 3px solid var(--accent);
+  border-radius: var(--r); padding: var(--s4) var(--s5);
   font-size: 13px; color: var(--ink-muted); line-height: 1.65; max-width: 900px; margin: 0 auto;
 }
 .disclaimer-icon svg { width: 16px; height: 16px; vertical-align: -3px; margin-right: 4px; color: var(--accent-text); }
@@ -332,12 +335,12 @@ mi-nav, mi-footer { display: contents; }
    TILE REVEAL — the hero portfolio card's entrance, for every tile
    (assets/js/reveal.js; html.rv is set in <head> unless reduced motion)
 ══════════════════════════════════════════════════════════ */
-.rv :is(.hero-sip-calc, .fund-cat-block, .why-card, .ret-cta-card, .phone):not(.is-in) {
+.rv :is(.hero-sip-calc, .fund-cat-block, .why-card, .ret-cta-card, .app-grid, .disclaimer):not(.is-in) {
   opacity: 0; transform: translateY(30px) scale(.97);
 }
 /* power2.out, 0.8s — the same curve GSAP uses for the portfolio card. Once the
    entrance ends (.is-done) each tile's own hover transition applies again. */
-.rv :is(.hero-sip-calc, .fund-cat-block, .why-card, .ret-cta-card, .phone).is-in:not(.is-done) {
+.rv :is(.hero-sip-calc, .fund-cat-block, .why-card, .ret-cta-card, .app-grid, .disclaimer).is-in:not(.is-done) {
   transition: opacity .8s cubic-bezier(.25,.46,.45,.94), transform .8s cubic-bezier(.25,.46,.45,.94);
 }
 
@@ -506,7 +509,7 @@ mi-nav, mi-footer { display: contents; }
 .ret-cta-section { padding: var(--s7) 0; }
 .ret-cta-card {
   display: flex; align-items: center; gap: var(--s6); flex-wrap: wrap;
-  background: var(--accent-dim); border: 1px solid var(--accent-border); border-radius: var(--r);
+  background: var(--tile-accent); border: 1px solid var(--accent-border); border-radius: var(--r);
   padding: var(--s6) var(--s6);
 }
 .ret-cta-icon { display: grid; place-items: center; width: 64px; height: 64px; flex-shrink: 0; border-radius: var(--r); background: var(--surface); color: var(--accent-text); border: 1px solid var(--accent-border); }
@@ -518,7 +521,11 @@ mi-nav, mi-footer { display: contents; }
 /* ══════════════════════════════════════════════════════════
    HOME — mobile app
 ══════════════════════════════════════════════════════════ */
-.app-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s8); align-items: center; }
+.app-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: var(--s8); align-items: center;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r);
+  box-shadow: var(--shadow); padding: var(--s7) var(--s7);
+}
 .app-features { display: flex; flex-direction: column; gap: var(--s5); margin-top: var(--s6); }
 .app-feat { display: flex; gap: var(--s4); align-items: flex-start; }
 .af-icon { width: 40px; height: 40px; flex-shrink: 0; display: grid; place-items: center; border-radius: var(--r); background: var(--accent-dim); color: var(--accent-text); }
@@ -556,7 +563,7 @@ mi-nav, mi-footer { display: contents; }
 }
 @media (max-width: 899px) {
   section { padding: var(--s7) 0; }
-  .app-grid { grid-template-columns: 1fr; gap: var(--s6); }
+  .app-grid { grid-template-columns: 1fr; gap: var(--s6); padding: var(--s6) var(--s5); }
   .fund-cat-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 680px) {
