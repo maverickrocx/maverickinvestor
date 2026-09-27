@@ -32,10 +32,21 @@ Design rationale: `MaverickInvestor/docs/superpowers/specs/`.
 - The bots rewrite these by regex. Keep them intact:
   `stock-screener.html` `const STOCKS=[...];` (single line),
   `id="priceAsOf"`, `id="fundAsOf"`.
-- `index.html` is ~2,900 lines. Edit it with a Python read/replace/write rather
+- `index.html` is ~1,000 lines. Edit it with a Python read/replace/write rather
   than the Edit tool (Edit has truncated it before). Afterwards check it ends
-  with `</html>`, still calls `loadLiveIndices();` and `loadFundNAVs();`, and
-  has exactly 2 `Promise.allSettled`.
+  with `</html>`, still calls `loadFundNAVs();`, and has exactly 1
+  `Promise.allSettled`.
+
+## Design system (RiskMaverick port — in progress)
+
+- One stylesheet: `MaverickInvestor/assets/css/site.css`. Light palette is the
+  default; `[data-theme="dark"]` switches. Tokens mirror RiskMaverick's.
+- Shared nav/footer: `assets/js/chrome.js` renders `<mi-nav>` / `<mi-footer>`
+  (load it synchronously in `<head>`). Edit links there, once.
+- Also per page: the inline no-flash `mi-theme` script first in `<head>`, then
+  `theme.js`, `edge-guide.js`, `page-utils.js` before `</body>`.
+- Converted so far: `index.html`. The other pages still carry their own inline
+  palettes until they are converted.
 - Screener.in tarpits fast crawls: keep `update_fundamentals.py` sequential
   with its spacing. Yahoo `quoteSummary` is blocked outright; only
   `v8/finance/chart` works.
