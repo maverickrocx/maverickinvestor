@@ -749,7 +749,20 @@ select { cursor: pointer; }
 .page-mf .step.active { display: block; }
 .page-mf #step7 { display: none; }
 .page-mf #step7.active { display: block; }
-.page-mf #goalBg { display: none; }   /* kept for the script; the candles are the backdrop now */
+/* Hovering a goal card fades that goal's photo in behind the picker
+   (previewGoal/resetBg in the page script set the image and opacity). */
+.page-mf #step0 { position: relative; overflow: hidden; }
+.page-mf #goalBg {
+  position: absolute; inset: 0; z-index: 0; opacity: 0; pointer-events: none;
+  background-size: cover; background-position: center; transform: scale(1.04);
+  transition: opacity .6s var(--e-out), transform .8s var(--e-out), background-image .4s;
+}
+.page-mf #goalBg::after {   /* page-colour wash keeps the heading readable in both themes */
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 82%, transparent) 0%, color-mix(in srgb, var(--bg) 55%, transparent) 45%, color-mix(in srgb, var(--bg) 80%, transparent) 100%);
+}
+.page-mf #goalBg[style*="opacity: 1"] { transform: scale(1); }
+.page-mf .goal-content { position: relative; z-index: 1; }
 
 /* Step 0: goal picker */
 .page-mf .goal-content { max-width: calc(980px + 2 * var(--content-inset)); margin: 0 auto; padding: var(--s7) var(--content-inset) var(--s8); text-align: center; }
