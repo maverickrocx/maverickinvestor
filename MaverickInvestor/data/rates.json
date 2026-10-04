@@ -1,7 +1,7 @@
 {
-  "quarter": "Jul-Sep 2026 (Q2 FY2026-27)",
-  "asOf": "2026-08-22",
-  "nextReviewDue": "2026-09-30",
+  "quarter": "Oct-Dec 2026 (Q3 FY2026-27)",
+  "asOf": "2026-10-04",
+  "nextReviewDue": "2026-10-07",
   "smallSavings": [
     { "scheme": "Public Provident Fund (PPF)", "rate": 7.1, "compounding": "Annual" },
     { "scheme": "Sukanya Samriddhi Yojana (SSY)", "rate": 8.2, "compounding": "Annual" },
@@ -21,5 +21,5 @@
     "EPFO (EPF rate, notified annually)",
     "RBI MPC (repo rate, reviewed bi-monthly)"
   ],
-  "note": "Small savings rates are notified quarterly by the Finance Ministry and have no free machine-readable feed, so this file is a manually verified snapshot rather than a live API pull. The weekly refresh job only checks whether nextReviewDue has passed and flags it for manual re-verification — it does not overwrite these numbers automatically."
+  "note": "Small savings rates are set quarterly by the Finance Ministry, the repo rate at each RBI policy meeting, and the EPF rate once a year. These figures are checked by hand against those announcements, not pulled from a live feed."
 }
