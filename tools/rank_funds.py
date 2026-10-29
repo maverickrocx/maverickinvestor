@@ -100,7 +100,37 @@ def _maxdd(series):
     return mdd
 
 
-def metrics(series, bench=None, ter=None, aum=None):
+def _month_ends(series):
+    m = {}
+    for d, v in series:
+        m[(d.year, d.month)] = v
+    return m
+
+
+def _rolling5(series, other=None, hurdle=None):
+    """Share of rolling 5-year windows (month-end to month-end) in which the
+    fund's CAGR beat `other`'s CAGR over the same window, or a fixed `hurdle`
+    rate. Returns (share, window count, first window's start year); share is
+    None under 12 windows."""
+    fm = _month_ends(series)
+    om = _month_ends(other) if other else None
+    wins = n = 0
+    first = None
+    for k in sorted(fm):
+        start = (k[0] - 5, k[1])
+        if start not in fm or fm[start] <= 0:
+            continue
+        if om is not None and (start not in om or k not in om or om[start] <= 0):
+            continue
+        fc = (fm[k] / fm[start]) ** 0.2 - 1
+        bar = (om[k] / om[start]) ** 0.2 - 1 if om is not None else hurdle
+        n += 1
+        first = first or start[0]
+        wins += fc > bar
+    return (wins / n if n >= 12 else None), n, first
+
+
+def metrics(series, bench=None, ter=None, aum=None, ppf=None):
     dr = _daily(series)
     if len(dr) < 200:
         return None
@@ -121,6 +151,8 @@ def metrics(series, bench=None, ter=None, aum=None):
     seq = [mvals[k] for k in sorted(mvals)]
     roll = [seq[i]/seq[i-12] - 1 for i in range(12, len(seq)) if seq[i-12] > 0][-60:]
     m['consistency'] = statistics.pstdev(roll) if len(roll) >= 12 else None
+    m['beatPPF5'], m['windows5'], m['since5'] = _rolling5(series, hurdle=ppf) if ppf else (None, 0, None)
+    m['beatBench5'], m['windowsBench5'], m['sinceBench5'] = _rolling5(series, bench) if bench else (None, 0, None)
     if bench:
         fm, bm = _monthly(series), _monthly(bench)
         n = min(len(fm), len(bm))
@@ -132,6 +164,7 @@ def metrics(series, bench=None, ter=None, aum=None):
             annf, annb = statistics.mean(fm)*12, statistics.mean(bm)*12
             m['alpha'] = (annf - RF) - (beta*(annb - RF) if beta else 0)
             m['beta'] = beta
+            m['benchMonths'] = n
             ub = sum(bm[i] for i in range(n) if bm[i] > 0)
             db = sum(bm[i] for i in range(n) if bm[i] < 0)
             m['upcap'] = (sum(fm[i] for i in range(n) if bm[i] > 0)/ub*100) if ub else None
@@ -209,7 +242,49 @@ def fetch_all_series(codes, max_workers=12):
     return {code: series for code, (series, _name) in zip(codes, results)}
 
 
-def rank_category(cat, bench_series, series_cache):
+def _pctx(x):
+    return f"{round(x * 100)}%"
+
+
+def verdict(m, cat, ppf, peer_ter):
+    """Plain-English read of a fund's numbers: what it does well ('plus') and
+    what to be ready for ('watch'). Education, not a recommendation."""
+    plus, watch = [], []
+    bench = cat.get('benchmarkName')
+    b5 = m.get('beatBench5')
+    if b5 is not None and bench:
+        if b5 >= 0.6:
+            plus.append(f"Beat the {bench} in {_pctx(b5)} of 5-year periods since {m['sinceBench5']}.")
+        elif b5 <= 0.4:
+            watch.append(f"Trailed the {bench} in {_pctx(1 - b5)} of 5-year periods since {m['sinceBench5']}.")
+    dn = m.get('dncap')
+    if dn is not None and bench and (m.get('benchMonths') or 0) >= 36:
+        if dn <= 95:
+            plus.append(f"In the market's bad months it fell about {round(100 - dn)}% less than the {bench}.")
+        elif dn >= 105:
+            watch.append(f"In the market's bad months it fell about {round(dn - 100)}% more than the {bench}.")
+    p5 = m.get('beatPPF5')
+    if p5 is not None and ppf is not None:
+        line = f"Beat today's PPF rate ({ppf * 100:.1f}%) in {_pctx(p5)} of 5-year periods since {m['since5']}."
+        if cat.get('profile') != 'activeEquity':
+            line += " PPF is tax-free, so the real gap is smaller."
+        (plus if p5 >= 0.6 else watch).append(line)
+    ter = m.get('ter')
+    if ter is not None and peer_ter is not None:
+        if ter < peer_ter:
+            plus.append(f"Cheaper than most funds on our list for its category ({ter:.2f}% a year).")
+        elif ter > peer_ter:
+            watch.append(f"Costs more than most funds on our list for its category ({ter:.2f}% a year).")
+    mdd = m.get('maxdd')
+    if mdd is not None:
+        if mdd > -0.10:
+            plus.append(f"A steady ride: its worst fall from a peak was only {round(-mdd * 100)}%.")
+        else:
+            watch.append(f"Its worst fall from a peak was {round(-mdd * 100)}%. Be ready to sit through drops like that.")
+    return {"plus": plus[:3], "watch": watch[:2]}
+
+
+def rank_category(cat, bench_series, series_cache, ppf=None):
     prof = cat['profile']
     bench = bench_series if prof == 'activeEquity' else None
     eligible = []
@@ -219,12 +294,22 @@ def rank_category(cat, bench_series, series_cache):
         min_yrs = 3 if fd.get('isIndex') else 5
         if yrs < min_yrs:
             continue
-        mt = metrics(s, bench, fd.get('ter'), fd.get('aum'))
+        mt = metrics(s, bench, fd.get('ter'), fd.get('aum'), ppf)
         if not mt:
             continue
         eligible.append({'label': fd['label'], 'schemeCode': fd['schemeCode'],
                          '_catkey': None, 'metrics': mt, '_monthly': _monthly(s)})
     return eligible
+
+
+def _ppf_rate(rates_path):
+    try:
+        for r in json.load(open(rates_path))["smallSavings"]:
+            if r["scheme"].startswith("Public Provident Fund"):
+                return r["rate"] / 100
+    except Exception:
+        pass
+    return None
 
 
 def write_rankings(candidates_path, out_path):
@@ -240,11 +325,12 @@ def write_rankings(candidates_path, out_path):
         sys.exit(f"no NAV history for scheme codes {missing} after retries — "
                  "fund-rankings.json left unchanged")
 
-    out = {"asOf": datetime.date.today().isoformat(), "categories": {}}
+    ppf = _ppf_rate(os.path.join(os.path.dirname(candidates_path), "rates.json"))
+    out = {"asOf": datetime.date.today().isoformat(), "ppfRate": ppf, "categories": {}}
     for catkey, cat in cfg["categories"].items():
         bcode = cat.get("benchmarkSchemeCode")
         bench = series_cache.get(bcode) if bcode else None
-        funds = rank_category(cat, bench, series_cache)
+        funds = rank_category(cat, bench, series_cache, ppf)
         for f in funds:
             f['_catkey'] = catkey
         ranked = composite(funds, cat['profile'])
@@ -253,6 +339,8 @@ def write_rankings(candidates_path, out_path):
             dup = ranked.pop(1)
             ranked.append(dup)
         cat_out = {"benchmark": cat.get("benchmarkName"), "ranked": []}
+        ters = [f['metrics'].get('ter') for f in ranked if f['metrics'].get('ter') is not None]
+        peer_ter = statistics.median(ters) if ters else None
         for i, f in enumerate(ranked, 1):
             m = f['metrics']
             cat_out["ranked"].append({
@@ -260,7 +348,9 @@ def write_rankings(candidates_path, out_path):
                 "composite": f['composite'],
                 "metrics": {k: (round(m[k], 4) if isinstance(m.get(k), float) else m.get(k))
                             for k in ('cagr3','cagr5','cagr7','sortino','sharpe','maxdd','vol',
-                                      'alpha','beta','upcap','dncap','ir','consistency','ter','aum')}
+                                      'alpha','beta','upcap','dncap','ir','consistency','ter','aum',
+                                      'beatPPF5','windows5','since5','beatBench5','windowsBench5','sinceBench5','benchMonths')},
+                "verdict": verdict(m, cat, ppf, peer_ter),
             })
         out["categories"][catkey] = cat_out
         print(f"{catkey:9} #1 {ranked[0]['label'] if ranked else '—'}")

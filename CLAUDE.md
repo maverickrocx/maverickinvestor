@@ -20,18 +20,24 @@ task's prompt is the source of truth for the cadence.
 
 | Script | When the task runs it | Does |
 |---|---|---|
-| `tools/rank_funds.py` | every run | mfapi.in → `data/fund-rankings.json`; refuses to write if any fund's NAVs are missing |
+| `tools/rank_funds.py` | every run | mfapi.in → `data/fund-rankings.json` (ranks, metrics, plain-English `verdict`, rolling 5-yr "beat PPF / benchmark" shares); refuses to write if any fund's NAVs are missing |
+| `tools/build_nav_data.py` | every run | AMFI `NAVAll.txt` + mfapi.in → `data/navs.json` (home tracker) and `data/nav-history/<code>.json` (MF Advisor backtest) |
+| `tools/monthly_insights.py` | every run (no-op after the month's first) | snapshots rankings to `data/rankings-history/YYYY-MM.json`, writes `data/monthly-review.json` (what changed + picks report card) |
 | `tools/update_stock_prices.py` | Saturdays, or if `priceAsOf` is 7+ days old | Yahoo chart → price in `stock-screener.html` |
 | `tools/verify_scheme_codes.py` | with the stock prices (warn-only) | flags drifted AMFI scheme codes |
 | `tools/update_fundamentals.py` | first run of each month (`fundAsOf` in an earlier month) | Screener.in → P/E, mcap, div yield, ROCE, TTM growth |
 | `tools/monthly_review.py --dry-run` | after the fundamentals | report of manual items; the task files/updates the `data-review` issue from it |
 
-Home-page NAVs need no job: the page fetches them live from mfapi.in.
+mfapi.in stopped sending CORS headers in Oct 2026, so no page may fetch it in
+the browser: pages read the same-origin files above instead. The home page's
+Monthly Fund Review section (above the tracker) renders from
+`fund-rankings.json` + `monthly-review.json`.
 `deploy.yml` publishes `MaverickInvestor/` on every push to `main`.
 
 Manual data: `data/rates.json` (small-savings/EPF/repo rates, review by
 `nextReviewDue`) and TER/AUM in `data/candidates.json` (import with
-`tools/import_fund_costs.py`; AMFI's robots.txt forbids crawling it).
+`tools/import_fund_costs.py`). AMFI's robots.txt allowed automated reads as of
+Oct 2026 (it used to forbid them); `build_nav_data.py` reads only `NAVAll.txt`.
 Design rationale: `MaverickInvestor/docs/superpowers/specs/`.
 
 ## Guardrails

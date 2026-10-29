@@ -532,6 +532,53 @@ select { cursor: pointer; }
 .hsc-sub { font-size: 11px; color: var(--ink-muted); text-align: right; line-height: 1.4; }
 
 /* ══════════════════════════════════════════════════════════
+   HOME — monthly fund review (above the tracker)
+══════════════════════════════════════════════════════════ */
+.review-section { padding-bottom: 0; }
+.review-section .section-title em { color: var(--accent-text); }
+.mr-picks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s4); margin: var(--s6) 0 var(--s5); }
+.mr-pick { display: flex; flex-direction: column; gap: var(--s3); padding: var(--s5); }
+.mr-pick-cat { font: 600 10.5px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted); }
+.tile .mr-pick-name { font-size: 22px; margin: 0; }
+.mr-ppf { display: flex; align-items: center; gap: var(--s3); padding: 10px 12px; border-radius: var(--r); background: var(--surface-2); }
+.mr-ppf.is-good { background: var(--pos-dim); }
+.mr-ppf-val { font: 700 26px/1 var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); flex: none; }
+.mr-ppf.is-good .mr-ppf-val { color: var(--pos); }
+.mr-ppf-lbl { font-size: 12.5px; line-height: 1.4; color: var(--ink-muted); }
+.mr-verdict { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.mr-verdict li { position: relative; padding-left: 20px; font-size: 13.5px; line-height: 1.45; color: var(--ink); }
+.mr-verdict li::before { position: absolute; left: 0; top: 0; font-weight: 700; }
+.mr-verdict li.plus::before { content: "✓"; color: var(--pos); }
+.mr-verdict li.watch { color: var(--ink-muted); }
+.mr-verdict li.watch::before { content: "!"; color: var(--accent-text); left: 4px; }
+.mr-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s4); }
+.mr-chg + .mr-chg { margin-top: var(--s4); padding-top: var(--s4); border-top: 1px solid var(--border-soft); }
+.mr-chg-cat { font: 400 20px/1.2 var(--font-display); color: var(--ink); margin-bottom: var(--s2); display: flex; align-items: center; gap: var(--s2); }
+.mr-badge { font: 600 10px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; background: var(--accent); color: var(--accent-fg); padding: 4px 7px; border-radius: var(--r-chip); }
+.mr-chg ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.mr-chg li { font-size: 13.5px; line-height: 1.5; color: var(--ink-muted); }
+.mr-chg li strong { color: var(--ink); }
+.mr-move { display: inline-block; width: 14px; font-size: 10px; }
+.mr-move.up { color: var(--pos); }
+.mr-move.down { color: var(--neg); }
+.mr-steady { margin-top: var(--s4); font-size: 13.5px; color: var(--ink-muted); }
+.mr-card-head { font-size: 15px; color: var(--ink); margin-bottom: var(--s4); }
+.mr-table-wrap { overflow-x: auto; }
+.mr-table { width: 100%; border-collapse: collapse; font: 500 12.5px/1 var(--mono); font-variant-numeric: tabular-nums; }
+.mr-table th, .mr-table td { padding: 9px 6px; border-bottom: 1px solid var(--border-soft); text-align: right; white-space: nowrap; }
+.mr-table thead th { font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); background: var(--surface-2); }
+.mr-table th[scope="row"], .mr-table thead th:first-child { text-align: left; font-family: var(--font); font-weight: 600; color: var(--ink); }
+.mr-table td.is-beat { color: var(--pos); }
+.mr-table td.is-trailed { color: var(--neg); }
+.mr-table td.is-level { color: var(--ink-muted); }
+.mr-mark { font-weight: 700; }
+.tile .mr-card-note, .mr-note { margin-top: var(--s4); font-size: 12px; line-height: 1.5; color: var(--ink-muted); }
+.mr-note { max-width: 90ch; }
+@media (max-width: 1099px) { .mr-picks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 899px) { .mr-grid { grid-template-columns: 1fr; } }
+@media (max-width: 680px) { .mr-picks { grid-template-columns: 1fr; } .mr-table th, .mr-table td { padding: 8px 4px; } }
+
+/* ══════════════════════════════════════════════════════════
    HOME — live fund tracker
 ══════════════════════════════════════════════════════════ */
 .tracker-controls { display: flex; gap: var(--s2); flex-wrap: wrap; margin: var(--s6) 0 var(--s5); }
@@ -922,6 +969,7 @@ select { cursor: pointer; }
 .page-mf .ptable { min-width: 700px; }
 .page-mf .ptable tr:hover td { background: var(--surface-2); }
 .page-mf .fund-cell { font-weight: 600; min-width: 180px; }
+.page-mf .fund-why { margin-top: 4px; font-size: 12px; font-weight: 400; line-height: 1.45; color: var(--ink-muted); white-space: normal; max-width: 42ch; }
 .page-mf .cat-pill { display: inline-block; padding: 4px 8px; border-radius: var(--r-chip); font: 600 11px/1 var(--font); }
 .page-mf .c-lc   { background: color-mix(in srgb, var(--blue) 14%, transparent);   color: var(--blue); }
 .page-mf .c-fc   { background: color-mix(in srgb, var(--violet) 14%, transparent); color: var(--violet); }

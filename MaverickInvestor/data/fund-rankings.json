@@ -1,5 +1,6 @@
 {
   "asOf": "2026-10-29",
+  "ppfRate": 0.071,
   "categories": {
     "largeCap": {
       "benchmark": "Nifty 50",
@@ -24,7 +25,24 @@
             "ir": 0.8782,
             "consistency": 0.1095,
             "ter": 0.54,
-            "aum": 38420
+            "aum": 38420,
+            "beatPPF5": 0.9623,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": 0.8396,
+            "windowsBench5": 106,
+            "sinceBench5": 2013,
+            "benchMonths": 165
+          },
+          "verdict": {
+            "plus": [
+              "Beat the Nifty 50 in 84% of 5-year periods since 2013.",
+              "In the market's bad months it fell about 12% less than the Nifty 50.",
+              "Beat today's PPF rate (7.1%) in 96% of 5-year periods since 2013."
+            ],
+            "watch": [
+              "Its worst fall from a peak was 37%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -47,7 +65,25 @@
             "ir": 0.7528,
             "consistency": 0.1447,
             "ter": 0.85,
-            "aum": 63200
+            "aum": 63200,
+            "beatPPF5": 0.9528,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": 0.8491,
+            "windowsBench5": 106,
+            "sinceBench5": 2013,
+            "benchMonths": 165
+          },
+          "verdict": {
+            "plus": [
+              "Beat the Nifty 50 in 85% of 5-year periods since 2013.",
+              "In the market's bad months it fell about 17% less than the Nifty 50.",
+              "Beat today's PPF rate (7.1%) in 95% of 5-year periods since 2013."
+            ],
+            "watch": [
+              "Costs more than most funds on our list for its category (0.85% a year).",
+              "Its worst fall from a peak was 37%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -70,7 +106,24 @@
             "ir": 0.6353,
             "consistency": 0.1475,
             "ter": 0.66,
-            "aum": 34500
+            "aum": 34500,
+            "beatPPF5": 0.9151,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": 0.6698,
+            "windowsBench5": 106,
+            "sinceBench5": 2013,
+            "benchMonths": 165
+          },
+          "verdict": {
+            "plus": [
+              "Beat the Nifty 50 in 67% of 5-year periods since 2013.",
+              "Beat today's PPF rate (7.1%) in 92% of 5-year periods since 2013."
+            ],
+            "watch": [
+              "Costs more than most funds on our list for its category (0.66% a year).",
+              "Its worst fall from a peak was 40%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -93,7 +146,24 @@
             "ir": 0.3018,
             "consistency": 0.1246,
             "ter": 0.52,
-            "aum": 35280
+            "aum": 35280,
+            "beatPPF5": 0.9717,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": 0.6038,
+            "windowsBench5": 106,
+            "sinceBench5": 2013,
+            "benchMonths": 165
+          },
+          "verdict": {
+            "plus": [
+              "Beat the Nifty 50 in 60% of 5-year periods since 2013.",
+              "In the market's bad months it fell about 16% less than the Nifty 50.",
+              "Beat today's PPF rate (7.1%) in 97% of 5-year periods since 2013."
+            ],
+            "watch": [
+              "Its worst fall from a peak was 30%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -116,7 +186,24 @@
             "ir": 0.1827,
             "consistency": 0.1276,
             "ter": 0.21,
-            "aum": 1750
+            "aum": 1750,
+            "beatPPF5": 0.92,
+            "windows5": 25,
+            "since5": 2019,
+            "beatBench5": 0.84,
+            "windowsBench5": 25,
+            "sinceBench5": 2019,
+            "benchMonths": 84
+          },
+          "verdict": {
+            "plus": [
+              "Beat the Nifty 50 in 84% of 5-year periods since 2019.",
+              "Beat today's PPF rate (7.1%) in 92% of 5-year periods since 2019.",
+              "Cheaper than most funds on our list for its category (0.21% a year)."
+            ],
+            "watch": [
+              "Its worst fall from a peak was 37%. Be ready to sit through drops like that."
+            ]
           }
         }
       ]
@@ -144,7 +231,23 @@
             "ir": 0.5386,
             "consistency": 0.1598,
             "ter": 0.63,
-            "aum": 75300
+            "aum": 75300,
+            "beatPPF5": 0.9902,
+            "windows5": 102,
+            "since5": 2013,
+            "beatBench5": null,
+            "windowsBench5": 0,
+            "sinceBench5": null,
+            "benchMonths": 27
+          },
+          "verdict": {
+            "plus": [
+              "Beat today's PPF rate (7.1%) in 99% of 5-year periods since 2013.",
+              "Cheaper than most funds on our list for its category (0.63% a year)."
+            ],
+            "watch": [
+              "Its worst fall from a peak was 31%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -167,7 +270,23 @@
             "ir": 1.1069,
             "consistency": 0.1445,
             "ter": 0.78,
-            "aum": 58320
+            "aum": 58320,
+            "beatPPF5": 0.9057,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": null,
+            "windowsBench5": 0,
+            "sinceBench5": null,
+            "benchMonths": 27
+          },
+          "verdict": {
+            "plus": [
+              "Beat today's PPF rate (7.1%) in 91% of 5-year periods since 2013."
+            ],
+            "watch": [
+              "Costs more than most funds on our list for its category (0.78% a year).",
+              "Its worst fall from a peak was 42%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -190,7 +309,23 @@
             "ir": 2.8944,
             "consistency": 0.1376,
             "ter": 0.8,
-            "aum": 22100
+            "aum": 22100,
+            "beatPPF5": 0.9717,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": null,
+            "windowsBench5": 0,
+            "sinceBench5": null,
+            "benchMonths": 27
+          },
+          "verdict": {
+            "plus": [
+              "Beat today's PPF rate (7.1%) in 97% of 5-year periods since 2013."
+            ],
+            "watch": [
+              "Costs more than most funds on our list for its category (0.80% a year).",
+              "Its worst fall from a peak was 39%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -213,7 +348,23 @@
             "ir": 0.3792,
             "consistency": 0.1296,
             "ter": 0.58,
-            "aum": 50800
+            "aum": 50800,
+            "beatPPF5": 0.9811,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": null,
+            "windowsBench5": 0,
+            "sinceBench5": null,
+            "benchMonths": 27
+          },
+          "verdict": {
+            "plus": [
+              "Beat today's PPF rate (7.1%) in 98% of 5-year periods since 2013.",
+              "Cheaper than most funds on our list for its category (0.58% a year)."
+            ],
+            "watch": [
+              "Its worst fall from a peak was 37%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -236,7 +387,23 @@
             "ir": 0.4054,
             "consistency": 0.1323,
             "ter": 0.9,
-            "aum": 25600
+            "aum": 25600,
+            "beatPPF5": 0.9057,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": null,
+            "windowsBench5": 0,
+            "sinceBench5": null,
+            "benchMonths": 27
+          },
+          "verdict": {
+            "plus": [
+              "Beat today's PPF rate (7.1%) in 91% of 5-year periods since 2013."
+            ],
+            "watch": [
+              "Costs more than most funds on our list for its category (0.90% a year).",
+              "Its worst fall from a peak was 34%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -259,7 +426,23 @@
             "ir": 0.3838,
             "consistency": 0.1559,
             "ter": 0.75,
-            "aum": 11800
+            "aum": 11800,
+            "beatPPF5": 0.9811,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": null,
+            "windowsBench5": 0,
+            "sinceBench5": null,
+            "benchMonths": 27
+          },
+          "verdict": {
+            "plus": [
+              "Beat today's PPF rate (7.1%) in 98% of 5-year periods since 2013.",
+              "Cheaper than most funds on our list for its category (0.75% a year)."
+            ],
+            "watch": [
+              "Its worst fall from a peak was 36%. Be ready to sit through drops like that."
+            ]
           }
         }
       ]
@@ -287,7 +470,25 @@
             "ir": 0.1506,
             "consistency": 0.2452,
             "ter": 0.65,
-            "aum": 20200
+            "aum": 20200,
+            "beatPPF5": 0.914,
+            "windows5": 93,
+            "since5": 2014,
+            "beatBench5": 1.0,
+            "windowsBench5": 26,
+            "sinceBench5": 2019,
+            "benchMonths": 85
+          },
+          "verdict": {
+            "plus": [
+              "Beat the Nifty Midcap 150 in 100% of 5-year periods since 2019.",
+              "In the market's bad months it fell about 16% less than the Nifty Midcap 150.",
+              "Beat today's PPF rate (7.1%) in 91% of 5-year periods since 2014."
+            ],
+            "watch": [
+              "Costs more than most funds on our list for its category (0.65% a year).",
+              "Its worst fall from a peak was 37%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -310,7 +511,24 @@
             "ir": 0.4471,
             "consistency": 0.198,
             "ter": 0.38,
-            "aum": 7600
+            "aum": 7600,
+            "beatPPF5": 1.0,
+            "windows5": 60,
+            "since5": 2016,
+            "beatBench5": 1.0,
+            "windowsBench5": 26,
+            "sinceBench5": 2019,
+            "benchMonths": 85
+          },
+          "verdict": {
+            "plus": [
+              "Beat the Nifty Midcap 150 in 100% of 5-year periods since 2019.",
+              "In the market's bad months it fell about 11% less than the Nifty Midcap 150.",
+              "Beat today's PPF rate (7.1%) in 100% of 5-year periods since 2016."
+            ],
+            "watch": [
+              "Its worst fall from a peak was 39%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -333,7 +551,25 @@
             "ir": 0.1843,
             "consistency": 0.1795,
             "ter": 0.82,
-            "aum": 72150
+            "aum": 72150,
+            "beatPPF5": 0.9528,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": 1.0,
+            "windowsBench5": 26,
+            "sinceBench5": 2019,
+            "benchMonths": 85
+          },
+          "verdict": {
+            "plus": [
+              "Beat the Nifty Midcap 150 in 100% of 5-year periods since 2019.",
+              "In the market's bad months it fell about 19% less than the Nifty Midcap 150.",
+              "Beat today's PPF rate (7.1%) in 95% of 5-year periods since 2013."
+            ],
+            "watch": [
+              "Costs more than most funds on our list for its category (0.82% a year).",
+              "Its worst fall from a peak was 40%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -356,7 +592,25 @@
             "ir": -0.3229,
             "consistency": 0.1658,
             "ter": 0.4,
-            "aum": 40280
+            "aum": 40280,
+            "beatPPF5": 0.9906,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": 0.0,
+            "windowsBench5": 26,
+            "sinceBench5": 2019,
+            "benchMonths": 85
+          },
+          "verdict": {
+            "plus": [
+              "In the market's bad months it fell about 24% less than the Nifty Midcap 150.",
+              "Beat today's PPF rate (7.1%) in 99% of 5-year periods since 2013.",
+              "Cheaper than most funds on our list for its category (0.40% a year)."
+            ],
+            "watch": [
+              "Trailed the Nifty Midcap 150 in 100% of 5-year periods since 2019.",
+              "Its worst fall from a peak was 29%. Be ready to sit through drops like that."
+            ]
           }
         }
       ]
@@ -384,7 +638,24 @@
             "ir": -0.0402,
             "consistency": 0.1744,
             "ter": 0.53,
-            "aum": 22800
+            "aum": 22800,
+            "beatPPF5": 0.9895,
+            "windows5": 95,
+            "since5": 2013,
+            "beatBench5": 0.9231,
+            "windowsBench5": 13,
+            "sinceBench5": 2020,
+            "benchMonths": 72
+          },
+          "verdict": {
+            "plus": [
+              "Beat the Nifty Smallcap 250 in 92% of 5-year periods since 2020.",
+              "In the market's bad months it fell about 41% less than the Nifty Smallcap 250.",
+              "Beat today's PPF rate (7.1%) in 99% of 5-year periods since 2013."
+            ],
+            "watch": [
+              "Its worst fall from a peak was 35%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -407,7 +678,24 @@
             "ir": 0.7968,
             "consistency": 0.2355,
             "ter": 0.62,
-            "aum": 55320
+            "aum": 55320,
+            "beatPPF5": 0.9717,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": 1.0,
+            "windowsBench5": 13,
+            "sinceBench5": 2020,
+            "benchMonths": 72
+          },
+          "verdict": {
+            "plus": [
+              "Beat the Nifty Smallcap 250 in 100% of 5-year periods since 2020.",
+              "In the market's bad months it fell about 32% less than the Nifty Smallcap 250.",
+              "Beat today's PPF rate (7.1%) in 97% of 5-year periods since 2013."
+            ],
+            "watch": [
+              "Its worst fall from a peak was 49%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -430,7 +718,25 @@
             "ir": 0.7963,
             "consistency": 0.2925,
             "ter": 0.64,
-            "aum": 26500
+            "aum": 26500,
+            "beatPPF5": 0.8019,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": 1.0,
+            "windowsBench5": 13,
+            "sinceBench5": 2020,
+            "benchMonths": 72
+          },
+          "verdict": {
+            "plus": [
+              "Beat the Nifty Smallcap 250 in 100% of 5-year periods since 2020.",
+              "In the market's bad months it fell about 21% less than the Nifty Smallcap 250.",
+              "Beat today's PPF rate (7.1%) in 80% of 5-year periods since 2013."
+            ],
+            "watch": [
+              "Costs more than most funds on our list for its category (0.64% a year).",
+              "Its worst fall from a peak was 47%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -453,7 +759,25 @@
             "ir": -0.0456,
             "consistency": 0.2145,
             "ter": 0.44,
-            "aum": 16400
+            "aum": 16400,
+            "beatPPF5": 0.9528,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": 0.0,
+            "windowsBench5": 13,
+            "sinceBench5": 2020,
+            "benchMonths": 72
+          },
+          "verdict": {
+            "plus": [
+              "In the market's bad months it fell about 28% less than the Nifty Smallcap 250.",
+              "Beat today's PPF rate (7.1%) in 95% of 5-year periods since 2013.",
+              "Cheaper than most funds on our list for its category (0.44% a year)."
+            ],
+            "watch": [
+              "Trailed the Nifty Smallcap 250 in 100% of 5-year periods since 2020.",
+              "Its worst fall from a peak was 41%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -476,7 +800,24 @@
             "ir": -0.291,
             "consistency": 0.166,
             "ter": 0.67,
-            "aum": 28450
+            "aum": 28450,
+            "beatPPF5": 1.0,
+            "windows5": 96,
+            "since5": 2013,
+            "beatBench5": 0.0769,
+            "windowsBench5": 13,
+            "sinceBench5": 2020,
+            "benchMonths": 72
+          },
+          "verdict": {
+            "plus": [
+              "In the market's bad months it fell about 35% less than the Nifty Smallcap 250.",
+              "Beat today's PPF rate (7.1%) in 100% of 5-year periods since 2013."
+            ],
+            "watch": [
+              "Trailed the Nifty Smallcap 250 in 92% of 5-year periods since 2020.",
+              "Costs more than most funds on our list for its category (0.67% a year)."
+            ]
           }
         },
         {
@@ -499,7 +840,25 @@
             "ir": 0.1579,
             "consistency": 0.2121,
             "ter": 0.68,
-            "aum": 31200
+            "aum": 31200,
+            "beatPPF5": 0.9438,
+            "windows5": 89,
+            "since5": 2014,
+            "beatBench5": 1.0,
+            "windowsBench5": 13,
+            "sinceBench5": 2020,
+            "benchMonths": 72
+          },
+          "verdict": {
+            "plus": [
+              "Beat the Nifty Smallcap 250 in 100% of 5-year periods since 2020.",
+              "In the market's bad months it fell about 30% less than the Nifty Smallcap 250.",
+              "Beat today's PPF rate (7.1%) in 94% of 5-year periods since 2014."
+            ],
+            "watch": [
+              "Costs more than most funds on our list for its category (0.68% a year).",
+              "Its worst fall from a peak was 48%. Be ready to sit through drops like that."
+            ]
           }
         }
       ]
@@ -527,7 +886,23 @@
             "ir": null,
             "consistency": 0.2078,
             "ter": 0.16,
-            "aum": 2000
+            "aum": 2000,
+            "beatPPF5": 0.7736,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": null,
+            "windowsBench5": 0,
+            "sinceBench5": null,
+            "benchMonths": null
+          },
+          "verdict": {
+            "plus": [
+              "Beat today's PPF rate (7.1%) in 77% of 5-year periods since 2013. PPF is tax-free, so the real gap is smaller.",
+              "Cheaper than most funds on our list for its category (0.16% a year)."
+            ],
+            "watch": [
+              "Its worst fall from a peak was 26%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -550,7 +925,23 @@
             "ir": null,
             "consistency": 0.2049,
             "ter": 0.17,
-            "aum": 600
+            "aum": 600,
+            "beatPPF5": 0.7547,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": null,
+            "windowsBench5": 0,
+            "sinceBench5": null,
+            "benchMonths": null
+          },
+          "verdict": {
+            "plus": [
+              "Beat today's PPF rate (7.1%) in 75% of 5-year periods since 2013. PPF is tax-free, so the real gap is smaller.",
+              "Cheaper than most funds on our list for its category (0.17% a year)."
+            ],
+            "watch": [
+              "Its worst fall from a peak was 26%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -573,7 +964,23 @@
             "ir": null,
             "consistency": 0.2099,
             "ter": 0.42,
-            "aum": 2500
+            "aum": 2500,
+            "beatPPF5": 0.7642,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": null,
+            "windowsBench5": 0,
+            "sinceBench5": null,
+            "benchMonths": null
+          },
+          "verdict": {
+            "plus": [
+              "Beat today's PPF rate (7.1%) in 76% of 5-year periods since 2013. PPF is tax-free, so the real gap is smaller."
+            ],
+            "watch": [
+              "Costs more than most funds on our list for its category (0.42% a year).",
+              "Its worst fall from a peak was 25%. Be ready to sit through drops like that."
+            ]
           }
         },
         {
@@ -596,7 +1003,23 @@
             "ir": null,
             "consistency": 0.2125,
             "ter": 0.34,
-            "aum": 1850
+            "aum": 1850,
+            "beatPPF5": 0.7547,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": null,
+            "windowsBench5": 0,
+            "sinceBench5": null,
+            "benchMonths": null
+          },
+          "verdict": {
+            "plus": [
+              "Beat today's PPF rate (7.1%) in 75% of 5-year periods since 2013. PPF is tax-free, so the real gap is smaller."
+            ],
+            "watch": [
+              "Costs more than most funds on our list for its category (0.34% a year).",
+              "Its worst fall from a peak was 25%. Be ready to sit through drops like that."
+            ]
           }
         }
       ]
@@ -624,7 +1047,23 @@
             "ir": null,
             "consistency": 0.0179,
             "ter": 0.38,
-            "aum": 28350
+            "aum": 28350,
+            "beatPPF5": 0.8208,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": null,
+            "windowsBench5": 0,
+            "sinceBench5": null,
+            "benchMonths": null
+          },
+          "verdict": {
+            "plus": [
+              "Beat today's PPF rate (7.1%) in 82% of 5-year periods since 2013. PPF is tax-free, so the real gap is smaller.",
+              "A steady ride: its worst fall from a peak was only 2%."
+            ],
+            "watch": [
+              "Costs more than most funds on our list for its category (0.38% a year)."
+            ]
           }
         },
         {
@@ -647,7 +1086,22 @@
             "ir": null,
             "consistency": 0.02,
             "ter": 0.35,
-            "aum": 18750
+            "aum": 18750,
+            "beatPPF5": 0.8208,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": null,
+            "windowsBench5": 0,
+            "sinceBench5": null,
+            "benchMonths": null
+          },
+          "verdict": {
+            "plus": [
+              "Beat today's PPF rate (7.1%) in 82% of 5-year periods since 2013. PPF is tax-free, so the real gap is smaller.",
+              "Cheaper than most funds on our list for its category (0.35% a year).",
+              "A steady ride: its worst fall from a peak was only 3%."
+            ],
+            "watch": []
           }
         },
         {
@@ -670,7 +1124,23 @@
             "ir": null,
             "consistency": 0.0207,
             "ter": 0.36,
-            "aum": 14200
+            "aum": 14200,
+            "beatPPF5": 0.4938,
+            "windows5": 81,
+            "since5": 2015,
+            "beatBench5": null,
+            "windowsBench5": 0,
+            "sinceBench5": null,
+            "benchMonths": null
+          },
+          "verdict": {
+            "plus": [
+              "Cheaper than most funds on our list for its category (0.36% a year).",
+              "A steady ride: its worst fall from a peak was only 2%."
+            ],
+            "watch": [
+              "Beat today's PPF rate (7.1%) in 49% of 5-year periods since 2015. PPF is tax-free, so the real gap is smaller."
+            ]
           }
         },
         {
@@ -693,7 +1163,23 @@
             "ir": null,
             "consistency": 0.0205,
             "ter": 0.35,
-            "aum": 6100
+            "aum": 6100,
+            "beatPPF5": 0.5962,
+            "windows5": 52,
+            "since5": 2017,
+            "beatBench5": null,
+            "windowsBench5": 0,
+            "sinceBench5": null,
+            "benchMonths": null
+          },
+          "verdict": {
+            "plus": [
+              "Cheaper than most funds on our list for its category (0.35% a year).",
+              "A steady ride: its worst fall from a peak was only 4%."
+            ],
+            "watch": [
+              "Beat today's PPF rate (7.1%) in 60% of 5-year periods since 2017. PPF is tax-free, so the real gap is smaller."
+            ]
           }
         },
         {
@@ -716,7 +1202,23 @@
             "ir": null,
             "consistency": 0.0209,
             "ter": 0.4,
-            "aum": 23600
+            "aum": 23600,
+            "beatPPF5": 0.8396,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": null,
+            "windowsBench5": 0,
+            "sinceBench5": null,
+            "benchMonths": null
+          },
+          "verdict": {
+            "plus": [
+              "Beat today's PPF rate (7.1%) in 84% of 5-year periods since 2013. PPF is tax-free, so the real gap is smaller.",
+              "A steady ride: its worst fall from a peak was only 2%."
+            ],
+            "watch": [
+              "Costs more than most funds on our list for its category (0.40% a year)."
+            ]
           }
         },
         {
@@ -739,7 +1241,23 @@
             "ir": null,
             "consistency": 0.0226,
             "ter": 0.4,
-            "aum": 32100
+            "aum": 32100,
+            "beatPPF5": 0.8113,
+            "windows5": 106,
+            "since5": 2013,
+            "beatBench5": null,
+            "windowsBench5": 0,
+            "sinceBench5": null,
+            "benchMonths": null
+          },
+          "verdict": {
+            "plus": [
+              "Beat today's PPF rate (7.1%) in 81% of 5-year periods since 2013. PPF is tax-free, so the real gap is smaller.",
+              "A steady ride: its worst fall from a peak was only 4%."
+            ],
+            "watch": [
+              "Costs more than most funds on our list for its category (0.40% a year)."
+            ]
           }
         }
       ]

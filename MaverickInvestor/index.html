@@ -202,15 +202,41 @@
 </section>
 
 <!-- ============================================================
-     LIVE FUND TRACKER
+     MONTHLY FUND REVIEW — rendered from data/fund-rankings.json (daily)
+     and data/monthly-review.json (first run of each month)
+============================================================ -->
+<section class="review-section" id="review" hidden>
+  <div class="container">
+    <div class="section-label">Monthly Fund Review</div>
+    <h2 class="section-title" id="mrTitle">This month's <em>fund review</em></h2>
+    <p class="section-sub" id="mrSub">Our top-ranked fund in each category, explained in plain words, and an honest record of how our past picks have done.</p>
+
+    <div class="mr-picks" id="mrPicks"></div>
+
+    <div class="mr-grid">
+      <div class="tile mr-changes" data-group="mr-changes">
+        <div class="tile-title">What changed this month</div>
+        <div id="mrChanges"></div>
+      </div>
+      <div class="tile mr-card" data-group="mr-card">
+        <div class="tile-title">Our picks' report card</div>
+        <div id="mrCard"></div>
+      </div>
+    </div>
+    <p class="mr-note">For education only, not personal advice. Rankings come from public NAV data and our published method; past returns do not promise future ones. Check a fund's documents, or speak to a SEBI-registered adviser, before investing.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     DAILY FUND TRACKER
 ============================================================ -->
 <section class="tracker-section" id="tracker">
   <div class="container">
-    <div class="section-label">Live Tracker</div>
+    <div class="section-label">Daily NAV Tracker</div>
     <h2 class="section-title">Top Mutual Fund NAVs</h2>
     <p class="section-sub">
       <span class="live-dot"></span>
-      <span id="navStatusText">Fetching live NAVs from AMFI via mfapi.in…</span>
+      <span id="navStatusText">Loading today's NAVs…</span>
     </p>
 
     <div class="tracker-controls">
@@ -581,7 +607,6 @@
   ];
 
 
-  const MFAPI = 'https://api.mfapi.in/mf/';
 
   /* ═══════════════════════════════════════════════════════════
      STATE
@@ -662,37 +687,133 @@
      LIVE FUND NAVs — plain fetch, all parallel, no stagger
   ═══════════════════════════════════════════════════════════ */
   async function loadFundNAVs() {
-    document.getElementById('navStatusText').textContent = 'Loading live NAVs…';
+    // mfapi.in stopped allowing browser reads (CORS) in Oct 2026. The daily
+    // data job writes AMFI's official NAVs and the returns to our own file.
+    const [navRes, rankRes, reviewRes] = await Promise.allSettled([
+      fetch('data/navs.json', { cache: 'no-cache' }).then(r => r.json()),
+      fetch('data/fund-rankings.json', { cache: 'no-cache' }).then(r => r.json()),
+      fetch('data/monthly-review.json', { cache: 'no-cache' }).then(r => r.json()),
+    ]);
 
-    // Fire all 30 fetches simultaneously — update data array only inside .then()
-    await Promise.allSettled(FUND_CONFIG.map((fund, idx) =>
-      fetch(MFAPI + fund.schemeCode)
-        .then(r => r.json())
-        .then(data => {
-          const arr = data.data;
-          if (!arr || arr.length < 2) return;
-          const cur  = parseFloat(arr[0].nav);
-          const prev = parseFloat(arr[1].nav);
-          const i1   = Math.min(252, arr.length - 1);
-          const i3   = Math.min(756, arr.length - 1);
-          const d1   = ((cur - prev) / prev) * 100;
-          const y1   = ((cur - parseFloat(arr[i1].nav)) / parseFloat(arr[i1].nav)) * 100;
-          const y3   = (Math.pow(cur / parseFloat(arr[i3].nav), 1/3) - 1) * 100;
-          const up   = d1 >= 0;
-          funds[idx] = { ...fund, nav:cur.toFixed(4), d1:sign(d1)+d1.toFixed(2)+'%', y1:sign(y1)+y1.toFixed(1)+'%', y3:y3.toFixed(1)+'%', asOf:arr[0].date, up, live:true };
-        })
-        .catch(() => {})
-    ));
+    const pc = v => v == null ? '—' : sign(v) + v.toFixed(2) + '%';
+    if (navRes.status === 'fulfilled') {
+      const navs = navRes.value.funds || {};
+      FUND_CONFIG.forEach((fund, idx) => {
+        const n = navs[fund.schemeCode];
+        if (!n) return;
+        funds[idx] = { ...fund, nav: n.nav.toFixed(4), d1: pc(n.d1),
+          y1: n.y1 == null ? '—' : sign(n.y1) + n.y1.toFixed(1) + '%',
+          y3: n.y3 == null ? '—' : n.y3.toFixed(1) + '%', asOf: n.date, up: (n.d1 || 0) >= 0, live: true };
+      });
+    }
 
-    // Render ONCE after all fetches settle — keeps render errors out of .catch()
     renderFundTable();
     updateTickerWithFunds();
 
     const live = funds.filter(f => f.live).length;
+    const asOf = navRes.status === 'fulfilled' ? navRes.value.asOf : null;
     document.getElementById('navStatusText').textContent =
       live > 0
-        ? `Live NAVs loaded · ${live}/${FUND_CONFIG.length} funds · Source: AMFI · As of last published date`
-        : 'NAV data unavailable — will retry on next refresh';
+        ? `NAVs as of ${fmtDate(asOf)} · ${live}/${FUND_CONFIG.length} funds · Source: AMFI's official daily NAV · Updated every morning`
+        : 'NAV data unavailable — please try again shortly';
+
+    if (rankRes.status === 'fulfilled') renderReview(rankRes.value, reviewRes.status === 'fulfilled' ? reviewRes.value : null);
+  }
+
+  function fmtDate(iso, opts) {
+    if (!iso) return '—';
+    const [y, m, d] = iso.split('-').map(Number);
+    return new Date(y, m - 1, d).toLocaleDateString('en-IN', opts || { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+  function escHtml(t) {
+    return String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     MONTHLY FUND REVIEW
+  ═══════════════════════════════════════════════════════════ */
+  const REVIEW_CATS = { largeCap: 'Large Cap', flexiCap: 'Flexi Cap', midCap: 'Mid Cap', smallCap: 'Small Cap', gold: 'Gold', debt: 'Debt' };
+  let reviewDrawn = false;
+
+  function renderReview(rank, review) {
+    if (reviewDrawn) return;   // the tracker refreshes; the review is drawn once
+    reviewDrawn = true;
+    const ppf = rank.ppfRate != null ? (rank.ppfRate * 100).toFixed(1) + '%' : 'PPF';
+
+    // Top pick per category: plain-English verdict + "Beat PPF?" score
+    document.getElementById('mrPicks').innerHTML = Object.entries(REVIEW_CATS).map(([key, name]) => {
+      const f = rank.categories[key] && rank.categories[key].ranked[0];
+      if (!f) return '';
+      const m = f.metrics || {}, v = f.verdict || { plus: [], watch: [] };
+      const p5 = m.beatPPF5;
+      const plus = v.plus.filter(t => !t.startsWith("Beat today's PPF"));
+      const ppfLine = v.plus.concat(v.watch).find(t => t.startsWith("Beat today's PPF"));
+      const taxNote = ppfLine && ppfLine.includes('tax-free') ? ' PPF is tax-free, so the real gap is smaller.' : '';
+      return `
+        <article class="tile mr-pick" data-group="mr-pick-${key}">
+          <div class="mr-pick-cat">${name} · our #1</div>
+          <h3 class="mr-pick-name">${escHtml(f.label)}</h3>
+          ${p5 != null ? `
+          <div class="mr-ppf ${p5 >= 0.6 ? 'is-good' : 'is-weak'}">
+            <span class="mr-ppf-val">${Math.round(p5 * 100)}%</span>
+            <span class="mr-ppf-lbl">of 5-year periods since ${m.since5} beat PPF's ${ppf}.${taxNote}</span>
+          </div>` : ''}
+          <ul class="mr-verdict">
+            ${plus.map(t => `<li class="plus">${escHtml(t)}</li>`).join('')}
+            ${v.watch.filter(t => !t.startsWith("Beat today's PPF")).map(t => `<li class="watch">${escHtml(t)}</li>`).join('')}
+          </ul>
+        </article>`;
+    }).join('');
+
+    if (review) {
+      const monthName = fmtDate(review.month + '-01', { month: 'long', year: 'numeric' });
+      document.getElementById('mrTitle').innerHTML = `${escHtml(monthName)} <em>fund review</em>`;
+      document.getElementById('mrSub').textContent =
+        `Our top-ranked fund in each category, explained in plain words. "What changed" compares our ${fmtDate(review.since)} and ${fmtDate(review.asOf)} rankings; the verdicts use today's data.`;
+
+      // What changed
+      const moved = review.changes.filter(c => c.moves.length);
+      const steady = review.changes.filter(c => !c.moves.length).map(c => c.name);
+      const rankTxt = mv => mv.was == null ? `new at #${mv.rank}` : (mv.rank < mv.was ? `up to #${mv.rank} from #${mv.was}` : `down to #${mv.rank} from #${mv.was}`);
+      document.getElementById('mrChanges').innerHTML =
+        moved.map(c => `
+          <div class="mr-chg">
+            <div class="mr-chg-cat">${c.name}${c.top !== c.topWas ? ' <span class="mr-badge">New #1</span>' : ''}</div>
+            <ul>${c.moves.map(mv => `
+              <li><span class="mr-move ${mv.was == null || mv.rank < mv.was ? 'up' : 'down'}">${mv.was == null || mv.rank < mv.was ? '▲' : '▼'}</span>
+                <strong>${escHtml(mv.label)}</strong> ${rankTxt(mv)}: ${mv.why.map(escHtml).join('; ')}.</li>`).join('')}
+            </ul>
+          </div>`).join('') +
+        (steady.length ? `<p class="mr-steady">No change in the top 3: ${steady.join(', ')}.</p>` : '');
+
+      // Report card: every past month's #1 pick vs its yardstick
+      const rc = review.reportCard;
+      if (rc && rc.total) {
+        const months = rc.months;
+        const cell = (cat, mo) => rc.cells.find(c => c.category === cat && c.month === mo);
+        const mark = { beat: '✓', level: '=', trailed: '✗' };
+        document.getElementById('mrCard').innerHTML = `
+          <p class="mr-card-head"><strong>${rc.beat} of ${rc.total}</strong> picks beat their yardstick, ${rc.level} were level (within 0.1%) and ${rc.total - rc.beat - rc.level} trailed.</p>
+          <div class="mr-table-wrap">
+            <table class="mr-table">
+              <thead><tr><th>Picked in</th>${months.map(mo => `<th>${fmtDate(mo + '-01', { month: 'short' })}</th>`).join('')}</tr></thead>
+              <tbody>${Object.entries(REVIEW_CATS).map(([key, name]) => `
+                <tr><th scope="row">${name}</th>${months.map(mo => {
+                  const c = cell(key, mo);
+                  if (!c) return '<td>—</td>';
+                  const gap = Math.abs(c.return - c.vs) < 0.05 ? 0 : c.return - c.vs;
+                  return `<td class="is-${c.result}" title="${escHtml(c.label)}: ${c.return.toFixed(1)}% vs ${c.vs.toFixed(1)}% (${escHtml(c.vsName)})">
+                    <span class="mr-mark">${mark[c.result]}</span> ${gap ? sign(gap) : ''}${gap.toFixed(1)}</td>`;
+                }).join('')}</tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+          <p class="mr-card-note">Each cell is our #1 fund's return from the day we picked it to ${fmtDate(rc.measuredTo || review.asOf)}, minus its yardstick's, in percentage points. The yardstick is the category index; for Gold and Debt, it's the average of the funds we track. A few months is a short record; we'll keep publishing it.</p>`;
+      }
+    } else {
+      document.querySelector('.mr-grid').hidden = true;
+    }
+    document.getElementById('review').hidden = false;
   }
 
   function updateTickerWithFunds() {
@@ -980,7 +1101,7 @@
 
 
   loadFundNAVs();
-  setInterval(loadFundNAVs,    5 * 60 * 1000);
+  setInterval(loadFundNAVs,   30 * 60 * 1000);
 
   const _toastStyle = document.createElement('style');
   _toastStyle.textContent = '@keyframes fadeInUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}';

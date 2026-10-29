@@ -873,7 +873,8 @@ function buildFundList(allocation){
         sharpe:(f.metrics&&f.metrics.sharpe!=null)?Math.round(f.metrics.sharpe*100)/100:null,
         ter:(f.metrics&&f.metrics.ter!=null)?f.metrics.ter:null,
         aum:(f.metrics&&f.metrics.aum!=null)?f.metrics.aum:null,
-        fallback:(f.metrics&&f.metrics.cagr5!=null)?Math.round(f.metrics.cagr5*1000)/10:FALLBACK_CAGR[ci]
+        fallback:(f.metrics&&f.metrics.cagr5!=null)?Math.round(f.metrics.cagr5*1000)/10:FALLBACK_CAGR[ci],
+        verdict:f.verdict||null
       }));
     } else {
       // bundled fallback if rankings unavailable
@@ -883,7 +884,7 @@ function buildFundList(allocation){
     if(!pick || pick.length===0) return;
     const perFund = pct/pick.length;
     pick.forEach(f=>{
-      funds.push({ name:f.name, code:f.code, sharpe:f.sharpe, ter:f.ter, aum:f.aum, fallback:f.fallback,
+      funds.push({ name:f.name, code:f.code, sharpe:f.sharpe, ter:f.ter, aum:f.aum, fallback:f.fallback, verdict:f.verdict||null,
         cat, catLabel:CAT_LABELS[ci], catCSS:CAT_CSS[ci], alloc:perFund, xirr:null });
     });
   });
@@ -898,7 +899,9 @@ function buildFundList(allocation){
 // ============================================================
 async function fetchNAV(code){
   try {
-    const r = await fetch(`https://api.mfapi.in/mf/${code}`,{signal:AbortSignal.timeout(8000)});
+    // Monthly NAV history written daily by tools/build_nav_data.py (mfapi.in
+    // no longer allows browser reads). Same {data:[{date,nav}]} shape.
+    const r = await fetch(`data/nav-history/${code}.json`,{signal:AbortSignal.timeout(8000)});
     if(!r.ok) return null;
     return await r.json();
   } catch(e){ return null; }
@@ -1121,7 +1124,7 @@ function renderResults(){
     const fundSip=Math.ceil(totalSip*f.alloc/100/100)*100;
     const xirrTxt=f.xirr!==null?`${f.xirr}%`:`${f.fallback}%*`;
     pb.innerHTML+=`<tr>
-      <td class="fund-cell">${f.name}</td>
+      <td class="fund-cell">${f.name}${f.verdict&&f.verdict.plus.length?`<div class="fund-why">${f.verdict.plus.slice(0,2).join(' ')}</div>`:''}</td>
       <td><span class="cat-pill ${f.catCSS}">${f.catLabel}</span></td>
       <td>${f.alloc}%<div class="alloc-bar-wrap"><div class="alloc-bar" style="width:${Math.min(f.alloc,100)}%"></div></div></td>
       <td>₹${fmt(fundSip)}</td>

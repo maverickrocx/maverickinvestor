@@ -1,0 +1,390 @@
+{
+ "month": "2026-10",
+ "since": "2026-09-05",
+ "asOf": "2026-10-03",
+ "generated": "2026-10-29",
+ "changes": [
+  {
+   "category": "largeCap",
+   "name": "Large Cap",
+   "top": "Mirae Asset Large Cap",
+   "topWas": "Mirae Asset Large Cap",
+   "moves": []
+  },
+  {
+   "category": "flexiCap",
+   "name": "Flexi Cap",
+   "top": "Parag Parikh Flexi Cap",
+   "topWas": "Parag Parikh Flexi Cap",
+   "moves": [
+    {
+     "label": "HDFC Flexi Cap",
+     "rank": 2,
+     "was": 3,
+     "why": [
+      "returns swung less from year to year (15.6% \u2192 14.5%)"
+     ]
+    },
+    {
+     "label": "Aditya Birla SL Flexi Cap",
+     "rank": 3,
+     "was": 2,
+     "why": [
+      "3-year return slipped (16.0% \u2192 13.6%)",
+      "5-year return slipped (12.3% \u2192 10.8%)"
+     ]
+    }
+   ]
+  },
+  {
+   "category": "midCap",
+   "name": "Mid Cap",
+   "top": "Motilal Oswal Midcap",
+   "topWas": "Edelweiss Mid Cap",
+   "moves": [
+    {
+     "label": "Motilal Oswal Midcap",
+     "rank": 1,
+     "was": 2,
+     "why": [
+      "its own numbers barely moved; its rivals' moved more"
+     ]
+    },
+    {
+     "label": "Edelweiss Mid Cap",
+     "rank": 2,
+     "was": 1,
+     "why": [
+      "3-year return slipped (21.8% \u2192 19.0%)",
+      "less return for the ups and downs taken (1.09 \u2192 1.03)"
+     ]
+    },
+    {
+     "label": "Kotak Emerging Equity",
+     "rank": 3,
+     "was": 4,
+     "why": [
+      "returns swung less from year to year (17.5% \u2192 16.6%)"
+     ]
+    }
+   ]
+  },
+  {
+   "category": "smallCap",
+   "name": "Small Cap",
+   "top": "Axis Small Cap",
+   "topWas": "Axis Small Cap",
+   "moves": []
+  },
+  {
+   "category": "gold",
+   "name": "Gold",
+   "top": "Kotak Gold FoF",
+   "topWas": "Kotak Gold FoF",
+   "moves": [
+    {
+     "label": "SBI Gold FoF",
+     "rank": 2,
+     "was": 3,
+     "why": [
+      "returns swung less from year to year (21.4% \u2192 21.0%)"
+     ]
+    },
+    {
+     "label": "Axis Gold FoF",
+     "rank": 3,
+     "was": 2,
+     "why": [
+      "5-year return slipped (25.4% \u2192 24.7%)",
+      "3-year return slipped (35.7% \u2192 34.7%)"
+     ]
+    }
+   ]
+  },
+  {
+   "category": "debt",
+   "name": "Debt",
+   "top": "ICICI Pru Corporate Bond",
+   "topWas": "ICICI Pru Corporate Bond",
+   "moves": []
+  }
+ ],
+ "reportCard": {
+  "cells": [
+   {
+    "month": "2026-07",
+    "picked": "2026-07-13",
+    "category": "largeCap",
+    "name": "Large Cap",
+    "label": "Mirae Asset Large Cap",
+    "return": -6.12,
+    "vs": -6.04,
+    "vsName": "Nifty 50",
+    "result": "level"
+   },
+   {
+    "month": "2026-07",
+    "picked": "2026-07-13",
+    "category": "flexiCap",
+    "name": "Flexi Cap",
+    "label": "Parag Parikh Flexi Cap",
+    "return": -2.23,
+    "vs": -6.72,
+    "vsName": "Nifty 500",
+    "result": "beat"
+   },
+   {
+    "month": "2026-07",
+    "picked": "2026-07-13",
+    "category": "midCap",
+    "name": "Mid Cap",
+    "label": "Edelweiss Mid Cap",
+    "return": -7.13,
+    "vs": -8.93,
+    "vsName": "Nifty Midcap 150",
+    "result": "beat"
+   },
+   {
+    "month": "2026-07",
+    "picked": "2026-07-13",
+    "category": "smallCap",
+    "name": "Small Cap",
+    "label": "Axis Small Cap",
+    "return": -3.91,
+    "vs": -6.43,
+    "vsName": "Nifty Smallcap 250",
+    "result": "beat"
+   },
+   {
+    "month": "2026-07",
+    "picked": "2026-07-13",
+    "category": "gold",
+    "name": "Gold",
+    "label": "Kotak Gold FoF",
+    "return": 0.1,
+    "vs": 0.13,
+    "vsName": "average of funds we track",
+    "result": "level"
+   },
+   {
+    "month": "2026-07",
+    "picked": "2026-07-13",
+    "category": "debt",
+    "name": "Debt",
+    "label": "ICICI Pru Corporate Bond",
+    "return": -0.36,
+    "vs": -0.34,
+    "vsName": "average of funds we track",
+    "result": "level"
+   },
+   {
+    "month": "2026-08",
+    "picked": "2026-08-02",
+    "category": "largeCap",
+    "name": "Large Cap",
+    "label": "Mirae Asset Large Cap",
+    "return": -6.86,
+    "vs": -6.8,
+    "vsName": "Nifty 50",
+    "result": "level"
+   },
+   {
+    "month": "2026-08",
+    "picked": "2026-08-02",
+    "category": "flexiCap",
+    "name": "Flexi Cap",
+    "label": "Parag Parikh Flexi Cap",
+    "return": -3.02,
+    "vs": -7.28,
+    "vsName": "Nifty 500",
+    "result": "beat"
+   },
+   {
+    "month": "2026-08",
+    "picked": "2026-08-02",
+    "category": "midCap",
+    "name": "Mid Cap",
+    "label": "Edelweiss Mid Cap",
+    "return": -7.35,
+    "vs": -8.89,
+    "vsName": "Nifty Midcap 150",
+    "result": "beat"
+   },
+   {
+    "month": "2026-08",
+    "picked": "2026-08-02",
+    "category": "smallCap",
+    "name": "Small Cap",
+    "label": "Axis Small Cap",
+    "return": -3.42,
+    "vs": -5.22,
+    "vsName": "Nifty Smallcap 250",
+    "result": "beat"
+   },
+   {
+    "month": "2026-08",
+    "picked": "2026-08-02",
+    "category": "gold",
+    "name": "Gold",
+    "label": "Kotak Gold FoF",
+    "return": 0.03,
+    "vs": 0.01,
+    "vsName": "average of funds we track",
+    "result": "level"
+   },
+   {
+    "month": "2026-08",
+    "picked": "2026-08-02",
+    "category": "debt",
+    "name": "Debt",
+    "label": "ICICI Pru Corporate Bond",
+    "return": -0.46,
+    "vs": -0.44,
+    "vsName": "average of funds we track",
+    "result": "level"
+   },
+   {
+    "month": "2026-09",
+    "picked": "2026-09-05",
+    "category": "largeCap",
+    "name": "Large Cap",
+    "label": "Mirae Asset Large Cap",
+    "return": -5.54,
+    "vs": -5.02,
+    "vsName": "Nifty 50",
+    "result": "trailed"
+   },
+   {
+    "month": "2026-09",
+    "picked": "2026-09-05",
+    "category": "flexiCap",
+    "name": "Flexi Cap",
+    "label": "Parag Parikh Flexi Cap",
+    "return": -1.38,
+    "vs": -6.55,
+    "vsName": "Nifty 500",
+    "result": "beat"
+   },
+   {
+    "month": "2026-09",
+    "picked": "2026-09-05",
+    "category": "midCap",
+    "name": "Mid Cap",
+    "label": "Edelweiss Mid Cap",
+    "return": -8.39,
+    "vs": -9.06,
+    "vsName": "Nifty Midcap 150",
+    "result": "beat"
+   },
+   {
+    "month": "2026-09",
+    "picked": "2026-09-05",
+    "category": "smallCap",
+    "name": "Small Cap",
+    "label": "Axis Small Cap",
+    "return": -6.75,
+    "vs": -8.16,
+    "vsName": "Nifty Smallcap 250",
+    "result": "beat"
+   },
+   {
+    "month": "2026-09",
+    "picked": "2026-09-05",
+    "category": "gold",
+    "name": "Gold",
+    "label": "Kotak Gold FoF",
+    "return": -7.97,
+    "vs": -7.92,
+    "vsName": "average of funds we track",
+    "result": "level"
+   },
+   {
+    "month": "2026-09",
+    "picked": "2026-09-05",
+    "category": "debt",
+    "name": "Debt",
+    "label": "ICICI Pru Corporate Bond",
+    "return": -0.84,
+    "vs": -0.7,
+    "vsName": "average of funds we track",
+    "result": "trailed"
+   },
+   {
+    "month": "2026-10",
+    "picked": "2026-10-03",
+    "category": "largeCap",
+    "name": "Large Cap",
+    "label": "Mirae Asset Large Cap",
+    "return": 0.14,
+    "vs": 1.25,
+    "vsName": "Nifty 50",
+    "result": "trailed"
+   },
+   {
+    "month": "2026-10",
+    "picked": "2026-10-03",
+    "category": "flexiCap",
+    "name": "Flexi Cap",
+    "label": "Parag Parikh Flexi Cap",
+    "return": 1.15,
+    "vs": -0.57,
+    "vsName": "Nifty 500",
+    "result": "beat"
+   },
+   {
+    "month": "2026-10",
+    "picked": "2026-10-03",
+    "category": "midCap",
+    "name": "Mid Cap",
+    "label": "Motilal Oswal Midcap",
+    "return": -1.83,
+    "vs": -2.65,
+    "vsName": "Nifty Midcap 150",
+    "result": "beat"
+   },
+   {
+    "month": "2026-10",
+    "picked": "2026-10-03",
+    "category": "smallCap",
+    "name": "Small Cap",
+    "label": "Axis Small Cap",
+    "return": -3.13,
+    "vs": -3.4,
+    "vsName": "Nifty Smallcap 250",
+    "result": "beat"
+   },
+   {
+    "month": "2026-10",
+    "picked": "2026-10-03",
+    "category": "gold",
+    "name": "Gold",
+    "label": "Kotak Gold FoF",
+    "return": -3.68,
+    "vs": -3.59,
+    "vsName": "average of funds we track",
+    "result": "level"
+   },
+   {
+    "month": "2026-10",
+    "picked": "2026-10-03",
+    "category": "debt",
+    "name": "Debt",
+    "label": "ICICI Pru Corporate Bond",
+    "return": -0.56,
+    "vs": -0.45,
+    "vsName": "average of funds we track",
+    "result": "trailed"
+   }
+  ],
+  "months": [
+   "2026-07",
+   "2026-08",
+   "2026-09",
+   "2026-10"
+  ],
+  "measuredTo": "2026-10-28",
+  "beat": 12,
+  "level": 8,
+  "total": 24
+ }
+}
