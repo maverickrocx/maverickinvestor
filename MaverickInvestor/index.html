@@ -209,24 +209,23 @@
   <div class="container">
     <div class="section-label">Monthly Fund Review</div>
     <h2 class="section-title" id="mrTitle">This month's <em>fund review</em></h2>
-    <p class="section-sub" id="mrSub">Our top-ranked fund in each category, explained in plain words, and an honest record of how our past picks have done.</p>
+    <p class="section-sub" id="mrSub">Our top-ranked fund in each category over the period you choose, with the numbers behind each pick in plain words.</p>
 
-    <div class="mr-picks" id="mrPicks"></div>
-
-    <div class="tile mr-period" data-group="mr-period" id="mrPeriodTile" hidden>
-      <div class="mr-period-head">
-        <div class="tile-title">Our picks by period</div>
-        <div class="mr-period-tabs" role="tablist" aria-label="Period">
-          <button class="tab-btn" role="tab" data-years="1">1 year</button>
-          <button class="tab-btn active" role="tab" data-years="3">3 years</button>
-          <button class="tab-btn" role="tab" data-years="5">5 years</button>
-        </div>
+    <div class="mr-period-bar" id="mrPeriodBar" hidden>
+      <span class="mr-period-lbl" id="mrPeriodLbl">Show our picks over</span>
+      <div class="mr-period-tabs" role="tablist" aria-labelledby="mrPeriodLbl">
+        <button class="tab-btn" role="tab" aria-selected="false" data-years="1">1 year</button>
+        <button class="tab-btn active" role="tab" aria-selected="true" data-years="3">3 years</button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-years="5">5 years</button>
       </div>
-      <div id="mrPeriod"></div>
+      <span class="mr-period-dates" id="mrPeriodDates"></span>
     </div>
+    <div class="mr-picks" id="mrPicks"></div>
+    <p class="mr-how" id="mrHow"></p>
 
     <div class="tile mr-changes" data-group="mr-changes" id="mrChangesTile">
       <div class="tile-title">What changed this month</div>
+      <p class="mr-chg-sub" id="mrChangesSub"></p>
       <div id="mrChanges"></div>
     </div>
     <p class="mr-more">Holding several funds? <a href="tools.html#duplicate-check">Check them for hidden duplicates</a> · Nervous about a fall? <a href="tools.html#crash-replay">Replay every crash since 2013</a></p>
@@ -725,58 +724,66 @@
         ? `NAVs as of ${fmtDate(asOf)} · ${live}/${FUND_CONFIG.length} funds · Source: AMFI's official daily NAV · Updated every morning`
         : 'NAV data unavailable — please try again shortly';
 
-    if (rankRes.status === 'fulfilled') renderReview(rankRes.value, reviewRes.status === 'fulfilled' ? reviewRes.value : null);
-    if (periodRes.status === 'fulfilled') initPeriodPicks(periodRes.value);
+    if (periodRes.status === 'fulfilled') renderReview(periodRes.value,
+      rankRes.status === 'fulfilled' ? rankRes.value : null,
+      reviewRes.status === 'fulfilled' ? reviewRes.value : null);
   }
 
-  /* Our picks by period: today's ranking over the last 1/3/5 years on SIP
-     XIRR, return vs yardstick, Sharpe, expense ratio and Beta
-     (tools/rank_funds.py → data/period-picks.json). */
-  let periodData = null, periodDrawn = false;
-  function initPeriodPicks(data) {
-    periodData = data;
-    if (periodDrawn) return;
-    periodDrawn = true;
-    document.querySelectorAll('.mr-period-tabs .tab-btn').forEach(btn => btn.addEventListener('click', () => {
-      document.querySelectorAll('.mr-period-tabs .tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
-      btn.classList.add('active'); btn.setAttribute('aria-selected', 'true');
-      renderPeriod(+btn.dataset.years);
-    }));
-    renderPeriod(3);
-    document.getElementById('mrPeriodTile').hidden = false;
-  }
-  function renderPeriod(years) {
+  function renderPicks(years) {
     const p = periodData.periods[years];
     if (!p) return;
     const w = periodData.weights;
-    const pct = (v, d = 1) => v == null ? '—' : (v * 100).toFixed(d) + '%';
+    const ppf = rankData && rankData.ppfRate != null ? (rankData.ppfRate * 100).toFixed(1) + '%' : 'PPF';
+    const pct = v => v == null ? '—' : (v * 100).toFixed(1) + '%';
     const pts = v => v == null ? '—' : sign(v) + (v * 100).toFixed(1);
     const num = v => v == null ? '—' : v.toFixed(2);
-    const rows = Object.entries(REVIEW_CATS).map(([key, name]) => {
+    const span = years + ' year' + (years > 1 ? 's' : '');
+    document.getElementById('mrPeriodDates').textContent = `${fmtDate(p.start)} – ${fmtDate(p.end)}`;
+
+    document.getElementById('mrPicks').innerHTML = Object.entries(REVIEW_CATS).map(([key, name]) => {
       const c = p.categories[key];
       if (!c || !c.ranked.length) return '';
       const f = c.ranked[0], next = c.ranked[1];
-      return `<tr>
-        <th scope="row" data-label="Category">${name}</th>
-        <td class="mr-p-fund" data-label="Our pick"><strong>${escHtml(f.label)}</strong>${next ? `<span>Next: ${escHtml(next.label)}</span>` : ''}</td>
-        <td data-label="SIP XIRR" class="${f.xirr >= 0 ? 'pos' : 'neg'}">${pct(f.xirr)}</td>
-        <td data-label="vs ${escHtml(c.yardstick)}" title="vs ${escHtml(c.yardstick)}" class="${f.vsBench >= 0 ? 'pos' : 'neg'}">${pts(f.vsBench)}<small> pts/yr</small><span class="mr-p-yard">vs ${escHtml(c.yardstick)}</span></td>
-        <td data-label="Sharpe">${num(f.sharpe)}</td>
-        <td data-label="Beta">${num(f.beta)}</td>
-        <td data-label="Expense">${f.ter != null ? f.ter.toFixed(2) + '%' : '—'}</td>
-        <td data-label="Score" class="mr-p-score">${f.score.toFixed(0)}</td>
-      </tr>`;
+      const long = rankData && rankData.categories[key] && rankData.categories[key].ranked.find(x => x.schemeCode === f.schemeCode);
+      const m = (long && long.metrics) || {}, v = (long && long.verdict) || { plus: [], watch: [] };
+      const isPpf = t => t.startsWith("Beat today's PPF");
+      const ppfLine = v.plus.concat(v.watch).find(isPpf);
+      const taxNote = ppfLine && ppfLine.includes('tax-free') ? ' PPF is tax-free, so the real gap is smaller.' : '';
+      return `
+        <article class="tile mr-pick" data-group="mr-pick-${key}">
+          <div class="mr-pick-top">
+            <div>
+              <div class="mr-pick-cat">${name} · our #1 over ${span}</div>
+              <h3 class="mr-pick-name">${escHtml(f.label)}</h3>
+            </div>
+            <div class="mr-pick-score" title="Score out of 100 against its category peers"><span>${f.score.toFixed(0)}</span>score</div>
+          </div>
+          <dl class="mr-stats">
+            <div><dt>SIP XIRR</dt><dd class="${f.xirr >= 0 ? 'pos' : 'neg'}">${pct(f.xirr)}</dd></div>
+            <div class="mr-stat-wide"><dt>vs ${escHtml(c.yardstick)}</dt><dd class="${f.vsBench >= 0 ? 'pos' : 'neg'}">${pts(f.vsBench)} <small>pts/yr</small></dd></div>
+            <div><dt>Sharpe</dt><dd>${num(f.sharpe)}</dd></div>
+            <div><dt>Beta</dt><dd>${num(f.beta)}</dd></div>
+            <div><dt>Expense</dt><dd>${f.ter != null ? f.ter.toFixed(2) + '%' : '—'}</dd></div>
+          </dl>
+          ${m.beatPPF5 != null ? `
+          <div class="mr-ppf ${m.beatPPF5 >= 0.6 ? 'is-good' : 'is-weak'}">
+            <span class="mr-ppf-val">${Math.round(m.beatPPF5 * 100)}%</span>
+            <span class="mr-ppf-lbl">of 5-year periods since ${m.since5} beat PPF's ${ppf}.${taxNote}</span>
+          </div>` : ''}
+          <ul class="mr-verdict">
+            ${v.plus.filter(t => !isPpf(t)).map(t => `<li class="plus">${escHtml(t)}</li>`).join('')}
+            ${v.watch.filter(t => !isPpf(t)).map(t => `<li class="watch">${escHtml(t)}</li>`).join('')}
+          </ul>
+          ${next ? `<div class="mr-next">Runner-up: <strong>${escHtml(next.label)}</strong> (score ${next.score.toFixed(0)})</div>` : ''}
+        </article>`;
     }).join('');
-    const yards = [...new Set(Object.values(p.categories).map(c => c.yardstick))];
-    document.getElementById('mrPeriod').innerHTML = `
-      <p class="mr-card-head">The fund in each category that scored best over the last <strong>${years} year${years > 1 ? 's' : ''}</strong> (${fmtDate(p.start)} to ${fmtDate(p.end)}).</p>
-      <div class="mr-table-wrap">
-        <table class="mr-ptable">
-          <thead><tr><th>Category</th><th>Our pick</th><th>SIP XIRR</th><th>vs yardstick</th><th>Sharpe</th><th>Beta</th><th>Expense</th><th>Score</th></tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>
-      <p class="mr-card-note">How we pick: SIP XIRR ${w.xirr * 100}%, return vs yardstick ${w.vsBench * 100}%, Sharpe ratio ${w.sharpe * 100}%, expense ratio ${w.ter * 100}% (lower is better), Beta ${w.beta * 100}% (lower means smaller swings than the yardstick). Each fund is scored against its category peers; 100 would be best on every measure. SIP XIRR is the yearly return on ₹1,000 invested every month. "vs yardstick" is the fund's yearly return minus its yardstick's, in percentage points: the category index where its index fund has ${years} years of history, otherwise the average of the funds we track (${yards.map(escHtml).join(', ')}). Expense ratios are today's. These picks can differ from the "our #1" cards above, which blend 3, 5 and 7 years and more risk measures.</p>`;
+
+    document.getElementById('mrHow').textContent =
+      `How we pick: over the last ${span}, each fund is scored against its category peers on SIP XIRR (${w.xirr * 100}%), ` +
+      `yearly return vs its yardstick (${w.vsBench * 100}%), Sharpe ratio (${w.sharpe * 100}%), expense ratio (${w.ter * 100}%, lower is better) ` +
+      `and Beta (${w.beta * 100}%, lower means smaller swings); 100 would be best on every measure. SIP XIRR is the yearly return on ₹1,000 invested every month. ` +
+      `The yardstick is the category index where its index fund has ${span} of history, otherwise the average of the funds we track. ` +
+      `Expense ratios are today's. The ticks and warnings, and the PPF test, look at each fund's full history since 2013.`;
   }
 
   function fmtDate(iso, opts) {
@@ -792,43 +799,29 @@
      MONTHLY FUND REVIEW
   ═══════════════════════════════════════════════════════════ */
   const REVIEW_CATS = { largeCap: 'Large Cap', flexiCap: 'Flexi Cap', midCap: 'Mid Cap', smallCap: 'Small Cap', gold: 'Gold', debt: 'Debt' };
-  let reviewDrawn = false;
+  let reviewDrawn = false, periodData = null, rankData = null;
 
-  function renderReview(rank, review) {
+  // Cards follow data/period-picks.json (rank_funds.py): today's ranking over
+  // the last 1/3/5 years on SIP XIRR, return vs yardstick, Sharpe, expense
+  // ratio and Beta. The long-run verdict and "beat PPF" lines come from the
+  // same fund's entry in data/fund-rankings.json.
+  function renderReview(period, rank, review) {
+    periodData = period; rankData = rank;
     if (reviewDrawn) return;   // the tracker refreshes; the review is drawn once
     reviewDrawn = true;
-    const ppf = rank.ppfRate != null ? (rank.ppfRate * 100).toFixed(1) + '%' : 'PPF';
-
-    // Top pick per category: plain-English verdict + "Beat PPF?" score
-    document.getElementById('mrPicks').innerHTML = Object.entries(REVIEW_CATS).map(([key, name]) => {
-      const f = rank.categories[key] && rank.categories[key].ranked[0];
-      if (!f) return '';
-      const m = f.metrics || {}, v = f.verdict || { plus: [], watch: [] };
-      const p5 = m.beatPPF5;
-      const plus = v.plus.filter(t => !t.startsWith("Beat today's PPF"));
-      const ppfLine = v.plus.concat(v.watch).find(t => t.startsWith("Beat today's PPF"));
-      const taxNote = ppfLine && ppfLine.includes('tax-free') ? ' PPF is tax-free, so the real gap is smaller.' : '';
-      return `
-        <article class="tile mr-pick" data-group="mr-pick-${key}">
-          <div class="mr-pick-cat">${name} · our #1</div>
-          <h3 class="mr-pick-name">${escHtml(f.label)}</h3>
-          ${p5 != null ? `
-          <div class="mr-ppf ${p5 >= 0.6 ? 'is-good' : 'is-weak'}">
-            <span class="mr-ppf-val">${Math.round(p5 * 100)}%</span>
-            <span class="mr-ppf-lbl">of 5-year periods since ${m.since5} beat PPF's ${ppf}.${taxNote}</span>
-          </div>` : ''}
-          <ul class="mr-verdict">
-            ${plus.map(t => `<li class="plus">${escHtml(t)}</li>`).join('')}
-            ${v.watch.filter(t => !t.startsWith("Beat today's PPF")).map(t => `<li class="watch">${escHtml(t)}</li>`).join('')}
-          </ul>
-        </article>`;
-    }).join('');
+    document.querySelectorAll('.mr-period-tabs .tab-btn').forEach(btn => btn.addEventListener('click', () => {
+      document.querySelectorAll('.mr-period-tabs .tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+      btn.classList.add('active'); btn.setAttribute('aria-selected', 'true');
+      renderPicks(+btn.dataset.years);
+    }));
+    document.getElementById('mrPeriodBar').hidden = false;
+    renderPicks(3);
 
     if (review) {
       const monthName = fmtDate(review.month + '-01', { month: 'long', year: 'numeric' });
       document.getElementById('mrTitle').innerHTML = `${escHtml(monthName)} <em>fund review</em>`;
-      document.getElementById('mrSub').textContent =
-        `Our top-ranked fund in each category, explained in plain words. "What changed" compares our ${fmtDate(review.since)} and ${fmtDate(review.asOf)} rankings; the verdicts use today's data.`;
+      document.getElementById('mrChangesSub').textContent =
+        `How our 3-year picks moved between the ${fmtDate(review.since)} and ${fmtDate(review.asOf)} editions. The cards above use today's data, so they can differ.`;
 
       // What changed
       const moved = review.changes.filter(c => c.moves.length);

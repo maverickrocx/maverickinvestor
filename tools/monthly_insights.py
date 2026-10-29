@@ -1,17 +1,27 @@
 """
-Maverick Investor — monthly fund review for the home page.
+Maverick Investor — monthly "What changed" for the home page.
 
-On the first run of each month this job:
-  1. snapshots data/fund-rankings.json to data/rankings-history/YYYY-MM.json
-  2. writes data/monthly-review.json: how each category's top 3 moved since
-     last month's snapshot, and the numbers behind each move, in plain words
+The home page's pick cards follow data/period-picks.json (rank_funds.py): a
+1/3/5-year ranking on SIP XIRR, return vs yardstick, Sharpe, expense ratio
+and Beta. This job explains how the 3-year ranking moved month to month.
+
+On the first run of each month it:
+  1. snapshots data/period-picks.json to data/period-history/YYYY-MM.json
+  2. writes data/monthly-review.json: how each category's 3-year top 3
+     moved since last month's snapshot, and which of the five measures moved
+     them, in plain words
 
 Later runs in the same month do nothing unless --force is given, so the
 review reads as one monthly edition, not a daily ticker.
 
+--backfill YYYY-MM=YYYY-MM-DD rebuilds a past month's snapshot from NAV
+history as of that date (expense ratios are today's; there is no history
+of them), for when a month's snapshot is missing.
+
 Stdlib only. Run:
-    python tools/monthly_insights.py           # monthly; no-op mid-month
-    python tools/monthly_insights.py --force   # rebuild the review now
+    python tools/monthly_insights.py                          # monthly; no-op mid-month
+    python tools/monthly_insights.py --force                  # rebuild the review now
+    python tools/monthly_insights.py --backfill 2026-09=2026-09-05
 """
 import datetime
 import json
@@ -23,26 +33,25 @@ import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "MaverickInvestor", "data")
-RANKINGS = os.path.join(DATA, "fund-rankings.json")
-SNAPS = os.path.join(DATA, "rankings-history")
+PICKS = os.path.join(DATA, "period-picks.json")
+CANDIDATES = os.path.join(DATA, "candidates.json")
+SNAPS = os.path.join(DATA, "period-history")
 OUT = os.path.join(DATA, "monthly-review.json")
+PERIOD = "3"
 
 CAT_NAMES = {"largeCap": "Large Cap", "flexiCap": "Flexi Cap", "midCap": "Mid Cap",
              "smallCap": "Small Cap", "gold": "Gold", "debt": "Debt"}
 
-# metric -> (higher is better, how to say it got better, got worse, formatter)
+# measure -> (higher is better, said when it helped, said when it hurt, formatter)
 _pc = lambda v: f"{v * 100:.1f}%"
-_pc2 = lambda v: f"{v:.2f}%"
+_pts = lambda v: f"{v * 100:+.1f} pts"
 _x = lambda v: f"{v:.2f}"
-_cap = lambda v: f"{v:.0f}%"
 REASONS = {
-    "cagr3":       (True,  "3-year return rose", "3-year return slipped", _pc),
-    "cagr5":       (True,  "5-year return rose", "5-year return slipped", _pc),
-    "sortino":     (True,  "more return for the ups and downs taken", "less return for the ups and downs taken", _x),
-    "maxdd":       (True,  "worst fall became shallower", "worst fall deepened", _pc),
-    "dncap":       (False, "held up better in falling months", "fell harder in falling months", _cap),
-    "consistency": (False, "returns swung less from year to year", "returns swung more from year to year", _pc),
-    "ter":         (False, "costs came down", "costs went up", _pc2),
+    "xirr":    (True,  "SIP return rose", "SIP return slipped", _pc),
+    "vsBench": (True,  "lead over its yardstick grew", "lead over its yardstick shrank", _pts),
+    "sharpe":  (True,  "more return for the risk taken", "less return for the risk taken", _x),
+    "ter":     (False, "costs came down", "costs went up", lambda v: f"{v:.2f}%"),
+    "beta":    (False, "swung less than its yardstick", "swung more than its yardstick", _x),
 }
 
 
@@ -60,12 +69,12 @@ def load_snap(key):
     return json.load(open(os.path.join(SNAPS, key + ".json")))
 
 
-def _why(now_m, was_m, spreads):
-    """Up to two metric moves that best explain a rank change, biggest first,
-    each measured against how widely that metric varies across the category."""
+def _why(now_f, was_f, spreads):
+    """Measure moves that best explain a rank change, biggest first, each
+    sized against how widely that measure varies across the category."""
     moves = []
     for k, (hib, up, down, fmt) in REASONS.items():
-        a, b = was_m.get(k), now_m.get(k)
+        a, b = was_f.get(k), now_f.get(k)
         if a is None or b is None or not spreads.get(k):
             continue
         z = (b - a) / spreads[k]
@@ -79,28 +88,29 @@ def _why(now_m, was_m, spreads):
 
 def changes(now, was):
     out = []
-    for key, cat in now["categories"].items():
+    for key, cat in now["periods"][PERIOD]["categories"].items():
         ranked = cat["ranked"]
-        prev = {f["schemeCode"]: f for f in was["categories"].get(key, {}).get("ranked", [])}
+        prev = {f["schemeCode"]: f for f in
+                was["periods"][PERIOD]["categories"].get(key, {}).get("ranked", [])}
         spreads = {}
         for k in REASONS:
-            vals = [f["metrics"].get(k) for f in ranked if f["metrics"].get(k) is not None]
+            vals = [f.get(k) for f in ranked if f.get(k) is not None]
             spreads[k] = statistics.pstdev(vals) if len(vals) > 1 else None
         moves = []
         for f in ranked[:3]:
             p = prev.get(f["schemeCode"])
             if p is None:
                 moves.append({"label": f["label"], "rank": f["rank"], "was": None,
-                              "why": ["new to our shortlist this month"]})
+                              "why": ["new to the 3-year ranking this month"]})
                 continue
             if p["rank"] == f["rank"]:
                 continue
             rose = f["rank"] < p["rank"]
-            why = [t for _, t, better in _why(f["metrics"], p["metrics"], spreads) if better == rose][:2]
+            why = [t for _, t, better in _why(f, p, spreads) if better == rose][:2]
             moves.append({"label": f["label"], "rank": f["rank"], "was": p["rank"],
                           "why": why or ["its own numbers barely moved; its rivals' moved more"]})
-        top = ranked[0]["label"] if ranked else None
-        out.append({"category": key, "name": CAT_NAMES.get(key, key), "top": top,
+        out.append({"category": key, "name": CAT_NAMES.get(key, key),
+                    "top": ranked[0]["label"] if ranked else None,
                     "topWas": next((f["label"] for f in prev.values() if f["rank"] == 1), None),
                     "moves": moves})
     return out
@@ -113,14 +123,37 @@ def _write_json(path, obj):
     os.replace(tmp, path)
 
 
+def backfill(spec):
+    import rank_funds
+    key, day = spec.split("=")
+    as_of = datetime.date.fromisoformat(day)
+    cfg = json.load(open(CANDIDATES))
+    codes = {f["schemeCode"] for c in cfg["categories"].values() for f in c["funds"]}
+    codes |= {c["benchmarkSchemeCode"] for c in cfg["categories"].values() if c.get("benchmarkSchemeCode")}
+    series = rank_funds.fetch_all_series(sorted(codes))
+    for c in [c for c in codes if not series.get(c)]:
+        series[c] = rank_funds.navseries(c)[0]
+    missing = [c for c in codes if not series.get(c)]
+    if missing:
+        sys.exit(f"no NAV history for {missing}; backfill not written")
+    snap = {"asOf": day, "backfilled": True, "weights": rank_funds.PERIOD_WEIGHTS,
+            "periods": {str(y): rank_funds.period_picks(cfg, series, y, as_of) for y in (1, 3, 5)}}
+    os.makedirs(SNAPS, exist_ok=True)
+    _write_json(os.path.join(SNAPS, key + ".json"), snap)
+    print(f"backfilled {key} as of {day}")
+
+
 def main():
+    if "--backfill" in sys.argv:
+        backfill(sys.argv[sys.argv.index("--backfill") + 1])
+        return
     force = "--force" in sys.argv
     today = datetime.date.today()
     os.makedirs(SNAPS, exist_ok=True)
     this_month = month_key(today)
     if this_month not in snapshots():
-        shutil.copyfile(RANKINGS, os.path.join(SNAPS, this_month + ".json"))
-        print(f"snapshotted rankings as {this_month}")
+        shutil.copyfile(PICKS, os.path.join(SNAPS, this_month + ".json"))
+        print(f"snapshotted period picks as {this_month}")
     elif not force:
         print(f"{this_month} review already published; nothing to do (use --force to rebuild)")
         return
@@ -131,11 +164,10 @@ def main():
         return
     now, was = load_snap(keys[-1]), load_snap(keys[-2])
     _write_json(OUT, {
-        "month": keys[-1], "since": was["asOf"], "asOf": now["asOf"],
-        "generated": today.isoformat(),
-        "changes": changes(now, was),
+        "month": keys[-1], "period": int(PERIOD), "since": was["asOf"], "asOf": now["asOf"],
+        "generated": today.isoformat(), "changes": changes(now, was),
     })
-    print(f"wrote monthly-review.json for {keys[-1]} (changes since {was['asOf']})")
+    print(f"wrote monthly-review.json for {keys[-1]} (3-year picks, changes since {was['asOf']})")
 
 
 if __name__ == "__main__":

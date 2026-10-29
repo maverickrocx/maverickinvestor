@@ -361,7 +361,11 @@ def _beta(fw, yw):
     return sum((a - mf) * (b - my) for a, b in zip(f, y)) / var if var else None
 
 
-def period_picks(cfg, series_cache, years):
+def period_picks(cfg, series_cache, years, as_of=None):
+    """Ranking over the `years` before the latest NAV, or before `as_of` to
+    rebuild a past month's picks (expense ratios are always today's)."""
+    if as_of:
+        series_cache = {c: [(d, v) for d, v in s if d <= as_of] for c, s in series_cache.items() if s}
     today_end = max(s[-1][0] for s in series_cache.values() if s)
     start = today_end.replace(year=today_end.year - years)
     def window(code):

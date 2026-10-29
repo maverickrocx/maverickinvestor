@@ -1,0 +1,1249 @@
+{
+ "asOf": "2026-10-03",
+ "backfilled": true,
+ "weights": {
+  "xirr": 0.3,
+  "vsBench": 0.25,
+  "sharpe": 0.2,
+  "ter": 0.15,
+  "beta": 0.1
+ },
+ "periods": {
+  "1": {
+   "start": "2025-10-01",
+   "end": "2026-10-01",
+   "categories": {
+    "largeCap": {
+     "yardstick": "Nifty 50",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "Axis Large Cap",
+       "schemeCode": 120465,
+       "score": 93.8,
+       "xirr": -0.0835,
+       "cagr": -0.0495,
+       "vsBench": 0.0395,
+       "sharpe": -0.8106,
+       "beta": 0.9822,
+       "ter": 0.52
+      },
+      {
+       "rank": 2,
+       "label": "Mirae Asset Large Cap",
+       "schemeCode": 118825,
+       "score": 63.8,
+       "xirr": -0.1019,
+       "cagr": -0.0561,
+       "vsBench": 0.0329,
+       "sharpe": -0.8265,
+       "beta": 1.0306,
+       "ter": 0.54
+      },
+      {
+       "rank": 3,
+       "label": "Nippon India Large Cap",
+       "schemeCode": 118632,
+       "score": 46.2,
+       "xirr": -0.1143,
+       "cagr": -0.0702,
+       "vsBench": 0.0188,
+       "sharpe": -0.9687,
+       "beta": 0.9679,
+       "ter": 0.66
+      },
+      {
+       "rank": 4,
+       "label": "Axis Nifty 100 Index",
+       "schemeCode": 147666,
+       "score": 41.2,
+       "xirr": -0.1267,
+       "cagr": -0.0704,
+       "vsBench": 0.0186,
+       "sharpe": -0.9575,
+       "beta": 1.0148,
+       "ter": 0.21
+      },
+      {
+       "rank": 5,
+       "label": "ICICI Pru Bluechip (Large Cap)",
+       "schemeCode": 120586,
+       "score": 5.0,
+       "xirr": -0.1297,
+       "cagr": -0.0752,
+       "vsBench": 0.0138,
+       "sharpe": -1.0657,
+       "beta": 0.9857,
+       "ter": 0.85
+      }
+     ]
+    },
+    "flexiCap": {
+     "yardstick": "Nifty 500",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "Aditya Birla SL Flexi Cap",
+       "schemeCode": 120564,
+       "score": 84.2,
+       "xirr": 0.0174,
+       "cagr": 0.0526,
+       "vsBench": 0.0937,
+       "sharpe": -0.0288,
+       "beta": 0.9443,
+       "ter": 0.8
+      },
+      {
+       "rank": 2,
+       "label": "HDFC Flexi Cap",
+       "schemeCode": 118955,
+       "score": 60.8,
+       "xirr": -0.0533,
+       "cagr": -0.0277,
+       "vsBench": 0.0134,
+       "sharpe": -0.6742,
+       "beta": 0.9086,
+       "ter": 0.78
+      },
+      {
+       "rank": 3,
+       "label": "DSP Flexi Cap",
+       "schemeCode": 119076,
+       "score": 55.8,
+       "xirr": -0.0583,
+       "cagr": -0.0319,
+       "vsBench": 0.0091,
+       "sharpe": -0.6287,
+       "beta": 1.0011,
+       "ter": 0.75
+      },
+      {
+       "rank": 4,
+       "label": "UTI Flexi Cap",
+       "schemeCode": 120662,
+       "score": 50.8,
+       "xirr": -0.004,
+       "cagr": -0.0365,
+       "vsBench": 0.0046,
+       "sharpe": -0.6711,
+       "beta": 0.9756,
+       "ter": 0.9
+      },
+      {
+       "rank": 5,
+       "label": "Kotak Flexicap",
+       "schemeCode": 120166,
+       "score": 39.2,
+       "xirr": -0.0899,
+       "cagr": -0.0377,
+       "vsBench": 0.0034,
+       "sharpe": -0.6426,
+       "beta": 0.9716,
+       "ter": 0.58
+      },
+      {
+       "rank": 6,
+       "label": "Parag Parikh Flexi Cap",
+       "schemeCode": 122639,
+       "score": 30.0,
+       "xirr": -0.0722,
+       "cagr": -0.0456,
+       "vsBench": -0.0045,
+       "sharpe": -1.2275,
+       "beta": 0.5999,
+       "ter": 0.63
+      },
+      {
+       "rank": 7,
+       "label": "Axis Nifty 500 Index",
+       "schemeCode": 152731,
+       "score": 29.2,
+       "xirr": -0.086,
+       "cagr": -0.0411,
+       "vsBench": 0.0,
+       "sharpe": -0.6973,
+       "beta": 1.0,
+       "ter": 0.25
+      }
+     ]
+    },
+    "midCap": {
+     "yardstick": "Nifty Midcap 150",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "Kotak Emerging Equity",
+       "schemeCode": 120505,
+       "score": 75.0,
+       "xirr": 0.0389,
+       "cagr": 0.0461,
+       "vsBench": 0.0216,
+       "sharpe": -0.0651,
+       "beta": 0.8757,
+       "ter": 0.4
+      },
+      {
+       "rank": 2,
+       "label": "Edelweiss Mid Cap",
+       "schemeCode": 140228,
+       "score": 65.0,
+       "xirr": 0.0001,
+       "cagr": 0.0447,
+       "vsBench": 0.0202,
+       "sharpe": -0.0575,
+       "beta": 0.9201,
+       "ter": 0.38
+      },
+      {
+       "rank": 3,
+       "label": "Motilal Oswal Midcap",
+       "schemeCode": 127042,
+       "score": 35.0,
+       "xirr": 0.0534,
+       "cagr": -0.013,
+       "vsBench": -0.0375,
+       "sharpe": -0.3292,
+       "beta": 1.0633,
+       "ter": 0.65
+      },
+      {
+       "rank": 4,
+       "label": "HDFC Mid-Cap Opportunities",
+       "schemeCode": 118989,
+       "score": 25.0,
+       "xirr": -0.0197,
+       "cagr": 0.0329,
+       "vsBench": 0.0084,
+       "sharpe": -0.1564,
+       "beta": 0.8591,
+       "ter": 0.82
+      }
+     ]
+    },
+    "smallCap": {
+     "yardstick": "Nifty Smallcap 250",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "Quant Small Cap",
+       "schemeCode": 120828,
+       "score": 83.0,
+       "xirr": 0.224,
+       "cagr": 0.1346,
+       "vsBench": 0.0909,
+       "sharpe": 0.4929,
+       "beta": 0.8656,
+       "ter": 0.64
+      },
+      {
+       "rank": 2,
+       "label": "Axis Small Cap",
+       "schemeCode": 125354,
+       "score": 80.0,
+       "xirr": 0.1401,
+       "cagr": 0.0899,
+       "vsBench": 0.0462,
+       "sharpe": 0.2213,
+       "beta": 0.8161,
+       "ter": 0.53
+      },
+      {
+       "rank": 3,
+       "label": "Nippon India Small Cap",
+       "schemeCode": 118778,
+       "score": 52.0,
+       "xirr": 0.12,
+       "cagr": 0.079,
+       "vsBench": 0.0353,
+       "sharpe": 0.1607,
+       "beta": 0.8597,
+       "ter": 0.62
+      },
+      {
+       "rank": 4,
+       "label": "Kotak Small Cap",
+       "schemeCode": 120164,
+       "score": 51.0,
+       "xirr": 0.1223,
+       "cagr": 0.0579,
+       "vsBench": 0.0142,
+       "sharpe": 0.0306,
+       "beta": 0.8711,
+       "ter": 0.44
+      },
+      {
+       "rank": 5,
+       "label": "SBI Small Cap",
+       "schemeCode": 125497,
+       "score": 28.0,
+       "xirr": 0.1118,
+       "cagr": 0.0547,
+       "vsBench": 0.011,
+       "sharpe": -0.0091,
+       "beta": 0.7972,
+       "ter": 0.67
+      },
+      {
+       "rank": 6,
+       "label": "HDFC Small Cap",
+       "schemeCode": 130503,
+       "score": 6.0,
+       "xirr": -0.0062,
+       "cagr": -0.0294,
+       "vsBench": -0.0731,
+       "sharpe": -0.5626,
+       "beta": 0.8227,
+       "ter": 0.68
+      }
+     ]
+    },
+    "gold": {
+     "yardstick": "average of funds we track",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "Kotak Gold FoF",
+       "schemeCode": 119781,
+       "score": 93.3,
+       "xirr": 0.0952,
+       "cagr": 0.245,
+       "vsBench": 0.0045,
+       "sharpe": 0.659,
+       "beta": 0.9749,
+       "ter": 0.16
+      },
+      {
+       "rank": 2,
+       "label": "SBI Gold FoF",
+       "schemeCode": 119788,
+       "score": 36.7,
+       "xirr": 0.0872,
+       "cagr": 0.2434,
+       "vsBench": 0.0029,
+       "sharpe": 0.6513,
+       "beta": 0.998,
+       "ter": 0.42
+      },
+      {
+       "rank": 3,
+       "label": "Axis Gold FoF",
+       "schemeCode": 120473,
+       "score": 36.7,
+       "xirr": 0.0901,
+       "cagr": 0.2314,
+       "vsBench": -0.0091,
+       "sharpe": 0.5837,
+       "beta": 0.9954,
+       "ter": 0.17
+      },
+      {
+       "rank": 4,
+       "label": "Nippon India Gold Savings FoF",
+       "schemeCode": 118663,
+       "score": 33.3,
+       "xirr": 0.0849,
+       "cagr": 0.2421,
+       "vsBench": 0.0016,
+       "sharpe": 0.6814,
+       "beta": 1.0318,
+       "ter": 0.34
+      }
+     ]
+    },
+    "debt": {
+     "yardstick": "average of funds we track",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "ICICI Pru Corporate Bond",
+       "schemeCode": 120692,
+       "score": 83.0,
+       "xirr": 0.0503,
+       "cagr": 0.0537,
+       "vsBench": 0.0054,
+       "sharpe": -0.7785,
+       "beta": 0.918,
+       "ter": 0.38
+      },
+      {
+       "rank": 2,
+       "label": "Axis Corporate Bond",
+       "schemeCode": 141588,
+       "score": 78.5,
+       "xirr": 0.0511,
+       "cagr": 0.0521,
+       "vsBench": 0.0038,
+       "sharpe": -0.9806,
+       "beta": 0.9555,
+       "ter": 0.35
+      },
+      {
+       "rank": 3,
+       "label": "HDFC Short Term Debt",
+       "schemeCode": 119016,
+       "score": 73.5,
+       "xirr": 0.0499,
+       "cagr": 0.0525,
+       "vsBench": 0.0042,
+       "sharpe": -1.0276,
+       "beta": 0.7996,
+       "ter": 0.35
+      },
+      {
+       "rank": 4,
+       "label": "Kotak Corporate Bond",
+       "schemeCode": 133791,
+       "score": 41.0,
+       "xirr": 0.0464,
+       "cagr": 0.0478,
+       "vsBench": -0.0005,
+       "sharpe": -1.218,
+       "beta": 0.9385,
+       "ter": 0.36
+      },
+      {
+       "rank": 5,
+       "label": "Aditya Birla SL Corporate Bond",
+       "schemeCode": 119533,
+       "score": 22.5,
+       "xirr": 0.0408,
+       "cagr": 0.0429,
+       "vsBench": -0.0054,
+       "sharpe": -1.1824,
+       "beta": 1.1929,
+       "ter": 0.4
+      },
+      {
+       "rank": 6,
+       "label": "HDFC Corporate Bond",
+       "schemeCode": 118987,
+       "score": 1.5,
+       "xirr": 0.0382,
+       "cagr": 0.0408,
+       "vsBench": -0.0075,
+       "sharpe": -1.3704,
+       "beta": 1.1955,
+       "ter": 0.4
+      }
+     ]
+    }
+   }
+  },
+  "3": {
+   "start": "2023-10-01",
+   "end": "2026-10-01",
+   "categories": {
+    "largeCap": {
+     "yardstick": "Nifty 50",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "Nippon India Large Cap",
+       "schemeCode": 118632,
+       "score": 76.2,
+       "xirr": 0.0096,
+       "cagr": 0.0957,
+       "vsBench": 0.0385,
+       "sharpe": 0.2781,
+       "beta": 1.0151,
+       "ter": 0.66
+      },
+      {
+       "rank": 2,
+       "label": "Axis Large Cap",
+       "schemeCode": 120465,
+       "score": 56.2,
+       "xirr": 0.0049,
+       "cagr": 0.0773,
+       "vsBench": 0.0201,
+       "sharpe": 0.1451,
+       "beta": 0.9749,
+       "ter": 0.52
+      },
+      {
+       "rank": 3,
+       "label": "ICICI Pru Bluechip (Large Cap)",
+       "schemeCode": 120586,
+       "score": 56.2,
+       "xirr": 0.0003,
+       "cagr": 0.0942,
+       "vsBench": 0.037,
+       "sharpe": 0.2785,
+       "beta": 0.9679,
+       "ter": 0.85
+      },
+      {
+       "rank": 4,
+       "label": "Mirae Asset Large Cap",
+       "schemeCode": 118825,
+       "score": 40.0,
+       "xirr": 0.0078,
+       "cagr": 0.0735,
+       "vsBench": 0.0163,
+       "sharpe": 0.1238,
+       "beta": 1.0044,
+       "ter": 0.54
+      },
+      {
+       "rank": 5,
+       "label": "Axis Nifty 100 Index",
+       "schemeCode": 147666,
+       "score": 21.2,
+       "xirr": -0.0096,
+       "cagr": 0.0736,
+       "vsBench": 0.0163,
+       "sharpe": 0.1188,
+       "beta": 1.0396,
+       "ter": 0.21
+      }
+     ]
+    },
+    "flexiCap": {
+     "yardstick": "average of funds we track",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "HDFC Flexi Cap",
+       "schemeCode": 118955,
+       "score": 83.0,
+       "xirr": 0.0557,
+       "cagr": 0.1437,
+       "vsBench": 0.0318,
+       "sharpe": 0.6622,
+       "beta": 0.957,
+       "ter": 0.78
+      },
+      {
+       "rank": 2,
+       "label": "Parag Parikh Flexi Cap",
+       "schemeCode": 122639,
+       "score": 71.0,
+       "xirr": 0.033,
+       "cagr": 0.1221,
+       "vsBench": 0.0102,
+       "sharpe": 0.5894,
+       "beta": 0.7197,
+       "ter": 0.63
+      },
+      {
+       "rank": 3,
+       "label": "Aditya Birla SL Flexi Cap",
+       "schemeCode": 120564,
+       "score": 69.0,
+       "xirr": 0.0797,
+       "cagr": 0.1376,
+       "vsBench": 0.0257,
+       "sharpe": 0.5683,
+       "beta": 1.056,
+       "ter": 0.8
+      },
+      {
+       "rank": 4,
+       "label": "Kotak Flexicap",
+       "schemeCode": 120166,
+       "score": 47.0,
+       "xirr": 0.0251,
+       "cagr": 0.1012,
+       "vsBench": -0.0106,
+       "sharpe": 0.3048,
+       "beta": 1.0955,
+       "ter": 0.58
+      },
+      {
+       "rank": 5,
+       "label": "DSP Flexi Cap",
+       "schemeCode": 119076,
+       "score": 24.0,
+       "xirr": 0.025,
+       "cagr": 0.0956,
+       "vsBench": -0.0163,
+       "sharpe": 0.2716,
+       "beta": 1.1406,
+       "ter": 0.75
+      },
+      {
+       "rank": 6,
+       "label": "UTI Flexi Cap",
+       "schemeCode": 120662,
+       "score": 6.0,
+       "xirr": 0.0245,
+       "cagr": 0.071,
+       "vsBench": -0.0409,
+       "sharpe": 0.1047,
+       "beta": 1.0312,
+       "ter": 0.9
+      }
+     ]
+    },
+    "midCap": {
+     "yardstick": "Nifty Midcap 150",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "Edelweiss Mid Cap",
+       "schemeCode": 140228,
+       "score": 90.0,
+       "xirr": 0.0942,
+       "cagr": 0.1878,
+       "vsBench": 0.0577,
+       "sharpe": 0.7501,
+       "beta": 0.9563,
+       "ter": 0.38
+      },
+      {
+       "rank": 2,
+       "label": "Kotak Emerging Equity",
+       "schemeCode": 120505,
+       "score": 55.0,
+       "xirr": 0.085,
+       "cagr": 0.1509,
+       "vsBench": 0.0208,
+       "sharpe": 0.595,
+       "beta": 0.8446,
+       "ter": 0.4
+      },
+      {
+       "rank": 3,
+       "label": "Motilal Oswal Midcap",
+       "schemeCode": 127042,
+       "score": 41.7,
+       "xirr": 0.0622,
+       "cagr": 0.1701,
+       "vsBench": 0.04,
+       "sharpe": 0.6263,
+       "beta": 0.8583,
+       "ter": 0.65
+      },
+      {
+       "rank": 4,
+       "label": "HDFC Mid-Cap Opportunities",
+       "schemeCode": 118989,
+       "score": 13.3,
+       "xirr": 0.0731,
+       "cagr": 0.1495,
+       "vsBench": 0.0194,
+       "sharpe": 0.5928,
+       "beta": 0.8638,
+       "ter": 0.82
+      }
+     ]
+    },
+    "smallCap": {
+     "yardstick": "Nifty Smallcap 250",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "Quant Small Cap",
+       "schemeCode": 120828,
+       "score": 81.0,
+       "xirr": 0.1121,
+       "cagr": 0.1686,
+       "vsBench": 0.0445,
+       "sharpe": 0.6208,
+       "beta": 0.8513,
+       "ter": 0.64
+      },
+      {
+       "rank": 2,
+       "label": "Axis Small Cap",
+       "schemeCode": 125354,
+       "score": 80.0,
+       "xirr": 0.1026,
+       "cagr": 0.1457,
+       "vsBench": 0.0216,
+       "sharpe": 0.5613,
+       "beta": 0.7531,
+       "ter": 0.53
+      },
+      {
+       "rank": 3,
+       "label": "Nippon India Small Cap",
+       "schemeCode": 118778,
+       "score": 56.0,
+       "xirr": 0.0844,
+       "cagr": 0.1412,
+       "vsBench": 0.0171,
+       "sharpe": 0.5082,
+       "beta": 0.8398,
+       "ter": 0.62
+      },
+      {
+       "rank": 4,
+       "label": "Kotak Small Cap",
+       "schemeCode": 120164,
+       "score": 51.0,
+       "xirr": 0.0674,
+       "cagr": 0.1158,
+       "vsBench": -0.0084,
+       "sharpe": 0.3829,
+       "beta": 0.7834,
+       "ter": 0.44
+      },
+      {
+       "rank": 5,
+       "label": "SBI Small Cap",
+       "schemeCode": 125497,
+       "score": 28.0,
+       "xirr": 0.0652,
+       "cagr": 0.107,
+       "vsBench": -0.0172,
+       "sharpe": 0.3368,
+       "beta": 0.7328,
+       "ter": 0.67
+      },
+      {
+       "rank": 6,
+       "label": "HDFC Small Cap",
+       "schemeCode": 130503,
+       "score": 4.0,
+       "xirr": 0.0354,
+       "cagr": 0.094,
+       "vsBench": -0.0301,
+       "sharpe": 0.2485,
+       "beta": 0.8304,
+       "ter": 0.68
+      }
+     ]
+    },
+    "gold": {
+     "yardstick": "average of funds we track",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "Kotak Gold FoF",
+       "schemeCode": 119781,
+       "score": 71.7,
+       "xirr": 0.345,
+       "cagr": 0.358,
+       "vsBench": 0.002,
+       "sharpe": 1.2546,
+       "beta": 0.9959,
+       "ter": 0.16
+      },
+      {
+       "rank": 2,
+       "label": "SBI Gold FoF",
+       "schemeCode": 119788,
+       "score": 65.0,
+       "xirr": 0.345,
+       "cagr": 0.3586,
+       "vsBench": 0.0026,
+       "sharpe": 1.27,
+       "beta": 0.9907,
+       "ter": 0.42
+      },
+      {
+       "rank": 3,
+       "label": "Nippon India Gold Savings FoF",
+       "schemeCode": 118663,
+       "score": 35.0,
+       "xirr": 0.3421,
+       "cagr": 0.3533,
+       "vsBench": -0.0027,
+       "sharpe": 1.2899,
+       "beta": 1.0411,
+       "ter": 0.34
+      },
+      {
+       "rank": 4,
+       "label": "Axis Gold FoF",
+       "schemeCode": 120473,
+       "score": 28.3,
+       "xirr": 0.3412,
+       "cagr": 0.3539,
+       "vsBench": -0.002,
+       "sharpe": 1.1331,
+       "beta": 0.9723,
+       "ter": 0.17
+      }
+     ]
+    },
+    "debt": {
+     "yardstick": "average of funds we track",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "Axis Corporate Bond",
+       "schemeCode": 141588,
+       "score": 88.5,
+       "xirr": 0.069,
+       "cagr": 0.0759,
+       "vsBench": 0.0036,
+       "sharpe": 0.9438,
+       "beta": 1.0003,
+       "ter": 0.35
+      },
+      {
+       "rank": 2,
+       "label": "HDFC Short Term Debt",
+       "schemeCode": 119016,
+       "score": 87.5,
+       "xirr": 0.067,
+       "cagr": 0.0739,
+       "vsBench": 0.0016,
+       "sharpe": 1.0028,
+       "beta": 0.8298,
+       "ter": 0.35
+      },
+      {
+       "rank": 3,
+       "label": "ICICI Pru Corporate Bond",
+       "schemeCode": 120692,
+       "score": 54.0,
+       "xirr": 0.0669,
+       "cagr": 0.0728,
+       "vsBench": 0.0005,
+       "sharpe": 0.8292,
+       "beta": 0.853,
+       "ter": 0.38
+      },
+      {
+       "rank": 4,
+       "label": "Kotak Corporate Bond",
+       "schemeCode": 133791,
+       "score": 50.0,
+       "xirr": 0.0651,
+       "cagr": 0.0731,
+       "vsBench": 0.0007,
+       "sharpe": 0.7657,
+       "beta": 0.9875,
+       "ter": 0.36
+      },
+      {
+       "rank": 5,
+       "label": "Aditya Birla SL Corporate Bond",
+       "schemeCode": 119533,
+       "score": 18.5,
+       "xirr": 0.0602,
+       "cagr": 0.0696,
+       "vsBench": -0.0027,
+       "sharpe": 0.3716,
+       "beta": 1.1638,
+       "ter": 0.4
+      },
+      {
+       "rank": 6,
+       "label": "HDFC Corporate Bond",
+       "schemeCode": 118987,
+       "score": 1.5,
+       "xirr": 0.0593,
+       "cagr": 0.0688,
+       "vsBench": -0.0036,
+       "sharpe": 0.3412,
+       "beta": 1.1656,
+       "ter": 0.4
+      }
+     ]
+    }
+   }
+  },
+  "5": {
+   "start": "2021-10-01",
+   "end": "2026-10-01",
+   "categories": {
+    "largeCap": {
+     "yardstick": "Nifty 50",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "Nippon India Large Cap",
+       "schemeCode": 118632,
+       "score": 81.2,
+       "xirr": 0.0923,
+       "cagr": 0.1193,
+       "vsBench": 0.0588,
+       "sharpe": 0.4291,
+       "beta": 1.0147,
+       "ter": 0.66
+      },
+      {
+       "rank": 2,
+       "label": "ICICI Pru Bluechip (Large Cap)",
+       "schemeCode": 120586,
+       "score": 66.2,
+       "xirr": 0.0772,
+       "cagr": 0.1011,
+       "vsBench": 0.0406,
+       "sharpe": 0.3269,
+       "beta": 0.9401,
+       "ter": 0.85
+      },
+      {
+       "rank": 3,
+       "label": "Mirae Asset Large Cap",
+       "schemeCode": 118825,
+       "score": 50.0,
+       "xirr": 0.0592,
+       "cagr": 0.0692,
+       "vsBench": 0.0087,
+       "sharpe": 0.0944,
+       "beta": 0.9879,
+       "ter": 0.54
+      },
+      {
+       "rank": 4,
+       "label": "Axis Nifty 100 Index",
+       "schemeCode": 147666,
+       "score": 33.8,
+       "xirr": 0.051,
+       "cagr": 0.0671,
+       "vsBench": 0.0066,
+       "sharpe": 0.0779,
+       "beta": 1.0189,
+       "ter": 0.21
+      },
+      {
+       "rank": 5,
+       "label": "Axis Large Cap",
+       "schemeCode": 120465,
+       "score": 18.8,
+       "xirr": 0.051,
+       "cagr": 0.0499,
+       "vsBench": -0.0106,
+       "sharpe": -0.0505,
+       "beta": 0.9686,
+       "ter": 0.52
+      }
+     ]
+    },
+    "flexiCap": {
+     "yardstick": "average of funds we track",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "HDFC Flexi Cap",
+       "schemeCode": 118955,
+       "score": 89.0,
+       "xirr": 0.1319,
+       "cagr": 0.1553,
+       "vsBench": 0.0551,
+       "sharpe": 0.7091,
+       "beta": 0.9637,
+       "ter": 0.78
+      },
+      {
+       "rank": 2,
+       "label": "Parag Parikh Flexi Cap",
+       "schemeCode": 122639,
+       "score": 76.0,
+       "xirr": 0.1033,
+       "cagr": 0.1116,
+       "vsBench": 0.0114,
+       "sharpe": 0.435,
+       "beta": 0.7911,
+       "ter": 0.63
+      },
+      {
+       "rank": 3,
+       "label": "Aditya Birla SL Flexi Cap",
+       "schemeCode": 120564,
+       "score": 60.0,
+       "xirr": 0.1211,
+       "cagr": 0.108,
+       "vsBench": 0.0078,
+       "sharpe": 0.3596,
+       "beta": 1.0406,
+       "ter": 0.8
+      },
+      {
+       "rank": 4,
+       "label": "Kotak Flexicap",
+       "schemeCode": 120166,
+       "score": 41.0,
+       "xirr": 0.0873,
+       "cagr": 0.0976,
+       "vsBench": -0.0026,
+       "sharpe": 0.2817,
+       "beta": 1.0625,
+       "ter": 0.58
+      },
+      {
+       "rank": 5,
+       "label": "DSP Flexi Cap",
+       "schemeCode": 119076,
+       "score": 30.0,
+       "xirr": 0.0889,
+       "cagr": 0.0891,
+       "vsBench": -0.0111,
+       "sharpe": 0.2286,
+       "beta": 1.1013,
+       "ter": 0.75
+      },
+      {
+       "rank": 6,
+       "label": "UTI Flexi Cap",
+       "schemeCode": 120662,
+       "score": 4.0,
+       "xirr": 0.0546,
+       "cagr": 0.0396,
+       "vsBench": -0.0606,
+       "sharpe": -0.1179,
+       "beta": 1.0408,
+       "ter": 0.9
+      }
+     ]
+    },
+    "midCap": {
+     "yardstick": "Nifty Midcap 150",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "Motilal Oswal Midcap",
+       "schemeCode": 127042,
+       "score": 66.7,
+       "xirr": 0.1609,
+       "cagr": 0.196,
+       "vsBench": 0.0535,
+       "sharpe": 0.7741,
+       "beta": 0.8823,
+       "ter": 0.65
+      },
+      {
+       "rank": 2,
+       "label": "Edelweiss Mid Cap",
+       "schemeCode": 140228,
+       "score": 60.0,
+       "xirr": 0.1699,
+       "cagr": 0.1726,
+       "vsBench": 0.0301,
+       "sharpe": 0.6785,
+       "beta": 0.9411,
+       "ter": 0.38
+      },
+      {
+       "rank": 3,
+       "label": "HDFC Mid-Cap Opportunities",
+       "schemeCode": 118989,
+       "score": 53.3,
+       "xirr": 0.1609,
+       "cagr": 0.175,
+       "vsBench": 0.0325,
+       "sharpe": 0.7354,
+       "beta": 0.8865,
+       "ter": 0.82
+      },
+      {
+       "rank": 4,
+       "label": "Kotak Emerging Equity",
+       "schemeCode": 120505,
+       "score": 20.0,
+       "xirr": 0.1326,
+       "cagr": 0.1234,
+       "vsBench": -0.0191,
+       "sharpe": 0.439,
+       "beta": 0.843,
+       "ter": 0.4
+      }
+     ]
+    },
+    "smallCap": {
+     "yardstick": "Nifty Smallcap 250",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "Quant Small Cap",
+       "schemeCode": 120828,
+       "score": 77.0,
+       "xirr": 0.1819,
+       "cagr": 0.1864,
+       "vsBench": 0.0538,
+       "sharpe": 0.6756,
+       "beta": 0.9325,
+       "ter": 0.64
+      },
+      {
+       "rank": 2,
+       "label": "Nippon India Small Cap",
+       "schemeCode": 118778,
+       "score": 75.0,
+       "xirr": 0.1617,
+       "cagr": 0.1806,
+       "vsBench": 0.0479,
+       "sharpe": 0.7198,
+       "beta": 0.8556,
+       "ter": 0.62
+      },
+      {
+       "rank": 3,
+       "label": "Axis Small Cap",
+       "schemeCode": 125354,
+       "score": 65.0,
+       "xirr": 0.1491,
+       "cagr": 0.1542,
+       "vsBench": 0.0216,
+       "sharpe": 0.6385,
+       "beta": 0.7252,
+       "ter": 0.53
+      },
+      {
+       "rank": 4,
+       "label": "HDFC Small Cap",
+       "schemeCode": 130503,
+       "score": 30.0,
+       "xirr": 0.1203,
+       "cagr": 0.1386,
+       "vsBench": 0.006,
+       "sharpe": 0.5022,
+       "beta": 0.8326,
+       "ter": 0.68
+      },
+      {
+       "rank": 5,
+       "label": "Kotak Small Cap",
+       "schemeCode": 120164,
+       "score": 27.0,
+       "xirr": 0.117,
+       "cagr": 0.1202,
+       "vsBench": -0.0125,
+       "sharpe": 0.4265,
+       "beta": 0.7526,
+       "ter": 0.44
+      },
+      {
+       "rank": 6,
+       "label": "SBI Small Cap",
+       "schemeCode": 125497,
+       "score": 26.0,
+       "xirr": 0.1151,
+       "cagr": 0.1314,
+       "vsBench": -0.0012,
+       "sharpe": 0.5087,
+       "beta": 0.7245,
+       "ter": 0.67
+      }
+     ]
+    },
+    "gold": {
+     "yardstick": "average of funds we track",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "SBI Gold FoF",
+       "schemeCode": 119788,
+       "score": 75.0,
+       "xirr": 0.2925,
+       "cagr": 0.2481,
+       "vsBench": 0.002,
+       "sharpe": 0.9951,
+       "beta": 0.9914,
+       "ter": 0.42
+      },
+      {
+       "rank": 2,
+       "label": "Kotak Gold FoF",
+       "schemeCode": 119781,
+       "score": 45.0,
+       "xirr": 0.2909,
+       "cagr": 0.2444,
+       "vsBench": -0.0017,
+       "sharpe": 0.9678,
+       "beta": 0.9954,
+       "ter": 0.16
+      },
+      {
+       "rank": 3,
+       "label": "Nippon India Gold Savings FoF",
+       "schemeCode": 118663,
+       "score": 43.3,
+       "xirr": 0.2897,
+       "cagr": 0.2455,
+       "vsBench": -0.0006,
+       "sharpe": 1.0024,
+       "beta": 1.0382,
+       "ter": 0.34
+      },
+      {
+       "rank": 4,
+       "label": "Axis Gold FoF",
+       "schemeCode": 120473,
+       "score": 36.7,
+       "xirr": 0.2897,
+       "cagr": 0.2466,
+       "vsBench": 0.0004,
+       "sharpe": 0.9016,
+       "beta": 0.975,
+       "ter": 0.17
+      }
+     ]
+    },
+    "debt": {
+     "yardstick": "average of funds we track",
+     "ranked": [
+      {
+       "rank": 1,
+       "label": "Axis Corporate Bond",
+       "schemeCode": 141588,
+       "score": 90.5,
+       "xirr": 0.0716,
+       "cagr": 0.0673,
+       "vsBench": 0.0026,
+       "sharpe": 0.2405,
+       "beta": 0.9724,
+       "ter": 0.35
+      },
+      {
+       "rank": 2,
+       "label": "ICICI Pru Corporate Bond",
+       "schemeCode": 120692,
+       "score": 80.0,
+       "xirr": 0.0704,
+       "cagr": 0.0669,
+       "vsBench": 0.0022,
+       "sharpe": 0.257,
+       "beta": 0.8502,
+       "ter": 0.38
+      },
+      {
+       "rank": 3,
+       "label": "HDFC Short Term Debt",
+       "schemeCode": 119016,
+       "score": 66.5,
+       "xirr": 0.0699,
+       "cagr": 0.0653,
+       "vsBench": 0.0007,
+       "sharpe": 0.1011,
+       "beta": 0.8666,
+       "ter": 0.35
+      },
+      {
+       "rank": 4,
+       "label": "Kotak Corporate Bond",
+       "schemeCode": 133791,
+       "score": 43.0,
+       "xirr": 0.0683,
+       "cagr": 0.0641,
+       "vsBench": -0.0006,
+       "sharpe": -0.0233,
+       "beta": 0.9931,
+       "ter": 0.36
+      },
+      {
+       "rank": 5,
+       "label": "Aditya Birla SL Corporate Bond",
+       "schemeCode": 119533,
+       "score": 18.5,
+       "xirr": 0.0655,
+       "cagr": 0.0629,
+       "vsBench": -0.0018,
+       "sharpe": -0.112,
+       "beta": 1.1311,
+       "ter": 0.4
+      },
+      {
+       "rank": 6,
+       "label": "HDFC Corporate Bond",
+       "schemeCode": 118987,
+       "score": 1.5,
+       "xirr": 0.0649,
+       "cagr": 0.0616,
+       "vsBench": -0.0031,
+       "sharpe": -0.2143,
+       "beta": 1.1866,
+       "ter": 0.4
+      }
+     ]
+    }
+   }
+  }
+ }
+}

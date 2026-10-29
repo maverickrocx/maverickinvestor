@@ -22,7 +22,7 @@ task's prompt is the source of truth for the cadence.
 |---|---|---|
 | `tools/rank_funds.py` | every run | mfapi.in → `data/fund-rankings.json` (ranks, metrics, plain-English `verdict`, rolling 5-yr "beat PPF / benchmark" shares) and `data/period-picks.json` (home "Our picks by period": 1/3/5-yr ranking on SIP XIRR 30, vs yardstick 25, Sharpe 20, TER 15, Beta 10); refuses to write if any fund's NAVs are missing |
 | `tools/build_nav_data.py` | every run | AMFI `NAVAll.txt` + mfapi.in → `data/navs.json` (home tracker), `data/nav-history/<code>.json` (MF Advisor backtest, duplicate check), `data/fund-list.json` and `data/crash-replay.json` (Tools page fund checks, via `assets/js/fund-checks.js`) |
-| `tools/monthly_insights.py` | every run (no-op after the month's first) | snapshots rankings to `data/rankings-history/YYYY-MM.json`, writes `data/monthly-review.json` (what changed this month) |
+| `tools/monthly_insights.py` | every run (no-op after the month's first) | snapshots `period-picks.json` to `data/period-history/YYYY-MM.json`, writes `data/monthly-review.json` (how the 3-year picks moved, and which of the five measures moved them) |
 | `tools/update_stock_prices.py` | Saturdays, or if `priceAsOf` is 7+ days old | Yahoo chart → price in `stock-screener.html` |
 | `tools/verify_scheme_codes.py` | with the stock prices (warn-only) | flags drifted AMFI scheme codes |
 | `tools/update_fundamentals.py` | first run of each month (`fundAsOf` in an earlier month) | Screener.in → P/E, mcap, div yield, ROCE, TTM growth |
@@ -30,8 +30,11 @@ task's prompt is the source of truth for the cadence.
 
 mfapi.in stopped sending CORS headers in Oct 2026, so no page may fetch it in
 the browser: pages read the same-origin files above instead. The home page's
-Monthly Fund Review section (above the tracker) renders from
-`fund-rankings.json` + `monthly-review.json`.
+Monthly Fund Review section (above the tracker): a 1/3/5-year selector drives
+six pick cards from `period-picks.json` (each card's ticks/warnings and PPF
+score come from the same fund's entry in `fund-rankings.json`), then "What
+changed this month" from `monthly-review.json`. The MF Advisor still builds
+portfolios from the composite ranking in `fund-rankings.json`.
 `deploy.yml` publishes `MaverickInvestor/` on every push to `main`.
 
 Manual data: `data/rates.json` (small-savings/EPF/repo rates, review by
