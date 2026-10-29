@@ -2,9 +2,9 @@
 Maverick Investor — TER / AUM importer.
 
 Merges user-supplied expense ratios and fund sizes into
-MaverickInvestor/data/candidates.json, which the ranking job reads. TER and
-AUM together carry roughly a fifth of the ranking composite, so stale
-figures do not just look wrong — they reorder the recommendations.
+MaverickInvestor/data/candidates.json, which the ranking job reads. The
+expense ratio is 15% of every fund's score, so stale figures do not just
+look wrong — they reorder the recommendations. AUM is shown, not scored.
 
 Why this is manual: amfiindia.com/robots.txt is `Disallow: /`, so the AUM
 and TER tables published there are not ours to crawl. Downloading them by

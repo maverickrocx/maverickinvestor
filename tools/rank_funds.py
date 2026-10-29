@@ -1,33 +1,32 @@
 """
-Maverick Investor — dynamic MF fund ranking job.
+Maverick Investor — MF fund ranking job.
 
-Reads MaverickInvestor/data/candidates.json, fetches live NAV + benchmark data
-from mfapi.in, computes Tier-A metrics, ranks each category by a weighted-
-percentile composite, and writes MaverickInvestor/data/fund-rankings.json.
+Reads MaverickInvestor/data/candidates.json, fetches NAV + benchmark history
+from mfapi.in and writes two files:
+
+  data/period-picks.json   THE ranking used across the site (home page cards,
+                           MF Advisor, "What changed"): for the last 1, 3 and
+                           5 years, every fund scored against its category
+                           peers on SIP XIRR 30%, yearly return vs yardstick
+                           25%, Sharpe 20%, expense ratio 15% and Beta 10%.
+  data/fund-facts.json     long-run facts per fund, not a ranking: risk and
+                           return metrics since 2013, the "beat PPF / beat the
+                           benchmark" shares of rolling 5-year periods, and the
+                           plain-English verdict lines shown on cards.
+
+Writes nothing if any fund's NAV history is missing after retries.
 
 Stdlib only. Run:
-    python -c "import rank_funds; rank_funds.write_rankings(CAND, OUT)"
+    python tools/rank_funds.py
 """
 import json, os, sys, time, tempfile, urllib.request, datetime, statistics, math
 from concurrent.futures import ThreadPoolExecutor
 
 RF = 0.065  # risk-free assumption for Sharpe/Sortino
 
-# ── Weight profiles (percentiles sum to 100) ──────────────────────────────
-WEIGHTS = {
-    "activeEquity": {'return_blend':0.20,'consistency':0.10,'sortino':0.12,'sharpe':0.08,
-                     'ir':0.10,'maxdd':0.08,'dncap':0.07,'upcap':0.05,'ter':0.10,'aum_band':0.10},
-    "debt":         {'return_blend':0.25,'consistency':0.10,'sortino':0.18,'sharpe':0.12,
-                     'maxdd':0.15,'ter':0.10,'aum_band':0.10},
-    "tracker":      {'return_blend':0.15,'consistency':0.10,'sortino':0.10,'maxdd':0.15,
-                     'ter':0.40,'aum_band':0.10},
-}
-LOWER_BETTER = {'consistency','vol','dncap','ter'}
-
-
 def _get(url, attempts=3):
     # mfapi.in drops the odd request under parallel load; retry with backoff
-    # rather than let one blip silently remove a fund from the rankings.
+    # rather than let one blip silently remove a fund from the ranking.
     for i in range(attempts):
         try:
             with urllib.request.urlopen(url, timeout=25) as r:
@@ -174,26 +173,6 @@ def metrics(series, bench=None, ter=None, aum=None, ppf=None):
     return m
 
 
-def _val(f, k):
-    if k == 'return_blend':
-        xs = [f['metrics'].get('cagr3'), f['metrics'].get('cagr5'), f['metrics'].get('cagr7')]
-        xs = [x for x in xs if x is not None]
-        return statistics.mean(xs) if xs else None
-    if k == 'aum_band':
-        return _aum_band(f['_catkey'], f['metrics'].get('aum') or 0)
-    return f['metrics'].get(k)
-
-
-def _aum_band(catkey, aum):
-    if catkey == 'smallCap':
-        peak, cap = 15000, 30000
-    elif catkey == 'midCap':
-        peak, cap = 20000, 45000
-    else:
-        return aum
-    return aum/peak if aum <= peak else max(0.2, 1 - (aum - peak)/(cap - peak)*0.8)
-
-
 def _pct(values, higher_better=True):
     present = [v for v in values if v is not None]
     med = statistics.median(present) if present else 0
@@ -207,29 +186,6 @@ def _pct(values, higher_better=True):
             worse = sum(1 for u in f if u > v); eq = sum(1 for u in f if u == v)
         out.append((worse + (eq - 1)/2)/(n - 1)*100 if n > 1 else 50)
     return out
-
-
-def composite(funds, profile):
-    W = WEIGHTS[profile]
-    pcts = {k: _pct([_val(f, k) for f in funds], higher_better=(k not in LOWER_BETTER)) for k in W}
-    for i, f in enumerate(funds):
-        f['composite'] = round(sum(W[k]*pcts[k][i] for k in W), 1)
-    return sorted(funds, key=lambda f: -f['composite'])
-
-
-def funds_used(weight):
-    return 2 if weight > 20 else 1
-
-
-def _corr(a, b):
-    n = min(len(a), len(b))
-    a, b = a[-n:], b[-n:]
-    if n < 12:
-        return 0
-    ma, mb = statistics.mean(a), statistics.mean(b)
-    num = sum((a[i]-ma)*(b[i]-mb) for i in range(n))
-    den = math.sqrt(sum((x-ma)**2 for x in a)*sum((x-mb)**2 for x in b))
-    return num/den if den else 0
 
 
 def fetch_all_series(codes, max_workers=12):
@@ -284,27 +240,22 @@ def verdict(m, cat, ppf, peer_ter):
     return {"plus": plus[:3], "watch": watch[:2]}
 
 
-def rank_category(cat, bench_series, series_cache, ppf=None):
-    prof = cat['profile']
-    bench = bench_series if prof == 'activeEquity' else None
-    eligible = []
+def category_facts(cat, bench_series, series_cache, ppf=None):
+    """Long-run metrics for every fund in a category with at least a year of
+    history; the verdict lines read these."""
+    bench = bench_series if cat['profile'] == 'activeEquity' else None
+    out = []
     for fd in cat['funds']:
         s = series_cache.get(fd['schemeCode'], [])
-        yrs = round((s[-1][0]-s[0][0]).days/365, 1) if s else 0
-        min_yrs = 3 if fd.get('isIndex') else 5
-        if yrs < min_yrs:
-            continue
-        mt = metrics(s, bench, fd.get('ter'), fd.get('aum'), ppf)
-        if not mt:
-            continue
-        eligible.append({'label': fd['label'], 'schemeCode': fd['schemeCode'],
-                         '_catkey': None, 'metrics': mt, '_monthly': _monthly(s)})
-    return eligible
+        mt = metrics(s, bench, fd.get('ter'), fd.get('aum'), ppf) if s else None
+        if mt:
+            out.append({'label': fd['label'], 'schemeCode': fd['schemeCode'], 'metrics': mt})
+    return out
 
 
-# ── Picks by period (home page "Our picks by period") ─────────────────────
-# Today's ranking over the last 1, 3 or 5 years on five measures. Separate
-# from the composite above, which blends 3/5/7-year history and more metrics.
+# ── Picks by period: the site's one ranking ───────────────────────────────
+# Today's ranking over the last 1, 3 or 5 years on five measures, each scored
+# as a percentile against the category's peers.
 PERIOD_WEIGHTS = {'xirr': 0.30, 'vsBench': 0.25, 'sharpe': 0.20, 'ter': 0.15, 'beta': 0.10}
 PERIOD_LOWER_BETTER = {'ter', 'beta'}
 
@@ -444,60 +395,52 @@ def _ppf_rate(rates_path):
     return None
 
 
-def write_rankings(candidates_path, out_path):
+def write_all(candidates_path, data_dir):
     cfg = json.load(open(candidates_path))
     all_codes = [bcode for cat in cfg["categories"].values() if (bcode := cat.get("benchmarkSchemeCode"))]
     all_codes += [fd['schemeCode'] for cat in cfg["categories"].values() for fd in cat['funds']]
     series_cache = fetch_all_series(all_codes)
     # A missing series would quietly drop that fund (or a category's
-    # benchmark) from the published rankings. Keep the last good file instead;
+    # benchmark) from what we publish. Keep the last good files instead;
     # the job fails visibly and the next run tries again.
     missing = [c for c, s in series_cache.items() if not s]
     if missing:
         sys.exit(f"no NAV history for scheme codes {missing} after retries — "
-                 "fund-rankings.json left unchanged")
+                 "period-picks.json and fund-facts.json left unchanged")
 
-    ppf = _ppf_rate(os.path.join(os.path.dirname(candidates_path), "rates.json"))
+    ppf = _ppf_rate(os.path.join(data_dir, "rates.json"))
     out = {"asOf": datetime.date.today().isoformat(), "ppfRate": ppf, "categories": {}}
     for catkey, cat in cfg["categories"].items():
         bcode = cat.get("benchmarkSchemeCode")
         bench = series_cache.get(bcode) if bcode else None
-        funds = rank_category(cat, bench, series_cache, ppf)
-        for f in funds:
-            f['_catkey'] = catkey
-        ranked = composite(funds, cat['profile'])
-        # overlap guard: drop #2 if too correlated with #1, promote next
-        if len(ranked) >= 2 and _corr(ranked[0]['_monthly'], ranked[1]['_monthly']) > 0.98:
-            dup = ranked.pop(1)
-            ranked.append(dup)
-        cat_out = {"benchmark": cat.get("benchmarkName"), "ranked": []}
-        ters = [f['metrics'].get('ter') for f in ranked if f['metrics'].get('ter') is not None]
+        funds = category_facts(cat, bench, series_cache, ppf)
+        ters = [f['metrics'].get('ter') for f in funds if f['metrics'].get('ter') is not None]
         peer_ter = statistics.median(ters) if ters else None
-        for i, f in enumerate(ranked, 1):
+        cat_out = {"benchmark": cat.get("benchmarkName"), "funds": {}}
+        for f in funds:
             m = f['metrics']
-            cat_out["ranked"].append({
-                "rank": i, "label": f['label'], "schemeCode": f['schemeCode'],
-                "composite": f['composite'],
+            cat_out["funds"][str(f['schemeCode'])] = {
+                "label": f['label'],
                 "metrics": {k: (round(m[k], 4) if isinstance(m.get(k), float) else m.get(k))
                             for k in ('cagr3','cagr5','cagr7','sortino','sharpe','maxdd','vol',
                                       'alpha','beta','upcap','dncap','ir','consistency','ter','aum',
                                       'beatPPF5','windows5','since5','beatBench5','windowsBench5','sinceBench5','benchMonths')},
                 "verdict": verdict(m, cat, ppf, peer_ter),
-            })
+            }
         out["categories"][catkey] = cat_out
-        print(f"{catkey:9} #1 {ranked[0]['label'] if ranked else '—'}")
     # atomic write — never leave a partial file
-    d = os.path.dirname(out_path)
-    fd, tmp = tempfile.mkstemp(dir=d, suffix=".tmp")
+    path = os.path.join(data_dir, "fund-facts.json")
+    fd, tmp = tempfile.mkstemp(dir=data_dir, suffix=".tmp")
     with os.fdopen(fd, "w") as fh:
-        json.dump(out, fh, indent=2)
-    os.replace(tmp, out_path)
-    print("wrote", out_path)
-    write_period_picks(cfg, series_cache, os.path.join(d, "period-picks.json"))
-    return out
+        json.dump(out, fh, indent=1)
+    os.replace(tmp, path)
+    print("wrote", path)
+    write_period_picks(cfg, series_cache, os.path.join(data_dir, "period-picks.json"))
+    picks = json.load(open(os.path.join(data_dir, "period-picks.json")))["periods"]["3"]["categories"]
+    for k, c in picks.items():
+        print(f"{k:9} 3-year #1 {c['ranked'][0]['label'] if c['ranked'] else '—'}")
 
 
 if __name__ == "__main__":
-    base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    write_rankings(os.path.join(base, "MaverickInvestor", "data", "candidates.json"),
-                   os.path.join(base, "MaverickInvestor", "data", "fund-rankings.json"))
+    data = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "MaverickInvestor", "data")
+    write_all(os.path.join(data, "candidates.json"), data)

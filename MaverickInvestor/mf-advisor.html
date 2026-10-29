@@ -514,16 +514,16 @@ const CAT_LABELS = ['Large Cap','Flexi Cap','Mid Cap','Small Cap','Gold','Debt']
 const CAT_CSS = ['c-lc','c-fc','c-mc','c-sc','c-gold','c-debt'];
 const FALLBACK_CAGR = [12.8,14.2,16.1,18.2,10.0,7.2]; // per category (incl. Gold)
 
-// Funds are chosen by the five-factor ranking (data/period-picks.json, the
-// same one as the home page cards): SIP XIRR, return vs yardstick, Sharpe,
+// Funds are chosen by the site's ranking (data/period-picks.json, the same
+// one as the home page cards): SIP XIRR, return vs yardstick, Sharpe,
 // expense ratio and Beta over the last 3 or 5 years, matched to the goal.
-// data/fund-rankings.json supplies AUM and the plain-English verdicts, and
-// is the fallback if period picks are missing; FUND_DB is the last resort.
-let RANKINGS = null, PERIOD_PICKS = null;
+// data/fund-facts.json supplies AUM and the plain-English verdicts. If the
+// ranking can't load, FUND_DB below is the fallback.
+let FACTS = null, PERIOD_PICKS = null;
 async function loadRankings(){
   const get = u => fetch(u,{cache:'no-store'}).then(r=>{ if(!r.ok) throw 0; return r.json(); });
-  const [rk, pp] = await Promise.allSettled([get('data/fund-rankings.json'), get('data/period-picks.json')]);
-  RANKINGS = rk.status==='fulfilled' ? rk.value : null;
+  const [fc, pp] = await Promise.allSettled([get('data/fund-facts.json'), get('data/period-picks.json')]);
+  FACTS = fc.status==='fulfilled' ? fc.value : null;
   PERIOD_PICKS = pp.status==='fulfilled' ? pp.value : null;
 }
 // Goals up to 3 years use the 3-year ranking; longer goals the 5-year one.
@@ -876,33 +876,23 @@ function buildFundList(allocation){
     const n = pct>20 ? 2 : 1;
     const period = PERIOD_PICKS && PERIOD_PICKS.periods[pickPeriod(S.years)];
     const pranked = period && period.categories[cat] && period.categories[cat].ranked;
-    const ranked = (RANKINGS && RANKINGS.categories[cat] && RANKINGS.categories[cat].ranked) || null;
-    const longRun = code => ranked && ranked.find(x=>x.schemeCode===code);
+    const facts = code => FACTS && FACTS.categories[cat] && FACTS.categories[cat].funds[code];
     let pick;
     if(pranked && pranked.length){
       pick = pranked.slice(0,n).map(f=>{
-        const lr = longRun(f.schemeCode);
+        const fx = facts(f.schemeCode);
         return {
           name:f.label, code:f.schemeCode,
           sharpe:f.sharpe!=null?Math.round(f.sharpe*100)/100:null,
           ter:f.ter,
-          aum:(lr&&lr.metrics&&lr.metrics.aum!=null)?lr.metrics.aum:null,
+          aum:(fx&&fx.metrics&&fx.metrics.aum!=null)?fx.metrics.aum:null,
           fallback:f.cagr!=null?Math.round(f.cagr*1000)/10:FALLBACK_CAGR[ci],
-          verdict:(lr&&lr.verdict)||null,
+          verdict:(fx&&fx.verdict)||null,
           score:f.score
         };
       });
-    } else if(ranked && ranked.length){
-      pick = ranked.slice(0,n).map(f=>({
-        name:f.label, code:f.schemeCode,
-        sharpe:(f.metrics&&f.metrics.sharpe!=null)?Math.round(f.metrics.sharpe*100)/100:null,
-        ter:(f.metrics&&f.metrics.ter!=null)?f.metrics.ter:null,
-        aum:(f.metrics&&f.metrics.aum!=null)?f.metrics.aum:null,
-        fallback:(f.metrics&&f.metrics.cagr5!=null)?Math.round(f.metrics.cagr5*1000)/10:FALLBACK_CAGR[ci],
-        verdict:f.verdict||null
-      }));
     } else {
-      // bundled fallback if rankings unavailable
+      // bundled fallback if the ranking can't load
       const db = FUND_DB[cat]; if(!db||db.length===0) return;
       pick = db.slice(0,n).map(f=>({name:f[0],code:f[1],sharpe:f[2],ter:f[3],aum:f[4],fallback:f[5]}));
     }
@@ -1017,7 +1007,7 @@ function solveFlatSIP(targetFV, rAnnual, months, existingFV){
 // ============================================================
 async function runCalculation(){
   setLoadStep(0,'cur');
-  if(!RANKINGS) await loadRankings();
+  if(!PERIOD_PICKS) await loadRankings();
 
   // Persona — if quick-pick was used, personaIdx is already set; skip quiz scoring
   const _personaKeys = ['guardian','preserver','balancer','grower','maverick'];

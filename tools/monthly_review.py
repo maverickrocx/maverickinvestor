@@ -9,9 +9,10 @@ be faked:
     bi-monthly MPC. AMFI and the ministries publish no machine-readable
     feed, and amfiindia.com/robots.txt is a blanket Disallow, so these are
     a manually verified snapshot by design.
-  - data/candidates.json — per-fund TER and AUM, which feed roughly a fifth
-    of the ranking composite. Same problem, same answer: the user supplies a
-    file (see import_fund_costs.py).
+  - data/candidates.json — per-fund TER and AUM. The expense ratio is 15% of
+    every fund's score in the site's ranking; AUM is shown in the MF Advisor.
+    Same problem, same answer: the user supplies a file (see
+    import_fund_costs.py).
   - scheme codes across three files, which drift as AMCs rename, merge and
     retire schemes.
 
@@ -42,7 +43,7 @@ CANDIDATES = os.path.join(SITE, "data", "candidates.json")
 ISSUE_TITLE = "Monthly data review: manual figures need re-verifying"
 ISSUE_LABEL = "data-review"
 # TER and AUM move slowly enough that a quarter is a fair review cycle, but
-# the ranking composite leans on them, so we start nudging at 90 days.
+# the ranking leans on TER, so we start nudging at 90 days.
 CANDIDATES_MAX_AGE_DAYS = 90
 
 
@@ -71,8 +72,8 @@ def check_candidates(today):
     n = sum(len(c["funds"]) for c in cand["categories"].values())
     return (
         f"**Fund TER and AUM** — last reviewed {reviewed:%d %b %Y} ({age} days ago), "
-        f"covering {n} funds. These feed ~20% of the ranking composite, so staleness "
-        f"skews the rankings themselves.\n"
+        f"covering {n} funds. The expense ratio is 15% of every fund's score, so "
+        f"staleness skews the picks themselves.\n"
         f"  - AMFI publishes both as downloads under Research & Information "
         f"(Average AUM, and TER of Mutual Fund Schemes). Their robots.txt forbids "
         f"crawling, so this stays a manual download rather than an automated pull.\n"

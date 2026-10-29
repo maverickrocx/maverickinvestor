@@ -106,6 +106,18 @@
       },
       {
        "rank": 3,
+       "label": "UTI Flexi Cap",
+       "schemeCode": 120662,
+       "score": 50.8,
+       "xirr": -0.0146,
+       "cagr": -0.0675,
+       "vsBench": 0.0151,
+       "sharpe": -0.8886,
+       "beta": 0.9684,
+       "ter": 0.9
+      },
+      {
+       "rank": 4,
        "label": "DSP Flexi Cap",
        "schemeCode": 119076,
        "score": 49.2,
@@ -117,28 +129,16 @@
        "ter": 0.75
       },
       {
-       "rank": 4,
+       "rank": 5,
        "label": "Parag Parikh Flexi Cap",
        "schemeCode": 122639,
-       "score": 47.5,
-       "xirr": -0.0487,
-       "cagr": -0.0654,
-       "vsBench": 0.0172,
-       "sharpe": -1.3985,
-       "beta": 0.6009,
+       "score": 43.3,
+       "xirr": -0.0574,
+       "cagr": -0.0701,
+       "vsBench": 0.0124,
+       "sharpe": -1.4549,
+       "beta": 0.5963,
        "ter": 0.63
-      },
-      {
-       "rank": 5,
-       "label": "UTI Flexi Cap",
-       "schemeCode": 120662,
-       "score": 46.7,
-       "xirr": -0.0146,
-       "cagr": -0.0675,
-       "vsBench": 0.0151,
-       "sharpe": -0.8886,
-       "beta": 0.9684,
-       "ter": 0.9
       },
       {
        "rank": 6,
@@ -507,9 +507,9 @@
        "score": 83.0,
        "xirr": 0.0585,
        "cagr": 0.154,
-       "vsBench": 0.0332,
+       "vsBench": 0.0336,
        "sharpe": 0.7369,
-       "beta": 0.9577,
+       "beta": 0.9578,
        "ter": 0.78
       },
       {
@@ -519,9 +519,9 @@
        "score": 73.0,
        "xirr": 0.0779,
        "cagr": 0.1493,
-       "vsBench": 0.0285,
+       "vsBench": 0.0289,
        "sharpe": 0.6463,
-       "beta": 1.057,
+       "beta": 1.0571,
        "ter": 0.8
       },
       {
@@ -529,11 +529,11 @@
        "label": "Parag Parikh Flexi Cap",
        "schemeCode": 122639,
        "score": 67.0,
-       "xirr": 0.0389,
-       "cagr": 0.1252,
-       "vsBench": 0.0044,
-       "sharpe": 0.6191,
-       "beta": 0.718,
+       "xirr": 0.0354,
+       "cagr": 0.1231,
+       "vsBench": 0.0027,
+       "sharpe": 0.5989,
+       "beta": 0.7169,
        "ter": 0.63
       },
       {
@@ -543,9 +543,9 @@
        "score": 41.0,
        "xirr": 0.0202,
        "cagr": 0.1099,
-       "vsBench": -0.0108,
+       "vsBench": -0.0104,
        "sharpe": 0.3609,
-       "beta": 1.0935,
+       "beta": 1.0938,
        "ter": 0.58
       },
       {
@@ -555,9 +555,9 @@
        "score": 18.0,
        "xirr": 0.0213,
        "cagr": 0.0806,
-       "vsBench": -0.0401,
+       "vsBench": -0.0397,
        "sharpe": 0.1764,
-       "beta": 1.0329,
+       "beta": 1.0331,
        "ter": 0.9
       },
       {
@@ -567,9 +567,9 @@
        "score": 18.0,
        "xirr": 0.0202,
        "cagr": 0.1055,
-       "vsBench": -0.0153,
+       "vsBench": -0.0149,
        "sharpe": 0.3372,
-       "beta": 1.1408,
+       "beta": 1.1412,
        "ter": 0.75
       }
      ]
@@ -915,9 +915,9 @@
        "score": 89.0,
        "xirr": 0.1311,
        "cagr": 0.1513,
-       "vsBench": 0.0544,
+       "vsBench": 0.0546,
        "sharpe": 0.6843,
-       "beta": 0.9614,
+       "beta": 0.9615,
        "ter": 0.78
       },
       {
@@ -925,11 +925,11 @@
        "label": "Parag Parikh Flexi Cap",
        "schemeCode": 122639,
        "score": 76.0,
-       "xirr": 0.1049,
-       "cagr": 0.1096,
-       "vsBench": 0.0128,
-       "sharpe": 0.4214,
-       "beta": 0.7859,
+       "xirr": 0.1027,
+       "cagr": 0.1084,
+       "vsBench": 0.0118,
+       "sharpe": 0.4112,
+       "beta": 0.7853,
        "ter": 0.63
       },
       {
@@ -939,7 +939,7 @@
        "score": 58.0,
        "xirr": 0.1183,
        "cagr": 0.1057,
-       "vsBench": 0.0089,
+       "vsBench": 0.0091,
        "sharpe": 0.3446,
        "beta": 1.047,
        "ter": 0.8
@@ -951,9 +951,9 @@
        "score": 41.0,
        "xirr": 0.0821,
        "cagr": 0.0936,
-       "vsBench": -0.0033,
+       "vsBench": -0.0031,
        "sharpe": 0.2561,
-       "beta": 1.0686,
+       "beta": 1.0688,
        "ter": 0.58
       },
       {
@@ -963,9 +963,9 @@
        "score": 30.0,
        "xirr": 0.0836,
        "cagr": 0.085,
-       "vsBench": -0.0118,
+       "vsBench": -0.0116,
        "sharpe": 0.2023,
-       "beta": 1.1001,
+       "beta": 1.1003,
        "ter": 0.75
       },
       {
@@ -975,9 +975,9 @@
        "score": 6.0,
        "xirr": 0.0513,
        "cagr": 0.0357,
-       "vsBench": -0.0611,
+       "vsBench": -0.0609,
        "sharpe": -0.1459,
-       "beta": 1.037,
+       "beta": 1.0371,
        "ter": 0.9
       }
      ]

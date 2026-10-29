@@ -1,3 +1,4 @@
 
 # Test screenshots never belong in the repo root (the site lives in MaverickInvestor/)
 /*.png
+__pycache__/

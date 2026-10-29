@@ -20,7 +20,7 @@ task's prompt is the source of truth for the cadence.
 
 | Script | When the task runs it | Does |
 |---|---|---|
-| `tools/rank_funds.py` | every run | mfapi.in → `data/fund-rankings.json` (ranks, metrics, plain-English `verdict`, rolling 5-yr "beat PPF / benchmark" shares) and `data/period-picks.json` (home "Our picks by period": 1/3/5-yr ranking on SIP XIRR 30, vs yardstick 25, Sharpe 20, TER 15, Beta 10); refuses to write if any fund's NAVs are missing |
+| `tools/rank_funds.py` | every run | mfapi.in → `data/period-picks.json` (the site's one ranking: 1/3/5-yr, each fund scored vs category peers on SIP XIRR 30, return vs yardstick 25, Sharpe 20, TER 15, Beta 10) and `data/fund-facts.json` (per-fund long-run metrics, rolling 5-yr "beat PPF / benchmark" shares and plain-English `verdict`; not a ranking); writes nothing if any fund's NAVs are missing |
 | `tools/build_nav_data.py` | every run | AMFI `NAVAll.txt` + mfapi.in → `data/navs.json` (home tracker), `data/nav-history/<code>.json` (MF Advisor backtest, duplicate check), `data/fund-list.json` and `data/crash-replay.json` (Tools page fund checks, via `assets/js/fund-checks.js`) |
 | `tools/monthly_insights.py` | every run (no-op after the month's first) | snapshots `period-picks.json` to `data/period-history/YYYY-MM.json`, writes `data/monthly-review.json` (how the 3-year picks moved, and which of the five measures moved them) |
 | `tools/update_stock_prices.py` | Saturdays, or if `priceAsOf` is 7+ days old | Yahoo chart → price in `stock-screener.html` |
@@ -29,15 +29,15 @@ task's prompt is the source of truth for the cadence.
 | `tools/monthly_review.py --dry-run` | after the fundamentals | report of manual items; the task files/updates the `data-review` issue from it |
 
 mfapi.in stopped sending CORS headers in Oct 2026, so no page may fetch it in
-the browser: pages read the same-origin files above instead. The home page's
-Monthly Fund Review section (above the tracker): a 1/3/5-year selector drives
-six pick cards from `period-picks.json` (each card's ticks/warnings and PPF
-score come from the same fund's entry in `fund-rankings.json`), then "What
-changed this month" from `monthly-review.json`. The MF Advisor picks funds
-from the same `period-picks.json` (goals up to 3 years: 3-year ranking; longer:
-5-year), taking AUM and verdicts from `fund-rankings.json`, which is also its
-fallback. The composite ranking in `fund-rankings.json` no longer picks funds
-anywhere on the site; it supplies the long-run verdicts and PPF scores.
+the browser: pages read the same-origin files above instead. Every fund pick on the site
+comes from `period-picks.json`: the home page's Monthly Fund Review (a
+1/3/5-year selector drives six pick cards; ticks/warnings and the PPF score
+come from the fund's entry in `fund-facts.json`; then "What changed this
+month" from `monthly-review.json`) and the MF Advisor (goals up to 3 years
+use the 3-year ranking, longer goals the 5-year; falls back to its bundled
+`FUND_DB`). The older composite ranking (`fund-rankings.json`) was removed in
+Oct 2026; design docs under `docs/superpowers/specs/` that describe it are
+historical.
 `deploy.yml` publishes `MaverickInvestor/` on every push to `main`.
 
 Manual data: `data/rates.json` (small-savings/EPF/repo rates, review by
