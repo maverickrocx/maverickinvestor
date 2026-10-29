@@ -21,7 +21,7 @@ task's prompt is the source of truth for the cadence.
 | Script | When the task runs it | Does |
 |---|---|---|
 | `tools/rank_funds.py` | every run | mfapi.in → `data/fund-rankings.json` (ranks, metrics, plain-English `verdict`, rolling 5-yr "beat PPF / benchmark" shares); refuses to write if any fund's NAVs are missing |
-| `tools/build_nav_data.py` | every run | AMFI `NAVAll.txt` + mfapi.in → `data/navs.json` (home tracker) and `data/nav-history/<code>.json` (MF Advisor backtest) |
+| `tools/build_nav_data.py` | every run | AMFI `NAVAll.txt` + mfapi.in → `data/navs.json` (home tracker), `data/nav-history/<code>.json` (MF Advisor backtest, duplicate check), `data/fund-list.json` and `data/crash-replay.json` (Tools page fund checks, via `assets/js/fund-checks.js`) |
 | `tools/monthly_insights.py` | every run (no-op after the month's first) | snapshots rankings to `data/rankings-history/YYYY-MM.json`, writes `data/monthly-review.json` (what changed + picks report card) |
 | `tools/update_stock_prices.py` | Saturdays, or if `priceAsOf` is 7+ days old | Yahoo chart → price in `stock-screener.html` |
 | `tools/verify_scheme_codes.py` | with the stock prices (warn-only) | flags drifted AMFI scheme codes |

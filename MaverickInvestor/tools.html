@@ -200,6 +200,37 @@
 </section>
 
 <!-- ============================================================
+     FUND CHECKS — duplicate check + crash replay (assets/js/fund-checks.js)
+============================================================ -->
+<section class="page-section" id="fund-checks">
+    <div class="page-section-head center">
+      <div class="section-label">Fund Checks</div>
+      <h2 class="section-title">Check your funds before the market does</h2>
+      <p class="section-sub">Two checks built on real NAV history, refreshed every morning.</p>
+    </div>
+
+    <div class="tile fc-tile" id="duplicate-check">
+      <h3 class="tile-title">Hidden duplicate check</h3>
+      <p class="fc-intro">Pick the funds you hold. We'll show which ones quietly do the same job, so you're not paying two fees for one fund.</p>
+      <div class="fc-pickers" id="dupPickers"></div>
+      <div class="fc-result" id="dupResult"><p class="fc-empty">Loading fund data…</p></div>
+    </div>
+
+    <div class="tile fc-tile" id="crash-replay">
+      <h3 class="tile-title">Crash replay</h3>
+      <p class="fc-intro">See what happened to money in a fund through every big market fall since 2013: how far it dropped, and how long it took to come back.</p>
+      <div class="fc-controls">
+        <label class="fc-field"><span>Fund</span><select id="crFund" aria-label="Fund"></select></label>
+        <div class="form-group fc-field">
+          <label for="crAmt">Invested at the peak · <strong id="crAmtLbl">₹1,00,000</strong></label>
+          <input type="range" min="10000" max="1000000" step="10000" value="100000" id="crAmt">
+        </div>
+      </div>
+      <div class="fc-result" id="crResult"><p class="fc-empty">Loading fund data…</p></div>
+    </div>
+</section>
+
+<!-- ============================================================
      ADDITIONAL CALCULATORS
 ============================================================ -->
 <section class="page-section" id="more-calculators">
@@ -626,6 +657,7 @@
 </script>
 
 
+<script src="assets/js/fund-checks.js"></script>
 <script src="assets/js/theme.js"></script>
 <script src="assets/js/edge-guide.js"></script>
 <script src="assets/js/page-utils.js"></script>
