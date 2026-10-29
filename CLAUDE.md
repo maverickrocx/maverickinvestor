@@ -33,8 +33,11 @@ the browser: pages read the same-origin files above instead. The home page's
 Monthly Fund Review section (above the tracker): a 1/3/5-year selector drives
 six pick cards from `period-picks.json` (each card's ticks/warnings and PPF
 score come from the same fund's entry in `fund-rankings.json`), then "What
-changed this month" from `monthly-review.json`. The MF Advisor still builds
-portfolios from the composite ranking in `fund-rankings.json`.
+changed this month" from `monthly-review.json`. The MF Advisor picks funds
+from the same `period-picks.json` (goals up to 3 years: 3-year ranking; longer:
+5-year), taking AUM and verdicts from `fund-rankings.json`, which is also its
+fallback. The composite ranking in `fund-rankings.json` no longer picks funds
+anywhere on the site; it supplies the long-run verdicts and PPF scores.
 `deploy.yml` publishes `MaverickInvestor/` on every push to `main`.
 
 Manual data: `data/rates.json` (small-savings/EPF/repo rates, review by

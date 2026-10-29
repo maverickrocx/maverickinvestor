@@ -406,7 +406,7 @@
         </tr></thead>
         <tbody id="port-body"></tbody>
       </table></div>
-      <p class="legend">* All direct plans. Backtested XIRR computed from live AMFI NAV history for your goal horizon.</p>
+      <p class="legend" id="port-legend">* All direct plans. Backtested XIRR computed from live AMFI NAV history for your goal horizon.</p>
     </div>
 
     <div class="tile rebal-wrap">
@@ -514,12 +514,21 @@ const CAT_LABELS = ['Large Cap','Flexi Cap','Mid Cap','Small Cap','Gold','Debt']
 const CAT_CSS = ['c-lc','c-fc','c-mc','c-sc','c-gold','c-debt'];
 const FALLBACK_CAGR = [12.8,14.2,16.1,18.2,10.0,7.2]; // per category (incl. Gold)
 
-// Live fund rankings (data/fund-rankings.json); null → bundled fallback below
-let RANKINGS = null;
+// Funds are chosen by the five-factor ranking (data/period-picks.json, the
+// same one as the home page cards): SIP XIRR, return vs yardstick, Sharpe,
+// expense ratio and Beta over the last 3 or 5 years, matched to the goal.
+// data/fund-rankings.json supplies AUM and the plain-English verdicts, and
+// is the fallback if period picks are missing; FUND_DB is the last resort.
+let RANKINGS = null, PERIOD_PICKS = null;
 async function loadRankings(){
-  try { RANKINGS = await (await fetch('data/fund-rankings.json',{cache:'no-store'})).json(); }
-  catch(e){ RANKINGS = null; }
+  const get = u => fetch(u,{cache:'no-store'}).then(r=>{ if(!r.ok) throw 0; return r.json(); });
+  const [rk, pp] = await Promise.allSettled([get('data/fund-rankings.json'), get('data/period-picks.json')]);
+  RANKINGS = rk.status==='fulfilled' ? rk.value : null;
+  PERIOD_PICKS = pp.status==='fulfilled' ? pp.value : null;
 }
+// Goals up to 3 years use the 3-year ranking; longer goals the 5-year one.
+// (1-year rankings are too noisy to build a portfolio on.)
+function pickPeriod(years){ return years<=3 ? 3 : 5; }
 // Gold sleeve % by [effective persona][horizon]; 0 for short horizon
 const GOLD = {
   guardian:{s:0,m:5,l:5,xl:5}, preserver:{s:0,m:5,l:7,xl:7},
@@ -865,9 +874,25 @@ function buildFundList(allocation){
     if(pct<=0) return;
     // pick rule: >20% → top 2 funds, else top 1
     const n = pct>20 ? 2 : 1;
+    const period = PERIOD_PICKS && PERIOD_PICKS.periods[pickPeriod(S.years)];
+    const pranked = period && period.categories[cat] && period.categories[cat].ranked;
     const ranked = (RANKINGS && RANKINGS.categories[cat] && RANKINGS.categories[cat].ranked) || null;
+    const longRun = code => ranked && ranked.find(x=>x.schemeCode===code);
     let pick;
-    if(ranked && ranked.length){
+    if(pranked && pranked.length){
+      pick = pranked.slice(0,n).map(f=>{
+        const lr = longRun(f.schemeCode);
+        return {
+          name:f.label, code:f.schemeCode,
+          sharpe:f.sharpe!=null?Math.round(f.sharpe*100)/100:null,
+          ter:f.ter,
+          aum:(lr&&lr.metrics&&lr.metrics.aum!=null)?lr.metrics.aum:null,
+          fallback:f.cagr!=null?Math.round(f.cagr*1000)/10:FALLBACK_CAGR[ci],
+          verdict:(lr&&lr.verdict)||null,
+          score:f.score
+        };
+      });
+    } else if(ranked && ranked.length){
       pick = ranked.slice(0,n).map(f=>({
         name:f.label, code:f.schemeCode,
         sharpe:(f.metrics&&f.metrics.sharpe!=null)?Math.round(f.metrics.sharpe*100)/100:null,
@@ -1132,6 +1157,16 @@ function renderResults(){
       <td>${f.sharpe!=null?f.sharpe:'—'}</td><td>${f.ter!=null?f.ter+'%':'—'}</td><td>${f.aum!=null?fmt(f.aum):'—'}</td>
     </tr>`;
   });
+
+  const pp = PERIOD_PICKS && PERIOD_PICKS.periods[pickPeriod(S.years)];
+  if(pp){
+    const yrs = pickPeriod(S.years), w = PERIOD_PICKS.weights;
+    document.getElementById('port-legend').textContent =
+      `* All direct plans. Funds are the top scorers in each category over the last ${yrs} years `+
+      `(${S.years<=3?'goals up to 3 years':'goals over 3 years'} use the ${yrs}-year ranking), scored on SIP XIRR ${w.xirr*100}%, `+
+      `return vs benchmark ${w.vsBench*100}%, Sharpe ${w.sharpe*100}%, expense ratio ${w.ter*100}% and Beta ${w.beta*100}%. `+
+      `Sharpe is over the same ${yrs} years. Backtested XIRR is computed from live AMFI NAV history for your goal horizon.`;
+  }
 
   // Rebalancing
   renderRebalancing();
