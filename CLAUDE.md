@@ -14,11 +14,13 @@ calculators, learning pages. Plain static HTML/CSS/JS, no build step.
 
 | Workflow | When | Does |
 |---|---|---|
-| `weekly-data-refresh.yml` | Sat 01:00 UTC | `tools/rank_funds.py` (mfapi.in → `data/fund-rankings.json`), `tools/update_stock_prices.py` (Yahoo chart → price in `stock-screener.html`), `tools/verify_scheme_codes.py` (warn-only) |
+| `daily-nav-refresh.yml` | Tue–Sat 01:00 UTC | `tools/rank_funds.py` (mfapi.in → `data/fund-rankings.json`) |
+| `weekly-data-refresh.yml` | Sat 01:30 UTC | `tools/update_stock_prices.py` (Yahoo chart → price in `stock-screener.html`), `tools/verify_scheme_codes.py` (warn-only) |
 | `monthly-review.yml` | 1st, 02:00 UTC | `tools/update_fundamentals.py` (Screener.in → P/E, mcap, div yield, ROCE, TTM growth), then `tools/monthly_review.py` opens/updates one GitHub issue labelled `data-review` |
-| `deploy.yml` | push to main, or after either job above | publishes `MaverickInvestor/` |
+| `deploy.yml` | push to main, or after any job above | publishes `MaverickInvestor/` |
 
 The bots commit with the default `GITHUB_TOKEN`, which does not fire `on: push`.
+Home-page NAVs need no job: the page fetches them live from mfapi.in.
 Any new workflow that commits site data must be added to `deploy.yml`'s
 `workflow_run.workflows` list, or its data will not go live until an unrelated push.
 

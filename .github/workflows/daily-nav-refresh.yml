@@ -1,0 +1,36 @@
+name: Daily NAV refresh
+
+on:
+  schedule:
+    # Tue-Sat 01:00 UTC = 06:30 IST, picking up each weekday's NAVs (AMFI
+    # publishes them late the same evening, so Monday's NAV lands Tuesday
+    # morning and Friday's on Saturday).
+    - cron: "0 1 * * 2-6"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Refresh MF NAV rankings
+        run: python tools/rank_funds.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "maverick-bot"
+          git config user.email "noreply@maverickinvestor.in"
+          git add MaverickInvestor/data/fund-rankings.json
+          git diff --staged --quiet || git commit -m "chore: daily NAV rankings refresh"
+          # Saturday's weekly job can push in the same window; take its commit
+          # first rather than failing on a non-fast-forward.
+          git pull --rebase origin main
+          git push

@@ -8,7 +8,7 @@ percentile composite, and writes MaverickInvestor/data/fund-rankings.json.
 Stdlib only. Run:
     python -c "import rank_funds; rank_funds.write_rankings(CAND, OUT)"
 """
-import json, os, tempfile, urllib.request, datetime, statistics, math
+import json, os, sys, time, tempfile, urllib.request, datetime, statistics, math
 from concurrent.futures import ThreadPoolExecutor
 
 RF = 0.065  # risk-free assumption for Sharpe/Sortino
@@ -25,9 +25,17 @@ WEIGHTS = {
 LOWER_BETTER = {'consistency','vol','dncap','ter'}
 
 
-def _get(url):
-    with urllib.request.urlopen(url, timeout=25) as r:
-        return json.load(r)
+def _get(url, attempts=3):
+    # mfapi.in drops the odd request under parallel load; retry with backoff
+    # rather than let one blip silently remove a fund from the rankings.
+    for i in range(attempts):
+        try:
+            with urllib.request.urlopen(url, timeout=25) as r:
+                return json.load(r)
+        except Exception:
+            if i == attempts - 1:
+                raise
+            time.sleep(2 * (i + 1))
 
 
 def despike(series):
@@ -224,6 +232,13 @@ def write_rankings(candidates_path, out_path):
     all_codes = [bcode for cat in cfg["categories"].values() if (bcode := cat.get("benchmarkSchemeCode"))]
     all_codes += [fd['schemeCode'] for cat in cfg["categories"].values() for fd in cat['funds']]
     series_cache = fetch_all_series(all_codes)
+    # A missing series would quietly drop that fund (or a category's
+    # benchmark) from the published rankings. Keep the last good file instead;
+    # the job fails visibly and the next run tries again.
+    missing = [c for c, s in series_cache.items() if not s]
+    if missing:
+        sys.exit(f"no NAV history for scheme codes {missing} after retries — "
+                 "fund-rankings.json left unchanged")
 
     out = {"asOf": datetime.date.today().isoformat(), "categories": {}}
     for catkey, cat in cfg["categories"].items():
@@ -260,7 +275,6 @@ def write_rankings(candidates_path, out_path):
 
 
 if __name__ == "__main__":
-    import sys
     base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     write_rankings(os.path.join(base, "MaverickInvestor", "data", "candidates.json"),
                    os.path.join(base, "MaverickInvestor", "data", "fund-rankings.json"))

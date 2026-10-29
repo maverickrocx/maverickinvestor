@@ -9,7 +9,7 @@ on:
     # trigger `on: push` in other workflows — chain off completion instead so
     # a refresh always ends with a redeploy. Every workflow that commits site
     # data must be listed here, or its commit waits for the next unrelated push.
-    workflows: ["Weekly data refresh", "Monthly data review"]
+    workflows: ["Daily NAV refresh", "Weekly data refresh", "Monthly data review"]
     types: [completed]
     branches: [main]
 
@@ -32,8 +32,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        # Not workflow_run.head_sha: that is the commit the refresh job
+        # started from, i.e. the data *before* its own commit, which left the
+        # live site one refresh behind. The refresh pushes to main, so take
+        # main's tip.
         with:
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.sha }}
 
       - name: Upload MaverickInvestor folder as Pages artifact
         uses: actions/upload-pages-artifact@v3

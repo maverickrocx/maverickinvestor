@@ -2,10 +2,10 @@ name: Weekly data refresh
 
 on:
   schedule:
-    # Saturdays 01:00 UTC = 06:30 IST — well after Friday's close data has
-    # settled on both mfapi.in and Yahoo Finance, before the site sees
-    # weekend traffic.
-    - cron: "0 1 * * 6"
+    # Saturdays 01:30 UTC = 07:00 IST — well after Friday's close has settled
+    # on Yahoo Finance, before the site sees weekend traffic. Half an hour
+    # after the daily NAV job so the two rarely push at the same moment.
+    - cron: "30 1 * * 6"
   workflow_dispatch:
 
 permissions:
@@ -21,14 +21,9 @@ jobs:
         with:
           python-version: "3.12"
 
-      # Weekly cadence covers the two things that actually move week to week.
+      # MF NAV rankings refresh daily instead — see daily-nav-refresh.yml.
       # Stock fundamentals (P/E, ROCE, growth) only change when a company
-      # reports, so they refresh monthly instead — see monthly-review.yml.
-      # Separate steps so a failure in one doesn't block the other, and each
-      # leaves a clear log to debug from.
-      - name: Refresh MF NAV rankings
-        run: python tools/rank_funds.py
-
+      # reports, so they refresh monthly — see monthly-review.yml.
       - name: Refresh stock prices
         run: python tools/update_stock_prices.py
 
@@ -42,6 +37,7 @@ jobs:
         run: |
           git config user.name "maverick-bot"
           git config user.email "noreply@maverickinvestor.in"
-          git add MaverickInvestor/data/fund-rankings.json MaverickInvestor/stock-screener.html
-          git diff --staged --quiet || git commit -m "chore: weekly data refresh (NAV rankings + stock prices)"
+          git add MaverickInvestor/stock-screener.html
+          git diff --staged --quiet || git commit -m "chore: weekly stock price refresh"
+          git pull --rebase origin main
           git push
