@@ -10,19 +10,24 @@ calculators, learning pages. Plain static HTML/CSS/JS, no build step.
 - Any push to `main` deploys via `.github/workflows/deploy.yml` in about a minute.
 - Owner's preference: merge changes straight to `main`; no PR unless asked.
 
-## Data pipeline (GitHub Actions, not Claude)
+## Data pipeline (one Claude scheduled task)
 
-| Workflow | When | Does |
+All site data is refreshed by a single Claude cloud scheduled task,
+"Maverick Investor - Data Refresh" (Tue–Sat ~07:00 IST, push + email
+summary to the owner). It runs the scripts below, commits straight to `main`,
+and the push fires `deploy.yml`. There are no scheduled GitHub Actions; the
+task's prompt is the source of truth for the cadence.
+
+| Script | When the task runs it | Does |
 |---|---|---|
-| `daily-nav-refresh.yml` | Tue–Sat 01:00 UTC | `tools/rank_funds.py` (mfapi.in → `data/fund-rankings.json`) |
-| `weekly-data-refresh.yml` | Sat 01:30 UTC | `tools/update_stock_prices.py` (Yahoo chart → price in `stock-screener.html`), `tools/verify_scheme_codes.py` (warn-only) |
-| `monthly-review.yml` | 1st, 02:00 UTC | `tools/update_fundamentals.py` (Screener.in → P/E, mcap, div yield, ROCE, TTM growth), then `tools/monthly_review.py` opens/updates one GitHub issue labelled `data-review` |
-| `deploy.yml` | push to main, or after any job above | publishes `MaverickInvestor/` |
+| `tools/rank_funds.py` | every run | mfapi.in → `data/fund-rankings.json`; refuses to write if any fund's NAVs are missing |
+| `tools/update_stock_prices.py` | Saturdays, or if `priceAsOf` is 7+ days old | Yahoo chart → price in `stock-screener.html` |
+| `tools/verify_scheme_codes.py` | with the stock prices (warn-only) | flags drifted AMFI scheme codes |
+| `tools/update_fundamentals.py` | first run of each month (`fundAsOf` in an earlier month) | Screener.in → P/E, mcap, div yield, ROCE, TTM growth |
+| `tools/monthly_review.py --dry-run` | after the fundamentals | report of manual items; the task files/updates the `data-review` issue from it |
 
-The bots commit with the default `GITHUB_TOKEN`, which does not fire `on: push`.
 Home-page NAVs need no job: the page fetches them live from mfapi.in.
-Any new workflow that commits site data must be added to `deploy.yml`'s
-`workflow_run.workflows` list, or its data will not go live until an unrelated push.
+`deploy.yml` publishes `MaverickInvestor/` on every push to `main`.
 
 Manual data: `data/rates.json` (small-savings/EPF/repo rates, review by
 `nextReviewDue`) and TER/AUM in `data/candidates.json` (import with
