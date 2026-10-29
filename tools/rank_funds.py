@@ -302,6 +302,134 @@ def rank_category(cat, bench_series, series_cache, ppf=None):
     return eligible
 
 
+# ── Picks by period (home page "Our picks by period") ─────────────────────
+# Today's ranking over the last 1, 3 or 5 years on five measures. Separate
+# from the composite above, which blends 3/5/7-year history and more metrics.
+PERIOD_WEIGHTS = {'xirr': 0.30, 'vsBench': 0.25, 'sharpe': 0.20, 'ter': 0.15, 'beta': 0.10}
+PERIOD_LOWER_BETTER = {'ter', 'beta'}
+
+
+def _xirr(flows):
+    """flows: [(date, amount)], investments negative, final value positive."""
+    t0 = flows[0][0]
+    def npv(r):
+        return sum(a / (1 + r) ** ((d - t0).days / 365.0) for d, a in flows)
+    lo, hi = -0.99, 5.0
+    if npv(lo) * npv(hi) > 0:
+        return None
+    for _ in range(200):
+        mid = (lo + hi) / 2
+        if npv(lo) * npv(mid) <= 0:
+            hi = mid
+        else:
+            lo = mid
+    return (lo + hi) / 2
+
+
+def _sip_xirr(window):
+    flows, units, seen = [], 0.0, set()
+    for d, v in window:
+        if (d.year, d.month) not in seen:
+            seen.add((d.year, d.month))
+            flows.append((d, -1000.0))
+            units += 1000.0 / v
+    end_d, end_v = window[-1]
+    if len(flows) < 6:
+        return None
+    flows.append((end_d, units * end_v))
+    return _xirr(flows)
+
+
+def _weekly(window):
+    w = {}
+    for d, v in window:
+        w[d.isocalendar()[:2]] = v
+    return w
+
+
+def _wk_returns(wk, keys):
+    return [wk[keys[i]] / wk[keys[i - 1]] - 1 for i in range(1, len(keys))]
+
+
+def _beta(fw, yw):
+    keys = sorted(k for k in fw if k in yw)
+    if len(keys) < 26:
+        return None
+    f, y = _wk_returns(fw, keys), _wk_returns(yw, keys)
+    my, mf = statistics.mean(y), statistics.mean(f)
+    var = sum((b - my) ** 2 for b in y)
+    return sum((a - mf) * (b - my) for a, b in zip(f, y)) / var if var else None
+
+
+def period_picks(cfg, series_cache, years):
+    today_end = max(s[-1][0] for s in series_cache.values() if s)
+    start = today_end.replace(year=today_end.year - years)
+    def window(code):
+        s = series_cache.get(code) or []
+        if not s or s[0][0] > start + datetime.timedelta(days=10):
+            return None
+        return [(d, v) for d, v in s if d >= start]
+    out = {}
+    for catkey, cat in cfg["categories"].items():
+        funds = []
+        for fd in cat["funds"]:
+            w = window(fd["schemeCode"])
+            if not w or len(w) < 120:
+                continue
+            yrs = (w[-1][0] - w[0][0]).days / 365.0
+            dr = _daily(w)
+            vol = statistics.pstdev(dr) * math.sqrt(252)
+            funds.append({"label": fd["label"], "schemeCode": fd["schemeCode"], "_w": w,
+                          "cagr": (w[-1][1] / w[0][1]) ** (1 / yrs) - 1,
+                          "xirr": _sip_xirr(w), "ter": fd.get("ter"),
+                          "sharpe": (statistics.mean(dr) * 252 - RF) / vol if vol else None})
+        if len(funds) < 2:
+            continue
+        bw = window(cat.get("benchmarkSchemeCode")) if cat.get("benchmarkSchemeCode") else None
+        if bw:
+            yard_name = cat.get("benchmarkName")
+            yrs = (bw[-1][0] - bw[0][0]).days / 365.0
+            yard_cagr = (bw[-1][1] / bw[0][1]) ** (1 / yrs) - 1
+            yard_wk = _weekly(bw)
+        else:
+            yard_name = "average of funds we track"
+            yard_cagr = statistics.mean(f["cagr"] for f in funds)
+            wks = [_weekly(f["_w"]) for f in funds]
+            common = sorted(set.intersection(*[set(w) for w in wks]))
+            # equal-weighted peer index built from weekly returns
+            yard_wk, lvl = {}, 100.0
+            for i, k in enumerate(common):
+                if i:
+                    lvl *= 1 + statistics.mean(w[k] / w[common[i - 1]] - 1 for w in wks)
+                yard_wk[k] = lvl
+        for f in funds:
+            f["vsBench"] = f["cagr"] - yard_cagr
+            f["beta"] = _beta(_weekly(f["_w"]), yard_wk)
+        pcts = {k: _pct([f[k] for f in funds], higher_better=k not in PERIOD_LOWER_BETTER)
+                for k in PERIOD_WEIGHTS}
+        for i, f in enumerate(funds):
+            f["score"] = round(sum(PERIOD_WEIGHTS[k] * pcts[k][i] for k in PERIOD_WEIGHTS), 1)
+        funds.sort(key=lambda f: -f["score"])
+        r4 = lambda x: round(x, 4) if x is not None else None
+        out[catkey] = {"yardstick": yard_name, "ranked": [
+            {"rank": i, "label": f["label"], "schemeCode": f["schemeCode"], "score": f["score"],
+             "xirr": r4(f["xirr"]), "cagr": r4(f["cagr"]), "vsBench": r4(f["vsBench"]),
+             "sharpe": r4(f["sharpe"]), "beta": r4(f["beta"]), "ter": f["ter"]}
+            for i, f in enumerate(funds, 1)]}
+    return {"start": start.isoformat(), "end": today_end.isoformat(), "categories": out}
+
+
+def write_period_picks(cfg, series_cache, out_path):
+    out = {"asOf": datetime.date.today().isoformat(), "weights": PERIOD_WEIGHTS,
+           "periods": {str(y): period_picks(cfg, series_cache, y) for y in (1, 3, 5)}}
+    d = os.path.dirname(out_path)
+    fd, tmp = tempfile.mkstemp(dir=d, suffix=".tmp")
+    with os.fdopen(fd, "w") as fh:
+        json.dump(out, fh, indent=1)
+    os.replace(tmp, out_path)
+    print("wrote", out_path)
+
+
 def _ppf_rate(rates_path):
     try:
         for r in json.load(open(rates_path))["smallSavings"]:
@@ -361,6 +489,7 @@ def write_rankings(candidates_path, out_path):
         json.dump(out, fh, indent=2)
     os.replace(tmp, out_path)
     print("wrote", out_path)
+    write_period_picks(cfg, series_cache, os.path.join(d, "period-picks.json"))
     return out
 
 

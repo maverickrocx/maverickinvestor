@@ -3,12 +3,8 @@ Maverick Investor — monthly fund review for the home page.
 
 On the first run of each month this job:
   1. snapshots data/fund-rankings.json to data/rankings-history/YYYY-MM.json
-  2. writes data/monthly-review.json with
-       - changes: how each category's top 3 moved since last month's
-         snapshot, and the numbers behind each move, in plain words
-       - reportCard: how every past month's #1 pick has done since it was
-         picked, against the category benchmark (or the average of the funds
-         we track, where a category has no index benchmark)
+  2. writes data/monthly-review.json: how each category's top 3 moved since
+     last month's snapshot, and the numbers behind each move, in plain words
 
 Later runs in the same month do nothing unless --force is given, so the
 review reads as one monthly edition, not a daily ticker.
@@ -25,12 +21,9 @@ import statistics
 import sys
 import tempfile
 
-import rank_funds
-
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "MaverickInvestor", "data")
 RANKINGS = os.path.join(DATA, "fund-rankings.json")
-CANDIDATES = os.path.join(DATA, "candidates.json")
 SNAPS = os.path.join(DATA, "rankings-history")
 OUT = os.path.join(DATA, "monthly-review.json")
 
@@ -113,63 +106,6 @@ def changes(now, was):
     return out
 
 
-def _value_on(series, day):
-    prior = [v for d, v in series if d <= day]
-    return prior[-1] if prior else None
-
-
-def report_card(snap_keys, cand, today):
-    picks = []
-    for key in snap_keys:
-        s = load_snap(key)
-        picked = datetime.date.fromisoformat(s["asOf"])
-        if (today - picked).days < 25:
-            continue
-        for cat_key, cat in s["categories"].items():
-            if cat["ranked"]:
-                picks.append((key, picked, cat_key, cat["ranked"][0]))
-    if not picks:
-        return {"cells": [], "months": [], "beat": 0, "total": 0}
-
-    codes = {p[3]["schemeCode"] for p in picks}
-    for cat in cand["categories"].values():
-        codes |= {f["schemeCode"] for f in cat["funds"]}
-        if cat.get("benchmarkSchemeCode"):
-            codes.add(cat["benchmarkSchemeCode"])
-    series = rank_funds.fetch_all_series(sorted(codes))
-    for c in [c for c in codes if not series.get(c)]:
-        series[c] = rank_funds.navseries(c)[0]
-
-    def ret(code, start):
-        s = series.get(code)
-        if not s:
-            return None
-        a = _value_on(s, start)
-        return (s[-1][1] / a - 1) if a else None
-
-    cells = []
-    for key, picked, cat_key, pick in picks:
-        cat = cand["categories"].get(cat_key, {})
-        mine = ret(pick["schemeCode"], picked)
-        if cat.get("benchmarkSchemeCode"):
-            vs, vs_name = ret(cat["benchmarkSchemeCode"], picked), cat.get("benchmarkName")
-        else:
-            peers = [r for f in cat.get("funds", []) if (r := ret(f["schemeCode"], picked)) is not None]
-            vs, vs_name = (statistics.mean(peers) if peers else None), "average of funds we track"
-        if mine is None or vs is None:
-            continue
-        cells.append({"month": key, "picked": picked.isoformat(), "category": cat_key,
-                      "name": CAT_NAMES.get(cat_key, cat_key), "label": pick["label"],
-                      "return": round(mine * 100, 2), "vs": round(vs * 100, 2),
-                      "vsName": vs_name,
-                      "result": "level" if abs(mine - vs) < 0.001 else ("beat" if mine > vs else "trailed")})
-    months = sorted({c["month"] for c in cells})
-    to = max((s[-1][0] for c, s in series.items() if s), default=today)
-    return {"cells": cells, "months": months, "measuredTo": to.isoformat(),
-            "beat": sum(c["result"] == "beat" for c in cells),
-            "level": sum(c["result"] == "level" for c in cells), "total": len(cells)}
-
-
 def _write_json(path, obj):
     fd, tmp = tempfile.mkstemp(dir=os.path.dirname(path), suffix=".tmp")
     with os.fdopen(fd, "w") as fh:
@@ -194,12 +130,10 @@ def main():
         print("need two monthly snapshots before there is anything to compare")
         return
     now, was = load_snap(keys[-1]), load_snap(keys[-2])
-    cand = json.load(open(CANDIDATES))
     _write_json(OUT, {
         "month": keys[-1], "since": was["asOf"], "asOf": now["asOf"],
         "generated": today.isoformat(),
         "changes": changes(now, was),
-        "reportCard": report_card(keys, cand, today),
     })
     print(f"wrote monthly-review.json for {keys[-1]} (changes since {was['asOf']})")
 

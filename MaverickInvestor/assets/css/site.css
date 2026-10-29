@@ -551,7 +551,22 @@ select { cursor: pointer; }
 .mr-verdict li.plus::before { content: "✓"; color: var(--pos); }
 .mr-verdict li.watch { color: var(--ink-muted); }
 .mr-verdict li.watch::before { content: "!"; color: var(--accent-text); left: 4px; }
-.mr-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s4); }
+.mr-period, .mr-changes { margin-top: var(--s4); }
+.mr-period-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); flex-wrap: wrap; margin-bottom: var(--s3); }
+.mr-period-head .tile-title { margin-bottom: 0; }
+.mr-period-tabs { display: flex; gap: var(--s2); }
+.mr-ptable { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.mr-ptable th, .mr-ptable td { padding: 11px 10px; border-bottom: 1px solid var(--border-soft); text-align: right; font: 500 13px/1.3 var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); }
+.mr-ptable thead th { font: 600 10.5px/1.2 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); background: var(--surface-2); white-space: nowrap; }
+.mr-ptable th:first-child, .mr-ptable td.mr-p-fund, .mr-ptable thead th:nth-child(2) { text-align: left; }
+.mr-ptable th[scope="row"] { font: 600 13.5px/1.3 var(--font); }
+.mr-p-fund strong { display: block; font: 600 14px/1.3 var(--font); color: var(--ink); }
+.mr-p-fund span { display: block; margin-top: 3px; font: 400 12px/1.3 var(--font); color: var(--ink-muted); }
+.mr-ptable td.pos { color: var(--pos); }
+.mr-ptable td.neg { color: var(--neg); }
+.mr-ptable small { font-size: 10.5px; color: var(--ink-muted); }
+.mr-p-score { font-weight: 700; color: var(--accent-text) !important; }
+.mr-p-yard { display: block; margin-top: 3px; font: 400 11px/1.3 var(--font); color: var(--ink-muted); }
 .mr-chg + .mr-chg { margin-top: var(--s4); padding-top: var(--s4); border-top: 1px solid var(--border-soft); }
 .mr-chg-cat { font: 400 20px/1.2 var(--font-display); color: var(--ink); margin-bottom: var(--s2); display: flex; align-items: center; gap: var(--s2); }
 .mr-badge { font: 600 10px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; background: var(--accent); color: var(--accent-fg); padding: 4px 7px; border-radius: var(--r-chip); }
@@ -564,21 +579,22 @@ select { cursor: pointer; }
 .mr-steady { margin-top: var(--s4); font-size: 13.5px; color: var(--ink-muted); }
 .mr-card-head { font-size: 15px; color: var(--ink); margin-bottom: var(--s4); }
 .mr-table-wrap { overflow-x: auto; }
-.mr-table { width: 100%; border-collapse: collapse; font: 500 12.5px/1 var(--mono); font-variant-numeric: tabular-nums; }
-.mr-table th, .mr-table td { padding: 9px 6px; border-bottom: 1px solid var(--border-soft); text-align: right; white-space: nowrap; }
-.mr-table thead th { font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); background: var(--surface-2); }
-.mr-table th[scope="row"], .mr-table thead th:first-child { text-align: left; font-family: var(--font); font-weight: 600; color: var(--ink); }
-.mr-table td.is-beat { color: var(--pos); }
-.mr-table td.is-trailed { color: var(--neg); }
-.mr-table td.is-level { color: var(--ink-muted); }
-.mr-mark { font-weight: 700; }
 .tile .mr-card-note, .mr-note { margin-top: var(--s4); font-size: 12px; line-height: 1.5; color: var(--ink-muted); }
 .mr-note { max-width: 90ch; }
 .mr-more { margin-top: var(--s5); font-size: 14px; color: var(--ink-muted); }
 .mr-more a { color: var(--accent-text); font-weight: 600; }
 @media (max-width: 1099px) { .mr-picks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 899px) { .mr-grid { grid-template-columns: 1fr; } }
-@media (max-width: 680px) { .mr-picks { grid-template-columns: 1fr; } .mr-table th, .mr-table td { padding: 8px 4px; } }
+@media (max-width: 760px) {
+  .mr-ptable thead { display: none; }
+  .mr-ptable, .mr-ptable tbody, .mr-ptable tr { display: block; }
+  .mr-ptable tr { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 10px; padding: var(--s3) 0; border-bottom: 1px solid var(--border); }
+  .mr-ptable th, .mr-ptable td { display: block; border: 0; padding: 0; text-align: left !important; }
+  .mr-ptable th[scope="row"], .mr-ptable td.mr-p-fund { grid-column: 1 / -1; }
+  .mr-ptable td::before { content: attr(data-label); display: block; font: 600 9.5px/1.2 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 3px; }
+  .mr-ptable td.mr-p-fund::before { content: none; }
+  .mr-p-yard { display: none; }
+}
+@media (max-width: 680px) { .mr-picks { grid-template-columns: 1fr; } }
 
 /* ══════════════════════════════════════════════════════════
    HOME — live fund tracker
