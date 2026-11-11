@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-10",
+ "asOf": "2026-11-11",
  "weights": {
   "xirr": 0.3,
   "vsBench": 0.25,
@@ -158,10 +158,10 @@
        "schemeCode": 122639,
        "score": 25.0,
        "xirr": 0.056,
-       "cagr": -0.0014,
-       "vsBench": -0.0055,
-       "sharpe": -0.6489,
-       "beta": 0.6236,
+       "cagr": -0.0009,
+       "vsBench": -0.0051,
+       "sharpe": -0.6458,
+       "beta": 0.6231,
        "ter": 0.63
       }
      ]
@@ -238,19 +238,19 @@
        "rank": 2,
        "label": "Axis Small Cap",
        "schemeCode": 125354,
-       "score": 62.0,
-       "xirr": 0.117,
-       "cagr": 0.0591,
-       "vsBench": 0.0246,
-       "sharpe": 0.0274,
-       "beta": 0.8149,
+       "score": 78.0,
+       "xirr": 0.1346,
+       "cagr": 0.0684,
+       "vsBench": 0.034,
+       "sharpe": 0.0857,
+       "beta": 0.8148,
        "ter": 0.53
       },
       {
        "rank": 3,
        "label": "Kotak Small Cap",
        "schemeCode": 120164,
-       "score": 54.0,
+       "score": 48.0,
        "xirr": 0.1201,
        "cagr": 0.0513,
        "vsBench": 0.0168,
@@ -262,7 +262,7 @@
        "rank": 4,
        "label": "Nippon India Small Cap",
        "schemeCode": 118778,
-       "score": 46.0,
+       "score": 42.0,
        "xirr": 0.0974,
        "cagr": 0.0591,
        "vsBench": 0.0246,
@@ -274,7 +274,7 @@
        "rank": 5,
        "label": "SBI Small Cap",
        "schemeCode": 125497,
-       "score": 43.0,
+       "score": 37.0,
        "xirr": 0.1178,
        "cagr": 0.0544,
        "vsBench": 0.02,
@@ -529,10 +529,10 @@
        "label": "Parag Parikh Flexi Cap",
        "schemeCode": 122639,
        "score": 61.0,
-       "xirr": 0.0668,
-       "cagr": 0.1342,
-       "vsBench": -0.0047,
-       "sharpe": 0.6975,
+       "xirr": 0.0667,
+       "cagr": 0.1339,
+       "vsBench": -0.0049,
+       "sharpe": 0.6976,
        "beta": 0.7196,
        "ter": 0.63
       },
@@ -555,9 +555,9 @@
        "score": 24.0,
        "xirr": 0.07,
        "cagr": 0.1005,
-       "vsBench": -0.0384,
+       "vsBench": -0.0383,
        "sharpe": 0.3193,
-       "beta": 1.0329,
+       "beta": 1.033,
        "ter": 0.9
       },
       {
@@ -567,7 +567,7 @@
        "score": 24.0,
        "xirr": 0.0663,
        "cagr": 0.1271,
-       "vsBench": -0.0118,
+       "vsBench": -0.0117,
        "sharpe": 0.4756,
        "beta": 1.1414,
        "ter": 0.75
@@ -632,27 +632,27 @@
      "ranked": [
       {
        "rank": 1,
+       "label": "Axis Small Cap",
+       "schemeCode": 125354,
+       "score": 86.0,
+       "xirr": 0.0951,
+       "cagr": 0.1393,
+       "vsBench": 0.0208,
+       "sharpe": 0.5231,
+       "beta": 0.7563,
+       "ter": 0.53
+      },
+      {
+       "rank": 2,
        "label": "Quant Small Cap",
        "schemeCode": 120828,
-       "score": 81.0,
+       "score": 75.0,
        "xirr": 0.0939,
        "cagr": 0.1649,
        "vsBench": 0.0464,
        "sharpe": 0.6046,
        "beta": 0.8468,
        "ter": 0.64
-      },
-      {
-       "rank": 2,
-       "label": "Axis Small Cap",
-       "schemeCode": 125354,
-       "score": 80.0,
-       "xirr": 0.0892,
-       "cagr": 0.1363,
-       "vsBench": 0.0177,
-       "sharpe": 0.5036,
-       "beta": 0.7563,
-       "ter": 0.53
       },
       {
        "rank": 3,
@@ -925,11 +925,11 @@
        "label": "Parag Parikh Flexi Cap",
        "schemeCode": 122639,
        "score": 71.0,
-       "xirr": 0.1242,
-       "cagr": 0.1139,
-       "vsBench": 0.0068,
-       "sharpe": 0.4534,
-       "beta": 0.7844,
+       "xirr": 0.124,
+       "cagr": 0.1138,
+       "vsBench": 0.0067,
+       "sharpe": 0.4535,
+       "beta": 0.7843,
        "ter": 0.63
       },
       {
@@ -939,9 +939,9 @@
        "score": 63.0,
        "xirr": 0.1444,
        "cagr": 0.1157,
-       "vsBench": 0.0086,
+       "vsBench": 0.0087,
        "sharpe": 0.41,
-       "beta": 1.0415,
+       "beta": 1.0416,
        "ter": 0.8
       },
       {
@@ -975,9 +975,9 @@
        "score": 6.0,
        "xirr": 0.083,
        "cagr": 0.0468,
-       "vsBench": -0.0603,
+       "vsBench": -0.0602,
        "sharpe": -0.066,
-       "beta": 1.0344,
+       "beta": 1.0345,
        "ter": 0.9
       }
      ]
@@ -1067,11 +1067,11 @@
        "label": "Axis Small Cap",
        "schemeCode": 125354,
        "score": 67.0,
-       "xirr": 0.1408,
-       "cagr": 0.1432,
-       "vsBench": 0.0202,
-       "sharpe": 0.5679,
-       "beta": 0.7223,
+       "xirr": 0.1441,
+       "cagr": 0.1451,
+       "vsBench": 0.022,
+       "sharpe": 0.5802,
+       "beta": 0.7224,
        "ter": 0.53
       },
       {
