@@ -330,6 +330,20 @@ def _beta(fw, yw):
     return sum((a - mf) * (b - my) for a, b in zip(f, y)) / var if var else None
 
 
+def _month_rets(window):
+    """{(year, month): return} from one month-end NAV to the next."""
+    me = _month_ends(window)
+    keys = sorted(me)
+    return {keys[i]: me[keys[i]] / me[keys[i - 1]] - 1 for i in range(1, len(keys))}
+
+
+def _hit_rate(fund_m, yard_m):
+    keys = [k for k in fund_m if k in yard_m]
+    if not keys:
+        return None, 0
+    return sum(fund_m[k] > yard_m[k] for k in keys) / len(keys), len(keys)
+
+
 def period_picks(cfg, series_cache, years, as_of=None):
     """Ranking over the `years` before the latest NAV, or before `as_of` to
     rebuild a past month's picks (expense ratios are always today's)."""
@@ -391,11 +405,24 @@ def period_picks(cfg, series_cache, years, as_of=None):
         for i, f in enumerate(funds):
             f["score"] = round(sum(PERIOD_WEIGHTS[k] * pcts[k][i] for k in PERIOD_WEIGHTS), 1)
         funds.sort(key=lambda f: -f["score"])
+        # Monthly hit rate for the cards: the category index fund where it
+        # covers the period, otherwise the average of our top 3 funds.
+        for f in funds:
+            f["_m"] = _month_rets(f["_w"])
+        if bw:
+            hit_name, hit_m = yard_name, _month_rets(bw)
+        else:
+            hit_name = "average of our top 3"
+            top3 = [f["_m"] for f in funds[:3]]
+            hit_m = {k: statistics.mean(m[k] for m in top3) for k in set.intersection(*[set(m) for m in top3])}
+        for f in funds:
+            f["beatMonths"], f["months"] = _hit_rate(f["_m"], hit_m)
         r4 = lambda x: round(x, 4) if x is not None else None
-        out[catkey] = {"yardstick": yard_name, "yardMaxdd": round(yard_maxdd, 4), "ranked": [
+        out[catkey] = {"yardstick": yard_name, "yardMaxdd": round(yard_maxdd, 4), "hitVs": hit_name, "ranked": [
             {"rank": i, "label": f["label"], "schemeCode": f["schemeCode"], "score": f["score"],
              "xirr": r4(f["xirr"]), "cagr": r4(f["cagr"]), "vsBench": r4(f["vsBench"]),
              "sharpe": r4(f["sharpe"]), "beta": r4(f["beta"]), "ter": f["ter"], "maxdd": r4(f["maxdd"]),
+             "beatMonths": r4(f["beatMonths"]), "months": f["months"],
              "sip": f["sip"] and {"invested": round(f["sip"]["invested"]), "value": round(f["sip"]["value"]),
                                   "cost": f["sip"]["cost"] is not None and round(f["sip"]["cost"], 1) or None,
                                   "yardValue": yard_sip_value and round(yard_sip_value)}}

@@ -33,9 +33,11 @@ the browser: pages read the same-origin files above instead. Every fund pick on 
 comes from `period-picks.json`: the home page's Monthly Fund Review (a
 1/3/5-year selector drives six pick cards: a ₹100-a-month SIP flow (fund value
 net of rupee expenses, then the same SIP in the yardstick; `sip` in
-period-picks), the five-measure grid, the PPF capsule, then bullets on Beta
-(vs the category yardstick only), Sharpe rank among peers and worst fall in the
-period (`maxdd`, `yardMaxdd`); the PPF score
+period-picks), the five-measure grid, a capsule with the share of months in
+the period the fund beat its index (or the average of our top 3 funds where no
+index fund covers the period; `beatMonths`, `hitVs`), then bullets on Beta (vs
+the category yardstick only), Sharpe rank among peers and worst fall in the
+period (`maxdd`, `yardMaxdd`). No PPF comparison is shown on the cards; the PPF score
 come from the fund's entry in `fund-facts.json`; then "What changed this
 month" from `monthly-review.json`) and the MF Advisor (goals up to 3 years
 use the 3-year ranking, longer goals the 5-year; falls back to its bundled

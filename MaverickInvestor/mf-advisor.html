@@ -1139,7 +1139,7 @@ function renderResults(){
     const fundSip=Math.ceil(totalSip*f.alloc/100/100)*100;
     const xirrTxt=f.xirr!==null?`${f.xirr}%`:`${f.fallback}%*`;
     pb.innerHTML+=`<tr>
-      <td class="fund-cell">${f.name}${f.verdict&&f.verdict.plus.length?`<div class="fund-why">${f.verdict.plus.slice(0,2).join(' ')}</div>`:''}</td>
+      <td class="fund-cell">${f.name}${f.verdict&&f.verdict.plus.some(t=>!t.startsWith("Beat today's PPF"))?`<div class="fund-why">${f.verdict.plus.filter(t=>!t.startsWith("Beat today's PPF")).slice(0,2).join(' ')}</div>`:''}</td>
       <td><span class="cat-pill ${f.catCSS}">${f.catLabel}</span></td>
       <td>${f.alloc}%<div class="alloc-bar-wrap"><div class="alloc-bar" style="width:${Math.min(f.alloc,100)}%"></div></div></td>
       <td>₹${fmt(fundSip)}</td>

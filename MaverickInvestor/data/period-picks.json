@@ -16,6 +16,7 @@
     "largeCap": {
      "yardstick": "Nifty 50",
      "yardMaxdd": -0.1513,
+     "hitVs": "Nifty 50",
      "ranked": [
       {
        "rank": 1,
@@ -29,6 +30,8 @@
        "beta": 0.966,
        "ter": 0.52,
        "maxdd": -0.1401,
+       "beatMonths": 0.5833,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1291,
@@ -48,6 +51,8 @@
        "beta": 1.0172,
        "ter": 0.54,
        "maxdd": -0.1573,
+       "beatMonths": 0.75,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1264,
@@ -67,6 +72,8 @@
        "beta": 0.9955,
        "ter": 0.21,
        "maxdd": -0.1495,
+       "beatMonths": 0.6667,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1253,
@@ -86,6 +93,8 @@
        "beta": 0.9427,
        "ter": 0.66,
        "maxdd": -0.1383,
+       "beatMonths": 0.5833,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1245,
@@ -105,6 +114,8 @@
        "beta": 0.9696,
        "ter": 0.85,
        "maxdd": -0.1424,
+       "beatMonths": 0.5,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1239,
@@ -117,6 +128,7 @@
     "flexiCap": {
      "yardstick": "Nifty 500",
      "yardMaxdd": -0.1486,
+     "hitVs": "Nifty 500",
      "ranked": [
       {
        "rank": 1,
@@ -130,6 +142,8 @@
        "beta": 0.9145,
        "ter": 0.8,
        "maxdd": -0.1279,
+       "beatMonths": 0.8333,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1302,
@@ -149,6 +163,8 @@
        "beta": 0.9191,
        "ter": 0.78,
        "maxdd": -0.1332,
+       "beatMonths": 0.6667,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1285,
@@ -168,6 +184,8 @@
        "beta": 0.9572,
        "ter": 0.9,
        "maxdd": -0.1862,
+       "beatMonths": 0.5,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1302,
@@ -187,6 +205,8 @@
        "beta": 1.0078,
        "ter": 0.75,
        "maxdd": -0.1441,
+       "beatMonths": 0.5,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1266,
@@ -206,6 +226,8 @@
        "beta": 1.0,
        "ter": 0.25,
        "maxdd": -0.1486,
+       "beatMonths": 0.0,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1250,
@@ -225,6 +247,8 @@
        "beta": 0.9609,
        "ter": 0.58,
        "maxdd": -0.1416,
+       "beatMonths": 0.5,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1239,
@@ -244,6 +268,8 @@
        "beta": 0.6243,
        "ter": 0.63,
        "maxdd": -0.106,
+       "beatMonths": 0.5,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1244,
@@ -256,6 +282,7 @@
     "midCap": {
      "yardstick": "Nifty Midcap 150",
      "yardMaxdd": -0.1393,
+     "hitVs": "Nifty Midcap 150",
      "ranked": [
       {
        "rank": 1,
@@ -269,6 +296,8 @@
        "beta": 0.8623,
        "ter": 0.4,
        "maxdd": -0.111,
+       "beatMonths": 0.5833,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1286,
@@ -288,6 +317,8 @@
        "beta": 0.9187,
        "ter": 0.38,
        "maxdd": -0.1281,
+       "beatMonths": 0.5833,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1247,
@@ -307,6 +338,8 @@
        "beta": 1.073,
        "ter": 0.65,
        "maxdd": -0.2212,
+       "beatMonths": 0.5,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1320,
@@ -326,6 +359,8 @@
        "beta": 0.8232,
        "ter": 0.82,
        "maxdd": -0.1257,
+       "beatMonths": 0.4167,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1239,
@@ -338,6 +373,7 @@
     "smallCap": {
      "yardstick": "Nifty Smallcap 250",
      "yardMaxdd": -0.1723,
+     "hitVs": "Nifty Smallcap 250",
      "ranked": [
       {
        "rank": 1,
@@ -351,6 +387,8 @@
        "beta": 0.8514,
        "ter": 0.64,
        "maxdd": -0.1588,
+       "beatMonths": 0.5833,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1330,
@@ -370,6 +408,8 @@
        "beta": 0.8142,
        "ter": 0.53,
        "maxdd": -0.145,
+       "beatMonths": 0.6667,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1298,
@@ -389,6 +429,8 @@
        "beta": 0.8022,
        "ter": 0.67,
        "maxdd": -0.1456,
+       "beatMonths": 0.5,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1284,
@@ -408,6 +450,8 @@
        "beta": 0.8696,
        "ter": 0.62,
        "maxdd": -0.1407,
+       "beatMonths": 0.5,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1279,
@@ -427,6 +471,8 @@
        "beta": 0.8571,
        "ter": 0.44,
        "maxdd": -0.1501,
+       "beatMonths": 0.5833,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1282,
@@ -446,6 +492,8 @@
        "beta": 0.7669,
        "ter": 0.68,
        "maxdd": -0.1712,
+       "beatMonths": 0.3333,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1203,
@@ -458,6 +506,7 @@
     "gold": {
      "yardstick": "average of funds we track",
      "yardMaxdd": -0.2477,
+     "hitVs": "average of our top 3",
      "ranked": [
       {
        "rank": 1,
@@ -471,6 +520,8 @@
        "beta": 0.9738,
        "ter": 0.16,
        "maxdd": -0.2413,
+       "beatMonths": 0.4167,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1168,
@@ -490,6 +541,8 @@
        "beta": 1.0035,
        "ter": 0.42,
        "maxdd": -0.2471,
+       "beatMonths": 0.5833,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1165,
@@ -509,6 +562,8 @@
        "beta": 0.9761,
        "ter": 0.17,
        "maxdd": -0.2582,
+       "beatMonths": 0.5,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1166,
@@ -528,6 +583,8 @@
        "beta": 1.0466,
        "ter": 0.34,
        "maxdd": -0.2441,
+       "beatMonths": 0.6667,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1164,
@@ -540,6 +597,7 @@
     "debt": {
      "yardstick": "average of funds we track",
      "yardMaxdd": -0.0095,
+     "hitVs": "average of our top 3",
      "ranked": [
       {
        "rank": 1,
@@ -553,6 +611,8 @@
        "beta": 0.9304,
        "ter": 0.35,
        "maxdd": -0.0062,
+       "beatMonths": 0.5,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1235,
@@ -572,6 +632,8 @@
        "beta": 0.9706,
        "ter": 0.38,
        "maxdd": -0.0101,
+       "beatMonths": 0.5833,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1233,
@@ -591,6 +653,8 @@
        "beta": 0.8051,
        "ter": 0.35,
        "maxdd": -0.0062,
+       "beatMonths": 0.5,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1233,
@@ -610,6 +674,8 @@
        "beta": 0.9358,
        "ter": 0.36,
        "maxdd": -0.0071,
+       "beatMonths": 0.4167,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1232,
@@ -629,6 +695,8 @@
        "beta": 1.157,
        "ter": 0.4,
        "maxdd": -0.0126,
+       "beatMonths": 0.3333,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1228,
@@ -648,6 +716,8 @@
        "beta": 1.201,
        "ter": 0.4,
        "maxdd": -0.0149,
+       "beatMonths": 0.3333,
+       "months": 12,
        "sip": {
         "invested": 1200,
         "value": 1226,
@@ -666,6 +736,7 @@
     "largeCap": {
      "yardstick": "Nifty 50",
      "yardMaxdd": -0.1551,
+     "hitVs": "Nifty 50",
      "ranked": [
       {
        "rank": 1,
@@ -679,6 +750,8 @@
        "beta": 0.9662,
        "ter": 0.52,
        "maxdd": -0.155,
+       "beatMonths": 0.5278,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4040,
@@ -698,6 +771,8 @@
        "beta": 0.9916,
        "ter": 0.66,
        "maxdd": -0.1537,
+       "beatMonths": 0.6111,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 3978,
@@ -717,6 +792,8 @@
        "beta": 0.9621,
        "ter": 0.85,
        "maxdd": -0.1539,
+       "beatMonths": 0.5833,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 3940,
@@ -736,6 +813,8 @@
        "beta": 1.0028,
        "ter": 0.54,
        "maxdd": -0.1585,
+       "beatMonths": 0.6389,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4016,
@@ -755,6 +834,8 @@
        "beta": 1.0261,
        "ter": 0.21,
        "maxdd": -0.1727,
+       "beatMonths": 0.6111,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 3925,
@@ -767,6 +848,7 @@
     "flexiCap": {
      "yardstick": "average of funds we track",
      "yardMaxdd": -0.1588,
+     "hitVs": "average of our top 3",
      "ranked": [
       {
        "rank": 1,
@@ -780,6 +862,8 @@
        "beta": 0.9673,
        "ter": 0.78,
        "maxdd": -0.1332,
+       "beatMonths": 0.6111,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4247,
@@ -799,6 +883,8 @@
        "beta": 1.0465,
        "ter": 0.8,
        "maxdd": -0.1702,
+       "beatMonths": 0.5556,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4327,
@@ -818,6 +904,8 @@
        "beta": 0.7186,
        "ter": 0.63,
        "maxdd": -0.1098,
+       "beatMonths": 0.4444,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4020,
@@ -837,6 +925,8 @@
        "beta": 1.0941,
        "ter": 0.58,
        "maxdd": -0.163,
+       "beatMonths": 0.4722,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4008,
@@ -856,6 +946,8 @@
        "beta": 1.1407,
        "ter": 0.75,
        "maxdd": -0.176,
+       "beatMonths": 0.4167,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4024,
@@ -875,6 +967,8 @@
        "beta": 1.0327,
        "ter": 0.9,
        "maxdd": -0.2008,
+       "beatMonths": 0.4167,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4020,
@@ -887,6 +981,7 @@
     "midCap": {
      "yardstick": "Nifty Midcap 150",
      "yardMaxdd": -0.2102,
+     "hitVs": "Nifty Midcap 150",
      "ranked": [
       {
        "rank": 1,
@@ -900,6 +995,8 @@
        "beta": 0.9553,
        "ter": 0.38,
        "maxdd": -0.2006,
+       "beatMonths": 0.5833,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4244,
@@ -919,6 +1016,8 @@
        "beta": 0.8445,
        "ter": 0.4,
        "maxdd": -0.1952,
+       "beatMonths": 0.5556,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4250,
@@ -938,6 +1037,8 @@
        "beta": 0.8783,
        "ter": 0.65,
        "maxdd": -0.2886,
+       "beatMonths": 0.5556,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4149,
@@ -957,6 +1058,8 @@
        "beta": 0.8534,
        "ter": 0.82,
        "maxdd": -0.1676,
+       "beatMonths": 0.5,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4144,
@@ -969,6 +1072,7 @@
     "smallCap": {
      "yardstick": "Nifty Smallcap 250",
      "yardMaxdd": -0.2615,
+     "hitVs": "Nifty Smallcap 250",
      "ranked": [
       {
        "rank": 1,
@@ -982,6 +1086,8 @@
        "beta": 0.7565,
        "ter": 0.53,
        "maxdd": -0.1943,
+       "beatMonths": 0.5833,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4198,
@@ -1001,6 +1107,8 @@
        "beta": 0.8475,
        "ter": 0.64,
        "maxdd": -0.2442,
+       "beatMonths": 0.6111,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4193,
@@ -1020,6 +1128,8 @@
        "beta": 0.8449,
        "ter": 0.62,
        "maxdd": -0.2421,
+       "beatMonths": 0.4722,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4060,
@@ -1039,6 +1149,8 @@
        "beta": 0.7839,
        "ter": 0.44,
        "maxdd": -0.2467,
+       "beatMonths": 0.4167,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 3965,
@@ -1058,6 +1170,8 @@
        "beta": 0.7367,
        "ter": 0.67,
        "maxdd": -0.2242,
+       "beatMonths": 0.4722,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 3985,
@@ -1077,6 +1191,8 @@
        "beta": 0.8174,
        "ter": 0.68,
        "maxdd": -0.2261,
+       "beatMonths": 0.4167,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 3770,
@@ -1089,6 +1205,7 @@
     "gold": {
      "yardstick": "average of funds we track",
      "yardMaxdd": -0.2477,
+     "hitVs": "average of our top 3",
      "ranked": [
       {
        "rank": 1,
@@ -1102,6 +1219,8 @@
        "beta": 0.9894,
        "ter": 0.42,
        "maxdd": -0.2471,
+       "beatMonths": 0.5278,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 5433,
@@ -1121,6 +1240,8 @@
        "beta": 1.04,
        "ter": 0.34,
        "maxdd": -0.2441,
+       "beatMonths": 0.3889,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 5418,
@@ -1140,6 +1261,8 @@
        "beta": 0.9957,
        "ter": 0.16,
        "maxdd": -0.2413,
+       "beatMonths": 0.4444,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 5427,
@@ -1159,6 +1282,8 @@
        "beta": 0.9749,
        "ter": 0.17,
        "maxdd": -0.2582,
+       "beatMonths": 0.5,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 5399,
@@ -1171,6 +1296,7 @@
     "debt": {
      "yardstick": "average of funds we track",
      "yardMaxdd": -0.0095,
+     "hitVs": "average of our top 3",
      "ranked": [
       {
        "rank": 1,
@@ -1184,6 +1310,8 @@
        "beta": 0.9774,
        "ter": 0.35,
        "maxdd": -0.0062,
+       "beatMonths": 0.6389,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 3994,
@@ -1203,6 +1331,8 @@
        "beta": 0.829,
        "ter": 0.35,
        "maxdd": -0.0062,
+       "beatMonths": 0.5278,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 3980,
@@ -1222,6 +1352,8 @@
        "beta": 0.8962,
        "ter": 0.38,
        "maxdd": -0.0101,
+       "beatMonths": 0.4167,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 3980,
@@ -1241,6 +1373,8 @@
        "beta": 0.9775,
        "ter": 0.36,
        "maxdd": -0.0071,
+       "beatMonths": 0.4722,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 3972,
@@ -1260,6 +1394,8 @@
        "beta": 1.1445,
        "ter": 0.4,
        "maxdd": -0.0126,
+       "beatMonths": 0.5,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 3941,
@@ -1279,6 +1415,8 @@
        "beta": 1.1754,
        "ter": 0.4,
        "maxdd": -0.0149,
+       "beatMonths": 0.5,
+       "months": 36,
        "sip": {
         "invested": 3600,
         "value": 3935,
@@ -1297,6 +1435,7 @@
     "largeCap": {
      "yardstick": "Nifty 50",
      "yardMaxdd": -0.1591,
+     "hitVs": "Nifty 50",
      "ranked": [
       {
        "rank": 1,
@@ -1310,6 +1449,8 @@
        "beta": 0.9966,
        "ter": 0.66,
        "maxdd": -0.1537,
+       "beatMonths": 0.6667,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 8238,
@@ -1329,6 +1470,8 @@
        "beta": 0.9409,
        "ter": 0.85,
        "maxdd": -0.1539,
+       "beatMonths": 0.65,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 7983,
@@ -1348,6 +1491,8 @@
        "beta": 0.9862,
        "ter": 0.54,
        "maxdd": -0.1637,
+       "beatMonths": 0.5833,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 7693,
@@ -1367,6 +1512,8 @@
        "beta": 0.9645,
        "ter": 0.52,
        "maxdd": -0.2085,
+       "beatMonths": 0.4667,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 7630,
@@ -1386,6 +1533,8 @@
        "beta": 1.0126,
        "ter": 0.21,
        "maxdd": -0.1727,
+       "beatMonths": 0.6,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 7570,
@@ -1398,6 +1547,7 @@
     "flexiCap": {
      "yardstick": "average of funds we track",
      "yardMaxdd": -0.1927,
+     "hitVs": "average of our top 3",
      "ranked": [
       {
        "rank": 1,
@@ -1411,6 +1561,8 @@
        "beta": 0.967,
        "ter": 0.78,
        "maxdd": -0.1332,
+       "beatMonths": 0.6,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 9063,
@@ -1430,6 +1582,8 @@
        "beta": 0.7844,
        "ter": 0.63,
        "maxdd": -0.1775,
+       "beatMonths": 0.45,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 8287,
@@ -1449,6 +1603,8 @@
        "beta": 1.0415,
        "ter": 0.8,
        "maxdd": -0.1946,
+       "beatMonths": 0.4833,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 8705,
@@ -1468,6 +1624,8 @@
        "beta": 1.0699,
        "ter": 0.58,
        "maxdd": -0.1777,
+       "beatMonths": 0.4333,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 8027,
@@ -1487,6 +1645,8 @@
        "beta": 1.1028,
        "ter": 0.75,
        "maxdd": -0.2176,
+       "beatMonths": 0.3667,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 8094,
@@ -1506,6 +1666,8 @@
        "beta": 1.0343,
        "ter": 0.9,
        "maxdd": -0.2555,
+       "beatMonths": 0.35,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 7436,
@@ -1518,6 +1680,7 @@
     "midCap": {
      "yardstick": "Nifty Midcap 150",
      "yardMaxdd": -0.2102,
+     "hitVs": "Nifty Midcap 150",
      "ranked": [
       {
        "rank": 1,
@@ -1531,6 +1694,8 @@
        "beta": 0.8946,
        "ter": 0.65,
        "maxdd": -0.2886,
+       "beatMonths": 0.5167,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 9409,
@@ -1550,6 +1715,8 @@
        "beta": 0.941,
        "ter": 0.38,
        "maxdd": -0.2006,
+       "beatMonths": 0.55,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 9430,
@@ -1569,6 +1736,8 @@
        "beta": 0.8785,
        "ter": 0.82,
        "maxdd": -0.1676,
+       "beatMonths": 0.55,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 9249,
@@ -1588,6 +1757,8 @@
        "beta": 0.8367,
        "ter": 0.4,
        "maxdd": -0.2001,
+       "beatMonths": 0.45,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 8728,
@@ -1600,6 +1771,7 @@
     "smallCap": {
      "yardstick": "Nifty Smallcap 250",
      "yardMaxdd": -0.2695,
+     "hitVs": "Nifty Smallcap 250",
      "ranked": [
       {
        "rank": 1,
@@ -1613,6 +1785,8 @@
        "beta": 0.928,
        "ter": 0.64,
        "maxdd": -0.2517,
+       "beatMonths": 0.65,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 9310,
@@ -1632,6 +1806,8 @@
        "beta": 0.8507,
        "ter": 0.62,
        "maxdd": -0.2421,
+       "beatMonths": 0.55,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 8906,
@@ -1651,6 +1827,8 @@
        "beta": 0.7224,
        "ter": 0.53,
        "maxdd": -0.1943,
+       "beatMonths": 0.5333,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 8715,
@@ -1670,6 +1848,8 @@
        "beta": 0.8199,
        "ter": 0.68,
        "maxdd": -0.2261,
+       "beatMonths": 0.4667,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 8035,
@@ -1689,6 +1869,8 @@
        "beta": 0.7265,
        "ter": 0.67,
        "maxdd": -0.2242,
+       "beatMonths": 0.4333,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 8022,
@@ -1708,6 +1890,8 @@
        "beta": 0.7505,
        "ter": 0.44,
        "maxdd": -0.2467,
+       "beatMonths": 0.4,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 8013,
@@ -1720,6 +1904,7 @@
     "gold": {
      "yardstick": "average of funds we track",
      "yardMaxdd": -0.2477,
+     "hitVs": "average of our top 3",
      "ranked": [
       {
        "rank": 1,
@@ -1733,6 +1918,8 @@
        "beta": 0.9909,
        "ter": 0.42,
        "maxdd": -0.2471,
+       "beatMonths": 0.4833,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 11496,
@@ -1752,6 +1939,8 @@
        "beta": 0.9963,
        "ter": 0.16,
        "maxdd": -0.2413,
+       "beatMonths": 0.45,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 11442,
@@ -1771,6 +1960,8 @@
        "beta": 1.0373,
        "ter": 0.34,
        "maxdd": -0.2441,
+       "beatMonths": 0.4333,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 11426,
@@ -1790,6 +1981,8 @@
        "beta": 0.9755,
        "ter": 0.17,
        "maxdd": -0.2582,
+       "beatMonths": 0.5167,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 11400,
@@ -1802,6 +1995,7 @@
     "debt": {
      "yardstick": "average of funds we track",
      "yardMaxdd": -0.0112,
+     "hitVs": "average of our top 3",
      "ranked": [
       {
        "rank": 1,
@@ -1815,6 +2009,8 @@
        "beta": 0.9592,
        "ter": 0.35,
        "maxdd": -0.0091,
+       "beatMonths": 0.55,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 7191,
@@ -1834,6 +2030,8 @@
        "beta": 0.8785,
        "ter": 0.38,
        "maxdd": -0.0101,
+       "beatMonths": 0.4333,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 7164,
@@ -1853,6 +2051,8 @@
        "beta": 0.8617,
        "ter": 0.35,
        "maxdd": -0.0095,
+       "beatMonths": 0.4667,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 7156,
@@ -1872,6 +2072,8 @@
        "beta": 0.9872,
        "ter": 0.36,
        "maxdd": -0.0103,
+       "beatMonths": 0.4333,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 7134,
@@ -1891,6 +2093,8 @@
        "beta": 1.1224,
        "ter": 0.4,
        "maxdd": -0.0126,
+       "beatMonths": 0.5,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 7079,
@@ -1910,6 +2114,8 @@
        "beta": 1.191,
        "ter": 0.4,
        "maxdd": -0.0154,
+       "beatMonths": 0.45,
+       "months": 60,
        "sip": {
         "invested": 6000,
         "value": 7066,
