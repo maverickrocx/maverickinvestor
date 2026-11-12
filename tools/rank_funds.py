@@ -277,18 +277,36 @@ def _xirr(flows):
     return (lo + hi) / 2
 
 
-def _sip_xirr(window):
-    flows, units, seen = [], 0.0, set()
+SIP_AMOUNT = 100.0   # the home page cards show a ₹100-a-month SIP
+
+
+def sip_run(window, ter=None, amount=SIP_AMOUNT, instalments=None):
+    """A monthly SIP on the first NAV date of each month in `window`, for at
+    most `instalments` months (12 a year), valued at the window's last NAV.
+    Returns invested, final value, XIRR and, if `ter` (% a year) is given, an
+    estimate of the rupees the fund's expenses took: each month, the value
+    held then times TER/12. (NAVs are already net of expenses, so this is
+    what the SIP paid, not a further deduction.)"""
+    flows, units, seen, cost = [], 0.0, set(), 0.0
     for d, v in window:
         if (d.year, d.month) not in seen:
             seen.add((d.year, d.month))
-            flows.append((d, -1000.0))
-            units += 1000.0 / v
+            if ter is not None and units:
+                cost += units * v * ter / 100 / 12
+            if instalments is None or len(flows) < instalments:
+                flows.append((d, -amount))
+                units += amount / v
     end_d, end_v = window[-1]
     if len(flows) < 6:
         return None
-    flows.append((end_d, units * end_v))
-    return _xirr(flows)
+    value = units * end_v
+    return {"invested": amount * len(flows), "value": value, "months": len(flows),
+            "xirr": _xirr(flows + [(end_d, value)]), "cost": cost if ter is not None else None}
+
+
+def _sip_xirr(window):
+    r = sip_run(window)
+    return r["xirr"] if r else None
 
 
 def _weekly(window):
@@ -334,9 +352,10 @@ def period_picks(cfg, series_cache, years, as_of=None):
             yrs = (w[-1][0] - w[0][0]).days / 365.0
             dr = _daily(w)
             vol = statistics.pstdev(dr) * math.sqrt(252)
+            sip = sip_run(w, fd.get("ter"), instalments=12 * years)
             funds.append({"label": fd["label"], "schemeCode": fd["schemeCode"], "_w": w,
                           "cagr": (w[-1][1] / w[0][1]) ** (1 / yrs) - 1,
-                          "xirr": _sip_xirr(w), "ter": fd.get("ter"),
+                          "xirr": sip and sip["xirr"], "sip": sip, "ter": fd.get("ter"),
                           "sharpe": (statistics.mean(dr) * 252 - RF) / vol if vol else None})
         if len(funds) < 2:
             continue
@@ -346,9 +365,13 @@ def period_picks(cfg, series_cache, years, as_of=None):
             yrs = (bw[-1][0] - bw[0][0]).days / 365.0
             yard_cagr = (bw[-1][1] / bw[0][1]) ** (1 / yrs) - 1
             yard_wk = _weekly(bw)
+            yard_sip = sip_run(bw, instalments=12 * years)
+            yard_sip_value = yard_sip and yard_sip["value"]
         else:
             yard_name = "average of funds we track"
             yard_cagr = statistics.mean(f["cagr"] for f in funds)
+            # the same SIP spread equally over every fund we track
+            yard_sip_value = statistics.mean(f["sip"]["value"] for f in funds if f["sip"])
             wks = [_weekly(f["_w"]) for f in funds]
             common = sorted(set.intersection(*[set(w) for w in wks]))
             # equal-weighted peer index built from weekly returns
@@ -369,13 +392,16 @@ def period_picks(cfg, series_cache, years, as_of=None):
         out[catkey] = {"yardstick": yard_name, "ranked": [
             {"rank": i, "label": f["label"], "schemeCode": f["schemeCode"], "score": f["score"],
              "xirr": r4(f["xirr"]), "cagr": r4(f["cagr"]), "vsBench": r4(f["vsBench"]),
-             "sharpe": r4(f["sharpe"]), "beta": r4(f["beta"]), "ter": f["ter"]}
+             "sharpe": r4(f["sharpe"]), "beta": r4(f["beta"]), "ter": f["ter"],
+             "sip": f["sip"] and {"invested": round(f["sip"]["invested"]), "value": round(f["sip"]["value"]),
+                                  "cost": f["sip"]["cost"] is not None and round(f["sip"]["cost"], 1) or None,
+                                  "yardValue": yard_sip_value and round(yard_sip_value)}}
             for i, f in enumerate(funds, 1)]}
     return {"start": start.isoformat(), "end": today_end.isoformat(), "categories": out}
 
 
 def write_period_picks(cfg, series_cache, out_path):
-    out = {"asOf": datetime.date.today().isoformat(), "weights": PERIOD_WEIGHTS,
+    out = {"asOf": datetime.date.today().isoformat(), "weights": PERIOD_WEIGHTS, "sipAmount": SIP_AMOUNT,
            "periods": {str(y): period_picks(cfg, series_cache, y) for y in (1, 3, 5)}}
     d = os.path.dirname(out_path)
     fd, tmp = tempfile.mkstemp(dir=d, suffix=".tmp")
