@@ -739,7 +739,7 @@
   function renderPicks(years) {
     const p = periodData.periods[years];
     if (!p) return;
-    const w = periodData.weights, amt = periodData.sipAmount || 100;
+    const amt = periodData.sipAmount || 100;
     const pct = v => v == null ? '—' : (v * 100).toFixed(1) + '%';
     const num = v => v == null ? '—' : v.toFixed(2);
     const span = years + ' year' + (years > 1 ? 's' : '');
@@ -803,15 +803,12 @@
     }).join('');
 
     const items = [
-      `<strong>What we compare.</strong> Over the last ${span}, every fund we track is scored against the other funds in its category on five measures, and the highest score is our pick. A score of 100 would mean best on every measure.`,
-      `<strong>SIP return (XIRR), ${w.xirr * 100}%.</strong> The yearly return on ${rupees(amt)} invested on the first business day of every month.`,
-      `<strong>Return against its yardstick, ${w.vsBench * 100}%.</strong> How many percentage points a year the fund beat or trailed its yardstick: the category index where its index fund has ${span} of history, otherwise the average of the funds we track.`,
-      `<strong>Sharpe ratio, ${w.sharpe * 100}%.</strong> Return earned for each unit of ups and downs, above a 6.5% risk-free rate. Higher is better.`,
-      `<strong>Expense ratio, ${w.ter * 100}%.</strong> The yearly fee the fund charges. Lower is better. We use today's expense ratios.`,
-      `<strong>Beta, ${w.beta * 100}%.</strong> How much the fund swings when its yardstick moves; 1.00 means in step. Lower means a calmer ride.`,
-      `<strong>The rupee figures.</strong> The SIP's value at the latest NAV, already net of the fund's expenses; the expense figure estimates how much of your money they took, month by month. The second line runs the same SIP in the fund's yardstick.`,
-      `<strong>Beta, Sharpe and worst fall</strong> in the bullets cover the period you chose. Beta is always measured against the fund's own category yardstick, never against PPF or other asset classes.`,
-      `<strong>Months ahead of the benchmark</strong> (the green capsule) counts the months in the period in which the fund's return beat its category index; where no index fund covers the period, it is compared with the average of our top 3 funds in the category.`,
+      `<strong>Like for like.</strong> Each fund is compared only with other funds in its own category, over the period you choose.`,
+      `<strong>Returns come first.</strong> We look at what a regular monthly SIP actually earned, and whether the fund beat its benchmark.`,
+      `<strong>Risk matters too.</strong> We reward funds that earned their returns with smaller swings than the market.`,
+      `<strong>Costs count.</strong> Lower fees leave more of the return with you, so cheaper funds score better.`,
+      `<strong>One score, one pick.</strong> The fund with the best overall balance across these is our pick, and the score shows how it compares with its peers.`,
+      `<strong>Refreshed daily.</strong> Picks update every morning with the latest NAVs, so they can change over time.`,
     ];
     document.getElementById('mrHow').innerHTML = '<div class="mr-how-title">How we pick</div><ul>' + items.map(t => `<li>${t}</li>`).join('') + '</ul>';
   }
