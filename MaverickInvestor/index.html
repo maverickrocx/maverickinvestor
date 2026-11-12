@@ -746,30 +746,41 @@
     const span = years + ' year' + (years > 1 ? 's' : '');
     document.getElementById('mrPeriodDates').textContent = `${fmtDate(p.start)} – ${fmtDate(p.end)}`;
 
+    const ordinal = n => n + (['th', 'st', 'nd', 'rd'][(n % 100 - 20) % 10] || ['th', 'st', 'nd', 'rd'][n % 100] || 'th');
     document.getElementById('mrPicks').innerHTML = Object.entries(REVIEW_CATS).map(([key, name]) => {
       const c = p.categories[key];
       if (!c || !c.ranked.length) return '';
       const f = c.ranked[0];
       const long = rankData && rankData.categories[key] && rankData.categories[key].funds[f.schemeCode];
       const m = (long && long.metrics) || {}, v = (long && long.verdict) || { plus: [], watch: [] };
-      const isPpf = t => t.startsWith("Beat today's PPF");
-      const ppfLine = v.plus.concat(v.watch).find(isPpf);
+      const ppfLine = v.plus.concat(v.watch).find(t => t.startsWith("Beat today's PPF"));
       const taxNote = ppfLine && ppfLine.includes('tax-free') ? ' PPF is tax-free, so the real gap is smaller.' : '';
-      const yard = c.yardstick === 'average of funds we track' ? 'the average fund we track' : 'the ' + c.yardstick;
+      const peerAvg = c.yardstick === 'average of funds we track';
+      const yardShort = peerAvg ? 'peer average' : c.yardstick;
+      const yardLong = peerAvg ? 'the average fund we track in this category' : 'the ' + c.yardstick;
       const sip = f.sip;
-      const story = sip ? `
-          <p class="mr-story"><strong>${rupees(amt)} every month</strong> for ${span} (${rupees(sip.invested)} in all) would have grown to
-            <strong class="${sip.value >= sip.invested ? 'pos' : 'neg'}">${rupees(sip.value)}</strong>.
-            The same SIP in ${escHtml(yard)} would be <strong>${rupees(sip.yardValue)}</strong>.
-            ${sip.cost != null ? `The fund's expenses took about <strong>${rupees(sip.cost)}</strong> of that along the way.` : ''}</p>` : '';
-      // Savvy line: our pick's Beta and Sharpe against the highest SIP XIRR in our top 3
-      const top3 = c.ranked.slice(0, 3);
-      const best = top3.reduce((a, b) => (b.xirr || -9) > (a.xirr || -9) ? b : a);
-      const other = best.schemeCode === f.schemeCode ? top3.filter(x => x !== f).sort((a, b) => (b.xirr || -9) - (a.xirr || -9))[0] : best;
-      const savvy = `<p class="mr-savvy"><span>For savvy investors:</span> SIP XIRR ${pct(f.xirr)}, Beta ${num(f.beta)}, Sharpe ${num(f.sharpe)}.
-        ${other ? (best.schemeCode === f.schemeCode
-          ? `The highest SIP XIRR in our top 3. Next best, ${escHtml(other.label)}: ${pct(other.xirr)}, Beta ${num(other.beta)}, Sharpe ${num(other.sharpe)}.`
-          : `Highest SIP XIRR in our top 3: ${escHtml(other.label)}, ${pct(other.xirr)}, Beta ${num(other.beta)}, Sharpe ${num(other.sharpe)}.`) : ''}</p>`;
+      // ₹100 SIP as a flow: the fund, then the same SIP in its yardstick
+      const flow = sip ? `
+          <ul class="mr-flow">
+            <li><span>${rupees(amt)} monthly SIP</span><i>→</i><span>${span}</span><i>→</i><strong class="${sip.value >= sip.invested ? 'pos' : 'neg'}">${rupees(sip.value)}</strong>${sip.cost != null ? `<em>net of ${rupees(sip.cost)} expenses</em>` : ''}</li>
+            <li><span>Same SIP in ${escHtml(yardShort)}</span><i>→</i><strong>${rupees(sip.yardValue)}</strong></li>
+          </ul>` : '';
+      // Risk bullets for the chosen period; Beta only against the category's own yardstick
+      const bullets = [];
+      if (f.beta != null) {
+        const d = Math.round((f.beta - 1) * 100);
+        bullets.push(`<strong>Beta ${num(f.beta)}</strong> vs ${escHtml(yardLong)}: ` +
+          (Math.abs(d) < 2 ? 'moves almost in step with it.' : `swings about ${Math.abs(d)}% ${d < 0 ? 'less' : 'more'} than it.`));
+      }
+      if (f.sharpe != null) {
+        const byS = [...c.ranked].filter(x => x.sharpe != null).sort((a, b) => b.sharpe - a.sharpe);
+        const pos = byS.findIndex(x => x.schemeCode === f.schemeCode) + 1;
+        bullets.push(`<strong>Sharpe ratio ${num(f.sharpe)}</strong>: ${pos === 1 ? 'the best' : ordinal(pos) + ' best'} return for the risk taken of the ${byS.length} funds we track in this category.`);
+      }
+      if (f.maxdd != null) {
+        bullets.push(`<strong>Worst fall ${Math.round(-f.maxdd * 100)}%</strong> from a peak in the last ${span}` +
+          (c.yardMaxdd != null ? ` (${escHtml(yardShort)}: ${Math.round(-c.yardMaxdd * 100)}%).` : '.'));
+      }
       return `
         <article class="tile mr-pick" data-group="mr-pick-${key}">
           <div class="mr-pick-top">
@@ -779,17 +790,20 @@
             </div>
             <div class="mr-pick-score" title="Score out of 100 against its category peers"><span>${f.score.toFixed(0)}</span>score</div>
           </div>
-          ${story}
+          ${flow}
+          <dl class="mr-stats">
+            <div><dt>SIP XIRR</dt><dd class="${f.xirr >= 0 ? 'pos' : 'neg'}">${pct(f.xirr)}</dd></div>
+            <div class="mr-stat-wide"><dt>vs ${escHtml(yardShort)}</dt><dd class="${f.vsBench >= 0 ? 'pos' : 'neg'}">${f.vsBench == null ? '—' : sign(f.vsBench) + (f.vsBench * 100).toFixed(1)} <small>pts/yr</small></dd></div>
+            <div><dt>Sharpe</dt><dd>${num(f.sharpe)}</dd></div>
+            <div><dt>Beta</dt><dd>${num(f.beta)}</dd></div>
+            <div><dt>Expense</dt><dd>${f.ter != null ? f.ter.toFixed(2) + '%' : '—'}</dd></div>
+          </dl>
           ${m.beatPPF5 != null ? `
           <div class="mr-ppf ${m.beatPPF5 >= 0.6 ? 'is-good' : 'is-weak'}">
             <span class="mr-ppf-val">${Math.round(m.beatPPF5 * 100)}%</span>
             <span class="mr-ppf-lbl">of 5-year periods since ${m.since5} beat PPF's ${ppf}.${taxNote}</span>
           </div>` : ''}
-          <ul class="mr-verdict">
-            ${v.plus.filter(t => !isPpf(t)).map(t => `<li class="plus">${escHtml(t)}</li>`).join('')}
-            ${v.watch.filter(t => !isPpf(t)).map(t => `<li class="watch">${escHtml(t)}</li>`).join('')}
-          </ul>
-          ${savvy}
+          <ul class="mr-verdict">${bullets.map(t => `<li>${t}</li>`).join('')}</ul>
         </article>`;
     }).join('');
 
@@ -800,8 +814,9 @@
       `<strong>Sharpe ratio, ${w.sharpe * 100}%.</strong> Return earned for each unit of ups and downs, above a 6.5% risk-free rate. Higher is better.`,
       `<strong>Expense ratio, ${w.ter * 100}%.</strong> The yearly fee the fund charges. Lower is better. We use today's expense ratios.`,
       `<strong>Beta, ${w.beta * 100}%.</strong> How much the fund swings when its yardstick moves; 1.00 means in step. Lower means a calmer ride.`,
-      `<strong>The rupee figures.</strong> "Grown to" is the SIP's value at the latest NAV. Expenses are already taken out of the NAV daily; the rupee figure estimates how much of your money they took, month by month.`,
-      `<strong>The ticks, warnings and PPF test</strong> look at each fund's full history since 2013, not just the period you chose.`,
+      `<strong>The rupee figures.</strong> The SIP's value at the latest NAV, already net of the fund's expenses; the expense figure estimates how much of your money they took, month by month. The second line runs the same SIP in the fund's yardstick.`,
+      `<strong>Beta, Sharpe and worst fall</strong> in the bullets cover the period you chose. Beta is always measured against the fund's own category yardstick, never against PPF or other asset classes.`,
+      `<strong>The PPF test</strong> looks at each fund's full history since 2013, not just the period you chose.`,
     ];
     document.getElementById('mrHow').innerHTML = '<div class="mr-how-title">How we pick</div><ul>' + items.map(t => `<li>${t}</li>`).join('') + '</ul>';
   }

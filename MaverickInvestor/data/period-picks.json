@@ -15,6 +15,7 @@
    "categories": {
     "largeCap": {
      "yardstick": "Nifty 50",
+     "yardMaxdd": -0.1513,
      "ranked": [
       {
        "rank": 1,
@@ -27,6 +28,7 @@
        "sharpe": -0.1294,
        "beta": 0.966,
        "ter": 0.52,
+       "maxdd": -0.1401,
        "sip": {
         "invested": 1200,
         "value": 1291,
@@ -45,6 +47,7 @@
        "sharpe": -0.2787,
        "beta": 1.0172,
        "ter": 0.54,
+       "maxdd": -0.1573,
        "sip": {
         "invested": 1200,
         "value": 1264,
@@ -63,6 +66,7 @@
        "sharpe": -0.3632,
        "beta": 0.9955,
        "ter": 0.21,
+       "maxdd": -0.1495,
        "sip": {
         "invested": 1200,
         "value": 1253,
@@ -81,6 +85,7 @@
        "sharpe": -0.3715,
        "beta": 0.9427,
        "ter": 0.66,
+       "maxdd": -0.1383,
        "sip": {
         "invested": 1200,
         "value": 1245,
@@ -99,6 +104,7 @@
        "sharpe": -0.4815,
        "beta": 0.9696,
        "ter": 0.85,
+       "maxdd": -0.1424,
        "sip": {
         "invested": 1200,
         "value": 1239,
@@ -110,6 +116,7 @@
     },
     "flexiCap": {
      "yardstick": "Nifty 500",
+     "yardMaxdd": -0.1486,
      "ranked": [
       {
        "rank": 1,
@@ -122,6 +129,7 @@
        "sharpe": 0.2236,
        "beta": 0.9145,
        "ter": 0.8,
+       "maxdd": -0.1279,
        "sip": {
         "invested": 1200,
         "value": 1302,
@@ -140,6 +148,7 @@
        "sharpe": -0.0667,
        "beta": 0.9191,
        "ter": 0.78,
+       "maxdd": -0.1332,
        "sip": {
         "invested": 1200,
         "value": 1285,
@@ -158,6 +167,7 @@
        "sharpe": -0.1733,
        "beta": 0.9572,
        "ter": 0.9,
+       "maxdd": -0.1862,
        "sip": {
         "invested": 1200,
         "value": 1302,
@@ -176,6 +186,7 @@
        "sharpe": -0.1661,
        "beta": 1.0078,
        "ter": 0.75,
+       "maxdd": -0.1441,
        "sip": {
         "invested": 1200,
         "value": 1266,
@@ -194,6 +205,7 @@
        "sharpe": -0.3045,
        "beta": 1.0,
        "ter": 0.25,
+       "maxdd": -0.1486,
        "sip": {
         "invested": 1200,
         "value": 1250,
@@ -212,6 +224,7 @@
        "sharpe": -0.2691,
        "beta": 0.9609,
        "ter": 0.58,
+       "maxdd": -0.1416,
        "sip": {
         "invested": 1200,
         "value": 1239,
@@ -230,6 +243,7 @@
        "sharpe": -0.5531,
        "beta": 0.6243,
        "ter": 0.63,
+       "maxdd": -0.106,
        "sip": {
         "invested": 1200,
         "value": 1244,
@@ -241,6 +255,7 @@
     },
     "midCap": {
      "yardstick": "Nifty Midcap 150",
+     "yardMaxdd": -0.1393,
      "ranked": [
       {
        "rank": 1,
@@ -253,6 +268,7 @@
        "sharpe": 0.1342,
        "beta": 0.8623,
        "ter": 0.4,
+       "maxdd": -0.111,
        "sip": {
         "invested": 1200,
         "value": 1286,
@@ -271,6 +287,7 @@
        "sharpe": -0.0529,
        "beta": 0.9187,
        "ter": 0.38,
+       "maxdd": -0.1281,
        "sip": {
         "invested": 1200,
         "value": 1247,
@@ -289,6 +306,7 @@
        "sharpe": -0.1357,
        "beta": 1.073,
        "ter": 0.65,
+       "maxdd": -0.2212,
        "sip": {
         "invested": 1200,
         "value": 1320,
@@ -307,6 +325,7 @@
        "sharpe": -0.1605,
        "beta": 0.8232,
        "ter": 0.82,
+       "maxdd": -0.1257,
        "sip": {
         "invested": 1200,
         "value": 1239,
@@ -318,6 +337,7 @@
     },
     "smallCap": {
      "yardstick": "Nifty Smallcap 250",
+     "yardMaxdd": -0.1723,
      "ranked": [
       {
        "rank": 1,
@@ -330,6 +350,7 @@
        "sharpe": 0.352,
        "beta": 0.8514,
        "ter": 0.64,
+       "maxdd": -0.1588,
        "sip": {
         "invested": 1200,
         "value": 1330,
@@ -348,6 +369,7 @@
        "sharpe": 0.1597,
        "beta": 0.8142,
        "ter": 0.53,
+       "maxdd": -0.145,
        "sip": {
         "invested": 1200,
         "value": 1298,
@@ -366,6 +388,7 @@
        "sharpe": 0.0338,
        "beta": 0.8022,
        "ter": 0.67,
+       "maxdd": -0.1456,
        "sip": {
         "invested": 1200,
         "value": 1284,
@@ -384,6 +407,7 @@
        "sharpe": 0.1232,
        "beta": 0.8696,
        "ter": 0.62,
+       "maxdd": -0.1407,
        "sip": {
         "invested": 1200,
         "value": 1279,
@@ -402,6 +426,7 @@
        "sharpe": 0.0506,
        "beta": 0.8571,
        "ter": 0.44,
+       "maxdd": -0.1501,
        "sip": {
         "invested": 1200,
         "value": 1282,
@@ -420,6 +445,7 @@
        "sharpe": -0.634,
        "beta": 0.7669,
        "ter": 0.68,
+       "maxdd": -0.1712,
        "sip": {
         "invested": 1200,
         "value": 1203,
@@ -431,6 +457,7 @@
     },
     "gold": {
      "yardstick": "average of funds we track",
+     "yardMaxdd": -0.2477,
      "ranked": [
       {
        "rank": 1,
@@ -443,6 +470,7 @@
        "sharpe": 0.3122,
        "beta": 0.9738,
        "ter": 0.16,
+       "maxdd": -0.2413,
        "sip": {
         "invested": 1200,
         "value": 1168,
@@ -461,6 +489,7 @@
        "sharpe": 0.3064,
        "beta": 1.0035,
        "ter": 0.42,
+       "maxdd": -0.2471,
        "sip": {
         "invested": 1200,
         "value": 1165,
@@ -479,6 +508,7 @@
        "sharpe": 0.294,
        "beta": 0.9761,
        "ter": 0.17,
+       "maxdd": -0.2582,
        "sip": {
         "invested": 1200,
         "value": 1166,
@@ -497,6 +527,7 @@
        "sharpe": 0.3056,
        "beta": 1.0466,
        "ter": 0.34,
+       "maxdd": -0.2441,
        "sip": {
         "invested": 1200,
         "value": 1164,
@@ -508,6 +539,7 @@
     },
     "debt": {
      "yardstick": "average of funds we track",
+     "yardMaxdd": -0.0095,
      "ranked": [
       {
        "rank": 1,
@@ -520,6 +552,7 @@
        "sharpe": -1.2509,
        "beta": 0.9304,
        "ter": 0.35,
+       "maxdd": -0.0062,
        "sip": {
         "invested": 1200,
         "value": 1235,
@@ -538,6 +571,7 @@
        "sharpe": -1.1113,
        "beta": 0.9706,
        "ter": 0.38,
+       "maxdd": -0.0101,
        "sip": {
         "invested": 1200,
         "value": 1233,
@@ -556,6 +590,7 @@
        "sharpe": -1.4095,
        "beta": 0.8051,
        "ter": 0.35,
+       "maxdd": -0.0062,
        "sip": {
         "invested": 1200,
         "value": 1233,
@@ -574,6 +609,7 @@
        "sharpe": -1.4467,
        "beta": 0.9358,
        "ter": 0.36,
+       "maxdd": -0.0071,
        "sip": {
         "invested": 1200,
         "value": 1232,
@@ -592,6 +628,7 @@
        "sharpe": -1.4386,
        "beta": 1.157,
        "ter": 0.4,
+       "maxdd": -0.0126,
        "sip": {
         "invested": 1200,
         "value": 1228,
@@ -610,6 +647,7 @@
        "sharpe": -1.5955,
        "beta": 1.201,
        "ter": 0.4,
+       "maxdd": -0.0149,
        "sip": {
         "invested": 1200,
         "value": 1226,
@@ -627,6 +665,7 @@
    "categories": {
     "largeCap": {
      "yardstick": "Nifty 50",
+     "yardMaxdd": -0.1551,
      "ranked": [
       {
        "rank": 1,
@@ -639,6 +678,7 @@
        "sharpe": 0.4506,
        "beta": 0.9662,
        "ter": 0.52,
+       "maxdd": -0.155,
        "sip": {
         "invested": 3600,
         "value": 4040,
@@ -657,6 +697,7 @@
        "sharpe": 0.523,
        "beta": 0.9916,
        "ter": 0.66,
+       "maxdd": -0.1537,
        "sip": {
         "invested": 3600,
         "value": 3978,
@@ -675,6 +716,7 @@
        "sharpe": 0.5212,
        "beta": 0.9621,
        "ter": 0.85,
+       "maxdd": -0.1539,
        "sip": {
         "invested": 3600,
         "value": 3940,
@@ -693,6 +735,7 @@
        "sharpe": 0.4173,
        "beta": 1.0028,
        "ter": 0.54,
+       "maxdd": -0.1585,
        "sip": {
         "invested": 3600,
         "value": 4016,
@@ -711,6 +754,7 @@
        "sharpe": 0.3864,
        "beta": 1.0261,
        "ter": 0.21,
+       "maxdd": -0.1727,
        "sip": {
         "invested": 3600,
         "value": 3925,
@@ -722,6 +766,7 @@
     },
     "flexiCap": {
      "yardstick": "average of funds we track",
+     "yardMaxdd": -0.1588,
      "ranked": [
       {
        "rank": 1,
@@ -734,6 +779,7 @@
        "sharpe": 0.9003,
        "beta": 0.9673,
        "ter": 0.78,
+       "maxdd": -0.1332,
        "sip": {
         "invested": 3600,
         "value": 4247,
@@ -752,6 +798,7 @@
        "sharpe": 0.7749,
        "beta": 1.0465,
        "ter": 0.8,
+       "maxdd": -0.1702,
        "sip": {
         "invested": 3600,
         "value": 4327,
@@ -770,6 +817,7 @@
        "sharpe": 0.6814,
        "beta": 0.7186,
        "ter": 0.63,
+       "maxdd": -0.1098,
        "sip": {
         "invested": 3600,
         "value": 4020,
@@ -788,6 +836,7 @@
        "sharpe": 0.5047,
        "beta": 1.0941,
        "ter": 0.58,
+       "maxdd": -0.163,
        "sip": {
         "invested": 3600,
         "value": 4008,
@@ -806,6 +855,7 @@
        "sharpe": 0.4753,
        "beta": 1.1407,
        "ter": 0.75,
+       "maxdd": -0.176,
        "sip": {
         "invested": 3600,
         "value": 4024,
@@ -824,6 +874,7 @@
        "sharpe": 0.3321,
        "beta": 1.0327,
        "ter": 0.9,
+       "maxdd": -0.2008,
        "sip": {
         "invested": 3600,
         "value": 4020,
@@ -835,6 +886,7 @@
     },
     "midCap": {
      "yardstick": "Nifty Midcap 150",
+     "yardMaxdd": -0.2102,
      "ranked": [
       {
        "rank": 1,
@@ -847,6 +899,7 @@
        "sharpe": 0.7735,
        "beta": 0.9553,
        "ter": 0.38,
+       "maxdd": -0.2006,
        "sip": {
         "invested": 3600,
         "value": 4244,
@@ -865,6 +918,7 @@
        "sharpe": 0.7012,
        "beta": 0.8445,
        "ter": 0.4,
+       "maxdd": -0.1952,
        "sip": {
         "invested": 3600,
         "value": 4250,
@@ -883,6 +937,7 @@
        "sharpe": 0.6879,
        "beta": 0.8783,
        "ter": 0.65,
+       "maxdd": -0.2886,
        "sip": {
         "invested": 3600,
         "value": 4149,
@@ -901,6 +956,7 @@
        "sharpe": 0.6583,
        "beta": 0.8534,
        "ter": 0.82,
+       "maxdd": -0.1676,
        "sip": {
         "invested": 3600,
         "value": 4144,
@@ -912,6 +968,7 @@
     },
     "smallCap": {
      "yardstick": "Nifty Smallcap 250",
+     "yardMaxdd": -0.2615,
      "ranked": [
       {
        "rank": 1,
@@ -924,6 +981,7 @@
        "sharpe": 0.5242,
        "beta": 0.7565,
        "ter": 0.53,
+       "maxdd": -0.1943,
        "sip": {
         "invested": 3600,
         "value": 4198,
@@ -942,6 +1000,7 @@
        "sharpe": 0.5839,
        "beta": 0.8475,
        "ter": 0.64,
+       "maxdd": -0.2442,
        "sip": {
         "invested": 3600,
         "value": 4193,
@@ -960,6 +1019,7 @@
        "sharpe": 0.4757,
        "beta": 0.8449,
        "ter": 0.62,
+       "maxdd": -0.2421,
        "sip": {
         "invested": 3600,
         "value": 4060,
@@ -978,6 +1038,7 @@
        "sharpe": 0.3822,
        "beta": 0.7839,
        "ter": 0.44,
+       "maxdd": -0.2467,
        "sip": {
         "invested": 3600,
         "value": 3965,
@@ -996,6 +1057,7 @@
        "sharpe": 0.3729,
        "beta": 0.7367,
        "ter": 0.67,
+       "maxdd": -0.2242,
        "sip": {
         "invested": 3600,
         "value": 3985,
@@ -1014,6 +1076,7 @@
        "sharpe": 0.2352,
        "beta": 0.8174,
        "ter": 0.68,
+       "maxdd": -0.2261,
        "sip": {
         "invested": 3600,
         "value": 3770,
@@ -1025,6 +1088,7 @@
     },
     "gold": {
      "yardstick": "average of funds we track",
+     "yardMaxdd": -0.2477,
      "ranked": [
       {
        "rank": 1,
@@ -1037,6 +1101,7 @@
        "sharpe": 1.0933,
        "beta": 0.9894,
        "ter": 0.42,
+       "maxdd": -0.2471,
        "sip": {
         "invested": 3600,
         "value": 5433,
@@ -1055,6 +1120,7 @@
        "sharpe": 1.1276,
        "beta": 1.04,
        "ter": 0.34,
+       "maxdd": -0.2441,
        "sip": {
         "invested": 3600,
         "value": 5418,
@@ -1073,6 +1139,7 @@
        "sharpe": 1.0799,
        "beta": 0.9957,
        "ter": 0.16,
+       "maxdd": -0.2413,
        "sip": {
         "invested": 3600,
         "value": 5427,
@@ -1091,6 +1158,7 @@
        "sharpe": 0.983,
        "beta": 0.9749,
        "ter": 0.17,
+       "maxdd": -0.2582,
        "sip": {
         "invested": 3600,
         "value": 5399,
@@ -1102,6 +1170,7 @@
     },
     "debt": {
      "yardstick": "average of funds we track",
+     "yardMaxdd": -0.0095,
      "ranked": [
       {
        "rank": 1,
@@ -1114,6 +1183,7 @@
        "sharpe": 0.9244,
        "beta": 0.9774,
        "ter": 0.35,
+       "maxdd": -0.0062,
        "sip": {
         "invested": 3600,
         "value": 3994,
@@ -1132,6 +1202,7 @@
        "sharpe": 0.9448,
        "beta": 0.829,
        "ter": 0.35,
+       "maxdd": -0.0062,
        "sip": {
         "invested": 3600,
         "value": 3980,
@@ -1150,6 +1221,7 @@
        "sharpe": 0.7464,
        "beta": 0.8962,
        "ter": 0.38,
+       "maxdd": -0.0101,
        "sip": {
         "invested": 3600,
         "value": 3980,
@@ -1168,6 +1240,7 @@
        "sharpe": 0.733,
        "beta": 0.9775,
        "ter": 0.36,
+       "maxdd": -0.0071,
        "sip": {
         "invested": 3600,
         "value": 3972,
@@ -1186,6 +1259,7 @@
        "sharpe": 0.3573,
        "beta": 1.1445,
        "ter": 0.4,
+       "maxdd": -0.0126,
        "sip": {
         "invested": 3600,
         "value": 3941,
@@ -1204,6 +1278,7 @@
        "sharpe": 0.3314,
        "beta": 1.1754,
        "ter": 0.4,
+       "maxdd": -0.0149,
        "sip": {
         "invested": 3600,
         "value": 3935,
@@ -1221,6 +1296,7 @@
    "categories": {
     "largeCap": {
      "yardstick": "Nifty 50",
+     "yardMaxdd": -0.1591,
      "ranked": [
       {
        "rank": 1,
@@ -1233,6 +1309,7 @@
        "sharpe": 0.5124,
        "beta": 0.9966,
        "ter": 0.66,
+       "maxdd": -0.1537,
        "sip": {
         "invested": 6000,
         "value": 8238,
@@ -1251,6 +1328,7 @@
        "sharpe": 0.4195,
        "beta": 0.9409,
        "ter": 0.85,
+       "maxdd": -0.1539,
        "sip": {
         "invested": 6000,
         "value": 7983,
@@ -1269,6 +1347,7 @@
        "sharpe": 0.2092,
        "beta": 0.9862,
        "ter": 0.54,
+       "maxdd": -0.1637,
        "sip": {
         "invested": 6000,
         "value": 7693,
@@ -1287,6 +1366,7 @@
        "sharpe": 0.0834,
        "beta": 0.9645,
        "ter": 0.52,
+       "maxdd": -0.2085,
        "sip": {
         "invested": 6000,
         "value": 7630,
@@ -1305,6 +1385,7 @@
        "sharpe": 0.2029,
        "beta": 1.0126,
        "ter": 0.21,
+       "maxdd": -0.1727,
        "sip": {
         "invested": 6000,
         "value": 7570,
@@ -1316,6 +1397,7 @@
     },
     "flexiCap": {
      "yardstick": "average of funds we track",
+     "yardMaxdd": -0.1927,
      "ranked": [
       {
        "rank": 1,
@@ -1328,6 +1410,7 @@
        "sharpe": 0.7972,
        "beta": 0.967,
        "ter": 0.78,
+       "maxdd": -0.1332,
        "sip": {
         "invested": 6000,
         "value": 9063,
@@ -1346,6 +1429,7 @@
        "sharpe": 0.4871,
        "beta": 0.7844,
        "ter": 0.63,
+       "maxdd": -0.1775,
        "sip": {
         "invested": 6000,
         "value": 8287,
@@ -1364,6 +1448,7 @@
        "sharpe": 0.4405,
        "beta": 1.0415,
        "ter": 0.8,
+       "maxdd": -0.1946,
        "sip": {
         "invested": 6000,
         "value": 8705,
@@ -1382,6 +1467,7 @@
        "sharpe": 0.3577,
        "beta": 1.0699,
        "ter": 0.58,
+       "maxdd": -0.1777,
        "sip": {
         "invested": 6000,
         "value": 8027,
@@ -1400,6 +1486,7 @@
        "sharpe": 0.3052,
        "beta": 1.1028,
        "ter": 0.75,
+       "maxdd": -0.2176,
        "sip": {
         "invested": 6000,
         "value": 8094,
@@ -1418,6 +1505,7 @@
        "sharpe": -0.0547,
        "beta": 1.0343,
        "ter": 0.9,
+       "maxdd": -0.2555,
        "sip": {
         "invested": 6000,
         "value": 7436,
@@ -1429,6 +1517,7 @@
     },
     "midCap": {
      "yardstick": "Nifty Midcap 150",
+     "yardMaxdd": -0.2102,
      "ranked": [
       {
        "rank": 1,
@@ -1441,6 +1530,7 @@
        "sharpe": 0.7523,
        "beta": 0.8946,
        "ter": 0.65,
+       "maxdd": -0.2886,
        "sip": {
         "invested": 6000,
         "value": 9409,
@@ -1459,6 +1549,7 @@
        "sharpe": 0.6655,
        "beta": 0.941,
        "ter": 0.38,
+       "maxdd": -0.2006,
        "sip": {
         "invested": 6000,
         "value": 9430,
@@ -1477,6 +1568,7 @@
        "sharpe": 0.7478,
        "beta": 0.8785,
        "ter": 0.82,
+       "maxdd": -0.1676,
        "sip": {
         "invested": 6000,
         "value": 9249,
@@ -1495,6 +1587,7 @@
        "sharpe": 0.4361,
        "beta": 0.8367,
        "ter": 0.4,
+       "maxdd": -0.2001,
        "sip": {
         "invested": 6000,
         "value": 8728,
@@ -1506,6 +1599,7 @@
     },
     "smallCap": {
      "yardstick": "Nifty Smallcap 250",
+     "yardMaxdd": -0.2695,
      "ranked": [
       {
        "rank": 1,
@@ -1518,6 +1612,7 @@
        "sharpe": 0.6085,
        "beta": 0.928,
        "ter": 0.64,
+       "maxdd": -0.2517,
        "sip": {
         "invested": 6000,
         "value": 9310,
@@ -1536,6 +1631,7 @@
        "sharpe": 0.669,
        "beta": 0.8507,
        "ter": 0.62,
+       "maxdd": -0.2421,
        "sip": {
         "invested": 6000,
         "value": 8906,
@@ -1554,6 +1650,7 @@
        "sharpe": 0.5896,
        "beta": 0.7224,
        "ter": 0.53,
+       "maxdd": -0.1943,
        "sip": {
         "invested": 6000,
         "value": 8715,
@@ -1572,6 +1669,7 @@
        "sharpe": 0.4789,
        "beta": 0.8199,
        "ter": 0.68,
+       "maxdd": -0.2261,
        "sip": {
         "invested": 6000,
         "value": 8035,
@@ -1590,6 +1688,7 @@
        "sharpe": 0.4298,
        "beta": 0.7265,
        "ter": 0.67,
+       "maxdd": -0.2242,
        "sip": {
         "invested": 6000,
         "value": 8022,
@@ -1608,6 +1707,7 @@
        "sharpe": 0.3601,
        "beta": 0.7505,
        "ter": 0.44,
+       "maxdd": -0.2467,
        "sip": {
         "invested": 6000,
         "value": 8013,
@@ -1619,6 +1719,7 @@
     },
     "gold": {
      "yardstick": "average of funds we track",
+     "yardMaxdd": -0.2477,
      "ranked": [
       {
        "rank": 1,
@@ -1631,6 +1732,7 @@
        "sharpe": 0.8632,
        "beta": 0.9909,
        "ter": 0.42,
+       "maxdd": -0.2471,
        "sip": {
         "invested": 6000,
         "value": 11496,
@@ -1649,6 +1751,7 @@
        "sharpe": 0.8368,
        "beta": 0.9963,
        "ter": 0.16,
+       "maxdd": -0.2413,
        "sip": {
         "invested": 6000,
         "value": 11442,
@@ -1667,6 +1770,7 @@
        "sharpe": 0.8659,
        "beta": 1.0373,
        "ter": 0.34,
+       "maxdd": -0.2441,
        "sip": {
         "invested": 6000,
         "value": 11426,
@@ -1685,6 +1789,7 @@
        "sharpe": 0.7828,
        "beta": 0.9755,
        "ter": 0.17,
+       "maxdd": -0.2582,
        "sip": {
         "invested": 6000,
         "value": 11400,
@@ -1696,6 +1801,7 @@
     },
     "debt": {
      "yardstick": "average of funds we track",
+     "yardMaxdd": -0.0112,
      "ranked": [
       {
        "rank": 1,
@@ -1708,6 +1814,7 @@
        "sharpe": 0.2857,
        "beta": 0.9592,
        "ter": 0.35,
+       "maxdd": -0.0091,
        "sip": {
         "invested": 6000,
         "value": 7191,
@@ -1726,6 +1833,7 @@
        "sharpe": 0.2565,
        "beta": 0.8785,
        "ter": 0.38,
+       "maxdd": -0.0101,
        "sip": {
         "invested": 6000,
         "value": 7164,
@@ -1744,6 +1852,7 @@
        "sharpe": 0.1284,
        "beta": 0.8617,
        "ter": 0.35,
+       "maxdd": -0.0095,
        "sip": {
         "invested": 6000,
         "value": 7156,
@@ -1762,6 +1871,7 @@
        "sharpe": 0.013,
        "beta": 0.9872,
        "ter": 0.36,
+       "maxdd": -0.0103,
        "sip": {
         "invested": 6000,
         "value": 7134,
@@ -1780,6 +1890,7 @@
        "sharpe": -0.0741,
        "beta": 1.1224,
        "ter": 0.4,
+       "maxdd": -0.0126,
        "sip": {
         "invested": 6000,
         "value": 7079,
@@ -1798,6 +1909,7 @@
        "sharpe": -0.1941,
        "beta": 1.191,
        "ter": 0.4,
+       "maxdd": -0.0154,
        "sip": {
         "invested": 6000,
         "value": 7066,

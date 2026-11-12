@@ -356,6 +356,7 @@ def period_picks(cfg, series_cache, years, as_of=None):
             funds.append({"label": fd["label"], "schemeCode": fd["schemeCode"], "_w": w,
                           "cagr": (w[-1][1] / w[0][1]) ** (1 / yrs) - 1,
                           "xirr": sip and sip["xirr"], "sip": sip, "ter": fd.get("ter"),
+                          "maxdd": _maxdd(w),
                           "sharpe": (statistics.mean(dr) * 252 - RF) / vol if vol else None})
         if len(funds) < 2:
             continue
@@ -367,11 +368,13 @@ def period_picks(cfg, series_cache, years, as_of=None):
             yard_wk = _weekly(bw)
             yard_sip = sip_run(bw, instalments=12 * years)
             yard_sip_value = yard_sip and yard_sip["value"]
+            yard_maxdd = _maxdd(bw)
         else:
             yard_name = "average of funds we track"
             yard_cagr = statistics.mean(f["cagr"] for f in funds)
             # the same SIP spread equally over every fund we track
             yard_sip_value = statistics.mean(f["sip"]["value"] for f in funds if f["sip"])
+            yard_maxdd = statistics.mean(f["maxdd"] for f in funds)
             wks = [_weekly(f["_w"]) for f in funds]
             common = sorted(set.intersection(*[set(w) for w in wks]))
             # equal-weighted peer index built from weekly returns
@@ -389,10 +392,10 @@ def period_picks(cfg, series_cache, years, as_of=None):
             f["score"] = round(sum(PERIOD_WEIGHTS[k] * pcts[k][i] for k in PERIOD_WEIGHTS), 1)
         funds.sort(key=lambda f: -f["score"])
         r4 = lambda x: round(x, 4) if x is not None else None
-        out[catkey] = {"yardstick": yard_name, "ranked": [
+        out[catkey] = {"yardstick": yard_name, "yardMaxdd": round(yard_maxdd, 4), "ranked": [
             {"rank": i, "label": f["label"], "schemeCode": f["schemeCode"], "score": f["score"],
              "xirr": r4(f["xirr"]), "cagr": r4(f["cagr"]), "vsBench": r4(f["vsBench"]),
-             "sharpe": r4(f["sharpe"]), "beta": r4(f["beta"]), "ter": f["ter"],
+             "sharpe": r4(f["sharpe"]), "beta": r4(f["beta"]), "ter": f["ter"], "maxdd": r4(f["maxdd"]),
              "sip": f["sip"] and {"invested": round(f["sip"]["invested"]), "value": round(f["sip"]["value"]),
                                   "cost": f["sip"]["cost"] is not None and round(f["sip"]["cost"], 1) or None,
                                   "yardValue": yard_sip_value and round(yard_sip_value)}}
