@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-14",
+ "asOf": "2026-11-17",
  "weights": {
   "xirr": 0.3,
   "vsBench": 0.25,
@@ -10,8 +10,8 @@
  "sipAmount": 100.0,
  "periods": {
   "1": {
-   "start": "2025-11-13",
-   "end": "2026-11-13",
+   "start": "2025-11-16",
+   "end": "2026-11-16",
    "categories": {
     "largeCap": {
      "yardstick": "Nifty 50",
@@ -23,20 +23,20 @@
        "label": "Axis Large Cap",
        "schemeCode": 120465,
        "score": 93.8,
-       "xirr": 0.1288,
-       "cagr": 0.0292,
-       "vsBench": 0.0434,
-       "sharpe": -0.1854,
-       "beta": 0.9639,
+       "xirr": 0.1358,
+       "cagr": 0.0296,
+       "vsBench": 0.0492,
+       "sharpe": -0.182,
+       "beta": 0.9661,
        "ter": 0.52,
        "maxdd": -0.1401,
        "beatMonths": 0.5833,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1287,
+        "value": 1293,
         "cost": 3.3,
-        "yardValue": 1251
+        "yardValue": 1250
        }
       },
       {
@@ -44,20 +44,20 @@
        "label": "Mirae Asset Large Cap",
        "schemeCode": 118825,
        "score": 63.8,
-       "xirr": 0.0933,
-       "cagr": 0.0066,
-       "vsBench": 0.0208,
-       "sharpe": -0.3219,
-       "beta": 1.0162,
+       "xirr": 0.1007,
+       "cagr": 0.0059,
+       "vsBench": 0.0255,
+       "sharpe": -0.3259,
+       "beta": 1.0179,
        "ter": 0.54,
        "maxdd": -0.1573,
-       "beatMonths": 0.6667,
+       "beatMonths": 0.75,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1263,
+        "value": 1269,
         "cost": 3.4,
-        "yardValue": 1251
+        "yardValue": 1250
        }
       },
       {
@@ -65,20 +65,20 @@
        "label": "Nippon India Large Cap",
        "schemeCode": 118632,
        "score": 43.8,
-       "xirr": 0.0613,
-       "cagr": -0.0052,
-       "vsBench": 0.009,
-       "sharpe": -0.4237,
-       "beta": 0.9413,
+       "xirr": 0.0665,
+       "cagr": -0.006,
+       "vsBench": 0.0137,
+       "sharpe": -0.428,
+       "beta": 0.9427,
        "ter": 0.66,
        "maxdd": -0.1383,
        "beatMonths": 0.5833,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1242,
+        "value": 1246,
         "cost": 4.2,
-        "yardValue": 1251
+        "yardValue": 1250
        }
       },
       {
@@ -86,20 +86,20 @@
        "label": "Axis Nifty 100 Index",
        "schemeCode": 147666,
        "score": 43.8,
-       "xirr": 0.068,
-       "cagr": -0.0086,
-       "vsBench": 0.0056,
-       "sharpe": -0.442,
-       "beta": 0.9925,
+       "xirr": 0.0734,
+       "cagr": -0.0098,
+       "vsBench": 0.0098,
+       "sharpe": -0.4492,
+       "beta": 0.9953,
        "ter": 0.21,
        "maxdd": -0.1495,
        "beatMonths": 0.6667,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1246,
+        "value": 1250,
         "cost": 1.3,
-        "yardValue": 1251
+        "yardValue": 1250
        }
       },
       {
@@ -107,20 +107,20 @@
        "label": "ICICI Pru Bluechip (Large Cap)",
        "schemeCode": 120586,
        "score": 5.0,
-       "xirr": 0.0444,
+       "xirr": 0.0509,
        "cagr": -0.0252,
-       "vsBench": -0.011,
-       "sharpe": -0.5979,
-       "beta": 0.966,
+       "vsBench": -0.0056,
+       "sharpe": -0.5964,
+       "beta": 0.9682,
        "ter": 0.85,
        "maxdd": -0.1424,
        "beatMonths": 0.5,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1230,
+        "value": 1235,
         "cost": 5.3,
-        "yardValue": 1251
+        "yardValue": 1250
        }
       }
      ]
@@ -135,18 +135,18 @@
        "label": "Aditya Birla SL Flexi Cap",
        "schemeCode": 120564,
        "score": 85.8,
-       "xirr": 0.1511,
-       "cagr": 0.0828,
-       "vsBench": 0.0807,
-       "sharpe": 0.1866,
-       "beta": 0.9155,
+       "xirr": 0.1528,
+       "cagr": 0.0789,
+       "vsBench": 0.0818,
+       "sharpe": 0.1605,
+       "beta": 0.9157,
        "ter": 0.8,
        "maxdd": -0.1279,
        "beatMonths": 0.8333,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1302,
+        "value": 1304,
         "cost": 5.3,
         "yardValue": 1247
        }
@@ -156,11 +156,11 @@
        "label": "HDFC Flexi Cap",
        "schemeCode": 118955,
        "score": 69.2,
-       "xirr": 0.1251,
-       "cagr": 0.0438,
-       "vsBench": 0.0417,
-       "sharpe": -0.0908,
-       "beta": 0.9201,
+       "xirr": 0.1245,
+       "cagr": 0.0389,
+       "vsBench": 0.0418,
+       "sharpe": -0.1264,
+       "beta": 0.9206,
        "ter": 0.78,
        "maxdd": -0.1332,
        "beatMonths": 0.6667,
@@ -178,17 +178,17 @@
        "schemeCode": 120662,
        "score": 60.0,
        "xirr": 0.1491,
-       "cagr": 0.0241,
-       "vsBench": 0.022,
-       "sharpe": -0.2086,
-       "beta": 0.9578,
+       "cagr": 0.0207,
+       "vsBench": 0.0236,
+       "sharpe": -0.2314,
+       "beta": 0.9579,
        "ter": 0.9,
        "maxdd": -0.1862,
        "beatMonths": 0.5,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1300,
+        "value": 1302,
         "cost": 5.9,
         "yardValue": 1247
        }
@@ -198,40 +198,40 @@
        "label": "DSP Flexi Cap",
        "schemeCode": 119076,
        "score": 45.0,
-       "xirr": 0.0983,
-       "cagr": 0.0224,
-       "vsBench": 0.0203,
-       "sharpe": -0.2129,
-       "beta": 1.0091,
+       "xirr": 0.1011,
+       "cagr": 0.0184,
+       "vsBench": 0.0213,
+       "sharpe": -0.2394,
+       "beta": 1.0087,
        "ter": 0.75,
        "maxdd": -0.1441,
        "beatMonths": 0.5,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1267,
+        "value": 1269,
         "cost": 4.8,
         "yardValue": 1247
        }
       },
       {
        "rank": 5,
-       "label": "Parag Parikh Flexi Cap",
-       "schemeCode": 122639,
-       "score": 33.3,
-       "xirr": 0.0646,
-       "cagr": 0.0086,
-       "vsBench": 0.0065,
-       "sharpe": -0.5391,
-       "beta": 0.6245,
-       "ter": 0.63,
-       "maxdd": -0.106,
+       "label": "Kotak Flexicap",
+       "schemeCode": 120166,
+       "score": 35.8,
+       "xirr": 0.0593,
+       "cagr": 0.0027,
+       "vsBench": 0.0056,
+       "sharpe": -0.3334,
+       "beta": 0.9619,
+       "ter": 0.58,
+       "maxdd": -0.1416,
        "beatMonths": 0.5,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1244,
-        "cost": 4.0,
+        "value": 1241,
+        "cost": 3.7,
         "yardValue": 1247
        }
       },
@@ -240,10 +240,10 @@
        "label": "Axis Nifty 500 Index",
        "schemeCode": 152731,
        "score": 30.0,
-       "xirr": 0.069,
-       "cagr": 0.0021,
+       "xirr": 0.0687,
+       "cagr": -0.0029,
        "vsBench": 0.0,
-       "sharpe": -0.3551,
+       "sharpe": -0.3885,
        "beta": 1.0,
        "ter": 0.25,
        "maxdd": -0.1486,
@@ -258,22 +258,22 @@
       },
       {
        "rank": 7,
-       "label": "Kotak Flexicap",
-       "schemeCode": 120166,
-       "score": 26.7,
-       "xirr": 0.056,
-       "cagr": 0.0064,
-       "vsBench": 0.0043,
-       "sharpe": -0.3091,
-       "beta": 0.9616,
-       "ter": 0.58,
-       "maxdd": -0.1416,
+       "label": "Parag Parikh Flexi Cap",
+       "schemeCode": 122639,
+       "score": 24.2,
+       "xirr": 0.0528,
+       "cagr": -0.0027,
+       "vsBench": 0.0002,
+       "sharpe": -0.6569,
+       "beta": 0.6217,
+       "ter": 0.63,
+       "maxdd": -0.106,
        "beatMonths": 0.5,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1238,
-        "cost": 3.7,
+        "value": 1236,
+        "cost": 4.0,
         "yardValue": 1247
        }
       }
@@ -289,62 +289,62 @@
        "label": "Kotak Emerging Equity",
        "schemeCode": 120505,
        "score": 81.7,
-       "xirr": 0.1429,
-       "cagr": 0.0829,
-       "vsBench": 0.0582,
-       "sharpe": 0.1751,
-       "beta": 0.8637,
+       "xirr": 0.133,
+       "cagr": 0.0734,
+       "vsBench": 0.0638,
+       "sharpe": 0.116,
+       "beta": 0.8656,
        "ter": 0.4,
        "maxdd": -0.111,
        "beatMonths": 0.5833,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1296,
+        "value": 1291,
         "cost": 2.7,
-        "yardValue": 1242
+        "yardValue": 1232
        }
       },
       {
        "rank": 2,
-       "label": "Edelweiss Mid Cap",
-       "schemeCode": 140228,
-       "score": 58.3,
-       "xirr": 0.0775,
-       "cagr": 0.0489,
-       "vsBench": 0.0242,
-       "sharpe": -0.0246,
-       "beta": 0.9178,
-       "ter": 0.38,
-       "maxdd": -0.1281,
-       "beatMonths": 0.5833,
-       "months": 12,
-       "sip": {
-        "invested": 1200,
-        "value": 1253,
-        "cost": 2.5,
-        "yardValue": 1242
-       }
-      },
-      {
-       "rank": 3,
        "label": "Motilal Oswal Midcap",
        "schemeCode": 127042,
-       "score": 50.0,
-       "xirr": 0.2166,
-       "cagr": 0.0393,
-       "vsBench": 0.0146,
-       "sharpe": -0.0369,
-       "beta": 1.0814,
+       "score": 56.7,
+       "xirr": 0.2054,
+       "cagr": 0.0284,
+       "vsBench": 0.0188,
+       "sharpe": -0.0922,
+       "beta": 1.0824,
        "ter": 0.65,
        "maxdd": -0.2212,
        "beatMonths": 0.5,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1344,
+        "value": 1339,
         "cost": 4.3,
-        "yardValue": 1242
+        "yardValue": 1232
+       }
+      },
+      {
+       "rank": 3,
+       "label": "Edelweiss Mid Cap",
+       "schemeCode": 140228,
+       "score": 51.7,
+       "xirr": 0.0692,
+       "cagr": 0.0353,
+       "vsBench": 0.0258,
+       "sharpe": -0.108,
+       "beta": 0.92,
+       "ter": 0.38,
+       "maxdd": -0.1281,
+       "beatMonths": 0.5833,
+       "months": 12,
+       "sip": {
+        "invested": 1200,
+        "value": 1248,
+        "cost": 2.5,
+        "yardValue": 1232
        }
       },
       {
@@ -352,20 +352,20 @@
        "label": "HDFC Mid-Cap Opportunities",
        "schemeCode": 118989,
        "score": 10.0,
-       "xirr": 0.057,
-       "cagr": 0.0238,
-       "vsBench": -0.0009,
-       "sharpe": -0.2114,
-       "beta": 0.8198,
+       "xirr": 0.0559,
+       "cagr": 0.0162,
+       "vsBench": 0.0066,
+       "sharpe": -0.2636,
+       "beta": 0.8225,
        "ter": 0.82,
        "maxdd": -0.1257,
        "beatMonths": 0.4167,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1239,
+        "value": 1238,
         "cost": 5.4,
-        "yardValue": 1242
+        "yardValue": 1232
        }
       }
      ]
@@ -380,20 +380,20 @@
        "label": "Quant Small Cap",
        "schemeCode": 120828,
        "score": 85.0,
-       "xirr": 0.1898,
-       "cagr": 0.107,
-       "vsBench": 0.0531,
-       "sharpe": 0.3173,
-       "beta": 0.8423,
+       "xirr": 0.1889,
+       "cagr": 0.1,
+       "vsBench": 0.065,
+       "sharpe": 0.276,
+       "beta": 0.8443,
        "ter": 0.64,
        "maxdd": -0.1588,
        "beatMonths": 0.5833,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1327,
+        "value": 1326,
         "cost": 4.5,
-        "yardValue": 1286
+        "yardValue": 1273
        }
       },
       {
@@ -401,41 +401,41 @@
        "label": "Axis Small Cap",
        "schemeCode": 125354,
        "score": 78.0,
-       "xirr": 0.165,
-       "cagr": 0.0878,
-       "vsBench": 0.0339,
-       "sharpe": 0.204,
-       "beta": 0.8166,
+       "xirr": 0.1615,
+       "cagr": 0.0757,
+       "vsBench": 0.0407,
+       "sharpe": 0.1297,
+       "beta": 0.8182,
        "ter": 0.53,
        "maxdd": -0.145,
-       "beatMonths": 0.6667,
+       "beatMonths": 0.75,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1310,
+        "value": 1308,
         "cost": 3.6,
-        "yardValue": 1286
+        "yardValue": 1273
        }
       },
       {
        "rank": 3,
-       "label": "SBI Small Cap",
-       "schemeCode": 125497,
+       "label": "Kotak Small Cap",
+       "schemeCode": 120164,
        "score": 47.0,
-       "xirr": 0.1416,
-       "cagr": 0.0693,
-       "vsBench": 0.0154,
-       "sharpe": 0.0878,
-       "beta": 0.8023,
-       "ter": 0.67,
-       "maxdd": -0.1456,
-       "beatMonths": 0.5,
+       "xirr": 0.127,
+       "cagr": 0.0617,
+       "vsBench": 0.0267,
+       "sharpe": 0.0576,
+       "beta": 0.8461,
+       "ter": 0.44,
+       "maxdd": -0.1475,
+       "beatMonths": 0.6667,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1295,
-        "cost": 4.6,
-        "yardValue": 1286
+        "value": 1287,
+        "cost": 3.0,
+        "yardValue": 1273
        }
       },
       {
@@ -443,41 +443,41 @@
        "label": "Nippon India Small Cap",
        "schemeCode": 118778,
        "score": 42.0,
-       "xirr": 0.1217,
-       "cagr": 0.07,
-       "vsBench": 0.0161,
-       "sharpe": 0.1061,
-       "beta": 0.866,
+       "xirr": 0.1208,
+       "cagr": 0.0633,
+       "vsBench": 0.0283,
+       "sharpe": 0.0652,
+       "beta": 0.871,
        "ter": 0.62,
        "maxdd": -0.1407,
        "beatMonths": 0.5,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1282,
+        "value": 1281,
         "cost": 4.2,
-        "yardValue": 1286
+        "yardValue": 1273
        }
       },
       {
        "rank": 5,
-       "label": "Kotak Small Cap",
-       "schemeCode": 120164,
+       "label": "SBI Small Cap",
+       "schemeCode": 125497,
        "score": 38.0,
-       "xirr": 0.1272,
-       "cagr": 0.0588,
-       "vsBench": 0.0049,
-       "sharpe": 0.04,
-       "beta": 0.8523,
-       "ter": 0.44,
-       "maxdd": -0.1491,
-       "beatMonths": 0.5833,
+       "xirr": 0.1332,
+       "cagr": 0.0591,
+       "vsBench": 0.0241,
+       "sharpe": 0.0239,
+       "beta": 0.8023,
+       "ter": 0.67,
+       "maxdd": -0.1456,
+       "beatMonths": 0.5,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1286,
-        "cost": 3.0,
-        "yardValue": 1286
+        "value": 1291,
+        "cost": 4.5,
+        "yardValue": 1273
        }
       },
       {
@@ -485,111 +485,111 @@
        "label": "HDFC Small Cap",
        "schemeCode": 130503,
        "score": 10.0,
-       "xirr": 0.0184,
-       "cagr": -0.0368,
-       "vsBench": -0.0907,
-       "sharpe": -0.5904,
-       "beta": 0.77,
+       "xirr": 0.0101,
+       "cagr": -0.0443,
+       "vsBench": -0.0793,
+       "sharpe": -0.6409,
+       "beta": 0.7718,
        "ter": 0.68,
        "maxdd": -0.17,
        "beatMonths": 0.3333,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1213,
+        "value": 1207,
         "cost": 4.4,
-        "yardValue": 1286
+        "yardValue": 1273
        }
       }
      ]
     },
     "gold": {
      "yardstick": "average of funds we track",
-     "yardMaxdd": -0.2477,
+     "yardMaxdd": -0.25,
      "hitVs": "average of our top 3",
      "ranked": [
       {
        "rank": 1,
        "label": "Kotak Gold FoF",
        "schemeCode": 119781,
-       "score": 76.7,
-       "xirr": -0.0993,
-       "cagr": 0.0608,
-       "vsBench": 0.0013,
-       "sharpe": 0.1442,
-       "beta": 0.974,
+       "score": 93.3,
+       "xirr": -0.1177,
+       "cagr": 0.08,
+       "vsBench": 0.0009,
+       "sharpe": 0.2027,
+       "beta": 0.9736,
        "ter": 0.16,
-       "maxdd": -0.2413,
-       "beatMonths": 0.4167,
+       "maxdd": -0.2427,
+       "beatMonths": 0.5,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1131,
+        "value": 1117,
         "cost": 1.1,
-        "yardValue": 1129
+        "yardValue": 1114
        }
       },
       {
        "rank": 2,
        "label": "Axis Gold FoF",
        "schemeCode": 120473,
-       "score": 56.7,
-       "xirr": -0.1027,
-       "cagr": 0.0547,
-       "vsBench": -0.0049,
-       "sharpe": 0.147,
-       "beta": 0.9769,
+       "score": 73.3,
+       "xirr": -0.1212,
+       "cagr": 0.0798,
+       "vsBench": 0.0008,
+       "sharpe": 0.2141,
+       "beta": 0.9772,
        "ter": 0.17,
        "maxdd": -0.2582,
-       "beatMonths": 0.5,
+       "beatMonths": 0.4167,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1128,
-        "cost": 1.1,
-        "yardValue": 1129
+        "value": 1114,
+        "cost": 1.2,
+        "yardValue": 1114
        }
       },
       {
        "rank": 3,
-       "label": "SBI Gold FoF",
-       "schemeCode": 119788,
-       "score": 35.0,
-       "xirr": -0.1041,
-       "cagr": 0.0619,
-       "vsBench": 0.0023,
-       "sharpe": 0.141,
-       "beta": 1.0039,
-       "ter": 0.42,
-       "maxdd": -0.2471,
-       "beatMonths": 0.5833,
-       "months": 12,
-       "sip": {
-        "invested": 1200,
-        "value": 1127,
-        "cost": 2.8,
-        "yardValue": 1129
-       }
-      },
-      {
-       "rank": 4,
        "label": "Nippon India Gold Savings FoF",
        "schemeCode": 118663,
-       "score": 31.7,
-       "xirr": -0.1033,
-       "cagr": 0.0608,
-       "vsBench": 0.0013,
-       "sharpe": 0.1292,
-       "beta": 1.0452,
+       "score": 23.3,
+       "xirr": -0.1231,
+       "cagr": 0.0786,
+       "vsBench": -0.0004,
+       "sharpe": 0.1885,
+       "beta": 1.0449,
        "ter": 0.34,
-       "maxdd": -0.2441,
+       "maxdd": -0.2489,
        "beatMonths": 0.6667,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1128,
+        "value": 1113,
         "cost": 2.3,
-        "yardValue": 1129
+        "yardValue": 1114
+       }
+      },
+      {
+       "rank": 4,
+       "label": "SBI Gold FoF",
+       "schemeCode": 119788,
+       "score": 10.0,
+       "xirr": -0.1247,
+       "cagr": 0.0776,
+       "vsBench": -0.0014,
+       "sharpe": 0.1893,
+       "beta": 1.0044,
+       "ter": 0.42,
+       "maxdd": -0.2502,
+       "beatMonths": 0.5833,
+       "months": 12,
+       "sip": {
+        "invested": 1200,
+        "value": 1112,
+        "cost": 2.8,
+        "yardValue": 1114
        }
       }
      ]
@@ -604,11 +604,11 @@
        "label": "Axis Corporate Bond",
        "schemeCode": 141588,
        "score": 92.5,
-       "xirr": 0.0489,
-       "cagr": 0.0464,
-       "vsBench": 0.0045,
-       "sharpe": -1.3354,
-       "beta": 0.9303,
+       "xirr": 0.0484,
+       "cagr": 0.0465,
+       "vsBench": 0.0044,
+       "sharpe": -1.3194,
+       "beta": 0.9306,
        "ter": 0.35,
        "maxdd": -0.0062,
        "beatMonths": 0.5,
@@ -624,12 +624,12 @@
        "rank": 2,
        "label": "HDFC Short Term Debt",
        "schemeCode": 119016,
-       "score": 74.5,
-       "xirr": 0.0467,
-       "cagr": 0.0462,
-       "vsBench": 0.0043,
-       "sharpe": -1.4789,
-       "beta": 0.8048,
+       "score": 70.5,
+       "xirr": 0.0462,
+       "cagr": 0.0461,
+       "vsBench": 0.0039,
+       "sharpe": -1.479,
+       "beta": 0.8052,
        "ter": 0.35,
        "maxdd": -0.0062,
        "beatMonths": 0.5,
@@ -646,11 +646,11 @@
        "label": "ICICI Pru Corporate Bond",
        "schemeCode": 120692,
        "score": 68.0,
-       "xirr": 0.0456,
+       "xirr": 0.0451,
        "cagr": 0.0462,
-       "vsBench": 0.0043,
-       "sharpe": -1.2169,
-       "beta": 0.974,
+       "vsBench": 0.004,
+       "sharpe": -1.2075,
+       "beta": 0.9743,
        "ter": 0.38,
        "maxdd": -0.0101,
        "beatMonths": 0.5833,
@@ -668,10 +668,10 @@
        "schemeCode": 133791,
        "score": 41.0,
        "xirr": 0.0449,
-       "cagr": 0.0425,
-       "vsBench": 0.0006,
-       "sharpe": -1.5178,
-       "beta": 0.936,
+       "cagr": 0.0429,
+       "vsBench": 0.0007,
+       "sharpe": -1.481,
+       "beta": 0.9357,
        "ter": 0.36,
        "maxdd": -0.0071,
        "beatMonths": 0.4167,
@@ -687,12 +687,12 @@
        "rank": 5,
        "label": "Aditya Birla SL Corporate Bond",
        "schemeCode": 119533,
-       "score": 22.5,
-       "xirr": 0.0386,
-       "cagr": 0.0359,
-       "vsBench": -0.006,
-       "sharpe": -1.509,
-       "beta": 1.1559,
+       "score": 26.5,
+       "xirr": 0.0381,
+       "cagr": 0.0365,
+       "vsBench": -0.0057,
+       "sharpe": -1.4729,
+       "beta": 1.1557,
        "ter": 0.4,
        "maxdd": -0.0126,
        "beatMonths": 0.3333,
@@ -709,11 +709,11 @@
        "label": "HDFC Corporate Bond",
        "schemeCode": 118987,
        "score": 1.5,
-       "xirr": 0.0363,
-       "cagr": 0.0342,
-       "vsBench": -0.0077,
-       "sharpe": -1.6521,
-       "beta": 1.1991,
+       "xirr": 0.0362,
+       "cagr": 0.0349,
+       "vsBench": -0.0073,
+       "sharpe": -1.6077,
+       "beta": 1.1985,
        "ter": 0.4,
        "maxdd": -0.0149,
        "beatMonths": 0.3333,
@@ -730,8 +730,8 @@
    }
   },
   "3": {
-   "start": "2023-11-13",
-   "end": "2026-11-13",
+   "start": "2023-11-16",
+   "end": "2026-11-16",
    "categories": {
     "largeCap": {
      "yardstick": "Nifty 50",
@@ -743,20 +743,20 @@
        "label": "Axis Large Cap",
        "schemeCode": 120465,
        "score": 71.2,
-       "xirr": 0.0727,
-       "cagr": 0.1186,
-       "vsBench": 0.0166,
-       "sharpe": 0.4407,
-       "beta": 0.9655,
+       "xirr": 0.0752,
+       "cagr": 0.1149,
+       "vsBench": 0.0193,
+       "sharpe": 0.4162,
+       "beta": 0.966,
        "ter": 0.52,
        "maxdd": -0.155,
        "beatMonths": 0.5278,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4028,
-        "cost": 30.7,
-        "yardValue": 3905
+        "value": 4045,
+        "cost": 30.6,
+        "yardValue": 3901
        }
       },
       {
@@ -764,10 +764,10 @@
        "label": "Nippon India Large Cap",
        "schemeCode": 118632,
        "score": 68.8,
-       "xirr": 0.0631,
-       "cagr": 0.1312,
-       "vsBench": 0.0293,
-       "sharpe": 0.5156,
+       "xirr": 0.0649,
+       "cagr": 0.1282,
+       "vsBench": 0.0325,
+       "sharpe": 0.4969,
        "beta": 0.9911,
        "ter": 0.66,
        "maxdd": -0.1537,
@@ -775,9 +775,9 @@
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 3969,
+        "value": 3982,
         "cost": 39.7,
-        "yardValue": 3905
+        "yardValue": 3901
        }
       },
       {
@@ -785,20 +785,20 @@
        "label": "ICICI Pru Bluechip (Large Cap)",
        "schemeCode": 120586,
        "score": 51.2,
-       "xirr": 0.054,
-       "cagr": 0.1255,
-       "vsBench": 0.0235,
-       "sharpe": 0.5019,
-       "beta": 0.9609,
+       "xirr": 0.0562,
+       "cagr": 0.1209,
+       "vsBench": 0.0252,
+       "sharpe": 0.4709,
+       "beta": 0.9617,
        "ter": 0.85,
        "maxdd": -0.1539,
        "beatMonths": 0.5833,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 3915,
+        "value": 3929,
         "cost": 50.8,
-        "yardValue": 3905
+        "yardValue": 3901
        }
       },
       {
@@ -806,20 +806,20 @@
        "label": "Mirae Asset Large Cap",
        "schemeCode": 118825,
        "score": 43.8,
-       "xirr": 0.0705,
-       "cagr": 0.1152,
-       "vsBench": 0.0133,
-       "sharpe": 0.414,
-       "beta": 1.0025,
+       "xirr": 0.0731,
+       "cagr": 0.1112,
+       "vsBench": 0.0156,
+       "sharpe": 0.3882,
+       "beta": 1.0028,
        "ter": 0.54,
        "maxdd": -0.1585,
-       "beatMonths": 0.6111,
+       "beatMonths": 0.6389,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4014,
+        "value": 4032,
         "cost": 32.2,
-        "yardValue": 3905
+        "yardValue": 3901
        }
       },
       {
@@ -827,20 +827,20 @@
        "label": "Axis Nifty 100 Index",
        "schemeCode": 147666,
        "score": 15.0,
-       "xirr": 0.0525,
-       "cagr": 0.1112,
-       "vsBench": 0.0092,
-       "sharpe": 0.3723,
-       "beta": 1.025,
+       "xirr": 0.0544,
+       "cagr": 0.1067,
+       "vsBench": 0.0111,
+       "sharpe": 0.3439,
+       "beta": 1.0257,
        "ter": 0.21,
        "maxdd": -0.1727,
        "beatMonths": 0.6111,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 3906,
+        "value": 3918,
         "cost": 12.3,
-        "yardValue": 3905
+        "yardValue": 3901
        }
       }
      ]
@@ -855,20 +855,20 @@
        "label": "HDFC Flexi Cap",
        "schemeCode": 118955,
        "score": 83.0,
-       "xirr": 0.108,
-       "cagr": 0.177,
-       "vsBench": 0.0371,
-       "sharpe": 0.8977,
-       "beta": 0.9674,
+       "xirr": 0.1076,
+       "cagr": 0.1707,
+       "vsBench": 0.0363,
+       "sharpe": 0.8529,
+       "beta": 0.9675,
        "ter": 0.78,
        "maxdd": -0.1332,
-       "beatMonths": 0.6111,
+       "beatMonths": 0.5556,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4247,
+        "value": 4245,
         "cost": 48.8,
-        "yardValue": 4106
+        "yardValue": 4107
        }
       },
       {
@@ -876,62 +876,62 @@
        "label": "Aditya Birla SL Flexi Cap",
        "schemeCode": 120564,
        "score": 73.0,
-       "xirr": 0.1204,
-       "cagr": 0.1686,
-       "vsBench": 0.0288,
-       "sharpe": 0.7721,
-       "beta": 1.0465,
+       "xirr": 0.121,
+       "cagr": 0.1626,
+       "vsBench": 0.0282,
+       "sharpe": 0.7349,
+       "beta": 1.0467,
        "ter": 0.8,
        "maxdd": -0.1702,
-       "beatMonths": 0.5556,
+       "beatMonths": 0.5278,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4326,
-        "cost": 49.9,
-        "yardValue": 4106
+        "value": 4334,
+        "cost": 49.8,
+        "yardValue": 4107
        }
       },
       {
        "rank": 3,
-       "label": "Parag Parikh Flexi Cap",
-       "schemeCode": 122639,
-       "score": 56.0,
-       "xirr": 0.071,
-       "cagr": 0.1319,
-       "vsBench": -0.008,
-       "sharpe": 0.6777,
-       "beta": 0.7185,
-       "ter": 0.63,
-       "maxdd": -0.1098,
-       "beatMonths": 0.4444,
+       "label": "Kotak Flexicap",
+       "schemeCode": 120166,
+       "score": 46.0,
+       "xirr": 0.0701,
+       "cagr": 0.1287,
+       "vsBench": -0.0058,
+       "sharpe": 0.4782,
+       "beta": 1.0943,
+       "ter": 0.58,
+       "maxdd": -0.163,
+       "beatMonths": 0.3889,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4017,
-        "cost": 38.5,
-        "yardValue": 4106
+        "value": 4014,
+        "cost": 35.2,
+        "yardValue": 4107
        }
       },
       {
        "rank": 4,
-       "label": "Kotak Flexicap",
-       "schemeCode": 120166,
-       "score": 40.0,
-       "xirr": 0.069,
-       "cagr": 0.1326,
-       "vsBench": -0.0073,
-       "sharpe": 0.5012,
-       "beta": 1.0941,
-       "ter": 0.58,
-       "maxdd": -0.163,
-       "beatMonths": 0.4722,
+       "label": "Parag Parikh Flexi Cap",
+       "schemeCode": 122639,
+       "score": 44.0,
+       "xirr": 0.0668,
+       "cagr": 0.1259,
+       "vsBench": -0.0085,
+       "sharpe": 0.6226,
+       "beta": 0.7177,
+       "ter": 0.63,
+       "maxdd": -0.1098,
+       "beatMonths": 0.3889,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4005,
-        "cost": 35.2,
-        "yardValue": 4106
+        "value": 3992,
+        "cost": 38.5,
+        "yardValue": 4107
        }
       },
       {
@@ -939,41 +939,41 @@
        "label": "DSP Flexi Cap",
        "schemeCode": 119076,
        "score": 36.0,
-       "xirr": 0.0726,
-       "cagr": 0.1273,
-       "vsBench": -0.0126,
-       "sharpe": 0.4755,
-       "beta": 1.1409,
+       "xirr": 0.0738,
+       "cagr": 0.123,
+       "vsBench": -0.0115,
+       "sharpe": 0.4492,
+       "beta": 1.141,
        "ter": 0.75,
        "maxdd": -0.176,
-       "beatMonths": 0.4167,
+       "beatMonths": 0.3889,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4028,
+        "value": 4037,
         "cost": 45.0,
-        "yardValue": 4106
+        "yardValue": 4107
        }
       },
       {
        "rank": 6,
        "label": "UTI Flexi Cap",
        "schemeCode": 120662,
-       "score": 12.0,
-       "xirr": 0.0707,
-       "cagr": 0.1018,
-       "vsBench": -0.0381,
-       "sharpe": 0.3276,
-       "beta": 1.0325,
+       "score": 18.0,
+       "xirr": 0.0709,
+       "cagr": 0.0959,
+       "vsBench": -0.0386,
+       "sharpe": 0.2868,
+       "beta": 1.0328,
        "ter": 0.9,
        "maxdd": -0.2008,
-       "beatMonths": 0.4167,
+       "beatMonths": 0.4444,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4016,
-        "cost": 53.0,
-        "yardValue": 4106
+        "value": 4019,
+        "cost": 52.9,
+        "yardValue": 4107
        }
       }
      ]
@@ -988,52 +988,52 @@
        "label": "Edelweiss Mid Cap",
        "schemeCode": 140228,
        "score": 80.0,
-       "xirr": 0.1106,
-       "cagr": 0.194,
-       "vsBench": 0.0475,
-       "sharpe": 0.7808,
-       "beta": 0.9549,
+       "xirr": 0.1075,
+       "cagr": 0.1851,
+       "vsBench": 0.0476,
+       "sharpe": 0.7366,
+       "beta": 0.9556,
        "ter": 0.38,
        "maxdd": -0.2006,
        "beatMonths": 0.5833,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4264,
+        "value": 4247,
         "cost": 24.5,
-        "yardValue": 4063
+        "yardValue": 4030
        }
       },
       {
        "rank": 2,
        "label": "Kotak Emerging Equity",
        "schemeCode": 120505,
-       "score": 65.0,
-       "xirr": 0.1136,
-       "cagr": 0.1719,
-       "vsBench": 0.0254,
-       "sharpe": 0.7163,
-       "beta": 0.8449,
+       "score": 71.7,
+       "xirr": 0.1103,
+       "cagr": 0.166,
+       "vsBench": 0.0286,
+       "sharpe": 0.6834,
+       "beta": 0.8454,
        "ter": 0.4,
        "maxdd": -0.1952,
        "beatMonths": 0.5556,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4283,
+        "value": 4265,
         "cost": 25.1,
-        "yardValue": 4063
+        "yardValue": 4030
        }
       },
       {
        "rank": 3,
        "label": "Motilal Oswal Midcap",
        "schemeCode": 127042,
-       "score": 48.3,
-       "xirr": 0.1048,
-       "cagr": 0.1901,
-       "vsBench": 0.0436,
-       "sharpe": 0.7196,
+       "score": 41.7,
+       "xirr": 0.1012,
+       "cagr": 0.1778,
+       "vsBench": 0.0404,
+       "sharpe": 0.6626,
        "beta": 0.8812,
        "ter": 0.65,
        "maxdd": -0.2886,
@@ -1041,9 +1041,9 @@
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4227,
-        "cost": 40.2,
-        "yardValue": 4063
+        "value": 4207,
+        "cost": 40.1,
+        "yardValue": 4030
        }
       },
       {
@@ -1051,20 +1051,20 @@
        "label": "HDFC Mid-Cap Opportunities",
        "schemeCode": 118989,
        "score": 6.7,
-       "xirr": 0.092,
-       "cagr": 0.16,
-       "vsBench": 0.0135,
-       "sharpe": 0.6575,
-       "beta": 0.8523,
+       "xirr": 0.0916,
+       "cagr": 0.1547,
+       "vsBench": 0.0172,
+       "sharpe": 0.6255,
+       "beta": 0.853,
        "ter": 0.82,
        "maxdd": -0.1676,
        "beatMonths": 0.5,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4147,
-        "cost": 51.5,
-        "yardValue": 4063
+        "value": 4144,
+        "cost": 51.4,
+        "yardValue": 4030
        }
       }
      ]
@@ -1079,20 +1079,20 @@
        "label": "Axis Small Cap",
        "schemeCode": 125354,
        "score": 86.0,
-       "xirr": 0.1065,
-       "cagr": 0.143,
-       "vsBench": 0.024,
-       "sharpe": 0.5438,
-       "beta": 0.7573,
+       "xirr": 0.1056,
+       "cagr": 0.1372,
+       "vsBench": 0.0273,
+       "sharpe": 0.509,
+       "beta": 0.7571,
        "ter": 0.53,
        "maxdd": -0.1943,
-       "beatMonths": 0.5833,
+       "beatMonths": 0.6111,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4237,
+        "value": 4232,
         "cost": 32.5,
-        "yardValue": 3977
+        "yardValue": 3937
        }
       },
       {
@@ -1100,10 +1100,10 @@
        "label": "Quant Small Cap",
        "schemeCode": 120828,
        "score": 75.0,
-       "xirr": 0.0983,
-       "cagr": 0.1598,
-       "vsBench": 0.0408,
-       "sharpe": 0.5787,
+       "xirr": 0.0981,
+       "cagr": 0.1569,
+       "vsBench": 0.047,
+       "sharpe": 0.5639,
        "beta": 0.8453,
        "ter": 0.64,
        "maxdd": -0.2442,
@@ -1111,9 +1111,9 @@
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4186,
+        "value": 4185,
         "cost": 38.3,
-        "yardValue": 3977
+        "yardValue": 3937
        }
       },
       {
@@ -1121,10 +1121,10 @@
        "label": "Nippon India Small Cap",
        "schemeCode": 118778,
        "score": 56.0,
-       "xirr": 0.08,
-       "cagr": 0.1364,
-       "vsBench": 0.0173,
-       "sharpe": 0.4806,
+       "xirr": 0.0798,
+       "cagr": 0.1328,
+       "vsBench": 0.0229,
+       "sharpe": 0.4607,
        "beta": 0.8441,
        "ter": 0.62,
        "maxdd": -0.2421,
@@ -1132,9 +1132,9 @@
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4073,
+        "value": 4071,
         "cost": 37.4,
-        "yardValue": 3977
+        "yardValue": 3937
        }
       },
       {
@@ -1142,20 +1142,20 @@
        "label": "Kotak Small Cap",
        "schemeCode": 120164,
        "score": 41.0,
-       "xirr": 0.0644,
-       "cagr": 0.1166,
-       "vsBench": -0.0024,
-       "sharpe": 0.3875,
-       "beta": 0.783,
+       "xirr": 0.0642,
+       "cagr": 0.1118,
+       "vsBench": 0.0019,
+       "sharpe": 0.3598,
+       "beta": 0.7823,
        "ter": 0.44,
        "maxdd": -0.2467,
-       "beatMonths": 0.4167,
+       "beatMonths": 0.4444,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 3977,
+        "value": 3978,
         "cost": 26.0,
-        "yardValue": 3977
+        "yardValue": 3937
        }
       },
       {
@@ -1163,20 +1163,20 @@
        "label": "SBI Small Cap",
        "schemeCode": 125497,
        "score": 38.0,
-       "xirr": 0.0712,
-       "cagr": 0.1156,
-       "vsBench": -0.0034,
-       "sharpe": 0.391,
-       "beta": 0.737,
+       "xirr": 0.0688,
+       "cagr": 0.1109,
+       "vsBench": 0.001,
+       "sharpe": 0.3619,
+       "beta": 0.7366,
        "ter": 0.67,
        "maxdd": -0.2242,
        "beatMonths": 0.4722,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4019,
-        "cost": 39.6,
-        "yardValue": 3977
+        "value": 4006,
+        "cost": 39.5,
+        "yardValue": 3937
        }
       },
       {
@@ -1184,90 +1184,90 @@
        "label": "HDFC Small Cap",
        "schemeCode": 130503,
        "score": 4.0,
-       "xirr": 0.035,
-       "cagr": 0.0944,
-       "vsBench": -0.0247,
-       "sharpe": 0.2518,
-       "beta": 0.8179,
+       "xirr": 0.0317,
+       "cagr": 0.0884,
+       "vsBench": -0.0215,
+       "sharpe": 0.2178,
+       "beta": 0.8176,
        "ter": 0.68,
        "maxdd": -0.2261,
        "beatMonths": 0.4167,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 3802,
-        "cost": 40.2,
-        "yardValue": 3977
+        "value": 3783,
+        "cost": 40.1,
+        "yardValue": 3937
        }
       }
      ]
     },
     "gold": {
      "yardstick": "average of funds we track",
-     "yardMaxdd": -0.2477,
+     "yardMaxdd": -0.25,
      "hitVs": "average of our top 3",
      "ranked": [
       {
        "rank": 1,
-       "label": "SBI Gold FoF",
-       "schemeCode": 119788,
-       "score": 66.7,
-       "xirr": 0.2577,
-       "cagr": 0.2973,
-       "vsBench": 0.0007,
-       "sharpe": 1.04,
-       "beta": 0.9899,
-       "ter": 0.42,
-       "maxdd": -0.2471,
-       "beatMonths": 0.5278,
-       "months": 36,
-       "sip": {
-        "invested": 3600,
-        "value": 5266,
-        "cost": 34.8,
-        "yardValue": 5256
-       }
-      },
-      {
-       "rank": 2,
-       "label": "Nippon India Gold Savings FoF",
-       "schemeCode": 118663,
-       "score": 60.0,
-       "xirr": 0.2566,
-       "cagr": 0.298,
-       "vsBench": 0.0013,
-       "sharpe": 1.074,
-       "beta": 1.0393,
-       "ter": 0.34,
-       "maxdd": -0.2441,
-       "beatMonths": 0.4167,
-       "months": 36,
-       "sip": {
-        "invested": 3600,
-        "value": 5258,
-        "cost": 28.1,
-        "yardValue": 5256
-       }
-      },
-      {
-       "rank": 3,
        "label": "Kotak Gold FoF",
        "schemeCode": 119781,
-       "score": 53.3,
-       "xirr": 0.2573,
-       "cagr": 0.2967,
-       "vsBench": 0.0,
-       "sharpe": 1.028,
-       "beta": 0.9955,
+       "score": 71.7,
+       "xirr": 0.2446,
+       "cagr": 0.2873,
+       "vsBench": 0.0005,
+       "sharpe": 0.9945,
+       "beta": 0.9953,
        "ter": 0.16,
-       "maxdd": -0.2413,
+       "maxdd": -0.2427,
        "beatMonths": 0.4444,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 5263,
+        "value": 5180,
         "cost": 13.2,
-        "yardValue": 5256
+        "yardValue": 5169
+       }
+      },
+      {
+       "rank": 2,
+       "label": "SBI Gold FoF",
+       "schemeCode": 119788,
+       "score": 65.0,
+       "xirr": 0.244,
+       "cagr": 0.2882,
+       "vsBench": 0.0014,
+       "sharpe": 1.0068,
+       "beta": 0.9901,
+       "ter": 0.42,
+       "maxdd": -0.2502,
+       "beatMonths": 0.5,
+       "months": 36,
+       "sip": {
+        "invested": 3600,
+        "value": 5176,
+        "cost": 34.8,
+        "yardValue": 5169
+       }
+      },
+      {
+       "rank": 3,
+       "label": "Nippon India Gold Savings FoF",
+       "schemeCode": 118663,
+       "score": 43.3,
+       "xirr": 0.2431,
+       "cagr": 0.2869,
+       "vsBench": 0.0001,
+       "sharpe": 1.0325,
+       "beta": 1.0392,
+       "ter": 0.34,
+       "maxdd": -0.2489,
+       "beatMonths": 0.4167,
+       "months": 36,
+       "sip": {
+        "invested": 3600,
+        "value": 5169,
+        "cost": 28.1,
+        "yardValue": 5169
        }
       },
       {
@@ -1275,20 +1275,20 @@
        "label": "Axis Gold FoF",
        "schemeCode": 120473,
        "score": 20.0,
-       "xirr": 0.2537,
-       "cagr": 0.2946,
-       "vsBench": -0.002,
-       "sharpe": 0.9371,
-       "beta": 0.9753,
+       "xirr": 0.2405,
+       "cagr": 0.2849,
+       "vsBench": -0.0019,
+       "sharpe": 0.9059,
+       "beta": 0.9754,
        "ter": 0.17,
        "maxdd": -0.2582,
        "beatMonths": 0.5,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 5237,
+        "value": 5150,
         "cost": 14.0,
-        "yardValue": 5256
+        "yardValue": 5169
        }
       }
      ]
@@ -1302,15 +1302,15 @@
        "rank": 1,
        "label": "Axis Corporate Bond",
        "schemeCode": 141588,
-       "score": 90.5,
-       "xirr": 0.0665,
-       "cagr": 0.0752,
-       "vsBench": 0.0037,
-       "sharpe": 0.8764,
-       "beta": 0.9771,
+       "score": 88.5,
+       "xirr": 0.0662,
+       "cagr": 0.0747,
+       "vsBench": 0.0038,
+       "sharpe": 0.8433,
+       "beta": 0.9774,
        "ter": 0.35,
        "maxdd": -0.0062,
-       "beatMonths": 0.6667,
+       "beatMonths": 0.6389,
        "months": 36,
        "sip": {
         "invested": 3600,
@@ -1324,14 +1324,14 @@
        "label": "HDFC Short Term Debt",
        "schemeCode": 119016,
        "score": 87.5,
-       "xirr": 0.0644,
-       "cagr": 0.073,
-       "vsBench": 0.0015,
-       "sharpe": 0.8953,
-       "beta": 0.8287,
+       "xirr": 0.0641,
+       "cagr": 0.0725,
+       "vsBench": 0.0016,
+       "sharpe": 0.8581,
+       "beta": 0.8292,
        "ter": 0.35,
        "maxdd": -0.0062,
-       "beatMonths": 0.4444,
+       "beatMonths": 0.5278,
        "months": 36,
        "sip": {
         "invested": 3600,
@@ -1342,38 +1342,17 @@
       },
       {
        "rank": 3,
-       "label": "Kotak Corporate Bond",
-       "schemeCode": 133791,
-       "score": 52.0,
-       "xirr": 0.0629,
-       "cagr": 0.0722,
-       "vsBench": 0.0007,
-       "sharpe": 0.6824,
-       "beta": 0.9774,
-       "ter": 0.36,
-       "maxdd": -0.0071,
-       "beatMonths": 0.3056,
-       "months": 36,
-       "sip": {
-        "invested": 3600,
-        "value": 3968,
-        "cost": 21.6,
-        "yardValue": 3963
-       }
-      },
-      {
-       "rank": 4,
        "label": "ICICI Pru Corporate Bond",
        "schemeCode": 120692,
-       "score": 50.0,
-       "xirr": 0.0639,
-       "cagr": 0.0715,
-       "vsBench": 0.0001,
-       "sharpe": 0.6789,
-       "beta": 0.8989,
+       "score": 54.0,
+       "xirr": 0.0635,
+       "cagr": 0.0711,
+       "vsBench": 0.0002,
+       "sharpe": 0.6475,
+       "beta": 0.8993,
        "ter": 0.38,
        "maxdd": -0.0101,
-       "beatMonths": 0.4722,
+       "beatMonths": 0.4167,
        "months": 36,
        "sip": {
         "invested": 3600,
@@ -1383,15 +1362,36 @@
        }
       },
       {
+       "rank": 4,
+       "label": "Kotak Corporate Bond",
+       "schemeCode": 133791,
+       "score": 50.0,
+       "xirr": 0.0627,
+       "cagr": 0.0716,
+       "vsBench": 0.0007,
+       "sharpe": 0.645,
+       "beta": 0.9771,
+       "ter": 0.36,
+       "maxdd": -0.0071,
+       "beatMonths": 0.4722,
+       "months": 36,
+       "sip": {
+        "invested": 3600,
+        "value": 3969,
+        "cost": 21.6,
+        "yardValue": 3963
+       }
+      },
+      {
        "rank": 5,
        "label": "Aditya Birla SL Corporate Bond",
        "schemeCode": 119533,
        "score": 18.5,
-       "xirr": 0.0576,
-       "cagr": 0.0688,
-       "vsBench": -0.0027,
-       "sharpe": 0.3127,
-       "beta": 1.1439,
+       "xirr": 0.0573,
+       "cagr": 0.0681,
+       "vsBench": -0.0029,
+       "sharpe": 0.2733,
+       "beta": 1.1436,
        "ter": 0.4,
        "maxdd": -0.0126,
        "beatMonths": 0.5,
@@ -1408,14 +1408,14 @@
        "label": "HDFC Corporate Bond",
        "schemeCode": 118987,
        "score": 1.5,
-       "xirr": 0.0567,
-       "cagr": 0.0681,
+       "xirr": 0.0565,
+       "cagr": 0.0677,
        "vsBench": -0.0033,
-       "sharpe": 0.2914,
-       "beta": 1.174,
+       "sharpe": 0.2672,
+       "beta": 1.1733,
        "ter": 0.4,
        "maxdd": -0.0149,
-       "beatMonths": 0.4167,
+       "beatMonths": 0.5,
        "months": 36,
        "sip": {
         "invested": 3600,
@@ -1429,8 +1429,8 @@
    }
   },
   "5": {
-   "start": "2021-11-13",
-   "end": "2026-11-13",
+   "start": "2021-11-16",
+   "end": "2026-11-16",
    "categories": {
     "largeCap": {
      "yardstick": "Nifty 50",
@@ -1442,10 +1442,10 @@
        "label": "Nippon India Large Cap",
        "schemeCode": 118632,
        "score": 81.2,
-       "xirr": 0.1238,
-       "cagr": 0.13,
-       "vsBench": 0.0506,
-       "sharpe": 0.4971,
+       "xirr": 0.1249,
+       "cagr": 0.1326,
+       "vsBench": 0.0521,
+       "sharpe": 0.5148,
        "beta": 0.9946,
        "ter": 0.66,
        "maxdd": -0.1537,
@@ -1453,9 +1453,9 @@
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 8219,
+        "value": 8251,
         "cost": 135.8,
-        "yardValue": 7457
+        "yardValue": 7455
        }
       },
       {
@@ -1463,20 +1463,20 @@
        "label": "ICICI Pru Bluechip (Large Cap)",
        "schemeCode": 120586,
        "score": 66.2,
-       "xirr": 0.1096,
-       "cagr": 0.111,
-       "vsBench": 0.0316,
-       "sharpe": 0.3955,
-       "beta": 0.9398,
+       "xirr": 0.111,
+       "cagr": 0.1127,
+       "vsBench": 0.0322,
+       "sharpe": 0.4086,
+       "beta": 0.9403,
        "ter": 0.85,
        "maxdd": -0.1539,
        "beatMonths": 0.65,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 7931,
+        "value": 7966,
         "cost": 169.4,
-        "yardValue": 7457
+        "yardValue": 7455
        }
       },
       {
@@ -1484,20 +1484,20 @@
        "label": "Mirae Asset Large Cap",
        "schemeCode": 118825,
        "score": 50.0,
-       "xirr": 0.0972,
-       "cagr": 0.0833,
-       "vsBench": 0.0039,
-       "sharpe": 0.192,
-       "beta": 0.9855,
+       "xirr": 0.099,
+       "cagr": 0.0858,
+       "vsBench": 0.0053,
+       "sharpe": 0.2099,
+       "beta": 0.9857,
        "ter": 0.54,
        "maxdd": -0.1637,
-       "beatMonths": 0.5667,
+       "beatMonths": 0.5833,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 7688,
+        "value": 7728,
         "cost": 100.4,
-        "yardValue": 7457
+        "yardValue": 7455
        }
       },
       {
@@ -1505,20 +1505,20 @@
        "label": "Axis Large Cap",
        "schemeCode": 120465,
        "score": 26.2,
-       "xirr": 0.0929,
-       "cagr": 0.0649,
-       "vsBench": -0.0145,
-       "sharpe": 0.0588,
-       "beta": 0.9649,
+       "xirr": 0.0946,
+       "cagr": 0.0665,
+       "vsBench": -0.014,
+       "sharpe": 0.0708,
+       "beta": 0.9651,
        "ter": 0.52,
-       "maxdd": -0.2081,
+       "maxdd": -0.2072,
        "beatMonths": 0.4667,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 7605,
+        "value": 7643,
         "cost": 94.3,
-        "yardValue": 7457
+        "yardValue": 7455
        }
       },
       {
@@ -1526,27 +1526,27 @@
        "label": "Axis Nifty 100 Index",
        "schemeCode": 147666,
        "score": 26.2,
-       "xirr": 0.089,
-       "cagr": 0.0818,
-       "vsBench": 0.0024,
-       "sharpe": 0.1764,
-       "beta": 1.0121,
+       "xirr": 0.0903,
+       "cagr": 0.0837,
+       "vsBench": 0.0032,
+       "sharpe": 0.1898,
+       "beta": 1.0125,
        "ter": 0.21,
        "maxdd": -0.1727,
        "beatMonths": 0.6,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 7531,
+        "value": 7560,
         "cost": 39.1,
-        "yardValue": 7457
+        "yardValue": 7455
        }
       }
      ]
     },
     "flexiCap": {
      "yardstick": "average of funds we track",
-     "yardMaxdd": -0.1926,
+     "yardMaxdd": -0.1921,
      "hitVs": "average of our top 3",
      "ranked": [
       {
@@ -1554,20 +1554,20 @@
        "label": "HDFC Flexi Cap",
        "schemeCode": 118955,
        "score": 89.0,
-       "xirr": 0.163,
-       "cagr": 0.1682,
-       "vsBench": 0.0595,
-       "sharpe": 0.797,
-       "beta": 0.965,
+       "xirr": 0.1631,
+       "cagr": 0.1702,
+       "vsBench": 0.0606,
+       "sharpe": 0.8106,
+       "beta": 0.9651,
        "ter": 0.78,
        "maxdd": -0.1332,
        "beatMonths": 0.6,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 9064,
-        "cost": 168.7,
-        "yardValue": 8265
+        "value": 9066,
+        "cost": 168.8,
+        "yardValue": 8271
        }
       },
       {
@@ -1575,20 +1575,20 @@
        "label": "Parag Parikh Flexi Cap",
        "schemeCode": 122639,
        "score": 71.0,
-       "xirr": 0.1268,
-       "cagr": 0.1142,
-       "vsBench": 0.0056,
-       "sharpe": 0.4576,
-       "beta": 0.7871,
+       "xirr": 0.1244,
+       "cagr": 0.1133,
+       "vsBench": 0.0038,
+       "sharpe": 0.4502,
+       "beta": 0.7866,
        "ter": 0.63,
-       "maxdd": -0.1775,
+       "maxdd": -0.176,
        "beatMonths": 0.45,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 8279,
+        "value": 8231,
         "cost": 128.8,
-        "yardValue": 8265
+        "yardValue": 8271
        }
       },
       {
@@ -1596,20 +1596,20 @@
        "label": "Aditya Birla SL Flexi Cap",
        "schemeCode": 120564,
        "score": 63.0,
-       "xirr": 0.1467,
-       "cagr": 0.1183,
-       "vsBench": 0.0096,
-       "sharpe": 0.4271,
-       "beta": 1.0399,
+       "xirr": 0.1472,
+       "cagr": 0.1203,
+       "vsBench": 0.0107,
+       "sharpe": 0.4415,
+       "beta": 1.04,
        "ter": 0.8,
        "maxdd": -0.1946,
-       "beatMonths": 0.4833,
+       "beatMonths": 0.5,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 8703,
+        "value": 8725,
         "cost": 160.3,
-        "yardValue": 8265
+        "yardValue": 8271
        }
       },
       {
@@ -1617,20 +1617,20 @@
        "label": "Kotak Flexicap",
        "schemeCode": 120166,
        "score": 41.0,
-       "xirr": 0.114,
-       "cagr": 0.1073,
-       "vsBench": -0.0013,
-       "sharpe": 0.342,
-       "beta": 1.069,
+       "xirr": 0.1148,
+       "cagr": 0.1091,
+       "vsBench": -0.0004,
+       "sharpe": 0.3542,
+       "beta": 1.0691,
        "ter": 0.58,
        "maxdd": -0.1777,
        "beatMonths": 0.4333,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 8020,
+        "value": 8043,
         "cost": 114.6,
-        "yardValue": 8265
+        "yardValue": 8271
        }
       },
       {
@@ -1638,20 +1638,20 @@
        "label": "DSP Flexi Cap",
        "schemeCode": 119076,
        "score": 30.0,
-       "xirr": 0.118,
-       "cagr": 0.0992,
-       "vsBench": -0.0095,
-       "sharpe": 0.2937,
-       "beta": 1.1028,
+       "xirr": 0.1188,
+       "cagr": 0.1001,
+       "vsBench": -0.0094,
+       "sharpe": 0.3005,
+       "beta": 1.1029,
        "ter": 0.75,
-       "maxdd": -0.217,
+       "maxdd": -0.2158,
        "beatMonths": 0.3667,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 8101,
+        "value": 8123,
         "cost": 148.1,
-        "yardValue": 8265
+        "yardValue": 8271
        }
       },
       {
@@ -1659,20 +1659,20 @@
        "label": "UTI Flexi Cap",
        "schemeCode": 120662,
        "score": 6.0,
-       "xirr": 0.0835,
-       "cagr": 0.0448,
-       "vsBench": -0.0639,
-       "sharpe": -0.0807,
-       "beta": 1.0362,
+       "xirr": 0.0838,
+       "cagr": 0.0444,
+       "vsBench": -0.0652,
+       "sharpe": -0.0833,
+       "beta": 1.0363,
        "ter": 0.9,
        "maxdd": -0.2555,
        "beatMonths": 0.35,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 7426,
+        "value": 7436,
         "cost": 158.9,
-        "yardValue": 8265
+        "yardValue": 8271
        }
       }
      ]
@@ -1687,20 +1687,20 @@
        "label": "Motilal Oswal Midcap",
        "schemeCode": 127042,
        "score": 83.3,
-       "xirr": 0.1855,
-       "cagr": 0.1934,
-       "vsBench": 0.0511,
-       "sharpe": 0.7605,
-       "beta": 0.8959,
+       "xirr": 0.1836,
+       "cagr": 0.1939,
+       "vsBench": 0.0531,
+       "sharpe": 0.7641,
+       "beta": 0.896,
        "ter": 0.65,
        "maxdd": -0.2886,
        "beatMonths": 0.5167,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 9583,
+        "value": 9550,
         "cost": 150.6,
-        "yardValue": 8750
+        "yardValue": 8685
        }
       },
       {
@@ -1708,20 +1708,20 @@
        "label": "Edelweiss Mid Cap",
        "schemeCode": 140228,
        "score": 50.0,
-       "xirr": 0.1808,
-       "cagr": 0.1692,
-       "vsBench": 0.0269,
-       "sharpe": 0.6612,
-       "beta": 0.9409,
+       "xirr": 0.179,
+       "cagr": 0.1685,
+       "vsBench": 0.0277,
+       "sharpe": 0.6582,
+       "beta": 0.9413,
        "ter": 0.38,
        "maxdd": -0.2006,
        "beatMonths": 0.55,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 9472,
-        "cost": 86.7,
-        "yardValue": 8750
+        "value": 9443,
+        "cost": 86.8,
+        "yardValue": 8685
        }
       },
       {
@@ -1730,19 +1730,19 @@
        "schemeCode": 118989,
        "score": 46.7,
        "xirr": 0.1714,
-       "cagr": 0.1762,
-       "vsBench": 0.0339,
-       "sharpe": 0.7451,
-       "beta": 0.8758,
+       "cagr": 0.1775,
+       "vsBench": 0.0367,
+       "sharpe": 0.7526,
+       "beta": 0.8762,
        "ter": 0.82,
        "maxdd": -0.1676,
        "beatMonths": 0.55,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 9254,
+        "value": 9255,
         "cost": 187.0,
-        "yardValue": 8750
+        "yardValue": 8685
        }
       },
       {
@@ -1750,20 +1750,20 @@
        "label": "Kotak Emerging Equity",
        "schemeCode": 120505,
        "score": 20.0,
-       "xirr": 0.1508,
-       "cagr": 0.1224,
-       "vsBench": -0.0199,
-       "sharpe": 0.4326,
-       "beta": 0.8377,
+       "xirr": 0.1489,
+       "cagr": 0.1219,
+       "vsBench": -0.019,
+       "sharpe": 0.4298,
+       "beta": 0.8379,
        "ter": 0.4,
-       "maxdd": -0.2001,
+       "maxdd": -0.1991,
        "beatMonths": 0.45,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 8793,
+        "value": 8761,
         "cost": 82.3,
-        "yardValue": 8750
+        "yardValue": 8685
        }
       }
      ]
@@ -1779,9 +1779,9 @@
        "schemeCode": 120828,
        "score": 77.0,
        "xirr": 0.1733,
-       "cagr": 0.1735,
-       "vsBench": 0.0446,
-       "sharpe": 0.6195,
+       "cagr": 0.1739,
+       "vsBench": 0.0479,
+       "sharpe": 0.6215,
        "beta": 0.9249,
        "ter": 0.64,
        "maxdd": -0.2517,
@@ -1791,7 +1791,7 @@
         "invested": 6000,
         "value": 9297,
         "cost": 143.0,
-        "yardValue": 8452
+        "yardValue": 8371
        }
       },
       {
@@ -1799,10 +1799,10 @@
        "label": "Nippon India Small Cap",
        "schemeCode": 118778,
        "score": 75.0,
-       "xirr": 0.1572,
-       "cagr": 0.1706,
-       "vsBench": 0.0417,
-       "sharpe": 0.6663,
+       "xirr": 0.1571,
+       "cagr": 0.1696,
+       "vsBench": 0.0437,
+       "sharpe": 0.6612,
        "beta": 0.8505,
        "ter": 0.62,
        "maxdd": -0.2421,
@@ -1810,9 +1810,9 @@
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 8934,
-        "cost": 136.9,
-        "yardValue": 8452
+        "value": 8933,
+        "cost": 136.8,
+        "yardValue": 8371
        }
       },
       {
@@ -1820,20 +1820,20 @@
        "label": "Axis Small Cap",
        "schemeCode": 125354,
        "score": 67.0,
-       "xirr": 0.1511,
-       "cagr": 0.1474,
-       "vsBench": 0.0185,
-       "sharpe": 0.5941,
-       "beta": 0.7237,
+       "xirr": 0.1506,
+       "cagr": 0.1466,
+       "vsBench": 0.0206,
+       "sharpe": 0.5889,
+       "beta": 0.7236,
        "ter": 0.53,
        "maxdd": -0.1943,
-       "beatMonths": 0.5333,
+       "beatMonths": 0.55,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 8795,
-        "cost": 110.0,
-        "yardValue": 8452
+        "value": 8789,
+        "cost": 109.9,
+        "yardValue": 8371
        }
       },
       {
@@ -1841,20 +1841,20 @@
        "label": "HDFC Small Cap",
        "schemeCode": 130503,
        "score": 34.0,
-       "xirr": 0.1182,
-       "cagr": 0.1365,
-       "vsBench": 0.0077,
-       "sharpe": 0.491,
-       "beta": 0.8199,
+       "xirr": 0.116,
+       "cagr": 0.1339,
+       "vsBench": 0.008,
+       "sharpe": 0.4772,
+       "beta": 0.8197,
        "ter": 0.68,
        "maxdd": -0.2261,
        "beatMonths": 0.4667,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 8104,
+        "value": 8067,
         "cost": 144.2,
-        "yardValue": 8452
+        "yardValue": 8371
        }
       },
       {
@@ -1862,20 +1862,20 @@
        "label": "SBI Small Cap",
        "schemeCode": 125497,
        "score": 26.0,
-       "xirr": 0.1174,
-       "cagr": 0.1201,
-       "vsBench": -0.0088,
-       "sharpe": 0.4321,
-       "beta": 0.7259,
+       "xirr": 0.116,
+       "cagr": 0.1205,
+       "vsBench": -0.0055,
+       "sharpe": 0.4357,
+       "beta": 0.7257,
        "ter": 0.67,
        "maxdd": -0.2242,
        "beatMonths": 0.4333,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 8089,
-        "cost": 132.5,
-        "yardValue": 8452
+        "value": 8067,
+        "cost": 132.6,
+        "yardValue": 8371
        }
       },
       {
@@ -1883,27 +1883,27 @@
        "label": "Kotak Small Cap",
        "schemeCode": 120164,
        "score": 21.0,
-       "xirr": 0.1149,
-       "cagr": 0.1084,
-       "vsBench": -0.0205,
-       "sharpe": 0.351,
-       "beta": 0.7511,
+       "xirr": 0.1147,
+       "cagr": 0.1073,
+       "vsBench": -0.0187,
+       "sharpe": 0.3448,
+       "beta": 0.7506,
        "ter": 0.44,
        "maxdd": -0.2467,
-       "beatMonths": 0.4,
+       "beatMonths": 0.4167,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 8037,
+        "value": 8041,
         "cost": 87.1,
-        "yardValue": 8452
+        "yardValue": 8371
        }
       }
      ]
     },
     "gold": {
      "yardstick": "average of funds we track",
-     "yardMaxdd": -0.2477,
+     "yardMaxdd": -0.25,
      "hitVs": "average of our top 3",
      "ranked": [
       {
@@ -1911,20 +1911,20 @@
        "label": "SBI Gold FoF",
        "schemeCode": 119788,
        "score": 75.0,
-       "xirr": 0.2472,
-       "cagr": 0.2143,
-       "vsBench": 0.0021,
-       "sharpe": 0.8298,
-       "beta": 0.9913,
+       "xirr": 0.2394,
+       "cagr": 0.2085,
+       "vsBench": 0.0017,
+       "sharpe": 0.8035,
+       "beta": 0.9914,
        "ter": 0.42,
-       "maxdd": -0.2471,
-       "beatMonths": 0.4833,
+       "maxdd": -0.2502,
+       "beatMonths": 0.4667,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 11144,
+        "value": 10954,
         "cost": 103.2,
-        "yardValue": 11098
+        "yardValue": 10915
        }
       },
       {
@@ -1932,20 +1932,20 @@
        "label": "Kotak Gold FoF",
        "schemeCode": 119781,
        "score": 45.0,
-       "xirr": 0.2455,
-       "cagr": 0.2108,
-       "vsBench": -0.0014,
-       "sharpe": 0.8052,
-       "beta": 0.9961,
+       "xirr": 0.2383,
+       "cagr": 0.2054,
+       "vsBench": -0.0013,
+       "sharpe": 0.7814,
+       "beta": 0.996,
        "ter": 0.16,
-       "maxdd": -0.2413,
+       "maxdd": -0.2427,
        "beatMonths": 0.45,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 11098,
+        "value": 10923,
         "cost": 39.1,
-        "yardValue": 11098
+        "yardValue": 10915
        }
       },
       {
@@ -1953,20 +1953,20 @@
        "label": "Nippon India Gold Savings FoF",
        "schemeCode": 118663,
        "score": 43.3,
-       "xirr": 0.2452,
-       "cagr": 0.2113,
-       "vsBench": -0.0008,
-       "sharpe": 0.8314,
-       "beta": 1.0368,
+       "xirr": 0.2376,
+       "cagr": 0.2061,
+       "vsBench": -0.0006,
+       "sharpe": 0.8073,
+       "beta": 1.0367,
        "ter": 0.34,
-       "maxdd": -0.2441,
+       "maxdd": -0.2489,
        "beatMonths": 0.45,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 11090,
-        "cost": 83.2,
-        "yardValue": 11098
+        "value": 10905,
+        "cost": 83.1,
+        "yardValue": 10915
        }
       },
       {
@@ -1974,10 +1974,10 @@
        "label": "Axis Gold FoF",
        "schemeCode": 120473,
        "score": 36.7,
-       "xirr": 0.244,
-       "cagr": 0.2122,
+       "xirr": 0.2365,
+       "cagr": 0.2068,
        "vsBench": 0.0001,
-       "sharpe": 0.7521,
+       "sharpe": 0.7303,
        "beta": 0.9759,
        "ter": 0.17,
        "maxdd": -0.2582,
@@ -1985,9 +1985,9 @@
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 11059,
+        "value": 10878,
         "cost": 41.6,
-        "yardValue": 11098
+        "yardValue": 10915
        }
       }
      ]
@@ -2002,11 +2002,11 @@
        "label": "Axis Corporate Bond",
        "schemeCode": 141588,
        "score": 94.5,
-       "xirr": 0.0704,
+       "xirr": 0.0702,
        "cagr": 0.0676,
        "vsBench": 0.0029,
-       "sharpe": 0.256,
-       "beta": 0.959,
+       "sharpe": 0.2566,
+       "beta": 0.9591,
        "ter": 0.35,
        "maxdd": -0.0091,
        "beatMonths": 0.55,
@@ -2015,7 +2015,7 @@
         "invested": 6000,
         "value": 7184,
         "cost": 60.8,
-        "yardValue": 7124
+        "yardValue": 7125
        }
       },
       {
@@ -2023,11 +2023,11 @@
        "label": "ICICI Pru Corporate Bond",
        "schemeCode": 120692,
        "score": 74.0,
-       "xirr": 0.0688,
-       "cagr": 0.0666,
+       "xirr": 0.0686,
+       "cagr": 0.0665,
        "vsBench": 0.0018,
-       "sharpe": 0.2093,
-       "beta": 0.8805,
+       "sharpe": 0.2091,
+       "beta": 0.8808,
        "ter": 0.38,
        "maxdd": -0.0101,
        "beatMonths": 0.4333,
@@ -2036,7 +2036,7 @@
         "invested": 6000,
         "value": 7154,
         "cost": 65.9,
-        "yardValue": 7124
+        "yardValue": 7125
        }
       },
       {
@@ -2044,20 +2044,20 @@
        "label": "HDFC Short Term Debt",
        "schemeCode": 119016,
        "score": 68.5,
-       "xirr": 0.0686,
+       "xirr": 0.0684,
        "cagr": 0.0654,
        "vsBench": 0.0007,
-       "sharpe": 0.0955,
-       "beta": 0.8614,
+       "sharpe": 0.0978,
+       "beta": 0.8617,
        "ter": 0.35,
        "maxdd": -0.0095,
        "beatMonths": 0.4667,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 7150,
+        "value": 7151,
         "cost": 60.6,
-        "yardValue": 7124
+        "yardValue": 7125
        }
       },
       {
@@ -2067,18 +2067,18 @@
        "score": 43.0,
        "xirr": 0.0672,
        "cagr": 0.0643,
-       "vsBench": -0.0005,
-       "sharpe": -0.0166,
-       "beta": 0.987,
+       "vsBench": -0.0004,
+       "sharpe": -0.0094,
+       "beta": 0.9868,
        "ter": 0.36,
        "maxdd": -0.0103,
        "beatMonths": 0.4333,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 7126,
+        "value": 7128,
         "cost": 62.2,
-        "yardValue": 7124
+        "yardValue": 7125
        }
       },
       {
@@ -2086,11 +2086,11 @@
        "label": "Aditya Birla SL Corporate Bond",
        "schemeCode": 119533,
        "score": 18.5,
-       "xirr": 0.0642,
-       "cagr": 0.0631,
-       "vsBench": -0.0016,
-       "sharpe": -0.102,
-       "beta": 1.1221,
+       "xirr": 0.064,
+       "cagr": 0.063,
+       "vsBench": -0.0017,
+       "sharpe": -0.1042,
+       "beta": 1.122,
        "ter": 0.4,
        "maxdd": -0.0126,
        "beatMonths": 0.5,
@@ -2099,7 +2099,7 @@
         "invested": 6000,
         "value": 7070,
         "cost": 69.0,
-        "yardValue": 7124
+        "yardValue": 7125
        }
       },
       {
@@ -2107,20 +2107,20 @@
        "label": "HDFC Corporate Bond",
        "schemeCode": 118987,
        "score": 1.5,
-       "xirr": 0.0635,
+       "xirr": 0.0634,
        "cagr": 0.0615,
-       "vsBench": -0.0033,
-       "sharpe": -0.2258,
-       "beta": 1.19,
+       "vsBench": -0.0032,
+       "sharpe": -0.2224,
+       "beta": 1.1896,
        "ter": 0.4,
        "maxdd": -0.0154,
        "beatMonths": 0.45,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 7059,
+        "value": 7060,
         "cost": 69.0,
-        "yardValue": 7124
+        "yardValue": 7125
        }
       }
      ]
