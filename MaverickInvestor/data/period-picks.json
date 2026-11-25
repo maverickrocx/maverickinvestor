@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-24",
+ "asOf": "2026-11-25",
  "weights": {
   "xirr": 0.3,
   "vsBench": 0.25,
@@ -216,22 +216,22 @@
       },
       {
        "rank": 5,
-       "label": "Parag Parikh Flexi Cap",
-       "schemeCode": 122639,
+       "label": "Axis Nifty 500 Index",
+       "schemeCode": 152731,
        "score": 34.2,
-       "xirr": 0.0739,
-       "cagr": 0.0111,
-       "vsBench": 0.0024,
-       "sharpe": -0.509,
-       "beta": 0.6233,
-       "ter": 0.63,
-       "maxdd": -0.106,
-       "beatMonths": 0.5,
+       "xirr": 0.0681,
+       "cagr": 0.0087,
+       "vsBench": 0.0,
+       "sharpe": -0.3058,
+       "beta": 1.0,
+       "ter": 0.25,
+       "maxdd": -0.1486,
+       "beatMonths": 0.0,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1252,
-        "cost": 4.0,
+        "value": 1248,
+        "cost": 1.6,
         "yardValue": 1248
        }
       },
@@ -258,22 +258,22 @@
       },
       {
        "rank": 7,
-       "label": "Axis Nifty 500 Index",
-       "schemeCode": 152731,
+       "label": "Parag Parikh Flexi Cap",
+       "schemeCode": 122639,
        "score": 25.0,
-       "xirr": 0.0681,
-       "cagr": 0.0087,
-       "vsBench": 0.0,
-       "sharpe": -0.3058,
-       "beta": 1.0,
-       "ter": 0.25,
-       "maxdd": -0.1486,
-       "beatMonths": 0.0,
+       "xirr": 0.063,
+       "cagr": 0.0053,
+       "vsBench": -0.0034,
+       "sharpe": -0.5691,
+       "beta": 0.6213,
+       "ter": 0.63,
+       "maxdd": -0.106,
+       "beatMonths": 0.5,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1248,
-        "cost": 1.6,
+        "value": 1245,
+        "cost": 4.0,
         "yardValue": 1248
        }
       }
@@ -352,18 +352,18 @@
        "label": "HDFC Mid-Cap Opportunities",
        "schemeCode": 118989,
        "score": 28.3,
-       "xirr": 0.0779,
-       "cagr": 0.0411,
-       "vsBench": 0.0152,
-       "sharpe": -0.0932,
-       "beta": 0.8221,
+       "xirr": 0.0678,
+       "cagr": 0.0355,
+       "vsBench": 0.0096,
+       "sharpe": -0.1302,
+       "beta": 0.8213,
        "ter": 0.82,
        "maxdd": -0.1257,
-       "beatMonths": 0.5,
+       "beatMonths": 0.4167,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1254,
+        "value": 1248,
         "cost": 5.4,
         "yardValue": 1231
        }
@@ -377,30 +377,9 @@
      "ranked": [
       {
        "rank": 1,
-       "label": "Quant Small Cap",
-       "schemeCode": 120828,
-       "score": 85.0,
-       "xirr": 0.1693,
-       "cagr": 0.1183,
-       "vsBench": 0.0535,
-       "sharpe": 0.3776,
-       "beta": 0.8452,
-       "ter": 0.64,
-       "maxdd": -0.1479,
-       "beatMonths": 0.5833,
-       "months": 12,
-       "sip": {
-        "invested": 1200,
-        "value": 1317,
-        "cost": 4.5,
-        "yardValue": 1269
-       }
-      },
-      {
-       "rank": 2,
        "label": "Axis Small Cap",
        "schemeCode": 125354,
-       "score": 78.0,
+       "score": 84.0,
        "xirr": 0.1543,
        "cagr": 0.1037,
        "vsBench": 0.0389,
@@ -418,10 +397,31 @@
        }
       },
       {
+       "rank": 2,
+       "label": "Quant Small Cap",
+       "schemeCode": 120828,
+       "score": 77.0,
+       "xirr": 0.1459,
+       "cagr": 0.105,
+       "vsBench": 0.0402,
+       "sharpe": 0.3065,
+       "beta": 0.8468,
+       "ter": 0.64,
+       "maxdd": -0.1479,
+       "beatMonths": 0.5833,
+       "months": 12,
+       "sip": {
+        "invested": 1200,
+        "value": 1303,
+        "cost": 4.5,
+        "yardValue": 1269
+       }
+      },
+      {
        "rank": 3,
        "label": "Kotak Small Cap",
        "schemeCode": 120164,
-       "score": 56.0,
+       "score": 58.0,
        "xirr": 0.1222,
        "cagr": 0.0861,
        "vsBench": 0.0213,
@@ -442,7 +442,7 @@
        "rank": 4,
        "label": "SBI Small Cap",
        "schemeCode": 125497,
-       "score": 38.0,
+       "score": 47.0,
        "xirr": 0.1266,
        "cagr": 0.0778,
        "vsBench": 0.013,
@@ -463,19 +463,19 @@
        "rank": 5,
        "label": "Nippon India Small Cap",
        "schemeCode": 118778,
-       "score": 33.0,
-       "xirr": 0.1132,
-       "cagr": 0.081,
-       "vsBench": 0.0163,
-       "sharpe": 0.1693,
-       "beta": 0.8699,
+       "score": 24.0,
+       "xirr": 0.0984,
+       "cagr": 0.0725,
+       "vsBench": 0.0078,
+       "sharpe": 0.1215,
+       "beta": 0.8703,
        "ter": 0.62,
        "maxdd": -0.132,
-       "beatMonths": 0.5833,
+       "beatMonths": 0.5,
        "months": 12,
        "sip": {
         "invested": 1200,
-        "value": 1279,
+        "value": 1270,
         "cost": 4.2,
         "yardValue": 1269
        }
@@ -857,18 +857,18 @@
        "score": 83.0,
        "xirr": 0.1139,
        "cagr": 0.1749,
-       "vsBench": 0.0386,
+       "vsBench": 0.039,
        "sharpe": 0.8803,
-       "beta": 0.9703,
+       "beta": 0.9712,
        "ter": 0.78,
        "maxdd": -0.1332,
-       "beatMonths": 0.6111,
+       "beatMonths": 0.5556,
        "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4297,
         "cost": 48.8,
-        "yardValue": 4130
+        "yardValue": 4126
        }
       },
       {
@@ -878,60 +878,60 @@
        "score": 73.0,
        "xirr": 0.1183,
        "cagr": 0.1611,
-       "vsBench": 0.0249,
+       "vsBench": 0.0253,
        "sharpe": 0.7228,
-       "beta": 1.0449,
+       "beta": 1.0455,
        "ter": 0.8,
        "maxdd": -0.1702,
-       "beatMonths": 0.5556,
+       "beatMonths": 0.5278,
        "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4326,
         "cost": 49.8,
-        "yardValue": 4130
+        "yardValue": 4126
        }
       },
       {
        "rank": 3,
-       "label": "Parag Parikh Flexi Cap",
-       "schemeCode": 122639,
-       "score": 56.0,
-       "xirr": 0.0742,
-       "cagr": 0.1291,
-       "vsBench": -0.0072,
-       "sharpe": 0.6506,
-       "beta": 0.7173,
-       "ter": 0.63,
-       "maxdd": -0.1098,
-       "beatMonths": 0.4444,
-       "months": 36,
-       "sip": {
-        "invested": 3600,
-        "value": 4042,
-        "cost": 38.5,
-        "yardValue": 4130
-       }
-      },
-      {
-       "rank": 4,
        "label": "Kotak Flexicap",
        "schemeCode": 120166,
-       "score": 40.0,
+       "score": 46.0,
        "xirr": 0.0707,
        "cagr": 0.132,
-       "vsBench": -0.0043,
+       "vsBench": -0.0039,
        "sharpe": 0.497,
-       "beta": 1.0945,
+       "beta": 1.0954,
        "ter": 0.58,
        "maxdd": -0.163,
-       "beatMonths": 0.4722,
+       "beatMonths": 0.3889,
        "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4023,
         "cost": 35.2,
-        "yardValue": 4130
+        "yardValue": 4126
+       }
+      },
+      {
+       "rank": 4,
+       "label": "Parag Parikh Flexi Cap",
+       "schemeCode": 122639,
+       "score": 44.0,
+       "xirr": 0.0701,
+       "cagr": 0.1266,
+       "vsBench": -0.0092,
+       "sharpe": 0.6296,
+       "beta": 0.7165,
+       "ter": 0.63,
+       "maxdd": -0.1098,
+       "beatMonths": 0.3889,
+       "months": 36,
+       "sip": {
+        "invested": 3600,
+        "value": 4019,
+        "cost": 38.5,
+        "yardValue": 4126
        }
       },
       {
@@ -941,39 +941,39 @@
        "score": 36.0,
        "xirr": 0.0758,
        "cagr": 0.1233,
-       "vsBench": -0.013,
+       "vsBench": -0.0125,
        "sharpe": 0.45,
-       "beta": 1.1419,
+       "beta": 1.1423,
        "ter": 0.75,
        "maxdd": -0.176,
-       "beatMonths": 0.4167,
+       "beatMonths": 0.3889,
        "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4054,
         "cost": 44.9,
-        "yardValue": 4130
+        "yardValue": 4126
        }
       },
       {
        "rank": 6,
        "label": "UTI Flexi Cap",
        "schemeCode": 120662,
-       "score": 12.0,
+       "score": 18.0,
        "xirr": 0.0734,
        "cagr": 0.0973,
-       "vsBench": -0.039,
+       "vsBench": -0.0386,
        "sharpe": 0.2958,
-       "beta": 1.0311,
+       "beta": 1.0292,
        "ter": 0.9,
        "maxdd": -0.2008,
-       "beatMonths": 0.4167,
+       "beatMonths": 0.4444,
        "months": 36,
        "sip": {
         "invested": 3600,
         "value": 4040,
         "cost": 52.9,
-        "yardValue": 4130
+        "yardValue": 4126
        }
       }
      ]
@@ -1051,18 +1051,18 @@
        "label": "HDFC Mid-Cap Opportunities",
        "schemeCode": 118989,
        "score": 23.3,
-       "xirr": 0.0986,
-       "cagr": 0.1594,
-       "vsBench": 0.0254,
-       "sharpe": 0.6531,
-       "beta": 0.8534,
+       "xirr": 0.0948,
+       "cagr": 0.157,
+       "vsBench": 0.023,
+       "sharpe": 0.6405,
+       "beta": 0.8531,
        "ter": 0.82,
        "maxdd": -0.1676,
-       "beatMonths": 0.5278,
+       "beatMonths": 0.5,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4195,
+        "value": 4174,
         "cost": 51.4,
         "yardValue": 4021
        }
@@ -1100,18 +1100,18 @@
        "label": "Quant Small Cap",
        "schemeCode": 120828,
        "score": 75.0,
-       "xirr": 0.0907,
-       "cagr": 0.1501,
-       "vsBench": 0.0433,
-       "sharpe": 0.5294,
-       "beta": 0.8457,
+       "xirr": 0.083,
+       "cagr": 0.1454,
+       "vsBench": 0.0387,
+       "sharpe": 0.5072,
+       "beta": 0.8461,
        "ter": 0.64,
        "maxdd": -0.2442,
        "beatMonths": 0.6111,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4145,
+        "value": 4100,
         "cost": 38.3,
         "yardValue": 3913
        }
@@ -1121,18 +1121,18 @@
        "label": "Nippon India Small Cap",
        "schemeCode": 118778,
        "score": 56.0,
-       "xirr": 0.0761,
-       "cagr": 0.126,
-       "vsBench": 0.0193,
-       "sharpe": 0.4239,
-       "beta": 0.844,
+       "xirr": 0.071,
+       "cagr": 0.123,
+       "vsBench": 0.0162,
+       "sharpe": 0.4081,
+       "beta": 0.8441,
        "ter": 0.62,
        "maxdd": -0.2421,
-       "beatMonths": 0.5,
+       "beatMonths": 0.4722,
        "months": 36,
        "sip": {
         "invested": 3600,
-        "value": 4054,
+        "value": 4025,
         "cost": 37.3,
         "yardValue": 3913
        }
@@ -1556,9 +1556,9 @@
        "score": 89.0,
        "xirr": 0.1666,
        "cagr": 0.1783,
-       "vsBench": 0.0612,
+       "vsBench": 0.0614,
        "sharpe": 0.8679,
-       "beta": 0.9657,
+       "beta": 0.9663,
        "ter": 0.78,
        "maxdd": -0.1332,
        "beatMonths": 0.6,
@@ -1567,7 +1567,7 @@
         "invested": 6000,
         "value": 9183,
         "cost": 168.9,
-        "yardValue": 8324
+        "yardValue": 8316
        }
       },
       {
@@ -1575,20 +1575,20 @@
        "label": "Parag Parikh Flexi Cap",
        "schemeCode": 122639,
        "score": 71.0,
-       "xirr": 0.1286,
-       "cagr": 0.1199,
-       "vsBench": 0.0027,
-       "sharpe": 0.5024,
-       "beta": 0.7896,
+       "xirr": 0.126,
+       "cagr": 0.1184,
+       "vsBench": 0.0015,
+       "sharpe": 0.4916,
+       "beta": 0.7889,
        "ter": 0.63,
        "maxdd": -0.1757,
        "beatMonths": 0.45,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 8338,
+        "value": 8292,
         "cost": 128.9,
-        "yardValue": 8324
+        "yardValue": 8316
        }
       },
       {
@@ -1598,9 +1598,9 @@
        "score": 63.0,
        "xirr": 0.1457,
        "cagr": 0.1263,
-       "vsBench": 0.0092,
+       "vsBench": 0.0094,
        "sharpe": 0.4814,
-       "beta": 1.0405,
+       "beta": 1.0408,
        "ter": 0.8,
        "maxdd": -0.1946,
        "beatMonths": 0.4833,
@@ -1609,7 +1609,7 @@
         "invested": 6000,
         "value": 8714,
         "cost": 160.5,
-        "yardValue": 8324
+        "yardValue": 8316
        }
       },
       {
@@ -1619,9 +1619,9 @@
        "score": 41.0,
        "xirr": 0.115,
        "cagr": 0.1161,
-       "vsBench": -0.001,
+       "vsBench": -0.0008,
        "sharpe": 0.3978,
-       "beta": 1.0676,
+       "beta": 1.0682,
        "ter": 0.58,
        "maxdd": -0.1777,
        "beatMonths": 0.4333,
@@ -1630,7 +1630,7 @@
         "invested": 6000,
         "value": 8063,
         "cost": 114.8,
-        "yardValue": 8324
+        "yardValue": 8316
        }
       },
       {
@@ -1640,9 +1640,9 @@
        "score": 30.0,
        "xirr": 0.12,
        "cagr": 0.1094,
-       "vsBench": -0.0078,
+       "vsBench": -0.0075,
        "sharpe": 0.3603,
-       "beta": 1.103,
+       "beta": 1.1034,
        "ter": 0.75,
        "maxdd": -0.2158,
        "beatMonths": 0.3667,
@@ -1651,7 +1651,7 @@
         "invested": 6000,
         "value": 8166,
         "cost": 148.3,
-        "yardValue": 8324
+        "yardValue": 8316
        }
       },
       {
@@ -1661,9 +1661,9 @@
        "score": 6.0,
        "xirr": 0.0855,
        "cagr": 0.0528,
-       "vsBench": -0.0643,
+       "vsBench": -0.0641,
        "sharpe": -0.0231,
-       "beta": 1.0337,
+       "beta": 1.0325,
        "ter": 0.9,
        "maxdd": -0.2479,
        "beatMonths": 0.35,
@@ -1672,7 +1672,7 @@
         "invested": 6000,
         "value": 7480,
         "cost": 159.1,
-        "yardValue": 8324
+        "yardValue": 8316
        }
       }
      ]
@@ -1684,22 +1684,22 @@
      "ranked": [
       {
        "rank": 1,
-       "label": "HDFC Mid-Cap Opportunities",
-       "schemeCode": 118989,
-       "score": 63.3,
-       "xirr": 0.1755,
-       "cagr": 0.1876,
-       "vsBench": 0.04,
-       "sharpe": 0.813,
-       "beta": 0.8737,
-       "ter": 0.82,
-       "maxdd": -0.1676,
-       "beatMonths": 0.5667,
+       "label": "Motilal Oswal Midcap",
+       "schemeCode": 127042,
+       "score": 66.7,
+       "xirr": 0.1746,
+       "cagr": 0.1948,
+       "vsBench": 0.0471,
+       "sharpe": 0.7697,
+       "beta": 0.8939,
+       "ter": 0.65,
+       "maxdd": -0.2886,
+       "beatMonths": 0.5167,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 9376,
-        "cost": 187.2,
+        "value": 9369,
+        "cost": 150.8,
         "yardValue": 8675
        }
       },
@@ -1726,22 +1726,22 @@
       },
       {
        "rank": 3,
-       "label": "Motilal Oswal Midcap",
-       "schemeCode": 127042,
-       "score": 56.7,
-       "xirr": 0.1746,
-       "cagr": 0.1948,
-       "vsBench": 0.0471,
-       "sharpe": 0.7697,
-       "beta": 0.8939,
-       "ter": 0.65,
-       "maxdd": -0.2886,
-       "beatMonths": 0.5167,
+       "label": "HDFC Mid-Cap Opportunities",
+       "schemeCode": 118989,
+       "score": 53.3,
+       "xirr": 0.1729,
+       "cagr": 0.1861,
+       "vsBench": 0.0385,
+       "sharpe": 0.8053,
+       "beta": 0.8735,
+       "ter": 0.82,
+       "maxdd": -0.1676,
+       "beatMonths": 0.55,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 9369,
-        "cost": 150.8,
+        "value": 9329,
+        "cost": 187.2,
         "yardValue": 8675
        }
       },
@@ -1778,18 +1778,18 @@
        "label": "Quant Small Cap",
        "schemeCode": 120828,
        "score": 77.0,
-       "xirr": 0.1686,
-       "cagr": 0.1769,
-       "vsBench": 0.0468,
-       "sharpe": 0.6373,
-       "beta": 0.9236,
+       "xirr": 0.1637,
+       "cagr": 0.174,
+       "vsBench": 0.0439,
+       "sharpe": 0.6246,
+       "beta": 0.9239,
        "ter": 0.64,
        "maxdd": -0.2517,
        "beatMonths": 0.65,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 9218,
+        "value": 9117,
         "cost": 143.1,
         "yardValue": 8325
        }
@@ -1799,18 +1799,18 @@
        "label": "Nippon India Small Cap",
        "schemeCode": 118778,
        "score": 75.0,
-       "xirr": 0.1549,
-       "cagr": 0.1758,
-       "vsBench": 0.0456,
-       "sharpe": 0.6961,
-       "beta": 0.8494,
+       "xirr": 0.1515,
+       "cagr": 0.1738,
+       "vsBench": 0.0436,
+       "sharpe": 0.6863,
+       "beta": 0.8496,
        "ter": 0.62,
        "maxdd": -0.2421,
-       "beatMonths": 0.5667,
+       "beatMonths": 0.55,
        "months": 60,
        "sip": {
         "invested": 6000,
-        "value": 8906,
+        "value": 8842,
         "cost": 137.0,
         "yardValue": 8325
        }
